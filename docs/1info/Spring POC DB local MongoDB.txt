@@ -1,0 +1,73 @@
+Spring local MongoDB POC
+
+Note: need local mongodb see tools page for install mongodb
+
+https://start.spring.io/
+
+add dependencies
+	Spring Web
+	Spring Data MongoDB
+	
+add DB details in application.properties file
+
+	spring.data.mongodb.database=mylocaldbone
+	spring.data.mongodb.port=27017
+	spring.data.mongodb.host=localhost
+	spring.data.mongodb.uri=mongodb://emummasani:PASSWORD@cluster0-shard-00-00.an86k.mongodb.net:27017,cluster0-shard-00-01.an86k.mongodb.net:27017,cluster0-shard-00-02.an86k.mongodb.net:27017/DATABASE?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority
+
+create ControlOne.java
+
+	package com.example.localMongo;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.data.mongodb.core.MongoTemplate;
+	import org.springframework.web.bind.annotation.GetMapping;
+	import org.springframework.web.bind.annotation.RestController;
+
+	@RestController
+	public class ControlOne {
+		@Autowired
+		MongoTemplate subTemplate;
+		
+		@GetMapping(path="/")
+		public Object test() {
+			return "HI";
+		}
+		@GetMapping(path="/one")
+		public Object one() {
+			List<String> vins = new ArrayList<String>();
+			vins.add("2T2HGMDA0MC062384");
+			Query query = new Query();
+			query.addCriteria(Criteria
+					.where("vin").in(vins));
+			List<DataOne> result = subTemplate.find(query, DataOne.class);
+			return result;
+		}
+
+	}
+create entity object	
+	package com.example.localMongo;
+	import org.springframework.data.mongodb.core.index.Indexed;
+	import org.springframework.data.mongodb.core.mapping.Document;
+	@Document(collection = "retail-delivery-report")
+	public class DataOne {
+		private String _id;
+		@Indexed
+		private String vin;
+		@Indexed
+		private String receivedTimestamp;
+	
+	}
+create DAO
+	package com.example.localMongo;
+	import java.util.List;
+	import org.springframework.data.domain.Sort;
+	import org.springframework.data.mongodb.repository.Aggregation;
+	import org.springframework.data.mongodb.repository.Meta;
+	import org.springframework.data.mongodb.repository.MongoRepository;
+	import org.springframework.data.mongodb.repository.Query;
+	public interface IRetailDeliveryReportDao extends MongoRepository<DataOne, String> {
+		@Meta(allowDiskUse = true)
+		@Aggregation(pipeline = {"{$sort: { vin:1,receivedTimestamp: -1 } }","{$match:{'msgType': {$in: ['U', 'R']}}","{ '$group': { '_id': '$vin','vin': {'$first': '$vin'},'ind':{'$first': '$sale.reversal.ind'},'type':{'$first': '$sale.reversal.type'},'receivedTimestamp': { '$first': '$receivedTimestamp' }}}"})
+		List<DataOne> findByReversalAndRegion(String oldDate);
+
+	}

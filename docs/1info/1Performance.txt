@@ -1,0 +1,78 @@
+
+Heap Dump collecting process
+Heap Dump View tool
+Heap memory size calculation
+
+
+
+List<Strings> guids = Arrays.aslist("50d5e9ff1bf2485cbe0b9b22f411992c") not able to hold 10000 guids(error method exceded 65535 bytes(64K))
+
+The servlet container has a dedicated thread pool to handle the HTTP requests, where each incoming request will have a thread assigned, and that thread will handle the entire lifecycle of the request (“thread per request model”). This means that the application will only be able to handle a number of concurrent requests that equal the size of the thread pool. It is possible to configure the size of the thread pool, but since each thread reserves some memory (typically 1MB), the higher thread pool size we configure, the higher the memory consumption.
+
+garbage collection
+To do automatic garbage collection, JVM has to pause the application to identify unreferenced objects and dispose of them. This pausing can take anywhere from a few milliseconds to few minutes, depending on the application, workload and JVM settings. When an application is paused to do garbage collection, no customer transactions will be processed. Any customer transactions that are in the middle of processing will be halted. It will result in poor response time to the customers.
+
+Heap Dump collecting process
+-------------------------------------------------------------------------------------------------------------------------------------------
+step1
+	how to find heap info
+	$ jcmd <pid> GC.heap_info
+	
+	$ jcmd <pid> GC.heap_dump [options] /path/to/dump/file
+		how to find pid for running applications
+			$ jps -l
+	$ jcmd 63984 GC.heap_dump -all ~/dump.hpro  
+		-all option all reachable and unreachable objects will be present in the heap dump. 
+		Without this option, the JVM will perform a full GC before creating the heap dump.
+
+Heap Dump View tool
+-------------------------------------------------------------------------------------------------------------------------------------------
+Visual VM 
+	the Visual VM was part of the Oracle and Open JDK distributions before Java 9. However, this is no longer the case as of Java 9, 
+	and we should download the Visual VM from its website separately.
+
+
+Heap memory size calculation
+-------------------------------------------------------------------------------------------------------------------------------------------
+it depends on JVM implemntations
+
+Java Object Layout (JOL) tool.
+------------------------------
+	Add dependency
+	<dependency> 
+		<groupId>org.openjdk.jol</groupId> 
+		<artifactId>jol-core</artifactId>    
+		<version>0.10</version> 
+	</dependency>
+	
+	To find JVM details(HotSpot JVM)
+		System.out.println(VM.current().details());//import org.openjdk.jol.vm.VM;
+			# Running 64-bit HotSpot VM.
+			# Using compressed oop with 3-bit shift.
+			# Using compressed klass with 3-bit shift.
+			# WARNING | Compressed references base/shifts are guessed by the experiment!
+			# WARNING | Therefore, computed addresses are just guesses, and ARE NOT RELIABLE.
+			# WARNING | Make sure to attach Serviceability Agent to get the reliable addresses.
+			# Objects are 8 bytes aligned.
+			# Field sizes by type: 4, 1, 1, 2, 2, 4, 4, 8, 8 [bytes]
+			# Array element sizes: 4, 1, 1, 2, 2, 4, 4, 8, 8 [bytes]
+			
+	To find class level Layout size
+		System.out.println(ClassLayout.parseClass(Cone.class).toPrintable());//import org.openjdk.jol.info.ClassLayout;
+	
+	To find Shallow size
+		public class CTwo {
+			String name = "Eswar";
+		}
+		create instance CTwo ct2 = new CTwo();
+		System.out.println("The shallow size is: " + VM.current().sizeOf(ct2));
+
+
+GC logs analysis
+----------------------------------------------
+free toools to analyze already collected GC logs
+	GCeasy
+	IBM GC and Memory Visualizer
+	HP Jemeter
+	Garbage Cat
+

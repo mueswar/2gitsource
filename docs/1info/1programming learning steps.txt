@@ -1,0 +1,30 @@
+
+define variables
+define strings
+workon string ang number functions
+check type of varible 
+cheing values and nulls
+working on dates
+working collections
+working on files
+
+code into multiple files
+error handling
+
+Create file
+	xml
+	CSV
+	excel
+fetch data from database
+
+call webservice
+
+loging 
+
+properties
+	
+	cloud config properties
+	
+	AWS SSM parameters
+
+Create webservice

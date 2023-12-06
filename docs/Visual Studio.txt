@@ -1,0 +1,11 @@
+shortcuts
+
+Open IDE in working directory
+C:\one\workspace1> code .
+
+Workplace: Ctrl+R
+
+Navigate back: Alt+Left
+Navigate forward: Alt+Right
+
+Column (box) select: Shift+Alt and mose down ...try same in notepad ++ also

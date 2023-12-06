@@ -1,0 +1,92 @@
+JSF 2.2 in Java EE 7 
+JSF 2.0 in Java EE 6
+
+import javax.faces.bean.ManagedBean;
+@ManagedBean
+public class UserBean{
+	private String userName;
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+}
+Scopes
+@FlowScoped - 
+it JSF 2.2 new feature. A flow scoped bean is thus a bean that can be used to back a flow instead of just a single view (page). Unlike a session scoped bean it can only be accessed from views inside the flow (called ViewNodes), and like the view scope for a single view it exists for an instance of the flow, meaning two of the same flows in a different tab or window won’t interfere with each other. To realize this, Faces Flow heavily leans on the new Client Id feature (previously called Window Id).
+
+
+UI Tags
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<h:inputText value="#{userBean.userName}" />
+<h:outputText value="#{userBean.userName}" />
+<h:inputSecret value="#{userBean.password}" />
+<h:inputTextarea value="#{userBean.address}" cols="30" rows="10" />
+<h:commandButton value="Submit" action="user" /> calls xhtml page
+<h:commandButton type="button" value="ClickMe" onclick="printHiddenValue()" /> javascript call
+<h:panelGrid columns="2"> no of components in row
+<h:selectOneRadio value="#{userBean.favColor1}">
+   	<f:selectItem itemValue="Red" itemLabel="Color1 - Red" />
+   	<f:selectItem itemValue="Green" itemLabel="Color1 - Green" />
+</h:selectOneRadio>
+<h:selectBooleanCheckbox value="#{userBean.rememberMe}" /> Remember Me // for single check box
+<h:selectManyCheckbox value="#{userBean.favNumber1}"> //for multiple check boxes
+   	<f:selectItem itemValue="1" itemLabel="Number1 - 1" />
+   	<f:selectItem itemValue="2" itemLabel="Number1 - 2" />
+</h:selectManyCheckbox>
+<h:selectOneListbox value="#{userBean.favYear1}">
+   	<f:selectItem itemValue="2000" itemLabel="Year1 - 2000" />
+   	<f:selectItem itemValue="2010" itemLabel="Year1 - 2010" />
+</h:selectOneListbox>
+<h:selectManyListbox value="#{userBean.favFood1}">
+   	<f:selectItem itemValue="Fry Checken" itemLabel="Food1 - Fry Checken" />
+   	<f:selectItem itemValue="Tomyam Soup" itemLabel="Food1 - Tomyam Soup" />
+   	<f:selectItem itemValue="Mixed Rice" itemLabel="Food1 - Mixed Rice" />
+</h:selectManyListbox>
+<h:selectManyMenu value="#{userBean.favCoffee1}">
+   	<f:selectItem itemValue="Cream Latte" itemLabel="Coffee3 - Cream Latte" />
+   	<f:selectItem itemValue="Extreme Mocha" itemLabel="Coffee3 - Extreme Mocha" />
+   	<f:selectItem itemValue="Buena Vista" itemLabel="Coffee3 - Buena Vista" />
+</h:selectManyMenu>
+<h:dataTable value="#{order.orderList}" var="o">
+	<h:column>#{o.orderNo}</h:column>
+	<h:column>#{o.price}</h:column>
+	<h:column>#{o.name}</h:column>
+</h:dataTable>
+
+
+
+Validation
+format display
+<h:outputText value="#{receipt.amount}" >
+	<f:convertNumber minFractionDigits="2" />
+</h:outputText>
+0.10 <f:convertNumber minFractionDigits="2" /> 
+0.100 <f:convertNumber pattern="#0.000" /> 
+GBP0.10 <f:convertNumber currencyCode="GBP" type="currency" /> 
+10% <f:convertNumber type="percent" />
+input validation
+<h:inputText id="username" value="#{userBean.username}">
+	<f:validateLength minimum="5" maximum="10" />
+</h:inputText>
+<f:validateLength minimum="5" maximum="10" /> range of characters
+<f:validateLongRange maximum="150" minimum="1" /> value range
+<f:validateDoubleRange minimum="10.11" maximum="10000.11" /> range of a floating point value
+<f:validateRequired />
+<f:validateRegex pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})" />
+
+Notes:
+no need setter and geeter in manged bean for action value. Just nedd one method with action value, it will store varible in HttpRequest. we can create web page with JSF tags without managed been by keeping values in Httprequest 
+
+we need setter and getter for expression langueage values
+commandButton,commandLink should be inside form
+no line break for below tags
+selectManyListbox
+selectManyMenu
+
+Button action attribute should specify method with no arguments and string return
+

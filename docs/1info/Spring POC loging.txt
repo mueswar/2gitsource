@@ -1,0 +1,30 @@
+lombok
+--------------------------------------------------------------------------------------------------------------------------------------
+https://start.spring.io/
+
+add dependencies
+	Spring Web
+	lombok
+
+ControlOne.java
+
+package com.org.lombok;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+
+@RestController
+@Slf4j
+public class ControlOne {
+	@GetMapping("/")
+	public void mone() {
+		log.info("abcdefg");
+	}
+}
+
+
+Test it.
+
+
+Sleuth
+--------------------------------------------------------------------------------------------------------------------------------------

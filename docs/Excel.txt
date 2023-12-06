@@ -1,0 +1,8 @@
+shift+ctrl+down arrow ---to select total column from top to end 
+
+pin commands on top
+freeze firt row and first column
+
+select print area
+
+how to repeat first row every print page

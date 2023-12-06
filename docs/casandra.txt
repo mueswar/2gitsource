@@ -1,0 +1,138 @@
+Casandra
+
+data is case sensitive, we can not use uppers case in query if data is in lower case
+we can not query data with non primary key in where clause
+you can not update row without where class
+if update command does not find existing row . it creates new row.
+you can delete one column in row(delete last_name from users where email='queen@yahoo.com')
+if all the colums are null in row except primary column then that row automatically will be deleted.
+truncate users;
+casandra does not support commit or undo
+insert into users (email, fname, lname) values ('e1','f1','l1')
+insert into users (email,  lname) values ('e2','l1')//this is also works fine
+we can alter table wich has data already
+alter table users add dob smallint;
+describe table users;
+alter table users drop dob;
+how to update comment of table
+alter table users with comment ='user info store';
+-------------------------------------------------------
+list:non unique values, we can insert at perticuler position. So we have read before write overhead here
+set: unique values, we get order while retiving even though it does not insert in order, and no read before write overhead here
+Map: key -value pairs
+keep collection small for good performance.
+
+insert into users (email, alerts_email) values ('e1',{'a1','a2'});
+update users set alerts_email = alerts_email+ {'a3','a4'} where email='e1';// add alerts to existing
+update users set alerts_email = alerts_email - {'a3'} where email='e1';// to delete from existing
+update users set alerts_email = {} where email='e1';// to delete all
+delete alerts_email from users where email='e1';// to delete all
+alter table users add c4 list<text>;
+insert into users (email, c4) values ('e1',['l1','l2']);
+update users set c4 = ['l3']+c4 where email='e1';// to prepend 
+update users set c4[2] = ['l9'] where email='e1';// it inserts and replace existing and here it use read before write overhead
+alter table users add secrect_questions map<text,text>;
+insert into users (email, c5) values ('e1',{'k1':'v1','k2':'v2'});
+update users set c5 = {'k3':'v3'}+c5 where email='e1';
+update users set c5['k2'] = 'modify' where email='e1';
+delete c5['k2'] from users where email='e1';
+delete c5 from users where email='e1';
+alter table users add c6 tuple<text,text,text>;
+insert into users (email, c6) values ('e1',{'d1','d2','d3'});
+alter table users add c6 frozen<set<tuple<text,text,text>>>;
+insert into users (email, c6) values ('e1',{{'d1','d2','d3'},{'e1','e2','e3'}});
+create type address(str1 text, str2 text);
+describe types;
+desc type address;
+alter table users add c7 frozen<address>;
+insert into users (email, c7) values ('e1',{str1:'v1',str2='v2'});
+-------------------------------------------------------
+create table web_stats(page text primarykey, likes count, dislikes count)//we can not use other data types with counter
+update web_stats set likes=likes+0 where page='homepage';
+//we can not use inser query for counter
+//we can not assigne vlaue, it should be decrement or increment
+select JSON * from users;
+select JSON c1,c2 from users where email='e1';
+insert into users JSON '{email:'e1',c2:'v2'}';
+------------------------------------------------------
+update users using TTL 120 set fname='fone' where email='e1';//it sets time for only on fname to 210 sec
+select fname, lanme, ttl(fanme), ttl(lanme) from users where email='e1';
+insert into users (email, fname, lnmae) values ('etwo','ftwo','ltwo') using ttl=120;// for all columns it effects for this row
+alter table users with default_time_to_live =120;// this will not apply for existing data but it effects new data in table.
+alter table users with default_time_to_live =0;//
+ttl efects performance if we have more ttl because compection(correct word here)
+-------------------------------------------------------
+insert into users (email, fname, lnmae) values ('etwo','ftwo','ltwo') if not exist;// it reads first and then does operation. performance issue
+update users set fname='fthree' where email='eone' if fname='fone';
+
+selct * from users limit 10;
+copy keysapce1.users (c1,c2) to 'fone/one.out' with delimiter '-' and header true and null='null';//to extract
+there are no filters, we can not use where clause to load/extract.
+
+create table tone( c1, c2 ....primarey key((c1,c2), c3,c4,c5) with clustring order by(c3 des, c4 aec, c5 aec)
+select * from tone where c1='one';// does not work becase we did not give full partision key
+select * from tone where c1='one' and c2 ='two'//this works
+select * from tone where c1='one' and c2 ='two' and c3 in ('x','y','z');// check if it work or not
+select * from tone where c1='one' and c2 ='two' and c3 in ('x','y','z') and c4 =5 and c5= 6;//this works
+select c1 as d1, c2 as d2 from tone where c1='one' and c2 ='two'
+create table tone( c1, c2 ....primarey key(c1,c2) with clustring order by(c2 asc);//c1 is partision key and c2 is clustering key
+select c1,c2,c3 from tone where c1='one' order by c2 desc;//this works we can do order by with clustering column
+select c1,c2,c3 from tone where c1='one' and c2 =>10 and c2 <= 20;// this is also works
+we can not use two range scans in single query
+select count(*) from users;// it works and gives waring that there is no pattition key in query
+it does not work if there are milllion records.
+select count(*) from tone where c1='one' and c2 ='two'//this works
+select min(c2), max(c3), sum(c4) where c1='30';
+desc KEYSPACEs;
+use system;
+cqlsh:system> select peer, host_id from peers;// gives other cluster memeber details
+cqlsh:system_schema> select keyspace_name, table_name from system_schema.tables where keyspace_name='userkeyspace1'//gives all tables in userkeyspace1
+-------------------------------------------------------------
+create index i1 on users (c4);
+selct * from users where c4 ='one';//this works because c4 is secondary index now
+secodary index is bad for performance
+drop index i1;
+drop table tone;
+drop keyspace userkeyspace1;
+--------------------------------------------------------------
+CQL Batches are not good
+extra burden on the Coordinator Node
+user-define functions UDF
+user-defined aggregates UDA
+
+SSl Encryption
+users and Roles based access control
+cat cassandra.yml | grep -l authenticator
+cat cassandra.yml | grep -l authorization
+
+nodetool version;
+nodetool describecluster;
+nodetool info;
+nodetool cfstats keyspace1.users;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

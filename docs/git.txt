@@ -1,0 +1,184 @@
+git clone http://bitbucket.us.ABC.com/scm/digital/CompanyOne.advisor.reference-api.git
+enter password
+cd C:\two\eclipsework\Bit\one-vehicle-health-report
+
+git checkout advisor-details-AMID
+git status
+git config --global user.email "user1@CompanyOne.com"  
+
+git checkout tags/v1.01.245.1 -b tagv1.01.245.1branch
+
+
+password change
+--------------------------
+control panel> Credential Manager>git:http//
+
+enrty for existing project
+---------------------------------
+cd C:\2work/sourcecode/CompanyOne.advisor.reference-api
+git add -A
+git commit -m "TTARL-
+git push origin Branchname1
+
+maven
+----------------------------------------
+cd C:\two\eclipsework\Bit\one-vehicle-association-legacy
+mvn clean package install
+mvn -U clean spring-boot:run
+mvn -U clean spring-boot:run -Dhibernate.show_sql=true -Dspring.profiles.active=dev,local -P dev-vault
+mvn -U clean spring-boot:run -Dspring.profiles.active=dev,local -P dev-vault >c:\2work\one.txt
+mvn -U clean spring-boot:run -Daws_profile=sso-nonprod -Daws_access_key_id=ASIA3NILJ2 -Daws_secret_access_key=hSm59zsUm/1O1Vn0hU26W0ezWvPAS
+mvn -U clean spring-boot:run -Dcloud.aws.region.static=us-east-1 -Dcloud.aws.credentials.useDefaultAwsCredentialsChain=true
+
+
+password change
+--------------------------
+control panel> Credential Manager>git:http//
+
+for config
+-------------------------------
+git clone http://bitbucket.us.ABC.com/scm/digital/CompanyOne.advisor.reference-api.git
+enter password
+
+git config --global user.email "user1@CompanyOne.com" 
+
+cd C:\2work/config/CompanyOne.platform.config
+
+checkout with tag 
+------------------------------
+git checkout tags/v1.01.245.1 -b tagv1.01.245.1branch
+
+local files override
+------------------
+git status
+git checkout feature/api-additiogit file1 -- to override one file changes in local
+src/main/resources/application.properties
+git reset --hard branch1 (to override total branch)
+
+update local - stash
+-------------------------
+git stash list
+git stash
+git pull (git pull --rebase)
+git stash apply
+
+Cherry pick
+---------------------------
+git checkout oldbranch
+git log
+esc and q
+git checkout newbranch
+git cherry-pick <commit hash from log>
+git push newbranch
+
+update local working directory
+-------------------------
+git stash
+git pull (git pull --rebase)
+git stash apply
+
+for config
+-------------------------------
+git clone http://
+enter password
+cd C:\2work/config/CompanyOne.platform.config
+
+update brach with master chnages
+-----------------------------------------
+git merge origin/master
+or
+git checkout master
+git pull
+git checkout <your branch>
+git merge master
+
+if there is any conflicts resolve and run below commands
+git add *.*
+git commit -m "merge conflits resolved"
+git push
+
+create new branch in remote from local
+------------------------------------------
+git checkout -b bone (bone from current brach)
+then commit chnages
+git push 
+
+swiching to new branch
+---------------------------
+commit all files b1
+git pull
+git checkout <new branch>
+git merge <old branch name>  camel-case-changes-and-and-agentPolicy-table-
+git commit --amend -m "DDEV-28467 Merge from old branch"
+git push origin advisor-details-AMID Branchname ((advisor-details-AMID))
+password
+
+if push get rejected 
+--------------------------------
+$ git rebase -i HEAD~6
+change pick to edit where you do not have jira number(in sert mode with 'insert' key in key board)
+to save and quit(esc> :x) x is small
+$ git commit --amend -m "DDEV-28467 lineOfBusinessCode changes"
+$ git rebase --continue
+$ git push origin IVR-chnages
+if error occurs 
+$ git pull --rebase
+$ git push origin IVR-chnages
+
+move to different repository
+----------------------------------------------
+git remote set-url origin http://user1@bitbucket.us.abc.com/scm/digital/CompanyOne.advisor.reference-api.git
+
+
+
+Git 
+https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+
+
+cd C:/two/eclipsework/Bit/
+cd C:/two/eclipsework/Bit/one-vehicle-health-report
+
+git clone https://bitbucket.sdlc.toyota.com/scm/ctp/one-vehicle-association-legacy.git
+
+mvn clean package install
+mvn -U clean spring-boot:run
+
+
+>git --version
+>git config --global user.name ""
+>git config --global user.email ""
+>git config --list
+>git status to see uncommited files
+>touch .gitignore
+>git add abc.java to move to stageing
+>git add -A to add all files to stageing
+>git reset abc.java to remove from stageing
+>git reset   to remove all files from stageing
+>git commit -m "reason to commit" it commites all stageing files
+>git log
+>git clone <from url> <to folder>
+>git remote -v
+>git branch a
+
+>git pull <remote repository> <branchX>
+>git push <remote repository> <branchX>
+
+>git branch        {lists all branches}
+>git branch -a     {it list all remote and local branches}
+>git branch bone   {creates bone branch in locally from current branch}
+>git push -u <remote repository> bone {it creates bone in remote pushes all local files to remote}
+
+>git branch -d bone {bone will be deleted locally}
+>git push <remote repository> -- delete bone {bone will be deleted from remote}
+
+
+
+to commit changes frome bone to master
+>git checkout master {switches to master}
+>git pull <remote repository> master
+>git branch --mereged
+>git merge bone
+>git push <remote repository> master
+
+
+

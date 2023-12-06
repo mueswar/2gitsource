@@ -1,0 +1,34 @@
+
+Exploring Collectors by Venkat Subramaniam 2:24:37 11/2019
+-------------------------------------------------------------------------
+
+to iterate list, we do not need to call stream method, we can directly call forEach method on list instance.
+list.stream().filter(a -> a.name().length()<20).foreach(System.out::println);
+here filter is lazy method , it will not exicute until we hit terminal operation forEach
+
+how get sum of emps age with reduce function 
+	list.stream().map(Emp::getAge).reduce(0,(total,age) -> total+age);
+what is functional programming? it is higher order funationality ,immutability, but other important thigs is functional composition and lazy evaluvation.
+
+lazy evaluvation requires purity of function.
+pure function gives same output if we give same input as many times we call it.
+pure function does not depend on anything that possible change
+
+
+Asynchronous Programming in Java: Options to Choose from By Venkat Subramaniam  2:3921 10/2023
+--------------------------------------------------------------------------------------------
+Java 1.0 Threads
+java 5.0 Executors
+java 7 ForkJoin
+java 8 parallel streams and CompletableFuture
+
+generally threads will be blocked and wait for something, to solve we create more threads.
+but that is not good idea
+
+callbacks - callbacks also have drabacks and nested callbacks create even more problems
+
+promises- 
+
+He will explain CompletableFuture with java script
+
+watched  60 min

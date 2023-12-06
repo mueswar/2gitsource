@@ -1,0 +1,34 @@
+AWS Cloud watch
+
+use AWS CLI to see logs
+
+
+Cloudwatch logs query
+--------------------------------
+query with JSON format 
+	{ $.status_code = "500" }
+	{$.message= Method*200}// here no quotes this returns start with Method and end with 200
+	{($.goal= "getCurrentSubscription" && $.level = "INFO")}
+
+insights query
+---------------------------------------------------------------------------------------------------	
+filter message like /(?i)Exception/     --contains word exception in message
+filter message like /vehicle => HttpStatus=400/
+filter message=~ /400$/            --this is regex for ends with 400
+
+filter @message like /(?i)(Exception|error|fail|5\d\d)/
+| filter traceId like /d727d5ad1fb91938/
+| filter @message like /connectedservices/
+
+fields @timestamp, @message
+| filter @logStream like /orchsub/
+|filter @message like /legacyCreateSubscriptions start for VIN JTDKARFPXH/
+| sort @timestamp desc
+
+
+fields  statusMsg
+|filter vin = '4T1B11HK5JU530598' and type ='ios'
+| sort @timestamp desc
+| limit 20
+
+

@@ -1,0 +1,53 @@
+
+//spring JPA
+LocalEntityManagerFactoryBean produces an application-managed EntityManagerFactory.
+LocalContainerEntityManagerFactoryBean produces a container-managed EntityManagerFactory.
+persistence.xml(This file must appear inthe META-INF directory in the classpath)
+<persistence-unit name="spitterPU">
+</persistence-unit>
+@Bean
+public LocalEntityManagerFactoryBean entityManagerFactoryBean() {
+	LocalEntityManagerFactoryBean emfb = new LocalEntityManagerFactoryBean();
+	emfb.setPersistenceUnitName("spitterPU");
+	return emfb;
+}
+CONFIGURING CONTAINER-MANAGED JPA
+@Bean
+public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+	DataSource dataSource, JpaVendorAdapter jpaVendorAdapter) {
+	LocalContainerEntityManagerFactoryBean emfb = new LocalContainerEntityManagerFactoryBean();
+	emfb.setDataSource(dataSource);
+	emfb.setJpaVendorAdapter(jpaVendorAdapter);
+	emfb.setPackagesToScan("com.habuma.spittr.domain");
+	return emfb;
+}
+@Bean
+public JpaVendorAdapter jpaVendorAdapter() {
+	HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();//different classes based on JPA implimentaion
+	//OpenJpaVendorAdapter adapter = new OpenJpaVendorAdapter()
+	adapter.setDatabase("HSQL");//ORACLE for Oracle and DB2 for DB2
+	adapter.setShowSql(true);
+	adapter.setGenerateDdl(false);
+	adapter.setDatabasePlatform("org.hibernate.dialect.HSQLDialect");
+	return adapter;
+}
+//ENTITYMANAGERFACTORY FROM JNDI
+@Bean
+public JndiObjectFactoryBean entityManagerFactory() {}
+	JndiObjectFactoryBean jndiObjectFB = new JndiObjectFactoryBean();
+	jndiObjectFB.setJndiName("jdbc/SpittrDS");
+	return jndiObjectFB;
+}
+//Spring-free JPA repositories(without JpaTemplete)
+@Repository
+@Transactional
+public class JpaSpitterRepository implements SpitterRepository {
+	@PersistenceUnit
+	private EntityManagerFactory emf;
+	public void addSpitter(Spitter spitter) {
+		emf.createEntityManager().persist(spitter);
+	}
+	public Spitter getSpitterById(long id) {
+		return emf.createEntityManager().find(Spitter.class, id);
+	}
+}

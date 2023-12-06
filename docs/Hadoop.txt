@@ -1,0 +1,13 @@
+Hadoop
+
+Big data' could be found in three forms:
+Structured
+Unstructured
+Semi-structured
+
+Install
+----------------------------------------------
+install Ubuntun
+install java
+sudo addgroup hadoop_
+sudo adduser --ingroup hadoop_ hduser_

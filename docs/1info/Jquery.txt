@@ -1,0 +1,763 @@
+
+JQuery
+	youtube: kudvenkat jQuery tutorial for beginners 
+	(http://csharp-video-tutorials.blogspot.com/2015/03/jquery-tutorial-for-beginners.html)
+
+
+<script src="/WebContent/jquery-3.3.1.js"></script>
+<script   src="http://code.jquery.com/jquery-2.2.4.js"  
+integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+microsoft CDN url http://asp.net/ajax/cdn/
+
+<script type="text/javascript">
+	$(window).load(function(){
+		alert('Window loaded');
+	});
+	$(document).ready(function(){ //first document reday will be executed aand then window.load will be called
+		alert('document loaded');
+	});
+</script>
+
+How to change button background color onload with ID selector
+	<html>
+	<head>
+	<script src="/WebContent/jquery-3.3.1.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#button1').css('background-color','yellow');
+		});
+	</script>
+	</head>
+		<body bgcolor="#FFFFFF">
+			<input id="button1" type="button" value="click me"/>
+		</body>
+	</html>
+	we should have unique ID's in page. id selector matches with first id if there are multiple ids with same name.
+how to make sure that element is present
+	<script type="text/javascript">
+		$(document).ready(function(){
+			if($('#button1').length>0) {alert('element is found');}
+			else{alert('element is not found');}
+		});
+	</script>
+javascript document.getElementById() returns raw DOM object where as jQuery('#id') selector returns a jQuery object 
+that wraps the DOM object and provides jQuery methods.
+
+how to get raw DOM object
+	<script type="text/javascript">
+		$(document).ready(function(){
+			alert($('#button1')[0]);
+		});
+	</script>
+javascript document.getElementById() is faster than jQuery('#id')
+element selectors
+$('td')//returns all td elements 
+<script type="text/javascript">
+	$(document).ready(function(){
+		alert($('td').length);//gives total td numbers
+		$('tr').css('background-color','red')//all tr background color to red
+	});
+</script>
+
+iterate table rows with each()
+	$(document).ready(function(){
+		$('table tr').each(function(){
+			alert($(this).html());
+		});
+		
+	});
+
+$('span, a, div').css('background-color','red');//this change bg color of all span , a and div elements
+$('div a').css('background-color','red');//this change bg color only anchor tags which are inside div
+$('tr:even').css('background-color','red');	//bg color change for even rows
+$('#table2 tr:odd').css('background-color','red');	//bg change for odd rows in table2. here use both id and element selectors
+
+jQuery class selectors uses JavaScript's native getElementsByClassname() function
+$('.small')//all elements with class as small
+$('.small,.big')//all elements with class as small or big
+$('div.small,.big')//div with class as small or any element with big
+
+	$(document).ready(function(){
+		$('.small').css('border','5px solid red');		
+	});
+		<div class="small">
+			dev1
+		</div>
+
+$('#div2 .small').css('border','5px solid red');//we space after div2 this selects all elements inside div2 
+$('.small.big').css('border','5px solid red');//element with class with both small and big
+		<div class="small big">
+			dev1
+		</div>
+
+jQuery Attribute Selector
+$('[attribute1]')//
+$('[attribute1="value"]')
+$('[title]')//selects all elements that have title attibute
+$('div[title]')//selects all div elements that have title attibute
+$('[title="t1"]')
+$('div[title="t1"]')
+		<div title="t1">
+			dev1
+		</div>
+$('div[title][style]')// div with title and style
+$('div[title],[style]')//div with title or style
+$('div[title !="t1"]')  $('div:not[title ="t1"]')
+$('div[title *="t1"]')// title="abct1"
+$('div[title ~="t1"]')// title="abc t1" or title="t1 abc"  or title="abc t1 def" 
+$('div[title |="t1"]')// title="t1" or title="t1-abc"
+$('div[title ^="t1"]')//value starts with t1
+$('div[title $="t1"]')//value ends with t1
+
+case insenstive comparision(toLowerCase() and attr() functions)
+	$(document).ready(function(){
+		$('div[title]').filter(function(){
+			return $(this).attr('title').toLowerCase() =="t1";
+		}).css('border','5px solid red');		
+	});
+
+$('div[title *="t1"]').css('border','5px solid red'); conver this to case insenstive
+type1 - regular expression
+	$('div[title]').filter(function(){
+			return(/t1/i).test($(this).attr('title')))
+		}).css('border','5px solid red');
+
+type2 - regular expression function
+	$('div[title]').filter(function(){
+			return RegExp('t1',i).test($(this).attr('title')))
+		}).css('border','5px solid red');
+note: i indicates insenstive
+
+$(:input) selects all input, textarea, select, button and images
+$(input) selects only input tags
+<input type="text" value="Jhon"/>
+<input type="radio" name="gender" checked="checked" value="M"> Male
+Skills:
+<input type="checkbox" name="skills" checked="checked" value="java">Java
+<input type="checkbox" name="skills"  value="C#"> C#
+country
+<select>
+	<option selected="selected" value="USA">USA</option>
+	<option  value="India">India</option>
+</select>
+Summary:<textarea Iam senor developer</textarea>
+<input type="submit" value="Register"/>
+
+the following displays only input tag values
+	$('input').each(function(){
+		alert($(this).val());
+	});
+the following displays all tags values
+	$(':input').each(function(){
+		alert($(this).val());
+	});
+the following displays only text tag values
+	$('input[type='text']').each(function(){
+		alert($(this).val());
+	});
+
+How to display radio button checked value in page, when submit button is clicked
+	<input type="radio" name="gender" value="M"> Male
+	<input type="radio" name="gender" value="F"> Female
+	<input id ="idB1" type="submit" value="Register"/>
+	<div id="divResult"/>
+		$(document).ready(function(){
+			$('#idB1').click(function(){
+				var result = $('input[type="radio"]:checked');
+				if(result.length >0){ $('#devResult').html(result.val()+"is checked");}
+				else{$('#devResult').html("no radio checked");}
+			});
+		});
+
+for checkbox
+	var result = $('input[type="checkbox"]:checked');
+	if(result.length >0){
+		var resulString="";
+		result.each(function(){
+			resulString+=$(this).val()+"<br/>"
+		})
+		$('#devResult').html(resulString);
+	}
+how to get one group of checkbox values only when there are multiple
+	<input type="checkbox" name="skills" value="java">Java
+	<input type="checkbox" name="skills"  value="C#"> C#
+	<input type="checkbox" name="city" value="NY">NY
+	<input type="checkbox" name="city"  value="CR"> CR
+	var result = $('input[name="skills"]:checked');
+	if(result.length >0){
+		var resulString="";
+		result.each(function(){
+			resulString+=$(this).val()+"<br/>"
+		})
+		$('#devResult').html(resulString);
+	}
+how to get selected values from dropdown
+	<select id="selectCountries">
+		<option value="U">USA</option>
+		<option  value="I">India</option>
+		<option  value="C">Canada</option>
+	</select>
+	$('#selectCountries').change(function(){
+		var selectedOption = $('#selectCountries option:selected');
+		$('#devResult').html('value ='+selectedOption.val()+", Text ="+selectedOption.text());
+	});
+how to get multiple selected values from dropdown
+	<select id="selectCountries" multiple="multiple">
+		<option value="U">USA</option>
+		<option  value="I">India</option>
+		<option  value="C">Canada</option>
+	</select>
+	$('#selectCountries').change(function(){
+		var selectedOption = $('#selectCountries option:selected');
+		if(selectedOption.length > 0){
+			var resultString='';
+			selectedOption.each(function(){
+				resultString+='value ='+$(this).val()+", Text ="+$(this).text();
+			});
+			$('#devResult').html(resultString);
+		}
+	});
+
+$('input[type="text"]:disabled').css('border','5px solid red');//slected disabled text boxes
+$('input[type="text"]:enabled').css('border','5px solid red');
+
+How to access JSON object properties
+	$(document).ready(function(){
+		var json1 = {"k1":"v1","k2":"v2"};
+		var res='';
+		res+='k1='+json1.k1+'<br/>';
+		res+='k2='+json1.k2+'<br/>';
+		$('#devResult').html(res);
+	});
+
+	$(document).ready(function(){
+		var json1 = [{"k1":"v1","k2":"v2"},{"t1":"v1","t2":"v2"}];
+		$('#devResult').html(json1[0].k2);
+	});
+
+	$(document).ready(function(){
+		var json1 = {"p1":{"k1":"v1","k2":"v2"},"p2":{"t1":"v1","t2":"v2"}};
+		$('#devResult').html(json1.p1.k1);
+	});
+
+how to convert JSON string to JSON object and iterate it
+	$(document).ready(function(){
+		var json1 = '[{"k1":"v1","k2":"v2"},{"k1":"v3","k2":"v4"}]';
+		var objJson = JSON.parse(json1);
+		var res='';
+		$.each(objJson, function(i,item){
+			res+='k1='+item.k1+'<br/>';
+			res+='k2='+item.k2+'<br/>';
+		});
+		$('#devResult').html(res);
+	});	
+
+check DOM manipulations
+
+$('div').wrap('<div class="containerDiv"></div>');//this add extra div to all existing divs
+this added no of divs = no of already existing DIVs
+$('div').wrapInner('<div class="containerDiv"></div>');//this adds divs around content insted of around div
+$('div').wrapAll('<div class="containerDiv"></div>');//adds only one div making sure that all existing divs under new dev
+$('div').unwrap()//removes one one layer of div from all nested divs
+$('div').append('<b> totorial</b>');//this addeds <b> totorial</b> to div content in all divs at end
+$('div').prepend('<b> totorial </b>');//this addeds <b> totorial</b> to div content in all divs at start
+$('div').before('<b> totorial </b>');//adds before elemnt not content
+$('div').after('<b> totorial </b>');//adds after elemnt not content
+append:appendTo, prepend:prependTo, before:insertBefore, after:insertafter
+
+adding css class to p1 on bt1 click
+$(btn1).click(function(){
+	$(p1).addClass('css_class1')
+});
+$(btn1).click(function(){
+	$(p1).addClass('css_class1 css_class2')
+});
+$(btn1).click(function(){
+	$(p1).removeClass('css_class1')
+});
+
+add if not there and remove if it is already there
+$(btn1).click(function(){
+	$(p1).toggleClass('css_class1')
+});
+
+jquery .each function(used for to iterate jQuery collections)
+var result='';
+$('li').each(function(index, element){
+	result+=index +', value='+$(element).text();
+});
+here element is raw DOM object, so we can not use jquery method like text funtion. but to use those wrap with $
+
+javascript array iteration(we use $.each())
+	var intarray=[10,20,30];//this is javascript array
+	var result='';
+	$().each(intarray,function(index, element){
+		result+=index +', value='+element;
+	});
+
+javascript object iteration(we use $.each())
+	var jsobj={'k1':'v1','k2':'v2'};//this is javascript object
+	var result='';
+	$().each(jsobj,function(key, element){
+		result+=key +', value='+element;
+	});
+push method is used to add elements to javascript array
+	var result=[];
+	$('li').each(function(index, element){
+		result.push($(element).text());
+	});
+	alert(result);
+how to impliment same with map
+alert($('li').map(function(index, element){
+	return $(element).text();
+}).get());
+
+construct |  delimeter string
+var result='';
+$('li').each(function(index, element){
+	result+=$(element).text()+"|";
+});
+result = result.subtring(0,result.length-1);
+alert(result);
+
+same with Map
+alert($('li').map(function(index, element){
+	return $(element).text();
+}).get().join('|'));
+
+difference between map and each
+
+    var intArray = [1, 2, 3, 4, 5];
+    function functionA(index, element) {
+        return element * 5;
+    }
+    function functionB(element, index) {
+        return element * 5;
+    }
+    var result1 = $.each(intArray, functionA);
+    var result2 = $.map(intArray, functionB);
+    document.write('each = ' + result1);
+    document.write('<br/>')
+    document.write('map = ' + result2);
+
+	output: each =1,2,3,4,5
+	map=5,10,15,20,25
+	each returns the original array(immutable). map returns new array.
+	Notice that the callback arguments in the each method are the reverse of the callback arguments in the map function.
+---------------------------------------------------------------------------
+--------------------  Mouse events              ---------------------------
+---------------------------------------------------------------------------
+jQuery mouse events (mouseover,mouseout,mouseenter,mouseleave)
+<table>
+    <tr>
+        <td>First Name</td>
+        <td style="vertical-align:middle">
+            <input id="txtFirstName" type="text" class="inputRequired" />
+        </td>
+        <td><img id="imgFirstNameHelp" src="help.png" /></td>
+        <td><div id="divFirstNameHelp" style="display:none">
+            First Name as shown in passport</div></td>
+    </tr>
+    <tr>
+        <td>Last Name</td>
+        <td>
+            <input id="txtLastName" type="text" class="inputRequired" />
+        </td>
+        <td><img id="imgLastNameHelp" src="help.png" /></td>
+        <td><div id="divLastNameHelp" style="display:none">
+            Last Name as shown in passport</div></td>
+    </tr>
+</table>
+	$(document).ready(function () {
+		$('img[src="help.png"]').mouseover(function () {
+			$('#' + getDivId(this)).fadeIn(400);
+			$(this).css('cursor', 'pointer');
+		}).mouseout(function () {
+			$('#' + getDivId(this)).fadeOut(400);
+		});
+		function getDivId(helpIcon) {
+			var helpIconId = $(helpIcon).attr('id');
+			return helpIconId.replace('img', 'div');
+		}
+	});
+	$(document).ready(function () {
+		$('img[src="help.png"]').mouseenter(function () {
+			$('#' + getDivId(this)).fadeIn(400);
+			$(this).css('cursor', 'pointer');
+		}).mouseleave(function () {
+			$('#' + getDivId(this)).fadeOut(400);
+		});
+		function getDivId(helpIcon) {
+			var helpIconId = $(helpIcon).attr('id');
+			return helpIconId.replace('img', 'div');
+		}
+	});
+
+hover(f1,f2);//syntax
+$(document).ready(function () {
+    $('img[src="help.png"]').hover(function () {
+        $('#' + getDivId(this)).fadeIn(400);
+        $(this).css('cursor', 'pointer');
+    }, function () {
+        $('#' + getDivId(this)).fadeOut(400);
+    });
+    function getDivId(helpIcon) {
+        var helpIconId = $(helpIcon).attr('id');
+        return helpIconId.replace('img', 'div');
+    }
+});
+
+How to retrieve event data using event object
+Whenever an event (like click, mouseover, mouseout etc) occurs, the relevant data about that event is placed into the event object. For example, 
+the event object contains event data like, the X and Y coordinates of the mouse pointer when the event occurred, the HTML element that fired the event, 
+which mouse button is clicked etc.
+        $(document).ready(function () {
+            $('#btn').click(function (event) {
+                getEventDetails(event);
+            }).mouseover(function (event) {
+                getEventDetails(event);
+            }).mouseout(function (event) {
+                getEventDetails(event);
+            });
+            function getEventDetails(event) {
+                var eventDetails = "Event = " + event.type +
+                                   "<br/> X = " + event.pageX +
+                                   "<br/>Y = " + event.pageY +
+                                   "<br/>Target Type = " + event.target.type +
+                                   "<br/>Target Tag Name = " + event.target.tagName;
+
+
+                $('#divResult').html(eventDetails);
+            }
+        });
+
+//below event is jQuery object
+	$('#btn').click(function (event) {
+		getEventDetails(event);
+	})
+//below event is javaScript object
+	$('#btn').click(function () {
+		getEventDetails(event);
+	})
+//to conver javascript into jQuery
+	in getEventDetails chnage code like
+	var e= $.event.fix(event);//e is jQuery object
+Detect which mouse button clicked
+         $(document).ready(function () {
+            $('#btn').mouseup(function (event) {//here event is jQuery object
+                switch (event.which) {
+                    case 1: whichButton = "Left Button Clicked"; break;
+                    case 2: whichButton = "Middle Button Clicked"; break;
+                    case 3: whichButton = "Right Button Clicked"; break;
+                    default: whichButton = "Invalid Button Clicked"; break;
+                }
+                $('#divResult').html(whichButton);
+            });
+        });
+
+how to remove and add jQuery mouse events(Binding event handlers in jQuery)
+   <style>
+        .ButtonStyle {
+            background-color: red;
+            cursor: pointer;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+           $('#btnClickMe').bind('click mouseover mouseout', function (event) {
+                if (event.type == 'click') {
+                    $('#divResult').html('Button Clicked at '
+                        + 'X = ' + event.pageX + ' Y = ' + event.pageY);
+                }
+                else if (event.type == 'mouseover') {
+                    $(this).addClass('ButtonStyle');
+                }
+                else {  $(this).removeClass('ButtonStyle'); }
+            });
+            $('#btnEnableMouseOverEffect').click(function () {
+                $('#btnClickMe').bind('mouseover', function () {
+                    $(this).addClass('ButtonStyle');
+                });
+            });
+            $('#btnDisableMouseOverEffect').click(function () {
+                $('#btnClickMe').unbind('mouseover');
+            });
+
+if you are using jQuery more than 1.7 version use on method.
+by just putting on in place of bind the above code works
+bind() and on() methods also accepect JSON object
+
+           $('#btnClickMe').bind(
+		   {
+		   click:function(event){$('#divResult').html('Button Clicked at '+ 'X = ' + event.pageX + ' Y = ' + event.pageY);},
+		   mouseover:function(event){$(this).addClass('ButtonStyle');},
+		   }
+		   );
+
+Passing JSON on click 
+        $(document).ready(function () {
+            $('#btnClickMe').on('click', {
+                firstName: 'John',
+                lastName: 'Doe'
+            }, sayHello);
+		function sayHello(event) {
+                if (event.data != null) {
+                    alert('Hello ' + event.data.firstName +
+                        (event.data.lastName != null ? ' ' + event.data.lastName : ''));
+                }
+            }
+adding new item to un ordered list on button list
+	$('#btn1').on('click', function(){
+		var newListItem ='<li>New list Item</li>';
+		$('ul')append(newListItem);
+	})
+how to fade out list item on click
+	$(document).ready(function () {
+		$('li').on('click',function(){$(this).fadeout(500);});
+	});
+does this fadeout dynamically added list item?
+No, because the above event will be added to list iteam that are available at reload document, 
+but the dinamacally added one will not be available at document ready time
+to work for dynamically addlist, we need to click event while adding list item.
+var newListItem =$('<li>New list Item</li>').on('click',function(){$(this).fadeout(500);});
+
+But best way to do is 
+$(document).ready(function () {
+	$('ul').on('click','li',function(){$(this).fadeout(500);});//here 3 parameters, here li is selector
+});
+
+What is Event delegation
+it alows us to add single event listener to a parent element, that will fire for descendants matching selecter, 
+whether those descendants exist now or added in the feature.
+Both on() and delegate() functions allow us to perform event delegation. (on is available from 1.7)
+off() and undelegate() will be used to undelegate event function
+$('#btnUndelegate').click(function(){
+	$('ul').off('click','li');
+});
+
+we can use live() for event deligation but that is removed from 1.7
+we can use on() insted of live(), delegate() and bind() functions
+
+How can we make sure that the even can be fired only once
+	option1: add event and remove the event once it is done
+		$(document).ready(function () {
+			$('#btn').on('click', function () {
+				alert('Button Clicked');
+				$(this).off('click');
+			});
+		});
+
+	option2: one() function
+		$(document).ready(function () {
+			$('#btn').one('click', function () {
+				alert('Button Clicked');
+			});
+		});
+
+How to bind multiple functions(on() or one())
+	$(document).ready(function () {
+		$('#btn').on({
+			mouseover: function () {
+				$(this).css('background-color', 'yellow');
+				$(this).off('mouseover');
+			},
+			mouseout: function () {
+				$(this).css('background-color', 'white');
+				$(this).off('mouseout');
+			},
+			click: function () {
+				alert('Button clicked');
+				$(this).off('click');
+			}
+		});
+	});
+
+How to checck if the click event is applied or not
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var jQueryObject = $('#btn');
+            var rawDOMElement = jQueryObject.get(0);
+            var eventObject = $._data(rawDOMElement, 'events');
+
+            if (eventObject != undefined && eventObject.click != undefined) {
+                alert('Click event exists');
+            }
+            else {
+                $('#btn').on('click', function () {
+                    alert('Button Clicked');
+                });
+            }
+        });
+    </script>
+aother way
+$('#btn').off('click').on('click', function () {
+    alert('Button Clicked');
+});
+
+but both does not work if you add event directly with javacript (not with jquery)
+var buttentElement = document.getElementById('btn');
+buttentElement.addEventListener('click', function1);
+
+video 40 completed (kudvenkat jQuery tutorial for beginners)
+
+How can we disable rightclick
+        $(document).ready(function () {
+            $(this).on('contextmenu', function (e) {
+                e.preventDefault();
+                $('#divResult').append('Right click disabled<br/>')
+            });
+        });
+
+contextmenu is envent like click event
+we have preventDefault() function event object
+
+How can we disable hyperlink navigation
+            $('#myHyperLink').on('click', function (e) {
+                e.preventDefault();
+                $('#divResult').append('Hyperlink default action prevented<br/>')
+            });
+How can we flash some message when you scroll scroll bar.
+            $('div').scroll(function () {
+                $('h3').css('display', 'inline').fadeOut(1000);
+            });
+<div style="width:30px; height:20px; border:1px solid black; overflow:scroll">
+dhdasdsahdasdjhkhkghdfjhggggggggggggggggggggggggggggggggggggggggggggg
+</dv>
+ <br />
+ <h3 style="display:none; color:red">Scroll event handled</h3>
+
+how to display no of times scrolled
+            var count = 0;
+            $('div').scroll(function () {
+                $('span').text(count += 1);
+            });
+<h3 style="color:red">Scroll event handled <span>0</span> time(s)</h3>
+
+Image gallery with moseout, moseover and click event
+    <style type="text/css">
+        .imgStyle {
+            width: 100px;
+            height: 100px;
+            border: 3px solid grey;
+        }
+    </style>
+    <script src="jquery-1.11.2.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#divId img').on({
+                mouseover: function () {
+                    $(this).css({
+                        'cursor': 'hand',
+                        'border-Color': 'red'
+                    });
+                },
+                mouseout: function () {
+                    $(this).css({
+                        'cursor': 'default',
+                        'border-Color': 'grey'
+                    });
+                },
+                click: function () {
+                    var imageURL = $(this).attr('src');
+                    $('#mainImage').fadeOut(1000, function () {
+                        $(this).attr('src', imageURL);
+                    }).fadeIn(1000);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <img id="mainImage" style="border:3px solid grey"
+         src="/Images/Hydrangeas.jpg" height="500" width="540" />
+    <br />
+    <div id="divId">
+        <img class="imgStyle" src="/Images/Hydrangeas.jpg" />
+        <img class="imgStyle" src="/Images/Jellyfish.jpg" />
+    </div>
+
+
+
+
+#############################################################################
+$(document).ready(function(){ });
+id selector 			  $('#id').css
+element selecctor         $('td')//returns all td elements 
+attribute selector        $('[attribute1]')
+class selector            $('.small')
+How to change button background color onload with ID selector
+	$('#button1').css('background-color','yellow');
+how to make sure that element is present
+	if($('#button1').length>0) {alert('element is found');} 
+$('#id').css
+$('#id').length
+
+$('tr').css('background-color','red')
+$('td').length
+$('table tr').each
+
+$(this).val()
+$(this).html()
+
+$('div').wrap
+$('div').wrapInner
+$('div').wrapAll
+$('div').unwrap()
+$('div').append
+$('div').prepend
+$('div').before
+$(p1).addClass
+$(p1).removeClass
+$(p1).toggleClass
+
+$('span, a, div').css
+$('div a').css
+$('tr:even').css
+$('div.small,.big')
+$(':input') selects all input, textarea, select, button and images
+$('input') selects only input tags
+
+$('div[title]')
+$('[title="t1"]')
+$('div[title="t1"]')
+$('div[title][style]')// div with title and style
+$('div[title],[style]')//div with title or style
+
+$('input[type="radio"]:checked')
+$('input[type="checkbox"]:checked')
+$('input[name="skills"]:checked')
+$('input[type="text"]:disabled').css('border','5px solid red');//slected disabled text boxes
+
+click,mouseover,mouseout,mouseenter,mouseleave, hover
+$('img[src="help.png"]').mouseover
+$('img[src="help.png"]').mouseout
+	these can be called as builder pattern chain
+	all this mouse function takes callback function and clallback will have reference of this
+	and hover function takes two callback function, one will be exicuted when hover
+	other will get exicuted when u are away from element
+
+$(this).attr('id');
+$(this).attr('nmae');
+
+$('#id2').fadeIn(400);
+$('#id2').fadeOut(400);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

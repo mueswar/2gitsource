@@ -1,0 +1,168 @@
+install
+at --C:\userinstall\mongodb
+but actually create DB in    : C:\Program Files\MongoDB 
+compass in                   : C:\Users\Arha\AppData\Local\MongoDBCompass
+
+we need compass/mongo shell to connect DB
+host - localhost:27017
+
+
+
+--------------------------------
+
+
+
+No schemas
+does not support Joins
+not good for ACID transactions(Atomicity consistency isolation durability)
+
+database>collection>document
+create databases
+
+show dbs;    //list all databases who have ateast one document
+db;          //displays current database
+show collections;
+use test1;//creates database or switches to database if it is there
+
+db.dropDatabase(); //removes testdb1
+
+in admin window
+mongodump //it backups all dadtabases
+mongodump --db testdb1;
+mongorestore;// restores all databases
+mongorestore --db testdb1 dump/testdb1
+mongodump --db testdb1 --collection col1
+mongorestore --db testdb1 --collection col1 dump/testdb1/col1.bson;
+
+
+db.createCollection("myCol2")
+db.testcollection.insert({"name":"testa"})//to create document
+db.newcollection.insert({"name":"testa"})
+db.newcollection.drop();
+db.dropDatabase();
+db.createCollection("Test");
+show collections;
+db.employee.insert(
+	[
+		{"name":"testa"},
+		{"name":"testb"}
+	]
+);
+db.employee.find();
+db.employee.find().pretty();
+db.employee.findOne();
+db.employee.find({$or:[{"name":"testa", "sal":"4000"}]});
+db.employee.find({"name":"testa",$or:[{"sal":"5000"}, "sal":"4000"}]});
+db.employee.find({"Age":{$lt: "30"}});
+db.employee.find({"Age":{$lte: "30"}});
+db.employee.find({"Age":{$gt: "30"}});
+db.employee.find({"Age":{$ne: "30"}});
+db.employee.update(
+	{"id":ObjectId("121221212")},
+	{$set:{"name":"testb"}}
+);
+db.employee.update(
+	{"skill":"java"},
+	{$set:{"sal":"8000"}},
+	{multi:true}
+);
+db.employee.remove(	{"id":ObjectId("121221212")});
+db.employee.remove(	{"skill":"java"},1);
+db.employee.find(	{},{"fname":1,"lname":1,"id":0});
+db.employee.find({"skill":"java"},{"fname":1,"lname":1,"id":0});
+db.employee.find(	{},{"fname":1,"lname":1,"id":0}).limit(5);
+db.employee.find(	{},{"fname":1,"lname":1,"id":0}).skip(3);
+db.employee.find(	{},{"fname":1,"lname":1,"id":0}).sort({"fname":1});
+db.employee.getIndexes();
+db.employee.ensureIndex({"skill":1});
+db.employee.dropIndex({"skill":1});
+db.employee.aggregate([{$group:{id:"Gender",Total:{$sum:1}}}])
+db.employee.aggregate([{$group:{id:"Gender",MaxAge:{$max:"$age"}}}])
+db.employee.aggregate([{$group:{id:"Gender",MinAge:{$min:"$age"}}}])
+
+{"vin":"AA358740084087385", commandDateTime:{$gte:new ISODate("2021-03-07T00:00:00Z")}}
+{$and:[{updatedDateTime:{$gte:new ISODate("2021-09-16T00:00:00Z")}}, {updatedDateTime:{$lte:new ISODate("2021-10-06T00:00:00Z")}}]}
+
+
+
+Compass
+========================================================================================
+{$and: [{"telema.status": {$ne :"SUCCESS"}},{"telema.status": {$ne :"ACK"}}]}// two conditions on same field
+{"telema.status": { $nin: [ "SUCCESS", "ACK" ] } } //same above query with $nin
+{"telema.status": {$ne :"SUCCESS"}} //this is kinda of WHERE condition
+$match{"telema.status": {$ne :"SUCCESS"}} //in aggregation here double quotes mandatory for same WHERE condition
+{"remoteService.remoteServiceResponse" : {$exists:true},"remoteService.code":"202"}
+{"remoteService.remoteServiceResponse" : {$exists:true},$and: [{"telema.status": {$ne :"SUCCESS"}},{"telema.status": {$ne :"ACK"}}]}
+{"subscriberGuid":{"$regex":'=='}}
+{subscriberGuid:/==/}
+{"vin":{"$in":["10","20"]}}//in condition
+{"$group":{_id: "$vin",  count:{$sum:1}}}//group by single column
+{"$group" : {_id:{telema:"$telema.status",remote:"$remoteService.status"}, count:{$sum:1}}} //group by multiple columns
+// group by and short -- here we need to use 2 stages to exicute with web/compass
+//here count is temp column and can be passed one stage to another stage in pipeline
+db.whois_range.aggregate([
+	{"$group" : {_id:{source:"$source",status:"$status"}, count:{$sum:1}}}, 
+	{$sort:{"count":-1}}
+])
+
+//arrays
+db.inventory.find( { "subscriptions": { $size: 3 } } )//returns whose subscriptions collections size is 3
+{$where:"this.subscriptions.length > 4"}//for array length more than 4
+how to write same with aggregate view
+{$project: {vin:1, subscriptions:1,temp: {$size: "$subscriptions"}}},
+{$match: {"temp": {$gt: 4}}}
+db.inventory.find( { tags: { $all: ["red", "blank"] } } )//returns documents whose array has these both elements
+db.inventory.find( { tags: ["red", "blank"] } )//returns documents whose array has these both elements with same order
+{"subscriptions.productCode":{$all:["PROD_SAFETYCONNECT","PROD_DESTASSIST","PROD_REMOTESERVICE","PROD_NAVIGATION"]},
+"subscriptions":{ $size: 4 } }
+
+Charts
+========================================================================================
+with below query I am grouping by vin and i am taking count to total variable.
+[
+  {"$match": {"createDate": {"$gte": "2020-01-01T00:38:00.647Z"},"provisioning.telema.status": "ACK"}},
+  {$group:{_id:{"vin":"$vin","ts":"$provisioning.telema.status"},Total:{$sum:1}}}
+ ]
+with below query I am grouping by vin and i am taking count to total variable and i am able to filter again with total variable.
+[
+  {"$match": {"provisioning.telema.telemaRequest":{$exists:true},"provisioning.updatedTimeStamp":{$gte:"2020-09-01T00:00:00.000Z"}}},
+  {$group:{_id:{"cid":"$provisioning.telema.correlationId"},Total:{$sum:1}}},
+  {$match:{"Total":{$gte:3}}}
+]
+========================================================================================
+
+Mongo shell
+open powershell 
+cd C:\two\install\mongodbshell-4.2.3\bin
+mongo "mongodb+srv://cluster0-an86k.mongodb.net/"  --username emummasani
+password join password without @
+>db
+>show dbs
+>use db3
+>db.subscription.aggregate([
+	{ $match : { vehicleStatus:"SUBSCRIBED" } } ,
+	{"$group" : {_id:{vin:"$vin"}, count:{$sum:1}}}, 
+	{$sort:{"count":-1}}], {allowDiskUse: true})
+>db.provisioning.find({ "telema.status": { $nin: [ "SUCCESS", "ACK" ] }});
+>db.provisioning.find({_id:"5TDBZRBH1LS024038"});
+>db.provisioning.find({_id:"5TDBZRBH1LS024038"},{_id:1,subscriberGuid:1,"telema.status":1});
+
+
+
+unique query
+------------------------------
+{"remoteService.remoteServiceResponse" : {$exists:false}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,253 @@
+AWS
+
+GitHub : web- no install
+	login:mu email and No password
+BitBucket: web - no install
+	login:mueswar and github password
+SourceTree: download single .exe file
+	first time it asks bitbucket login details.
+	check out bitbucket project newtabe>click on clone> url
+jenkins:
+	install
+		download installer from website
+		then install in folder C:\two\install
+		open localhost:8080
+		then enter admin password from log file secrets/initialAdminPassword
+		jenkins.xml to 8082
+		error: cert error : in managed plugin proxy config, remove S in https
+Kibana:
+	just zip file extraction for windows system
+	run batch file from bin folder
+	how to connect elastic serch with kibana
+elastic search:
+	just zip file extraction for windows system
+	run batch file from bin folder
+	what are the sources for elastic serch engine data
+		1.logstash
+		2.aws lambda
+
+
+IAM
+---------------------------------------------------------------------------------------------------
+when we creat user, adminstator can give two kids of access types 1. programmatics and 2. console access
+we only get access key and secrect key for programmatics access type user
+
+create group and add policy(existing policy like s3 full access)
+create user and add user to group, now user can have access to S3
+
+Roles will be assigned to applications not for user.
+while creating role we should select role type(ec2/lambda) and attach policy/role(s3 full access)
+now we can attach this role to ec2 and then ec2 can access s3
+
+we can also create custom policy
+
+IAM fedaration 
+Identity fedaration uses SAML standard (Active directory)
+
+when we login with root accot 
+step1:set MFA security
+step2:create user 
+step3:add permission (i.e attach policy) like AdministratorAccess/IAMUserPasswordChange
+step4: create group and attach policy like AdministratorAccess
+step5: add user to group
+
+Login with IAM user
+create EC2
+step1- select AMI(linex2 free tire)
+step2- select instance type t2 micro 1 cpu 1 GB memory
+step3- no of instance
+	   vpc (there will be one default vpc)
+	   subnet
+	   public ip
+	   purchage option (spot instance, on demand) do not selct any by default it is on demand
+	   Enable cloudwatch logs (do not do it for frist time)
+	   create tags (name: myfirst instance)
+step4- create security group
+	   Type-SSH protocol:TCP
+step5- create key pair to login to EC2 machine
+
+SSH doe not work for befoure windows 10 versions
+PUTTY (SSH util) can be used for older windows systems
+EC2 instance connect (tool to connect to EC2)
+C:>chmod 0400 keyFilename
+c:>ssh -i keyFilename ec2-user@pulic ip of ec2
+[ec2-user@100.33.44.22]$whoami
+to exit ctrl+C
+
+to connect with ec2 instance connect, login to aws account>select ec2 instance>connect> provide user name
+here no key pair is required
+
+everytime we stop ec2 we will loose public ip and private ip does not change
+
+Vertical scalability: increase size of instance (t2 small to t2 large)
+Harizontal scalability: increase no of instances
+
+High Availability: running same application in multiple AZ's
+
+ELB
+-------------------------------------------------
+with ELB we can provide single point of access(DNS) to your application
+does regular health checks on instances
+hides failures of down stream systems 
+spred load acorss multiple down stream systems
+classic load balancer 2009 (Http, Https, TCP)
+Application load balancer 2016 (Http, Https, websoket)
+network load balancer 2017 (TCP, TLS and UDP)
+
+Private and public load balancer
+
+CLB-
+create- load balancer>CLB>
+	select internal or external load balancer
+	listener config- choose http 80 (i.e accepect request from http/80) 
+	and also select instance ()how it conncets with instance
+	create new security group> tcp/80 0.0.0.0 (i.e anyone on port 80 from anywhere(ip address))
+	create health check> path can be given as root(/) and itervel as 30 seconds, 
+	intervel shouls be more than response time
+	add already created EC2 to load balancer
+	now CLB is ready take DNS and hit in browser for testing
+	if ec2 security allows request from anywhere then we can access Ec2 we can hit ec2 public ip 
+	directly or we can access with load balancer
+	if we edit ec2 security gruop to aloow only from load balancer then we can only access from CLB
+	
+NLB
+	high performance compare to ALB (100ms latency for NLB almost 4 times less than ALB)
+	
+VPC
+-------------------------------------------------
+one VPC can not span multiple regions
+subnet can not span multiple avilability zones
+
+Internet gateway
+-------------------------------------------------
+we can attach and detach IGW with VPC
+one IGW connects to one VPC only
+
+Route table
+-------------------------------------------------
+you can have multiple route tables in one VPC
+one route table can have multiple subnets
+if can delete route table when there are no subnets to that route table
+
+Subnets
+----------------
+one  subnet will be availabe in one Zone.
+one subnet connect(associates) to one route table
+private subnet conects to rout tables but not internet gateway
+public subnet conects to rout tables and internet gateway
+
+S3 simple storage service
+--------------------------
+Standard  durability(99.99999999) availability(99.99)
+Reduced redundancy storage  durability(99.99) availability(99.99)
+infrequent access durability(99.99999999) availability(99.90)
+Glaceir  durability(99.99999999) 
+S3:lifecycle: you can automate storage class duration.
+S3:versioning
+by default versioning is disabled
+we can suspend versioning anytime but that does not delete old verions
+
+Elastic compute cloud (Ec2)
+--------------------------------------
+on-demand: more expensive
+reserved:
+spot
+Amazon Machine Image (AMI's)
+
+
+*****************************************
+AWS Integration & messaging
+*****************************************
+
+
+
+***************************************************************************************************
+											Lamda
+***************************************************************************************************
+Open lambda console>functions
+crete lambda
+crate role(we can edit in permission tab later, like add lambda sqs access)
+
+invoke lambda with CLI/ALB/API gateway --syncronus invocation
+create lambda by just providing name and selecting new role with basic permission 
+create ALB and chouse Lamda as traget group
+invoke ALB from browser with DNS name
+
+invoke lambda with cloudwatch event bridge/S3 notification-- asyncronus invocation
+create lambda by just providing name and selecting new role with basic permission
+create S3 bucket and configure notification event, in this config select lambda fuction
+
+
+
+
+###################################################################################################
+################      AWS Certified Solutions Architect Associate               ###################
+###################################################################################################
+
+
+
+AWS EC2
+forum:    https://forums.aws.amazon.com/forum.jspa?forumID=30
+Elastic Load Balancing: To automatically distribute incoming application traffic across multiple instances
+Amazon CloudWatch: To monitor basic statistics for your instances and Amazon EBS volumes
+aws cloudtrail: To monitor the calls made to the Amazon EC2 API for your account, including calls made by the AWS 	
+				Management Console, command line tools, and other services
+Amazon RDS: To get a managed relational database in the cloud
+VM Import/Export: To import virtual machine (VM) images from your local environment into AWS and convert them into 
+				ready-to-use AMIs or instances
+
+cloudFormation engine : depolyment service
+------------------------------------------
+cloudFormation takes templete with stack information leike database, ECS and creates environment.
+cloudFormation>stack>design templete : darg and drop components like VPC, Subnet
+or use sample templete
+it helps in disaster situvations
+one templete can call another templete(one for VPC and one Subnet)
+
+ECS(elastic continaer service) : container service
+--------------------------------------------------
+continer orchestration service from AWS which makes us easy to manage docker continers on EC2
+one EC2 OS and then Docker engine and mulpile continers on same engine.
+each application in one docker continer
+ECS can help us on sclae up application
+Docker image is registered with AWS ECR continer registery
+there will be task defenation in ECS which docker image should be used, how much memory for docker continer
+
+elastic beankStlak
+-------------------
+elastic beanStalk help to build environmet and deploy application
+
+what happens if we try to create application with elastic beanStalk
+it store application S3 bucket(as source code repository)
+it creates security group
+it create elastic ip
+it launches EC2 instance
+it configures helth checks 
+it creats url for application
+
+Kinesis
+---------------------------------
+Producers puts adata in Kinesis and cosumer takes data as stream.
+Kinesis can keep data maximum of 7 days
+Stream contains one or more shards(1MB/sec data input, 2MB output)
+Kinesis Firehose- loads data to S3,Redshift, ElasticSearch, Splunk
+Kinesis data analytics- runs SQL against data streams
+benifits: realtime processing, parllel processing, Durable, Scales
+
+Elastic MapReduce (EMR): Analytics service
+--------------------------------------------
+Bigdata frameforks: Hadoop and Spark
+Hadoop uses HDFS to store data and data will be in instance, but EMR you can store data in S3
+
+
+
+
+
+#################################################################
+################      working session         ###################
+#################################################################
+aws-azure-login --profile tjnp
+aws ec2 discribe
+aws sqs 
+
+

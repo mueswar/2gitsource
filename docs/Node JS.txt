@@ -1,0 +1,390 @@
+https://www.youtube.com/watch?v=ce90lLhDI_Y&list=PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY&index=12
+npmorg.com
+
+How nodeJs application is powerfull even it is single thready appliaction
+	it is powerfull because of it's asyncronous calls and callbacks
+	So need to understand howmany max threads can be ron for jave microservice and 
+	how single thread asyc call can handle the toomany calls
+NodeJs is not good for CPU intensive tasks, So what is CPU intensive task?
+	CPU task is generally computatinal logic(math functions like shorting bulk data)
+	
+realtime async usecases
+	to make multiple backed calls and combine outputs, it is latency issue.
+	
+Index
+	local module- commanJS
+	local module- ES -Node.js 14
+	Built-in module {path, events, fs, stream, http}
+	
+
+
+use cases
+---------------------------------------------------------------------------------------------------
+fs module
+	read file sync/async/chunk
+	write file
+	check if exist
+	create folder and delete it
+fetch data from database
+call webservice
+loging 
+properties
+	cloud config properties
+	AWS SSM parameters
+	
+	
+run with commandline
+---------------------------------------------------------------------------------------------------
+	install nodeJs
+	create javascript file one.js in c:\project1
+	to run it open commandline and run below command 
+	c:\project1>node one
+Run Heloowrld program  with VS
+---------------------------------------------------------------------------------------------------
+	install Node
+	check node
+	>node -v
+	create project folder node1
+	open visual studio code 
+	c:>node1>code .
+	crate Test.js file
+	create function in it and call it
+		function mone(){ console.log("Hello world");}
+		mone();
+	open terminal and run it in VS code
+		open terminal
+		c:\node1>node Test
+
+Hapi farmework
+---------------------------------------------------------------------------------------------------
+Create folder C:\node1
+run npm init in above folder
+run npm install hapi --save in the above folder
+create index.js 
+	const Hapi = require('hapi');
+	const server = new Hapi.Server({port:3000});
+	server.route({   
+		method: 'GET',   
+		path: '/',   
+		handler:  (request, reply) => {     
+			return 'I am the home route';   
+		} 
+	});
+	server.start(function(){
+		console.log("servet is started");
+	});
+
+run node .
+hit localhost:3000/
+
+to stop Ctrl+C
+
+please check package.json to find strt point and to run app.
+
+Hapi farmework use cases
+---------------------------------------------------------------------------------------------------
+server route method will have access to request and reply objects.
+how to return multiple values with function without Array.
+	function fone(){let a; let b; retrun {a,b}}//here no key value pair, just values
+how to assign to variable if method returns more than one value
+	let {x,y}=fone();
+
+
+
+validations with lodash
+------------------------
+	_.isEmpty(a);
+	_.includes
+	
+mongoose	
+------------------------
+
+
+
+
+***************************************************************************************************
+								*******  THE NET NINJA (youtube) ******
+***************************************************************************************************
+define variables
+
+//if one function mone takes another function mtwo as parameter
+	while calling function mone we have to pass other function name without brackets
+	like mone(mtwo) but not like mone(mtwo())
+//when you are assigning function difenation to variable we can not give function Name
+	vone = function (aone){console.log(aone);};
+	mone(vone, 'teat');
+//instead of assigning anonymous function to variable add pass to mone
+we can pass complete anonymous function definition to mone while calling mone
+but we can not pass complete anonymous function while defining mone function
+	function mone(funOne,onetxt){
+	  funOne(onetxt);
+	}
+	mone(function(aone){console.log(aone)},'test4');
+what is the use of passing anonumous function while calling mone function
+why can not we write complete anoumous function inside mone
+the use case is event binding
+
+//to import another module var vtwo = require('./one');
+	here one is file name
+	to call method vtwo.eone
+	here eone is key in module.exports syntax
+//video number 5 (function expression)
+how to write function in JS or Node JS
+	function fone(){ console.log('Hi');}// this does not exicute utill we call it.
+How to invoke function
+	fone(); // this exicutes actual function fone
+how to write function expression
+	var vone = function(){console.log('Hi');} // here also function will not be exicutedd untill we call it
+How to call function assigned to variable
+	vone();//this exicutes actual function
+how can we pass funtion to another
+	var vone = function(){console.log('Hi');}
+	function ftwo(a){ a();};
+	ftwo(vone);//this line exicutes ftwo function and ftwo calls other function which is being passed.
+how to call function passing array
+	var vone = function(aone){ return aone.length;}// length is property in array object
+	vone(['sone','stwo','sthree']);
+how can we write temple string
+	var vone = function(aone, atwo){return `two arguments are ${aone} ${atwo}`;}// this symbol in available under esc key
+how to create new module in node JS
+	every js file is considered as node js module
+how can expose function in module
+	var vone = function(aone){console.log(aone);}
+	module.exports = vone;
+how can we call function which is available in another module(mtwo.js)
+	var vone = require('./mtwo');
+	console.log(vone('hi'););
+How can we expose multiple function of module
+	module.exports.vone = vone;
+	module.exports.vtwo = vtwo;
+how can we call function which is available in another module(mtwo.js) and mtwo exposes multiple functions
+	var mtwo = require('./mtwo');
+	console.log(mtwo.vone('hi'););
+How can we expose multiple function of module
+	module.exports.vone = function(aone){console.log(aone);}
+	module.exports.vtwo = function(atwo){console.log(atwo);}
+How can we expose multiple function of module
+	module.exports = {
+		vone: vone,
+		vtwo:vtwo
+	}//see syntax here like key pair but no quotes
+
+what are node.js core/built-in modules how we can import those
+	enents, utils //no capital letters
+what is EventEmitter, how do we get refernce to it, what methods do have in it
+	on - method is used to define funtion for perticuler event
+	emit - methos is used to trigger event and we can pass parameters to event function
+	var events = require('events');
+	var emone = new events.EventEmitter();
+	emone.on('eventone',function(aone){console.log('Hi');});// here we defined function for eventone
+	emone.emit('eventone', 'sone');
+
+//what is inherits
+	inherits is function util module, which can add one object funtions to another
+	how can we inherit on function of the EventEmitter in custom object called function
+	var events = require('events');
+	var util = require('util');
+	var Person = function(name){this.name=name;}
+	util.inherits(Person, events.EventEmitter);
+	var james = new Person('james');var mary = new Person('mary');var peter = new Person('peter');
+	var people = [james,mary,peter];
+	people.forEach(function(person){
+		person.on('speak', function(msg){console.log(person.name+'said:'+msg);});
+	});
+	james.emit('speak', 'hey dude');
+
+Files
+---------------------------------------------------------------------------------------------------
+//how to read file syncronusoly
+	var fs = require('fs');
+	var readMe =fs.readFileSync('/readMe.txt', 'utf8');
+	console.log(readMe);
+	fs.writeFileSync('writeMe.txt',readMe);
+//how to read file asyncronusoly
+	fs.readdFile('readMe.txt', 'utf8', function(err, data){
+	console.log(data);
+	});
+	console.log('test');
+	here test will be printed first and then file content will be printed.
+
+	fs.readdFile('readMe.txt', 'utf8', function(err, data){
+		fs.writeFile('writeMe.txt',data);
+	});
+//create, remove folder and file
+	fs.unlink('readme.txt');// removes file
+	fs.mkdirSync('stuff');
+	fs.rmdirSync('stuff');
+
+how to create dir aync and create file in it
+	fs.mkdir('stuff', function(){
+		fs.readdFile('readMe.txt', 'utf8', function(err, data){
+			fs.writeFile('./stuff/writeMe.txt',data);
+		});
+	});
+how to remole file and folder async
+	fs.unlink('./stuff/writeMe.txt', function(){
+		fs.rmdir('stuff');
+	});
+
+var fs = require('fs');
+var rs = fs.createReadStream(__dirname+'/readMe.txt', 'utf8');//__dirname is Global object property which gives project directory
+rs.on('data',function(chunk){
+	console.log('new chunk received:');
+	console.log(chunk);
+});
+What is readStream
+ReadStream reads data like pockets and send to buffer. it does not read total data one time.
+
+how can we read complete big data with ReadSteam if it can only read by pockets.
+ReadStream has one emiter called data, using data emiter we can collect each pocket received from ReadSstream
+each time we get pocket from stream data emiter fires function where we can do operation like write to something.
+
+we can test how many times data emiter is fired by removing utf8 and reading large file
+
+var rs = fs.createReadStream(__dirname+'/readMe.txt', 'utf8');
+var ws = fs.createWriteStream(__dirname+'/writeMe.txt');
+rs.on('data',function(chunk){
+	console.log('new chunk received:');
+	ws.write(chunk);
+});
+
+what is pipe
+	pipe help us to connecct read stream with write stream and we can avoid maually triggering functions code
+	var rs = fs.createReadStream(__dirname+'/readMe.txt', 'utf8');
+	var ws = fs.createWriteStream(__dirname+'/writeMe.txt');
+	rs.pipe(ws);
+
+var server = http.createServer(function(req,res){
+	console.log('request was made:' +req.url);
+	res.writeHead(200, {'content-type':'text/plain'});
+	var rs = fs.createReadStream(__dirname+'/readMe.txt', 'utf8');
+	rs.pipe(res);
+});
+server.listen(3000, '127.0.0.1');
+console.log('listening to port 3000');
+
+how to send html from server to client
+	res.writeHead(200, {'content-type':'text/html'});
+	var rs = fs.createReadStream(__dirname+'/index.html', 'utf8');
+	rs.pipe(res);
+how to send json from server to client
+	res.writeHead(200, {'content-type':'application/json'});
+	var myObj = {
+		name ='james', //see JSON key do not have single quotes
+		age=29
+	}
+	res.end(JSON.stringify(myObj));
+
+how can we install express package using node pacakge manager
+	npm install express
+	npm uninstall express
+	npm install express -save// it adds dependency to package.json
+	npm install // installs all pacakeges availabe in dependency section in package.json
+	npm install -g nodemon// installs nodemon globally
+
+node app.js// this can not track chnages
+nodemon app.js // this will track changes and restarts automatically
+
+// how to define routes with express
+	var express = require('express');
+	var app = express();
+	app.get('/',function(req, res){
+		res.send('this is homepage');
+	});
+	app.get('/contact',function(req, res){
+		res.send('this is contactpage');// this res is response object of express which send method
+	});
+	app.listen(3000);
+
+how to pass parameter values
+	app.get('/profile/:id',function(req, res){
+		res.send('you requested profile:'+req.params.id);
+	});
+
+how to send html with express routes
+	app.get('/contact',function(req, res){
+		res.sendFile(__dirname +'/contact.html');// for files we need to sendFile method
+	});
+
+how to send array to view and how to display array in view
+	npm install ejs --save
+	create folder called view
+	create file profile with .ejs extension
+
+	app.set('view engine', ejs); // we no need to import ejs
+	app.get('/profile/:id',function(req, res){
+		var x ={age:29, job:'IT', hobbies:['singing','fishing']};
+		res.render('profile',{person:req.params.id, data:x}); //here we are using render method for daynamic view data
+	});
+	profile.ejs
+	<%= person %> //embeding object property whoes value is string
+	<%= data.age%> //embeding object property whoes value is object
+	<%= data.job =%>
+	<% data.hobbies.forEach(function(item){%> // iterate array wirh javaScript forEach function
+		<%= item %>
+	<% ))%>
+
+How to partial templete in another file
+	partials/nav.ejs
+	add all navigation links here <a ref="profile">profile</a>
+	profile.ejs
+	<% include partials/nav.ejs %>
+	contact.ejs
+	<% include partials/nav.ejs %>
+
+	app.get('/contact',function(req, res){
+		res.render(contact);here we are using render method
+	});
+	app.get('/profile',function(req, res){
+		res.render(profile);here we are using render method
+	});
+
+how to add static files like CSS (Middleware)
+app.use('/assets',function(req,res,next){
+	next();
+});
+
+or
+app.use('/assets', express.static('folderName1'));
+
+profile.ejs
+<head>
+	<link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+whithout app.use method express middleware service static content will not be picked.
+when we hit /profiles, internally another hit will happen with /assets/styles.css so we should configure /assets route and what to do next
+
+how can we access query string
+	app.get('/profile',function(req, res){
+		console.log(req.query);// this returns JS object for query string
+		res.render(profile);here we are using render method
+	});
+
+?dept=dept1&person=p1  will converted like  {dept:'dept1',person:'p1'}
+
+how can we render view with query string
+	app.get('/profile',function(req, res){
+		res.render('profile',{qs:req.query});here we are using render method
+	});
+
+<%= qs.dept%>//we can add this in ejs file
+
+How can we prepopulate form with query string
+	<form id="profile1">
+		<input name="name" value="qs.person">
+		<input name="dept" value="qs.dept">
+	</from>
+
+how can we read dat from post request
+<form id="profile1" method="post" action="/profile">
+	<input name="name" value="qs.person">
+	<input name="dept" value="qs.dept">
+</from>
+var bodyParser =require('body-parser');
+var app = express();
+var urlencodedParser = bodyParser.urlencoded({extended: false});
+	app.post('/profile',urlencodedParser,function(req, res){
+		console.log(req.body);// here we used body method
+		res.render('profile',{qs:req.query});here we are using render method
+	});

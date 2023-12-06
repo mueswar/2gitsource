@@ -1,0 +1,135 @@
+It works with springboot 2.0.3.RELEASE
+
+https://start.spring.io/
+
+add dependencies
+	Spring Web
+	Spring Data MongoDB
+	
+add data base details in application.properties file
+	mongodb.db2.database=consolidated-vehicle-store
+	mongodb.db2.port=27017
+	mongodb.db2.host=localhost
+	mongodb.db1.database=subscription-management
+	mongodb.db1.port=27017
+	mongodb.db1.host=localhost
+MultipleMongoProperties.java
+	package com.example.mongoMulDB;
+	import org.springframework.boot.autoconfigure.mongo.MongoProperties;
+	import org.springframework.boot.context.properties.ConfigurationProperties;
+	@ConfigurationProperties(prefix = "mongodb")
+	public class MultipleMongoProperties {
+		private MongoProperties db1 = new MongoProperties();
+		private MongoProperties db2 = new MongoProperties();
+		public MongoProperties getDb1() {
+			return db1;
+		}
+		public void setDb1(MongoProperties db1) {
+			this.db1 = db1;
+		}
+		public MongoProperties getDb2() {
+			return db2;
+		}
+		public void setDb2(MongoProperties db2) {
+			this.db2 = db2;
+		}
+	}
+MongoDBConfig.java
+	package com.example.mongoMulDB;
+	import org.springframework.boot.autoconfigure.mongo.MongoProperties;
+	import org.springframework.boot.context.properties.EnableConfigurationProperties;
+	import org.springframework.context.annotation.Bean;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.context.annotation.Primary;
+	import org.springframework.data.mongodb.MongoDbFactory;
+	import org.springframework.data.mongodb.core.MongoTemplate;
+	import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+	import com.mongodb.MongoClient;
+
+	@Configuration
+	@EnableConfigurationProperties(MultipleMongoProperties.class)
+	public class MongoDBConfig {
+		private final MultipleMongoProperties mongoProperties;
+		public MongoDBConfig(MultipleMongoProperties mongoProperties){
+			this.mongoProperties = mongoProperties;
+		}
+		@Primary
+		@Bean(name = "template1")
+		public MongoTemplate template1() throws Exception {
+			return new MongoTemplate(template1Factory(this.mongoProperties.getDb1()));
+		}
+		@Bean(name = "template2")
+		public MongoTemplate template2() throws Exception {
+			return new MongoTemplate(template2Factory(this.mongoProperties.getDb2()));
+		}
+		@Bean
+		@Primary
+		public MongoDbFactory template1Factory(final MongoProperties mongo) {
+			return new SimpleMongoDbFactory(new MongoClient(mongo.getHost(), mongo.getPort()),mongo.getDatabase());
+		}
+		@Bean
+		public MongoDbFactory template2Factory(final MongoProperties mongo) {
+			return new SimpleMongoDbFactory(new MongoClient(mongo.getHost(), mongo.getPort()),mongo.getDatabase());
+		}
+	}
+MongoDb1Config.java
+	package com.example.mongoMulDB;
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+	@Configuration
+	@EnableMongoRepositories(basePackages = "com.example.mongoMulDB.sub",
+			mongoTemplateRef = "template1")
+	public class MongoDb1Config {}
+MongoDb2Config.java
+	import org.springframework.context.annotation.Configuration;
+	import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+	@Configuration
+	@EnableMongoRepositories(basePackages = "com.example.mongoMulDB.cvs",
+			mongoTemplateRef = "template2")
+	public class MongoDb2Config {
+
+	}
+CvsService.java
+	package com.example.mongoMulDB.cvs;
+	import java.util.ArrayList;
+	import java.util.List;
+
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.beans.factory.annotation.Qualifier;
+	import org.springframework.data.mongodb.core.MongoTemplate;
+	import org.springframework.data.mongodb.core.query.Criteria;
+	import org.springframework.data.mongodb.core.query.Query;
+	import org.springframework.stereotype.Service;
+	@Service
+	public class CvsService {
+		@Autowired
+		@Qualifier("template2")
+		MongoTemplate cvsTemplete;
+		public void getData() {
+			List<String> vins = new ArrayList<String>();
+			vins.add("2T2HGMDA0MC062384");
+			Query query = new Query();
+			query.addCriteria(Criteria
+					.where("vin").in(vins));
+			List<DataOne> result = cvsTemplete.find(query, DataOne.class);
+			System.out.println(result);
+		}
+	}
+DataOne.java	
+	import org.springframework.data.mongodb.core.index.Indexed;
+	import org.springframework.data.mongodb.core.mapping.Document;
+
+	@Document(collection = "retail-delivery-report")
+	public class DataOne {
+		private String _id;
+		@Indexed
+		private String vin;
+		@Indexed
+		private String receivedTimestamp;
+	}
+ControlOne.java
+	@RestController
+	public class ControlOne {
+		@Autowired
+		CvsService cvsService;
+	}

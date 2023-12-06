@@ -1,0 +1,230 @@
+install
+mySql 8.0.33
+ it installs sever, client, router, workbench, connectors
+ server port: 3306,   x-protocal port: 33060
+ password: see in C:\1E\1Book\java\passwords.txt
+ user: root
+ 
+workbench
+
+MySQL Shell
+      C:\Program Files\MySQL\MySQL Shell 8.0\bin\mysqlsh.exe
+	  to connect run  \connect root@localhost:3306
+	  give password
+	  
+	  database =schema in tomcat
+
+Test data
+	see below
+	
+-------------------------------------
+
+Database interview questions
+
+
+if database column can have null values then that entity property can not be premitive(int)
+
+What is difference between where and having clause
+	main difference between WHERE and HAVING clause in SQL is that, condition specified in WHERE clause is used while fetching data (rows) from table, 
+	and data which doesn't pass the condition will not be fetched into result set, on the other hand HAVING clause is later used to filter summarized data or grouped data. 
+Drop - removes table and index
+truncate - total data
+delete - we can delete few records
+
+Read more: https://javarevisited.blogspot.com/2013/08/difference-between-where-vs-having-clause-SQL-databse-group-by-comparision.html#ixzz5rUfnum4g
+
+SQL Query to find second highest salary of Employee?
+	SELECT max(salary) FROM Employee WHERE salary NOT IN (SELECT max(salary) FROM Employee)
+	Select name, Salary from Employee e1 where n-1 =Select count(distinct Salary) from Employee e2 where e1.salary<e2.salary;
+	select sal from Employee order by sal desc LIMIT n-1,1 //for MYsql 
+SQL Query to find Max Salary from each department?
+	SELECT DeptID, MAX(Salary) FROM Employee  GROUP BY DeptID;
+Write an SQL Query find the number of employees according to gender?
+	SELECT COUNT(*), sex from Employees GROUP BY sex
+How to select random rows from a table?
+	SELECT * FROM table_name SAMPLE(10)
+Get employee details from employee table whose first name ends with ‘m’ and name contains 4 letters
+	Select * from EMPLOYEE where FIRST_NAME like '___m' (Underscores)
+Get employee details from employee table whose first name starts with ‘K’ and name contains 4 letters
+	Select * from EMPLOYEE where FIRST_NAME like 'K___' (Underscores)
+Query To Find Duplicate Rows In Table?
+	Select * from Employee a where row_id != select max(row_id) for Employee b where a.Employee_num=b.Employee_num; 
+What Is The Query To Fetch First Record From Employee Table?
+	Select * from Employee where Rownum =1;
+What Is The Query To Fetch Last Record From The Table?
+	Select * from Employee where Rowid= select max(Rowid) from Employee;
+What Is Query To Display First 5 Records From Employee Table?
+	Select * from Employee where Rownum <= 5;
+What Is Query To Display Last 5 Records From Employee Table?
+	Select * from Employee e where rownum <=5
+	Union:
+	select * from (Select * from Employee e order by rowid desc) where rownum <=5;
+How To Display Odd Rows In Employee Table?
+	Select * from(Select rownum as rno,E.* from Employee E) where Mod(rno,2)=1;
+How Can I Create Table With Same Structure Of Employee Table?
+	Select rownum,E.* from Employee E where rownum<=(Select count(*/2) from Employee);
+How Can I Create Table With Same Structure With Data Of Employee Table?
+	Create table Employee1 as select * from Employee;
+How Do I Fetch Only Common Records Between 2 Tables?
+	Select * from Employee
+	Intersect
+	Select * from Employee1
+
+
+DECLARE
+	new_feed_entity_sid           afp_awd.feed_enty.feed_enty_sid%TYPE;
+BEGIN
+	SELECT afp_awd.feed_enty_sid.NEXTVAL INTO new_feed_entity_sid FROM DUAL;
+	INSERT INTO afp_awd.feed_enty(feed_enty_sid, enty_err_type_nbr,  enty_type_cd, imprt_svc_feed_sid,  mult_alw_flg,  		sort_ord_nbr, awd_instance_cd  )
+		VALUES (new_feed_entity_sid, 1, 2, 21, 'N', 1, 'CR' );
+commit;	
+END;
+
+
+
+
+What is Difference between Primary Key and Unique Key in SQL?
+	Primary and Unique key uniquely identifies each row in table but there are some subtle difference between them. here are some of them :
+
+	1) Unique key in a table can be null, at-least one but primary key can not be null in any table in relation database like MySQL , Oracle etc.
+	2) Primary key can be combination of more than one unique keys in same table.
+	3) There can be only one primary key per table in relation database e.g. MySQL, Oracle or Sybase but there can be more than one unique key per table.
+	4) Unique key is represented using unique constraint while primary key is created using primary key constraint in any table and it’s automatically gets unique constraint.
+	5) Many database engine automatically puts clustered index on primary key and since you can only have one clustered index per table, its not available to any other unique key at same time.
+
+What is Difference between Truncate and Delete command in SQL?
+	1.truncate is fast delete is slow.
+	2.truncate doesn’t do logging delete logs on per row basis.
+	3.rollback is possible with delete, not with truncate until specifically supported by the vendor.
+	4.truncate doesn’t fire trigger, delete does.
+	5.Don’t delete, truncate it when it comes to purge tables.
+	6.truncate reset identity column in table if any, delete doesn’t.
+	7.truncate is DDL while delete is DML (use this when you are writing exam)
+	8.truncate doesn’t support where clause, delete does.
+
+What is difference between UNION vs UNION ALL in SQL?
+	1) Both UNION and UNION ALL are used to combine result of two separate SQL query, it could be on same table or different table but data should be same. E.g. if product_id is used in two table e.g. Product and Order, then two sql queries which pulls product_id from these two table can be combined using UNION or UNION ALL.
+	2) Key difference between UNION and UNION ALL is that Union will remove duplicates but Union All will keep them. In another words, UNION is equal to running distinct on output of UNION ALL. For example, if product_id 10 is returned by both of SQL query then it will only appear once if you use UNION and appear twice if you use UNION ALL.
+
+Is it possible for a table to have more than one foreign key? 
+	Yes, a table can have many foreign keys and only one primary key.
+What is the difference between Having clause and Where clause?
+	WHERE Clause can be used without GROUP BY Clause , but Having not
+	WHERE Clause can be used with SELECT, UPDATE, DELETE statement
+	HAVING Clause can only be used with SELECT statement.
+	WHERE Clause is used to filter the records from the table based on the specified condition.
+	HAVING Clause is used to filter record from the groups based on the specified condition.
+	WHERE Clause is used with single row function like UPPER, LOWER etc.
+	HAVING Clause is used with multiple row function like SUM, COUNT etc.
+	
+	SELECT Department, sum(Salary) as Salary FROM employee GROUP BY department;//total sal in each dept
+	SELECT Department, sum(Salary) as Salary FROM employee GROUP BY department HAVING SUM(Salary) >= 50000;
+	
+*************************************************
+****   kudvenkat   ******************************
+*************************************************
+
+select e.name,d.name from employee e inner join dept d on e.did = d.did
+select e.name,d.name from employee e left join dept d on e.did = d.did
+select e.name,d.name from employee e right join dept d on e.did = d.did
+select e.name,d.name from employee e full join dept d on e.did = d.did
+inner join= join
+left join = left outer join
+right join = right outer join
+full join = full outer join
+
+
+*************************************************
+practical learning points:
+*************************************************
+select c1, c2 from t1 group by c1;
+	the above query does not work until we keep c2 in group by clause or in aggegate function like below
+	select c1, c2 from t1 group by c1,c2;
+	select c1, count(c2) from t1 group by c1;
+How to exicute multiple commands at once
+	begin
+		inset into t1 (c1, c2) values("","");
+		inset into t2 (c1, c2) values("",SYSDATE);
+	commit;
+	end;
+How to get next value and insert new recod
+	we can take next value using dual table and NEXTVAL
+	DECLARE
+		new_feed_entity_sid           sch1.t1.c1%TYPE;
+		new_object_entity_sid         sch1.t2.cb1%TYPE;
+		new_feed_param_sid            sch1.t3.cd1%TYPE;
+	BEGIN
+	SELECT sch1.c1.NEXTVAL INTO tempVar1 FROM DUAL;
+	INSERT INTO sch1.FEED_ENTY(c1, c2, c3, c4, c5,  c6, c7) 
+		VALUES(tempVar1, 1, 3, null, 'Y',  1, 'CR');
+	dbms_output.put_line(tempVar1);
+	commit;	
+	END;
+	/	
+
+*************************************************
+****************  H2 database   *****************
+*************************************************
+
+it does not support data types like jsonb
+it does not support constraint and primary key
+it does not ROW_NUMBER() OVER (order by c1) as rum
+
+****************************************************
+************        FAQ            *****************
+****************************************************
+Third max salary with out row number
+
+how to convert columns to rows
+id, name , location1, location2, location3
+into 
+id, name, location1
+id,name, location2
+how to fetch data from table which does not have primarey key in hibernate
+
+how to get manager heirarchy using CTEs
+
+
+
+Test data
+-------------------------------------------------------------------------
+CREATE TABLE `sche_1`.`tb_1` ( `name` VARCHAR(10) NOT NULL, `id` INT NOT NULL,  PRIMARY KEY (`id`));
+
+CREATE TABLE sche_1.DEPARTMENT ( DEPTCODE   INT(10) NOT NULL,DeptName   VARCHAR(15) UNIQUE,LOCATION   VARCHAR(33) NOT NULL);
+CREATE TABLE sche_1.EMPLOYEE(EmpCode INT(4) NOT NULL,EmpFName VARCHAR(15),EmpLName VARCHAR(15),Job VARCHAR(45),
+   Manager      CHAR(4),HireDate DATE,Salary DECIMAL(6,2),Commission INT(6),DEPTCODE INT(2));
+   
+ALTER TABLE sche_1.DEPARTMENT ADD PRIMARY KEY (DEPTCODE);
+ALTER TABLE sche_1.EMPLOYEE ADD PRIMARY KEY (EmpCode);
+ALTER TABLE sche_1.EMPLOYEE ADD FOREIGN KEY (DEPTCODE) REFERENCES DEPARTMENT(DEPTCODE);
+
+INSERT INTO sche_1.DEPARTMENT VALUES (10, 'FINANCE', 'EDINBURGH'),
+                              (20,'SOFTWARE','PADDINGTON'),
+                              (30, 'SALES', 'MAIDSTONE'),
+                              (40,'MARKETING', 'DARLINGTON'),
+                              (50,'ADMIN', 'BIRMINGHAM');
+                       
+INSERT INTO sche_1.EMPLOYEE  
+VALUES (9369, 'TONY', 'STARK', 'SOFTWARE ENGINEER', 7902, '1980-12-17', 2800,0,20),
+       (9499, 'TIM', 'ADOLF', 'SALESMAN', 7698, '1981-02-20', 1600, 300,30),    
+       (9566, 'KIM', 'JARVIS', 'MANAGER', 7839, '1981-04-02', 3570,0,20),
+       (9654, 'SAM', 'MILES', 'SALESMAN', 7698, '1981-09-28', 1250, 1400, 30),
+       (9782, 'KEVIN', 'HILL', 'MANAGER', 7839, '1981-06-09', 2940,0,10),
+       (9788, 'CONNIE', 'SMITH', 'ANALYST', 7566, '1982-12-09', 3000,0,20),
+       (9839, 'ALFRED', 'KINSLEY', 'PRESIDENT', 7566, '1981-11-17', 5000,0, 10),
+       (9844, 'PAUL', 'TIMOTHY', 'SALESMAN', 7698, '1981-09-08', 1500,0,30),
+       (9876, 'JOHN', 'ASGHAR', 'SOFTWARE ENGINEER', 7788, '1983-01-12',3100,0,20),
+       (9900, 'ROSE', 'SUMMERS', 'TECHNICAL LEAD', 7698, '1981-12-03', 2950,0, 20),
+       (9902, 'ANDREW', 'FAULKNER', 'ANAYLYST', 7566, '1981-12-03', 3000,0, 10),
+       (9934, 'KAREN', 'MATTHEWS', 'SOFTWARE ENGINEER', 7782, '1982-01-23', 3300,0,20),
+       (9591, 'WENDY', 'SHAWN', 'SALESMAN', 7698, '1981-02-22', 500,0,30),
+       (9698, 'BELLA', 'SWAN', 'MANAGER', 7839, '1981-05-01', 3420, 0,30),
+       (9777, 'MADII', 'HIMBURY', 'ANALYST', 7839, '1981-05-01', 2000, 200, NULL),
+       (9860, 'ATHENA', 'WILSON', 'ANALYST', 7839, '1992-06-21', 7000, 100, 50),
+       (9861, 'JENNIFER', 'HUETTE', 'ANALYST', 7839, '1996-07-01', 5000, 100, 50);
+
+
+
+
+
+

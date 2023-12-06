@@ -1,0 +1,53 @@
+
+Install AWS CLI https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html 
+Install NodeJS (https://nodejs.org/en/download/)  
+Install the aws-azure-login npm module (https://github.com/dtjohnson/aws-azure-login) 
+you have to run below command to install azure login
+	>npm install -g aws-azure-login
+To set profile run below command
+	>aws-azure-login --configure
+	this will create config file, but we have to provide ARN and role names
+To connect AWS run this command, this will ask email, password and OTP and generates credentials file
+	aws-azure-login --profile tjnp
+	
+	
+remove npm cache if you face scripts disabled error
+	C:\Users\461469\AppData\Roaming\npm-cache
+	run command in CMD  C:\>Set-ExecutionPolicy RemoteSigned
+
+chek reason to fail in image in below folder 
+C:\Users\461469\AppData\Roaming\npm
+
+
+I am able to login but always taking wrong role
+
+
+to check version 
+	C:\> aws --version
+
+Uninstall
+	step1:control panel>programs uninstall
+	step2:pip3 uninstall awscli
+	step3: after completing above two steps check aws version, you should get aws as not recognized error
+
+Install AWS CLI
+	to install AWS CLI 2
+	download MSI file from AWS site
+	it installs bydefault in C:\Program Files\Amazon\AWSCLIV2\
+
+--------------------------------------------------------------------------------------------------------------------------------------
+AWS CLI commands
+	aws-azure-login --profile tjnp
+	aws-azure-login --profile tjnp --role arn:aws:iam::1111111111:role/Developer-NonProd
+	aws ssm get-parameters --names /config/account-management-serverless/acm/CCsecurityToken --profile sso-nonprod
+	aws ec2 discribe
+	aws sqs
+	to login to aws cli in VCP
+		sudo su -
+	to download file from S3
+		aws s3 cp s3://ubi-feed-reports-prod/prov/Mirai816.csv TMNA11.csv
+		aws s3 cp s3://ubi-feed-reports-prod/prov/rv4.csv rv4.csv
+		
+	exicute curl 
+		take service discovery endpoint from AWS ECS
+		take allowed VPC name and remove vpc and search in EC2

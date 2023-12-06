@@ -1,0 +1,59 @@
+
+
+
+identify key player 
+do not talk to people who are risk to you than asset
+do not talk about manger
+do not talk negative
+do not give solution, ask their approach
+do not give explanation
+
+
+
+
+how you have been assigned
+------------------------------------------------
+who is going to take it 
+seniors should take responsibility
+asking write document
+frocing to share with others
+forcefully assigning it
+late comers is asking how to solve it(even senior person taking advantage)
+too many things are asked without any hesitate
+
+
+what kind of problems faced to get answers 
+------------------------------------------------
+people ignored personal message
+i am scared to ask too many times
+people gave solutions which are not possible
+
+
+
+about 
+------------------
+speak slowly
+
+analyze complex applications
+never miss milestones, i can gues problem in early stage , more intractive with work
+i am good at projects when there is multiple vendor involment
+I have migrated products to improve performance
+I have prapose best solutions by analyzing code
+talk less and work more
+
+
+respond to 
+---------------------------------------------------------------------------------------------------
+ask what they are doing(steps)
+ask to follow the kt videos/documents
+ask did anyone became expert in tool after they got access
+ask what is their extra efforts to learn 
+
+
+
+
+real time things 
+-------------------------
+Migration - we can move application cluster by cluster, we no need to move all applications one time even though they have internal URL configuration. DNS/F5 will take care of it.
+
+take feedback after project moved to Production. both good and bad in document from each one of the team player

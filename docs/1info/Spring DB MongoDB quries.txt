@@ -1,0 +1,43 @@
+Spring mongo db quries
+
+Query using Criteria
+	get imports
+		import org.springframework.data.mongodb.core.MongoTemplate;
+		import org.springframework.data.mongodb.core.query.Criteria;
+		import org.springframework.data.mongodb.core.query.Query;
+	get templete
+		@Autowired
+		MongoTemplate subTemplate
+	Query with IN operator single VIN
+		Query querySub = new Query();
+		querySub.addCriteria(Criteria.where("vin").in("234567892234").and("vehicleStatus").is("SUBSCRIBED"));
+		List<Subscription> subList = subTemplate.find(querySub, Subscription.class);	
+	Query with IN operator multiple VIN's
+		List<String> authVins
+		Query querySub = new Query();
+		querySub.addCriteria(Criteria
+				.where("vin").in(authVins)
+				.and("vehicleStatus").is("SUBSCRIBED")
+				.and("subscriptions.productCode").is("PROD_REMOTESERVICE"));
+		query.fields().include("subscriberGuid");
+		List<Subscription> subList = subTemplate.find(querySub, Subscription.class);
+	query with element
+		Long lte = Long.valueOf("1596085200000");
+		Long gte = Long.valueOf("1577858400000");
+		Query query = new Query();
+		query.addCriteria(Criteria.where("codes").elemMatch(
+				Criteria
+				.where("status").is("NOT-VERIFIED")
+				.and("channel").is("TC_AGENT")
+				.and("createdTime").lte(lte).gte(gte)
+				));
+		query.fields().include("vin");
+		List<RemoteAuth> authList = subTemplate.find(query, RemoteAuth.class);	
+	query with orOperator and andOperator
+		Query queryCust = new Query();
+		queryCust.addCriteria(new Criteria().orOperator(
+						Criteria.where("emails.emailVerified").is(true),
+						Criteria.where("phoneNumbers.phoneVerified").is(true))
+				.andOperator(Criteria.where("id").in(al)));
+		queryCust.fields().include("id");
+		List<Customer> custList = subTemplate.find(queryCust, Customer.class);

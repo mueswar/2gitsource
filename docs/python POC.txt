@@ -1,0 +1,37 @@
+connect mongodb
+Excel document
+Connect to AWS resources
+
+
+connect mongodb
+---------------------------------------------------------------------------------------------------
+install pymongo
+	>python -version   --3.7.4
+	>pip -version      --19.0.3
+	>pip install pymongo
+	>pip3 install pymongo[srv]
+
+import statements, and also try to install with IDE also, otherwise there will be errors
+	import pymongo
+	from pymongo import MongoClient
+	
+	
+
+
+
+Excel document
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+Connect to AWS resources
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+

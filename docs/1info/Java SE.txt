@@ -1,0 +1,1149 @@
+Reduce defect fix time:
+---------------------------------
+1) Always handle exception with care. log more info
+2) Do not log same exception more than once
+3) implement tostring() method
+4) log third party exceptions properly at one place, check all mandatory fields at one place.
+5) have front side and back side different objects and always convert third party service response
+6) always have seperate vo object to call third party service
+
+Coding:
+................................................................................
+1)Minimize the accessibility of classes and members
+2)A final field containing a reference to a mutable object has all the disadvantages of a non final field. While the reference cannot be modified, the 
+referenced object can be modified�with disastrous results. Note that a nonzero-length array is always mutable, so it is nearly always wrong to have public static final array field.
+3)An object can always be reused if it is immutable.
+4)you can also reuse mutable objects that you know will not be modified.(with a static initializer)
+static factory method allows immutable classes to use preconstructed instances or to cache instances as they're constructed and to
+dispense these instances repeatedly so as to avoid creating unnecessary duplicate objects.
+5)providing a good toString implementation makes your class much more pleasant to use.
+6)define factory pattern when you have multiple implimentations for interface. (dont create instance for implimentaion in client code.)
+7)write pure functions(value only depends on input of the function, no instance variable)
+8)avoid mutability (do not change object state once it is created, it is very difficult to find where status is getting changed, if required create object state to new object)
+a)If the local variable is a primative variable, then yes, it is thread safe. If the local variable is a reference that is pointing to a locally created object, then yes, it should be thread safe (assuming the statics are thread safe). If the local variable is a reference that is pointing to an externally created object, then it is thread safe, if and only if the object can be used safely in a threaded fashion.
+b)On the other hand, final methods can be inlined after being loaded into the JVM, because at that point the JVM knows definitely that the method is final. So compilers that operate after class loading, such as JIT compilers, can take advantage of final methods. Consequently, methods declared final could have some performance benefit.
+-------------------------------------------
+In enhancement project, adding an additional checked exception to the interface will require many code changes.
+
+when do we need to create new class
+example1: we have a class which having product code and user role but client want product type and user is allowed or not.
+then create new class and do bussiness logic on existing class to get what client want.
+client should not have business logic.
+example2: when claint has to get information from multiple calsses then create new class.
+
+Public superclass methods are usually final: the abstract methods deferred to subclasses are protected. This helps to reduce the likelihood of bugs: all subclasses are required to do, is fulfill a clear contract.
+
+Use nested class if there is no meaning of subcomponent without  primery component.
+
+Methods are often static is if they neither access nor modify any of the instance (non-static) fields of a class and they do not invoke any non-static methods in the class. This is common in calculation methods like a square root method that merely operate on their arguments and return a value.
+�	Neither reads from nor writes to instance fields
+�	Independent of the state of the object
+�	Mathematical methods that accept arguments, apply an algorithm to those arguments, and return a value
+
+Performance with method parameters :method parameters in a single object can occasionally cause performance degradation in J2EE applications if the method call is potentially remote (a call on the remote interface of an EJB), as marshaling and unmarshaling several primitive parameters will always be faster than marshaling and unmarshaling an object. However, this isn't a concern unless the method is invoked particularly often (which might indicate poor application partitioning � we don't want to make frequent remote calls if we can avoid it).
+
+Basics
+------------------------------------------
+static compiler javac:It takes Java code as input and translates it into bytecode. Static compilers interpret the input code once and the output executable is in the form that will be used when the program executes. Because the input is static you will always see the same outcome.
+Dynamic compilers, such as Just-In-Time (JIT) compilers, perform the translation from one language to another dynamically, meaning they do it as the code is executed.
+A JIT compiler lets you collect or create runtime profiling data (by the means of inserting performance counters) and make compiler decisions on the fly, using the environment data at hand.
+A garbage collector should never reclaim a referenced object; doing so would break the JVM standard specification. An exception to this rule is a soft or weak reference (if defined as such) that could be collected if the garbage collector were approaching a state of running out of memory.
+
+Class:
+.......................
+Top level class can be abstract final public and default.
+Top level class can not be private or protected
+
+Interface:
+.......................
+Top level Interface can be abstract, public and default
+Top level Interface can not be private or protected
+we can not write static methods in interface before java 8
+
+InnerClass:
+......................
+Non static inner class cannot declare static field and static methods.
+Non static inner classes can result in memory leaks while static inner class will protect against them.
+a nested interface is automatically "static"
+
+step1 think enum or class
+step2 create static nested class(package convenience)
+step3 create nested class(if needed)
+step4 default top level class
+
+**********************************
+***********   enums
+**********************************
+. Top level enum are by default are package accessble, we can also use public access specifier to access outside package
+but we can not use other than default and public.
+.we can not define final or abstract in enum
+�Enum constructors must be either private or package default, and protected or public access modifier is not allowed.
+�All enums implicitly extend java.lang.Enum. Since Java does not support multiple inheritance, an enum cannot extend anything else.
+�All enum types implicitly implements java.io.Serializable, and java.lang.Comparable.
+�The ; after the last element is optional, when this is the end of enum definition.
+�We can declare abstract methods in java enum, then all the enum fields must implement the abstract method.
+�We can define a method in enum and enum fields can override them too.
+�Enum constants are implicitly static and final.
+�Since enum constants are final, we can safely compare them using �==� and equals() methods. Both will have the same result.
+
+How to get enum from string
+    private RuleName getAssetAllocationRuleName(String val) {
+        RuleName ruleName = Enum.valueOf(AssetAllocationRuleVO.RuleName.class, val);
+        return ruleName;
+    }
+public enum DocumentInformation {
+	CREATED_BY,
+	UPDATED_BY,
+	LAST_UPDATED_TIMESTAMP
+}
+
+when to use:
+if you are returning different strings based on condition
+if (level.equalsIgnoreCase("GOLD"))
+	return LoyaltyLevel.GOLD;
+else if (level.equalsIgnoreCase("DIAMOND"))
+	return LoyaltyLevel.DIAMOND;
+
+
+Singleton:
+..........
+Enum Singletons handled Serialization by themselves
+what is double checking
+difference between instance creation at load time and with instance method by checking null(multithred , lazy loading)
+
+Stack
+.....
+Stack is a subclass of Vector that implements a standard last-in, first-out stack. Stack only defines the default constructor, which creates an empty stack. Stack includes all the methods defined by Vector, and adds several of its own.
+
+To put an object on the top of the stack, call push(). To remove and return the top element, call pop(). An EmptyStackException is thrown if you call pop( ) when the invoking stack is empty. You can use peek( ) to return, but not remove, the top object.
+
+The empty() method returns true if nothing is on the stack. The search() method determines whether an object exists on the stack, and returns the number of pops that are required to bring it to the top of the stack.
+
+Wrapper classes
+=====================
+
+
+*********************************************************
+********       Generics: collections     ****************
+*********************************************************
+Two facts about Set<?>
+http://www.programcreek.com/2013/12/raw-type-set-vs-unbounded-wildcard-set/
+
+for(String s :strList){
+	if(s.length()> 5){
+		strList.remove();
+	}
+}
+the above code does not work. it throghs ConcurrentModification exception
+for(Iterator i :strList.iterator; i.hasnext()){
+	String s=i.next();
+	if(s.length()> 5){
+		i.remove();
+	}
+}
+the code above works fine without any error
+with java 8 also safe code
+strList.removeIf(s-> s.length()> 5);
+
+
+
+**************************************************
+********               Dates           ***********
+**************************************************
+How do I checks if two dates are on the same day?
+	DateUtils.isSameDay(date1, date2)
+How do I get the last day of a month?
+	Calendar calendar = Calendar.getInstance();
+	int lastDate = calendar.getActualMaximum(Calendar.DATE);
+How do I know if a date is before another date?
+	Date today = new Date();
+	--Substract 1 day from the current date.
+	Calendar calendar = Calendar.getInstance();
+	calendar.add(Calendar.DATE, -1);
+	Date yesterday = calendar.getTime();
+	yesterday.before(today)
+How do I add or subtract a date?
+	Calendar cal = Calendar.getInstance();
+	cal.add(Calendar.DATE, -30);
+	cal.add(Calendar.MONTH, 10);
+	cal.add(Calendar.YEAR, -1)
+
+How to convert int value into date?
+Date d = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(intDateValue));
+How to convert String value into date?
+Date d = new SimpleDateFormat("yyyyMMdd").parse(stringDateValue);
+
+How to format current date
+SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+String date = sdf.format(new Date());
+
+How to convert UTC to CST
+String s2 ="2020-02-03T17:03:00.379";//"yyyy-MM-dd'T'HH:mm:ss+SSSS"
+s2=s2.substring(0,23);
+SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+
+**************************************************
+****************       concepts
+**************************************************
+How do I join an array or collection of Strings into a single String?
+StringUtils.join(new String[] { LETTER_BEGINNING, component, LETTER_ENDING })
+
+Arrays.fill(content, null);
+
+////Construct dynamic string
+final MessageFormat sqlIccFormat = new MessageFormat(" abscc {0} and {1}")
+String iccContractQuery sqlIccFormat.format(new Object[] { "psw10", "too"})(instance method of Format)
+
+MessageFormat.format("sa{0}df{1}fd{2}fdf{3}","","","","");(static method of MessageFormat)
+
+StringUtils.replace("dasdasdasd", "a", "x");
+
+Iterating var args
+String getList( String ... symbols) {
+for (String symbol : symbols) {
+System.out.println(symbol);
+}
+}
+
+if we want to return String and that is limited of values then create enum and change return type as enum.
+
+how to put 10 values in set?
+String [] countires = {"India", "Switzerland", "Italy"};
+Set<String> set = new HashSet<String>(Arrays.asList(countires));
+
+if you are returning map and if you think no need to modify map then return like Collections.unmodifiableMap(workingMap);
+
+dont write code like
+Map<String, int> a = new Map<String, int>(); if you know set of string values that goes to as key. careate enum and pass.
+
+String s = new String("silly"); // DON'T DO THIS!
+String s = "No longer silly";
+
+Boolean(String); // DON'T DO THIS!
+Boolean.valueOf(String)
+
+First
+public class Elvis {
+public static final Elvis INSTANCE = new Elvis();
+private Elvis() { ... }
+}
+Second
+public class Elvis {
+private static final Elvis INSTANCE = new Elvis();
+private Elvis() { ... }
+public static Elvis getInstance() { return INSTANCE; }
+}
+it makes sense to use the first approach if you're absolutely sure that the class will forever remain a singleton. Use the second approach if you want to reserve judgment in the matter.
+
+To make a singleton class serializable (Chapter 10), it is not sufficient merely to add implements Serializable to its declaration. To maintain the singleton guarantee, you must also provide a readResolve method (Item 57). Otherwise, each deserialization of a serialized instance will result in the creation of a new instance
+private Object readResolve() throws ObjectStreamException {
+/*
+* Return the one true Elvis and let the garbage collector
+* take care of the Elvis impersonator.
+*/
+return INSTANCE;
+}
+
+Dont return actual array itself insted return clone of it.
+public String[] getWeekdays() {     return weekdays; }
+public String[] getWeekdays() {     return weekdays.clone(); }
+
+
+class One {
+	static String a = null;
+	One(){
+		System.out.println("aaaa");
+	}
+	static void run(){
+		if(a == null){
+			a="x";
+			System.out.println("if");
+		}else {
+			System.out.println("else");
+		}
+
+	}
+}
+
+class Test{
+	public static void main(String a[]){
+		One.run();
+		for(int i=0 ; i<10; i++){
+			try {
+				Thread.sleep(10000);
+			} catch (InterruptedException e) {
+			}
+		}
+		One.run();
+	}
+}
+
+How to write binary data to file.
+FileUtils.writeByteArrayToFile(
+                new File("c:\\temp\\ChangeNotification.doc"),
+                binary.getSpecification());
+------------------------------------------------
+Setting values to VO
+class Done {
+	public static void main(String a[]){
+		String x=null;
+		String y= null;
+		Vone one = getOne(x,y);
+
+	}
+	private static Vone getOne(final String one, final String two){
+		return new Vone(){
+			public String getone(){return one;}
+			public String gettwo(){return two;}
+		};
+	}
+
+	interface Vone{
+		String getone();
+		String gettwo();
+	}
+}
+-------------------------------------------
+final class ETest {
+	public static void main(String[] args) {
+		Eone e1 = Eone.EONE;
+		Eone e2 = Eone.EONE;
+		ETwo o1 = new ETwo();
+		ETwo o2 = new ETwo();
+		if(e1==e2){
+			System.out.println("e1==e2");
+		}
+		if(o1==o2){
+			System.out.println("o1==o2");
+		}
+	}
+}
+o/p:e1==e2
+-------------------------------------------
+How do we know whether perticuler string is in given group.
+    private static final Set<String> CONTRACT_STATUS_BEFORE_ACTIVE =
+            Collections.unmodifiableSet( ArrayUtility.toUnsortedSet("PS", "DC", "PC","CA"));
+	CONTRACT_STATUS_BEFORE_ACTIVE.contains("DC");
+-------------------------------------------
+if productCode is DB06 or DBNY06 return true
+public boolean isDefinedBenefit(String productCode){
+return "DB06".equals(productCode) || "DBNY06".equals(productCode);
+}
+
+How to short two vo objects?
+Use: In jsp if records are displayed with name date status and you want to short all records by any column
+create collection with vos
+Collections.sort(bulkRequestList,new BeanPropertyComparator(sortBy)) see comparator code in BeanPropertyComparator.java
+
+Do not create class with instance variable if instance is not creted everytime.
+
+public class Test {
+	public static void main(String arg[]) {
+		Cone c = new Cone();
+		Thread t1 = new T1(c);t1.start();
+		Thread t2 = new T1(c);t2.start();
+	}
+}
+
+class T1 extends Thread{
+	Cone c;
+	public T1(Cone c) {this.c=c;}
+	public void run() {
+		for(int i=0; i<10;i++) {
+			System.out.println(Thread.currentThread().getName()+" vlaue:"+c.m1());
+		}
+	}
+}
+class Cone {
+	private int count;
+	public int m1() {
+		count=count+1;
+		return count;
+	}
+}
+the aboe code does not print values in seuence(156789234..20)
+class Cone {
+	private int count;
+	public int m1() {
+		synchronized (this){
+			count=count+1;
+			return count;
+		}
+	}
+}
+the aboe code does print values in seuence(12345..20)
+
+**************************************************
+########				JAVA 7                 ###
+**************************************************
+we can use Strings in switch case
+we can use underscores in Numaric literals
+Handling More Than One Type of Exception
+	catch (IOException|SQLException ex) {
+		logger.log(ex);
+		throw ex;
+	}
+Rethrowing Exceptions with More Inclusive Type Checking
+//before java7
+  public void rethrowException(String exceptionName) throws Exception {
+    try {
+      if (exceptionName.equals("First")) {
+        throw new FirstException();
+      } else {
+        throw new SecondException();
+      }
+    } catch (Exception e) {
+      throw e;
+    }
+  }
+//with java7
+  public void rethrowException(String exceptionName)
+  throws FirstException, SecondException {
+    try {
+      // ...
+    }
+    catch (Exception e) {
+      throw e;
+    }
+  }
+
+The try-with-resources Statement
+
+
+
+
+***********************************************************************************************************************
+															java8 lambda
+***********************************************************************************************************************
+lambda expressions is a better alternative than writing anonymous classes
+The Syntax of Functional Interfaces(functinal can have only one abstract method)
+public interface Event { public void onEventOccurance();}
+() -> System.out.println("event occurred : no argument syntax");
+public interface EventProcess {public void onEventOccuranceProcess(int i)};
+(i)-> System.out.println("event processed : one argument syntax"+ i);
+(i)-> {System.out.println("event processed : one argument syntax"+ i)};
+public interface EventResult { public int onEventOccuranceConfirm(int i);}
+(i)-> { i = i + 1; return i; }
+
+The syntax of a lambda expression comprises three parts:
+�A comma-separated list of parameters enclosed within parentheses. You can omit the parentheses if there is only one parameter to the method.
+�The arrow token (->) is the separator between the parameters and the body of the lambda expression.
+�The body of the lambda expression contains a single statement or a block of statements. If it's a single statement, you do not need to use curly braces; a block of statements has to be wrapped within curly braces.
+Lambda expressions are safe from shadowing issues because variables accessed by a lambda expression should be final or effectively final. If variables don't meet these criteria, you will get a compile time error.
+Each lambda expression can be implicitly assigned to one of the interface called Functional interface.
+For example we can create Runnable interface�s reference from lambda expression like below:
+Runnable r = () -> System.out.println("hello world");
+new Thread(	() -> System.out.println("hello world")).start();
+
+@FunctionalInterface is a new interface added in Java 8 to indicate that an interface type declaration is intended to be a functional interface as defined by the Java Language Specification.
+@FunctionalInterface
+public interface WorkerInterface {
+	public void doSomeWork();
+}
+As its definition says, Functional Interfaces can have only one abstract method. If you try to add one more abstract method in it, it throws compile time error.
+
+key word 'this' works in anonimaous implimetation in static method(Main)
+public class Cone {
+	public static void main(String[] arg) {
+		Cone c = new Cone();
+		c.doProcess(10, new Process1() {
+			public void process(int i){
+				System.out.println(i);
+				System.out.println(this);
+				}
+		});
+	}
+	void doProcess(int i, Process1 p) {
+		p.process(i);
+	}
+}
+public interface Process1 {
+	void process(int i);
+}
+key word 'this' does not work in lamada in static method(Main) but works in non static method
+public class Cone {
+	public static void main(String[] arg) {
+		Cone c = new Cone();
+		c.doProcess(10,(K)->{
+			System.out.println(K);
+			System.out.println(this);// this does not work here
+		});
+
+		}
+	void doProcess(int i, Process1 p) {
+		p.process(i);
+	}
+}
+exmple 1 with threads
+public class Cone {
+	public static void main(String[] arg) {
+		Thread t = new Thread();
+		t.start();
+		Runnable r = new Runnable() {
+			public void run() {System.out.println("runnable"); }
+			};
+		Thread t1 = new Thread(r);
+		t1.start();
+		Thread t2 = new Thread(()->System.out.println("lamada"));
+		t2.start();
+		Thread t3 = new Thread(()->mone());
+		t3.start();
+	}
+
+	static void  mone() {
+		System.out.println("Cone");
+	}
+}
+
+method reference
+()->method() //classname::methodname
+p->method(p) //classname::methodname
+
+//// differnt foreach
+if we have one list l1 then 4 types of loops
+		for(int i=0; i<l1.size();i++) {
+			System.out.println(l1.get(i));
+		}
+		for (String e : l1) {
+			System.out.println(e);
+		}
+		l1.forEach(a -> System.out.println(a));
+		l1.forEach(System.out::println);
+
+Default interface methods
+---------------------------
+Before Java 8, once an interface is published and implemented by other clients,
+it's very hard to add a new method to the interface without breaking existing implementations.
+
+Abstract Classes versus Interfaces in Java 8
+-------------------------------------------------
+Abstract Class can define constructor. They are more structured and can have a state associated with them. 
+While in contrast, default method can be implemented only in the terms of invoking other Interface methods,
+ with no reference to a particular implementation's state.
+Default Method and Multiple Inheritance Ambiguity Problems
+----------------------------------------------------------
+public interface InterfaceA {
+       default void defaultMethod(){ System.out.println("Interface A default method"); }
+}
+public interface InterfaceB {
+   default void defaultMethod(){ System.out.println("Interface B default method"); }
+}
+public class Impl implements InterfaceA, InterfaceB  {
+}
+The above code will fail to compile. In order to fix this class, we need to provide default method implementation:
+public class Impl implements InterfaceA, InterfaceB {
+    public void defaultMethod(){
+    }
+}
+Further, if we want to invoke default implementation provided by any of super Interface rather than our own 
+implementation, we can do so as follows:
+public class Impl implements InterfaceA, InterfaceB {
+    public void defaultMethod(){
+        // existing code here.
+        InterfaceA.super.defaultMethod();
+    }
+}
+Difference between Default Method and Regular Method
+-----------------------------------------------------
+methods in Classes can use and modify method arguments as well as the fields of their Class but default method, on the other hand, can only access its arguments as Interfaces do not have any state.
+
+predicate
+------------------
+
+
+collections
+---------------
+Collection<String> vals = Arrays.asList("abc","abcde","a","abc");
+vals.removeIf(s->s.length()>3);
+vals.replaceAll(s-> s+"123");
+
+Null check for non optional object
+-----------------------------------------------------
+if(Objects.isNull(response)){ }
+if(Objects.nonNull(response)){}
+It's much easier and clearer to write .stream().filter(Objects::isNull) than to write .stream().filter(x -> x == null)
+
+Optinal
+-----------------------------------------------------
+isPresent()
+	Optional<String> empty = Optional.empty();
+	empty.isPresent();//returns false
+	String name = "baeldung";
+	Optional<String> opt = Optional.of(name); //how to create optinal object with non optional object
+	opt.isPresent();// returns true //how to check null condition on optional object
+	opt.get();//trurns actual object//how to get actual object from optional object
+
+of() and ofNullable() which one is best to creat optional object
+	String name = null;
+    Optional.of(name);//throws NullPointerException
+	Optional<String> opt = Optional.ofNullable(name);// return empty Optional object
+How to return something if optional is empty
+	Optional<List<String>> trip = service.mone();
+	return trip.orElse(new ArrayList<>(););
+
+
+***********************************************************************************************************************
+**************          streams       ******************
+***********************************************************************************************************************
+Java 8 Streams API supports many parallel operations to process the data, while completely abstracting out the low level
+ multithreading logic and letting the developer fully concentrate on the data and the operations to be performed on the data.
+Each element in the collection is computed before it actually becomes a part of that collection.
+On the other hand Streams are fixed data structures which computes the elements on-demand basis.
+Just like functional programming languages, Streams support Aggregate Operations.
+The common aggregate operations are filter, map, reduce, find, match, sort. These operations can be executed in series or in parallel.
+List<String> names = new ArrayList<>();
+for (Student student : students) {
+    if(student.getName().startsWith("A")){
+        names.add(student.getName());
+    }
+}
+//same above code in java 8
+List<string> names = students.stream().map(Student::getName).filter(name->name.startsWith("A")).collect(Collectors.toList());
+List<String> names = students.stream().map(x -> x.getName()).collect(Collectors.toList());//all names
+List<Integer> ages = students.stream().map(n -> n.getAge() * 2).collect(Collectors.toList());//double ages
+List<Person> ages =students.stream().map(temp -> {
+													Peron p = new Person();
+													p.setname(temp.getName());
+													return p;
+												}).collect(Collectors.toList());// convert sudent to person
+here we are not creating new collection outside loop and we are not adding person object to outside list like JAVA7
+map function will tacke care of it. here map is like (for(i..){List a = new ArrayList();a.add(i)})
+
+//map on single object
+VehicleInfo.Payload payloadInfo =  Optional.ofNullable(vehicleInfo).map(VehicleInfo::getPayload).map(VehicleInfo.Payload::getVehicle).orElseGet(VehicleInfo.Payload::new);// map with orElseGet
+String modelYear = Optional.of(modelInfo).map(VehicleInfo.Model::getModelYear).orElse("").trim();//map with orElse
+
+//Creating Stream of hardcoded Strings and printing each String
+Stream.of("This", "is", "Java8", "Stream").forEach(System.out::println);
+//Creating stream of arrays
+String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
+Arrays.stream(stringArray).forEach(System.out::println);
+// ->12345678910
+IntStream.rangeClosed(1, 10).forEach(num -> System.out.print(num));
+// ->123456789
+IntStream.range(1, 10).forEach(num -> System.out.print(num));
+http://java.amitph.com/
+
+display vlaue starts with t
+		l1.add("one");l1.add("two");
+		l1.stream().filter(k->k.startsWith("t")).forEach(a -> System.out.println(a));
+display count
+		l1.add("one");l1.add("two")
+		long c =l1.stream().filter(k->k.startsWith("t")).count();
+
+
+List<String> a= Arrays.asList("","",""); gives immutable ArrayList
+
+
+what is difference between filter and map 
+	both rerurns collections but filter returns entire object which satisfies condition and map returns part of object
+
+constructor reference
+BiFunction
+
+
+
+##################################################
+#####                 JAVA  9 features    ########
+##################################################
+Java 9 brought modularity into the Java platform. Modular JVM can run on devices with a lot less available memory.
+The JVM could run with only those modules and APIs which are required by the application.
+java.base
+java.compiler
+java.corba
+java.desktop
+java.logging
+java.rmi
+
+A New HTTP Client
+-----------------
+The new API is located under the java.net.http package. It should support both HTTP/2 protocol and WebSocket handshake,
+with performance that should be comparable with the Apache HttpClient, Netty and Jetty.
+	HttpRequest request = HttpRequest.newBuilder()
+	  .uri(new URI("https://postman-echo.com/get"))
+	  .GET()
+	  .build();
+
+	HttpResponse<String> response = HttpClient.newHttpClient()
+	  .send(request, HttpResponse.BodyHandler.asString());
+
+Diamond Operator Extension
+Now we can use diamond operator in conjunction with anonymous inner classes:
+	FooClass<Integer> fc = new FooClass<>(1) { // anonymous inner class
+	};
+
+Interface Private Method
+Interfaces in the upcoming JVM version can have private methods, which can be used to split lengthy default methods:
+
+Immutable Set
+java.util.Set.of() � creates an immutable set of a given elements. In Java 8 creating a Set of several
+elements would require several lines of code.
+	Set<String> strKeySet = Set.of("key1", "key2", "key3");
+You can also convert an entire array into a Set with the same method.
+
+Optional To Stream
+what is optional stream, find examples
+
+##################################################
+#######         JAVA 10 features          ########
+##################################################
+One of the most visible enhancements in JDK 10 is type inference of local variables with initializers.
+	String message = "Good bye, Java 9"; convert to: var message = "Hello, Java 10";
+	Map<Integer, String> map = new HashMap<>();
+	var idToNameMap = new HashMap<Integer, String>();
+here var reducing the boilerplate code
+there is no runtime overhead in using var nor does it make Java a dynamically typed language.
+The type of the variable is still inferred at compile time and cannot be changed later.
+
+Illegal Use of var
+	var n; // error: cannot use 'var' on variable without initializer
+	var emptyList = null; // error: variable initializer is 'null'
+	var arr = { 1, 2, 3 }; // error: array initializer needs an explicit target-type
+	public var = "hello"; // error: 'var' is not allowed here
+leagal but not recommended
+	var result = obj.prcoess(); //it becomes difficult to understand the type returned
+	var x = emp.getProjects.stream()
+	.findFirst()
+	.map(String::length)
+	.orElse(0);         //in streams with long pipeline
+	List<String> l1 = new ArrayList<>(); //java 7 inroduced diamond symbel
+	var empList = new ArrayList<>(); //The type of empListwill be ArrayList<Object>and not List<Object>
+	so better to avoid diamond symbol
+	var empList = new ArrayList<Employee>();
+java.util.List, java.util.Map and java.util.Set each got a new static method copyOf(Collection).
+	List<Integer> copyList = List.copyOf(someIntList);
+java.util.stream.Collectors get additional methods to collect a Stream into unmodifiable List, Map or Set
+	List<Integer> evenList = someIntList.stream()
+      .filter(i -> i % 2 == 0)
+      .collect(Collectors.toUnmodifiableList());
+
+##################################################
+######          JAVA 11 features              ####
+##################################################
+TextBlocks
+	we can place our text in between the triple quotes and have multiple double quoted strings inside it without having to use escape characters
+	we can use \s to add space and \ to remove new line
+Record types
+sealed classes
+
+##################################################
+             FAQ with answers
+##################################################
+how to create immutable class(String,Integer, Float, Boolean)
+............................................
+	Make your class final, so that no other classes can extend it
+	Make all your fields final, so that they�re initialized only once inside the constructor and never modified afterward.
+	Don�t expose setter methods.
+	When exposing methods which modify the state of the class, you must always return a new instance of the class.
+	If the class holds a mutable object
+		Inside the constructor, make sure to use a clone copy of the passed argument and never set your mutable field to the real instance passed through constructor, this is to prevent the clients who pass the object from modifying it afterwards.
+		Make sure to always return a clone copy of the field and never return the real object instance.
+	we need to do something related to serialization
+public final class ImmutableStudent {
+    private final int id;
+    private final String name;
+    private final Age age;
+    public ImmutableStudent(int id, String name, Age age) {
+		this.name = name;
+		this.id = id;
+		Age cloneAge = new Age();
+		cloneAge.setDay(age.getDay());
+		cloneAge.setMonth(age.getMonth());
+		cloneAge.setYear(age.getYear());
+		this.age = cloneAge;
+		}
+	public Age getAge() {
+		Age cloneAge = new Age();
+		cloneAge.setDay(this.age.getDay());
+		cloneAge.setMonth(this.age.getMonth());
+		cloneAge.setYear(this.age.getYear());
+		return cloneAge;
+	}
+}
+
+How to create singleton class(David Geary in javaworld)
+........................................................
+	public class ClassicSingleton {
+	   private static ClassicSingleton instance = null;
+	   private ClassicSingleton() {
+		  // Exists only to defeat instantiation.
+	   }
+	   public static ClassicSingleton getInstance() {
+		  if(instance == null) {
+			 instance = new ClassicSingleton();
+		  }
+		  return instance;
+	   }
+	}
+multiple JVM's can have multiple instances
+if class impliments java.io.Serializable then we can have multiple instances
+If two threads�we'll call them Thread 1 and Thread 2�call ClassicSingleton.getInstance() at the same time, two ClassicSingleton instances can be created if Thread 1 is preempted just after it enters the if block and control is subsequently given to Thread 2.
+	public class ClassicSingleton {
+	   private static ClassicSingleton instance = new ClassicSingleton();
+	   private ClassicSingleton() {
+		  // Exists only to defeat instantiation.
+	   }
+	   public static ClassicSingleton getInstance() {
+		  return instance;
+	   }
+	}
+above code is thread safe
+public class Singleton implements java.io.Serializable {
+   public static Singleton INSTANCE = new Singleton();
+   protected Singleton() {   }
+      private Object readResolve() {
+            return INSTANCE;
+      }
+}
+when you impliment java.io.Serializable we have to impliment readResolve(). This ensures that nobody can create another instance by serializing and deserializing the singleton.
+
+HashCode() and equals()
+---------------------------------
+public class Test {
+	public static void main(String ags[]) {
+		HashSet<Emp> map = new HashSet<>();
+		map.add(new Emp(5));
+		map.add(new Emp(4));
+		map.add(new Emp(5));
+		System.out.println(map.size());
+		Emp e=new Emp(5);
+		Emp e1=new Emp(5);
+		System.out.println(e.equals(e1));
+		HashSet<Emp1> map1 = new HashSet<>();
+		map1.add(new Emp1(5));
+		map1.add(new Emp1(4));
+		map1.add(new Emp1(5));
+		System.out.println(map.size());
+		Emp1 e2=new Emp1(5);
+		Emp1 e3=new Emp1(5);
+		System.out.println(e2.equals(e3));
+		HashSet<Emp2> map2 = new HashSet<>();
+		map2.add(new Emp2(5));
+		map2.add(new Emp2(4));
+		map2.add(new Emp2(5));
+		System.out.println(map.size());
+		Emp2 e4=new Emp2(5);
+		Emp2 e5=new Emp2(5);
+		System.out.println(e4.equals(e5));
+	}
+}
+class Emp{
+	private int age;
+	Emp(int a){
+		age = a;
+	}
+}
+class Emp1{
+	private int age;
+	Emp1(int a){
+		age = a;
+	}
+	public int hashCode() {
+		return age;
+	}
+}
+class Emp2{
+	private int age;
+	Emp2(int a){
+		age = a;
+	}
+	public boolean equals( Object obj ) {
+		return true;
+	}
+}
+to work HashSet and HashMap correctly we should impliment both hashCode and equal methods
+for just comparing we no need to impliment hashCode, equal onlone enough
+if we do not implement hashCode(), it does not work in hash-based collections
+
+
+what is CopyOnWriteArrayList
+
+Comparable vs Comparator
+-----------------------
+Comparable:compareTo()
+Comparator:compare()
+A comparable object is capable of comparing itself with another object.
+The class itself must implements the java.lang.Comparable interface to compare its instances.
+Consider a Movie class that has members like, rating, name, year. Suppose we wish to sort a list of Movies based on year of release.
+We can implement the Comparable interface with the Movie class, and we override the method compareTo() of Comparable interface.
+Now, suppose we want sort movies by their rating and names also. we can not do it because with comparable, we get only one chance to implement the compareTo() method.
+Unlike Comparable, Comparator is external to the element type we are comparing. It's a separate class.
+We create multiple separate classes (that implement Comparator) to compare by different members.
+
+method local variables are thread safe
+--------------------------------------
+public class Test1 {
+	public static void main(String[] args) {
+		Thread t1 = new Thread() {public void run() {Test2.t.mone(); } };
+		Thread t2 = new Thread() {public void run() {Test2.t.mone(); } };
+		t1.start();
+		t2.start();
+	}
+}
+public class Test2 {
+	public static final Test2 t = new Test2();
+	public void  mone() {
+		int i =0;
+		System.out.println(i);
+		try {
+			i = i+5;
+			System.out.println(i);
+			System.out.println(Thread.currentThread().getName()+"  "+i);
+			Thread.sleep(20);
+			i = i+5;
+			System.out.println(i);
+			System.out.println(Thread.currentThread().getName()+"  "+i);
+			Thread.sleep(20);
+			i = i+5;
+			System.out.println(i);
+			System.out.println(Thread.currentThread().getName()+"  "+i);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+public class Test2 {
+	public static final Test2 t = new Test2();
+	private int j =0;
+	public void  mone() {
+		try {
+			j=j+3;
+			System.out.println(Thread.currentThread().getName()+"  "+j);
+			Thread.sleep(20);
+			j=j+3;
+			System.out.println(Thread.currentThread().getName()+"  "+j);
+			Thread.sleep(20);
+			j=j+3;
+			Thread.sleep(20);
+			System.out.println(Thread.currentThread().getName()+"  "+j);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+}
+
+final variables
+-----------------------------------------
+public class Test {
+	private final int i;
+	private final String s;
+	Test(){
+		i=0; //we should intialize in constructor or in declaration.
+		s="5";
+	}
+	public static void main(String ags[]) {
+		Test t = new Test();
+		System.out.println(t.i);
+		System.out.println(t.s);
+		//t.s="4"; // you can  not assign anything
+		//t.i = 20; // you can  not assign anything
+		String m = t.s.concat("abc"); // you can  modify with method but string is immutable
+		System.out.println(t.s);
+		System.out.println(m);
+	}
+}
+
+String Stringbuffer
+------------------------------
+String class is immutable.
+StringBuffer class is mutable.
+String implements Comparable interface but StringBuffer not
+StringBuffer concatenation is significantly faster than String concatenation.
+StringBuffer is thread safe(every method is synchronized), but still fast compare to String.
+
+StringBuilder is faster than StringBuffer.
+
+return and exit in try block
+-----------------------------
+public class Cone {
+	public static void main (String a[]) {
+		System.out.println("*********"+mone());
+	}
+	public static int mone() {
+		try {
+			System.out.println("1");
+			return 1;
+		}catch(Exception e) {
+			System.out.println("2");
+			e.printStackTrace();
+		}finally {
+		System.out.println("3");
+		}
+		return 2;
+	}
+}
+o/p:
+1
+3
+*********1
+public class Cone {
+	public static void main (String a[]) {
+		System.out.println("*********"+mone());
+	}
+	public static int mone() {
+		try {
+			System.out.println("1");
+			System.exit(0);
+		}catch(Exception e) {
+			System.out.println("2");
+			e.printStackTrace();
+		}finally {
+			System.out.println("3");
+		}
+		return 2;
+	}
+}
+o/p:
+1
+so finally is not exicuted when exit statement is exicuted.
+
+###################################################################
+#################          FAQ                    #################
+###################################################################
+what is prototype creational pattern
+what is Single responsibility principle
+Why do we need to use character arry than string in security?
+Does performance effects if we impliment hash method?
+what will happen when we cast object
+what libraries are loaded when you just exicute hello world propram
+how to load calss dinamically
+how to create immutable class(String,Integer, Float, Boolean)
+what is befference between iterater and iteratable
+how to create custom marker interface
+what is difference between stock memory and heap memory
+what are the access controls we can use for class
+can we extend custome enum class
+what are default access for enum constant
+what are the access controls of enum costructor
+is nested enum class by default static or non static
+what is difference between exception and error
+what is difference between runnable and callable
+What is transient keyword?
+What is Externalizable interface
+What is difference between wait() and sleep() method?
+What does join() method?
+What is the difference between notify() and notifyAll()?
+What is the difference between HashMap and TreeMap?
+What is the difference between HashMap and Hashtable?
+What is the difference between Comparable and Comparator?
+
+What is difference between StringBuffer and StringBuilder
+what is volatile keyword
+What is synchronized VS volatile
+how do make a class not serializable
+how do make a variable not serializable
+
+what is thread join()
+what is wait and notify and notifyAll
+what is difference between wait and sleep
+what is callable interface
+What is unimplemented method in callable interface
+
+what are the Concurrent classes
+what is singleton design
+can we pass data to singleton object
+what is default method in java8
+what is functional interface
+what are intermediate function
+what is terminate function
+what are the builtin functinal interfaces in java
+How to use predicate
+
+
+What is difference between StringBuffer and StringBuilder
+		Buffer is synchonized and thread safe but builder not
+		use buffer or builder insted of String if there are more manupulations
+what is volatile keyword
+	The values of volatile variable will never be cached and all writes and reads will be done to and from the main memory.
+	changes made by one thread to shared data are visible to other threads.
+	volatile is not threadsafe in all coditions (i++ is not thread safe)
+What is synchronized VS volatile
+	volatile does not block other threads and does not hold locks
+how do make a class not serializable
+    private void writeObject(ObjectOutputStream oos) throws IOException {
+        throw new NotSerializableException();
+    }
+how do make a variable not serializable
+	transient
+what is thread join()
+	if we create three instances for one thread and we call t1.start(),t1.join(),t2.start(),t3.start()
+	here t2 and t3 will wait for t1 to complete
+what is wait and notify and notifyAll
+	lets say two threads Producer and Consumer are taking same List through Consutroctor
+	producer synchronized list with synchronized lock within block it check list size
+		if it is not max it adds items into list and cally notify() so that sleeping consumer wakes up and consume it
+		if it is max, it will call wait method and goes sleep state
+	Consumer synchronized list with synchronized lock within block it check list size
+		if it is not empty it removes element and call notify so that produce wakes and can add
+		if it is empty, it call wait method and goes sleep
+	all these methods are object class methods
+what is difference between wait and sleep
+	in case of wait() method, thread goes in waiting state and it won�t come back automatically until we call the notify() or notifyAll().
+	 wait() releases the lock
+	 sleep() doesn�t releases the lock  and simply passues exicution for specified time
+what is callable interface
+	Runnable tasks can be run using the Thread class or ExecutorService
+	Callables can be run only by ExecutorService
+	public interface Callable<V> {
+		V call() throws Exception;
+	}
+	executorService = Executors.newSingleThreadExecutor();
+	Future<Integer> future = executorService.submit(task);
+	we can handle exceptions properly
+Collections
+	ArrayList Think of this as a growable array. It gives you fast iteration and fast random access.
+	A HashSet is an unsorted, unordered Set. LinkedHashSet maintains insertion order
+	The HashMap gives you an unsorted, unordered Map. and allows null values, un synchronized
+	LinkedHashMap maintains insertions order, slow in insertion and fast in retrive
+what are the Concurrent classes
+	ConcurrentHashMap class, CopyOnWriteArrayList
+what is singleton design
+	private static final Cone c= new Cone();// it is thread safe
+	if Cone implements serializable
+      private Object readResolve() {
+            return INSTANCE;
+      }//this prevents creating new instance. ObjectInputStream method
+what is default method in java8
+	in java 8 we can write implentation methods in interfaces. we call these mothods as default methods
+what is functional interface
+	functional interface is interface with single abstract method
+what are intermediate function
+	map(Student::getName), filter(name->name.startsWith("A")),distinct
+what is terminate function
+	forEach, count, collect
+what are the builtin functinal interfaces in java
+	java.util.function.Predicate p = (value) -> value != null;
+	Consumer<Integer> consumer = (value) -> System.out.println(value);
+	UnaryOperator<Person> unaryOperator = (person) -> { person.name = "New Name"; return person; };
+	BinaryOperator<MyValue> binaryOperator = (value1, value2) -> { value1.add(value2); return value1; };
+How to use predicate
+	Predicate<Integer> greaterThanTen = (i) -> i > 10;
+	Predicate<Integer> lowerThanTwenty = (i) -> i < 20;
+	boolean result = greaterThanTen.and(lowerThanTwenty).test(15);
+
+
+
+
+########################################################
+########## Third party utils              ##############
+########################################################
+com.google.common.base.Strings.isNullOrEmpty(obj)
+org.apache.commons.lang3.StringUtils.isBlank(guid)
+org.apache.commons.lang3.StringUtils.isNotEmpty(vin)
+org.apache.commons.lang3.StringUtils.isAllBlank()
+java.utils.Objects.nonNull(xCorrelationId)
+
+
+*****************************************************
+***************   next level   **********************
+*****************************************************
+JVM
+java class loading
+rt.jar
+lib/ext
+classpath
+Read area
+exicution

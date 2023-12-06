@@ -1,0 +1,63 @@
+customer(web app or mobile app) to service
+service to service in same Organization
+service to service in different Organization
+certs
+
+
+
+
+customer IoT(web app or mobile app) to service
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+service to service in same Organization
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+service to service in different Organization
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+certs
+--------------------------------------------------------------------------------------------------------------------------------------
+known and legitimate Certificate Authorities (CA)
+	Comodo
+	DigiCert
+	Entrust
+production application certificates should be signed by known and legitimate Certificate Authorities (CA).
+Springboot does not support PEM Files, we need to convert PEM file into PKCS12 file.
+to configure certificate, we need to configure PKCS12 file and key in application.yml
+if website accepect HTTPS connection, then browser and server exchange data in encrypted form.
+CA verifies organigation and domain names before issing certificates.
+
+
+
+Authorization
+
+
+service to external call
+---------------------------------------------------------------------------------------------------
+	call token service passing passing client id and secret
+		we can save token since client and secret does not chnage 
+		based on token expiration
+		it is b2b so client id and secret doenot change
+		but in case of user to app, client id(username) changes
+	call external API through apigateway
+		on apigateway, authorizer will be called passing token
+		authorizer(lambda) validates token calling Azure
+		on successful call to authorozer, apigateway redirects call to service
+		
+	how to evict cache for token 
+	
+service to service internal call
+---------------------------------------------------------------------------------------------------
+we do not need to access token, we can call directly through nlb url/service discover url
+Because all will be in same vpc
+ 

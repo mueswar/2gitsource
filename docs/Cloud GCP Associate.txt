@@ -1,0 +1,580 @@
+https://www.udemy.com/course/google-certified-associate-cloud-engineer-practice-exams-gcp/
+
+
+
+VPC -Section-21  --
+
+
+
+-----------------------------------------------------------
+v1: NA
+v2: NA
+v3: NA
+v4: NA
+v5: NA
+v6: high availablity and low latency can be achived with multiple zones and regions.
+v7:	we will multiple zones in one region, latence will be less only between two zones in same region.
+v8: NA
+
+VM - section3
+----------------------------------------------
+v9:  no need
+v10: watchit
+	Google compute engine is the service in GCP to manage and provision vertual machines.
+	loadbalancing, autoscalling, attach storage, network connectivity
+v11: do not watch it if you can create vm instance(name,http,serviceaccount,)
+v12: just watch machine types
+v13: do not watch
+v14:do not watch it if you can create VM server and access apache server
+	when we send request to VM insance through external ip, request goes to apche index file
+	sudo su
+	apt update
+	apt -y install apache2
+	echo "Hello ...." > /var/www/index.html
+	sudo service apache2 start
+v15:do not watch it if you what internal ip, external ip and static ip
+	external ip address changes when we stop and start, but static ip does not change
+	we can create and and assign static ip to VM instance, this will not change on every server restart
+	we have to release/delete static ip if we do need it, otherwise you would be billed
+v16:do not watch if you where we can create static ip and how we can assign ip to VM
+	in vpc network we can create static ip, and zoom out and we can see Change button to assign to VM
+	we can assign static ip to VM from static ip page it self
+	default external ip is of type ephemeral(changes on restart)
+v17:do not watch it
+v18: do not watch it
+v19: do not watch it if you can create VM with startup script 
+	>>managment>>startup script
+	#!/bin/bash
+	apt update
+	apt -y install apache2
+	echo "Hello ...." > /var/www/index.html
+	we do not need start server command
+v20:do not watch if you can create VM instance with templete
+	we can create templete by providing all details what we provide while creating VM , except region
+	instance templete can not be updated
+v21: do not watch if you can create VM with custom image
+	create VM with custom image to reduce bootup time
+	if instance templete has lot of software update commands it takes more time to bootup
+	hardening an image- cutom image to your company standard
+	we can not create image from running instance disk(we can not take it but recomended)
+	we can see disk(local disk) attached to vm in compute engine>storage>disks
+	vm instance OS will run on local disk
+	how can we create image? go to local disk page and create image
+	how do we create VM from image, in normal process insted of disk give image
+		and in startup script remove install apache2 but add "service apache2 start"
+		echo "Hello ...." > /var/www/index.html
+	sudo service apache2 start
+v22:do not watch it
+v23: no need
+v24: NA
+--------------------------------------------------------
+			Section-4
+--------------------------------------------------------
+v24:sustained discounts are auto applicale discounts
+	for N1,N2 if use sage is more that 25% in month saustained applicable 20% to 50% based on usage
+	for E2 and A2 not applicable
+	not applicable for engines created by App Engine and Dataflow
+	discounts applicable for instance created by Kubernetes and Compute engines.
+v25:committed discounts(up to 70%)(1 or 3 years) are higher than sustained discounts
+	not applicable for engines created by App Engine and Dataflow
+	discounts applicable for instance created by Kubernetes and Compute engines.
+v26:preempitable VM are cheper and short lived(24 hrs)
+	can be terminated any time with 30 seconds notice
+	VM's are not available always. no automatic restart.
+v27:billed per second bases after first minute
+v28:Live migration- when host needs be upgraged without stopping running instance,
+	with live migration running instnace is moved to different host in same zone.
+	Availability policy-1)on host maintance i.migrate ii.terminate
+	2)automatic restart i.on-restart after termination witout user intervention, ii. off
+v29: E2, N2, N1 supports custom intanca type like x cpus, y memory
+v30:for GPU incances 1)on host maintance option always terminate 2) automatic restart is on by default
+	E2 does not support GPU, N2 supports GPU
+	gpu are for high intensive math calculation and grafics
+v31:we can not change cpu/memory for running VM
+	VM is associated with project
+	automatic basic montoring is enabled for VM- cpu utilization, network bytes
+	for memory utilization metrics we need cloud metric agent installation
+v33: pre requisists for VM are i. project ii.billing account iii.compte engine API enabled
+	sole tenancy- for dedicated hardware for company compliance
+	vm will be created in specific sole tenancy
+	vm manager can be used to automate software for multiple VM's
+v36:gsutil- command utility for cloud storage
+	bq- command utility for BigQuery
+	cbt- command utility for cloud BigTable
+	kubectl- command utility for kubernetes
+	Gcloud is park of google SDK, google SDK requires python
+	Cloud shell is alternatevie tool to Gloud
+	gcloud init
+	gcloud config list
+v38:gcloud config set core/project value(pone) here core is default one so no need to mention
+	gcloud config set project value(pone)
+	gcloud config set compute/region us-east
+v39:gcloud config configurations list  lists all configurations
+	gcloud config configurations create clonfig2 this creates and activates
+	gcloud config configurations activate config1
+v42:options to set region and zone
+	option1:centralized cong gcloud compute project-info add-metada --metadata[]
+	option2:local configuration gcloud config set compute/region us-east-1
+	option3:command specific --region us-east-1
+	option3 has height preiority
+--------------------------------------------------------
+			Instance Groups section-6
+--------------------------------------------------------
+v49:Instance groups
+	managed-identoical VM's - auto scale, healing(helath check), manage release(v1,v2)
+	we can load balancer to MIG, instances can be created in differnt zones(regional MIG)
+	Release- new vertion application witout downtime
+		i.Rolling updates-update % instances with new version (step by step)
+		ii.canary deployment- test new version with group of VM instance, then roll it to all
+	unmanged- different cong VM's - no features auto scale, healing(helath check), manage release(v1,v2)
+v50: watch it
+	cooling period- how long to wait to check autoscalling metrics again
+	stateless MIG-
+	stateful MIG- if we want deal with database persistance
+	create instance group: select sateless in compute engine> provide
+			instance templete
+			multi zone- how to distribute instance
+			auto scale- min, max, 
+			how to increase/decrease- autoscalling metrics> cpu utilisation or based on time
+			scale-in control-
+			auto healing- health check
+--------------------------------------------------------
+			loadbalancing
+--------------------------------------------------------
+v
+--------------------------------------------------------
+            section 8 Managed service
+--------------------------------------------------------
+v67: NA
+v68: 1.iaas- infrastructure, we only get system and network like VM, EC2
+	we are responsible code, runtime, load balancer, auto scale
+     2.paas- platform, elastic bean stock, app engine- all features othen than code and configuration
+	i.caas -continer as service comes under paas- kubernetes aws:eks, gcp:gke
+	ii.fass - funtcion as service comes under paas
+	iii. data bases
+	app engine is paas, cass and serverless
+	cloudrun is caas only but without cluster
+--------------App Engine
+v71:App engine is paas, cass and serverless but billing not based useage but based on provisioing resource 
+	features- auto load balancing, auto scaling, platform update, application health
+v72:App engine provide 1.standard env 2. flexible	
+	standard: app runs in specific language sandbox , billed by usage
+	v1 support only java, python, php, go, python and php have restriction like network access and librararies
+	v2 support only java, python, php, go, ruby, nodejs, with no restrictions
+	flexible- uses VM instances,supports any language, no restrisctions, billed by resorce
+v73:
+	AppEngine hierarchy application(only one per project) ->service ->version -> instance
+	we can run multiple versions at same time
+v75:appengine auto sacling basic, automatic, manual
+	basic only supported in standard. instnace is created when request comes, high latency, resource can be zero
+			but rapid scaling is available
+	automatic- saled based on cpu, memory, min resource, max resource
+			no rapid scaling
+	automatic and manual are supported by both env standard, flexible
+	we can have only one appengine per project(prject top element in gcp structure)
+	app engine is not multi region. it just one region 
+v78:when we deploy service to appengine in project using gcloud, internally cloud bild is used for deployment 
+	and cloud bild need Cloud storage object Viewer role(not object admin)
+	when we open Appengine view we can see left side 1.dash board 2. service 3 versions 4 instances
+v79:wen we deploy new version taraffic automatically shifted to new version
+but we can control with no-promoto in gcloud app command
+
+------------ GKE
+v96:create new project>>enable kubernetes api>>kubernetes engine
+	in kubernetes engine view we can see 1.clusters, 2.worknodes, 3service&Ingress, 4.applications, 5.config
+	create cluster(automatically nodes get created)
+		autopilot:
+		Standarad:there are two types regional and zonel
+	by default cluster is created with 3 nodes each with 2vCpus and one node pool
+		we can add additional node pools after creating cluster also
+		we can create differnt kind of nodes(compute engines/VM) in node pool. while creating pool
+	connect cluster
+		gcloud container clusters get-credentials my-cluster --zone us-central1-c --project my-kubernetes-project-304910
+	create deployment-
+		kubectl create deployment hello-world-rest-api --image=in28min/hello-world-rest-api:0.0.1.RELEASE
+v98:to deploy service into cluster we need image
+	we can expose deployment with loadbalancer
+	when we expose deployment then new service will get created
+100:worker nodes- pod is just instace
+	by default one pod created we can increase pod size upto node size. if we need more pods, we have to increase nodes
+101:to auto scale instances, we have to set autoscale to deployment(not service)
+	aws service = GKE deployment, AWS instance = GKE service
+	we can also auto sacle clusters
+	we can create Config, for access like DB
+	we can create secrate
+102:in yml file no of replicas are equal to number pods
+105:pod can have multiple continers. generally only one continer.
+	all continers in pod share resouce netwok,storage,IP, port
+106:deployment is responsible for multiple versions
+	replica is responsible for maintaing no of pods for version
+107:kubernetes service types- 1.ClusterIP- useful if service is not requored to be exposed outer world
+	2.load balance- for service to be exposed to external world. each service will one load balancer
+	3.NodePort- when you do not want seperate load balancer for each service. create Ingress with  satsic 
+	port and expose
+108:GCR- continer register like AWS ECR
+-------------Cloud functions
+114: cloud fucntion time bound default 1 and max 9 min
+116:cloud function uses CLoud build API, it should be enabled
+	we can not manage sacling or servers
+-------------Cloud run
+118: cloud run: container to production in seconds
+	unlike cloud function cloud run work as continer service, it takes image as application.
+	no need to create cluster here. we can configure no of requests to contimer, timeouts
+	we can configure scalling and traffic split for versions
+122:same key is used for encryption/decryption in symmetric encryption 
+	in asmmetric, we use public and private keys and we share publiv key -
+124:cloud KMS- key managment service
+	by default service accont does not have access to use encryption keys
+--------------------------------------------------------
+			file storage
+--------------------------------------------------------
+132: block storage(hard disks) and file storage(files) 
+	one block storage can be assigned to one VM only in typical case(but there exceptions)
+	but one VM can have multiple block storage
+	file storage can be share with multiple VM's
+	persisten block storage- not in same host(network block storage)- zonel and regional
+	local SSD- in same host, we can not detach
+	persistance Disk(Data base)- network block storage attachted to VM, life cycle is independent of VM.
+	local SSD is 10X faster than persistance disk. but persistance disk is more durable.
+	peristance disk support snapshot but local SSD does not
+129:peristance disk type        standard        balanced      SSD
+	storage                      hard disdk       ssd          ssd
+	sqentinal IOPs(batch)        good             good         veryGood
+	random Iops(transaction)     bad              good         very good
+	use case              bigdata(codt effictive) |  b/w cost and performace  | high performance
+130:creating snapshot from disk is faster than from image
+	creating disk from image faster than from snapshot
+	we can take shanshop on schdule basis also. 
+	shanpshot are incremental that means latest snapshot will have changes after previos snapshot taken
+	but if u delete old snapshoot, u do  not loose data that is required for lastest snapshot
+	snapshot reduces the performance
+131: we can also create VM instance from snapshot
+132: image contains boot persistance data where as machine image contains everyting from VM(config, metadata)
+133: only machine image can backup multi disk
+134: we can create delete disk from gcloud
+	gcloud compute disks create md1 --zone=us-easta-a 
+	u can increase disk size but can not decrease size
+--------------------------------------------------------
+			cloud Storage	- Section-16
+--------------------------------------------------------
+144:object max size 5TB, but we can have unliked 5TB  objects in bucket.
+	bucket name is global unique, but object key is bucket unique.
+145:standard- freaquent access
+	nearline- 30 days once access
+	codeline- 90 days once access
+	archive - 365 days once access
+	we can even set different storage class for object in bucket
+	by default object storagr calss is same as bucket storage class
+	durability %, availablity %
+150:how to chage storage class for existing objects and feature objects in bucket
+	step1:chage storage calls of bucket so that all feature objects can have new class 
+	step2: edit all existing objects sto calss 
+151: gsutil mb/ls/cp/mv
+152: provides very granular limiting user to perform single action/on specific resource
+	/from specific IP/ specific timeframe
+153: Role -set of permissions doenot know about members
+	policy is used to assigne role to member
+154:types of roles
+	1.basic roles/primitive roles - owner/editor/view
+		editor: view+edit action, owner:editor+mange roles+billing
+	2.predefined are faine grained roles
+		storage admin,Storage Object admin, Storage object viewer, Storage Object creator
+	3.custom roles
+156: we can have mutiple bindings in one policy
+	doubt- looks we have only one iam policy per projecct
+157:policy trabulshuter helps u check any member access issues
+160:default service aaccount - while creating VM instance we can chose deafult service accout
+	user manage service a/c - we can create service a/c with specific permission 
+		and assign a/c while creating VM instance
+	google managed service a/c -
+161: how to create bucket from VM.
+	create service a/c with Storage admin role and create VM and use this service account for VM 
+	then SSH into VM and create bucket with gsutil mb gs://bone
+	note: for service account does not have password
+162: how to connect GCP resource fromm onperm application 
+		create service account and generate key file from service account and use it 
+		application use Google cloud client libraries , and librararies use application default credentials(ADC)
+		ADC uses env variable GOOGLE_APPLICATION_CREDENTIALS
+	how to connect GCP resource fromm onperm application for short period
+		create Oauth 2.0/ openId for service a/c
+163: service is identity and resource based on senario. 
+		u attach role to service a/c - identity
+		u can let other members access SA by granting role to account - resource
+164: ACL- Access control list
+	IAM permissions apply to all objects in bucket
+	ACL can be used to customize specific access to different objects
+165:signed URL used to give permission(to bucket) for limited time. 
+166: how to expose static website
+	create bucket with name as your domain name
+	update bucket permissions to uniform/IAM(from fine grained/ACL)
+	add member to bucket with all users with storage object viewer
+	and allow public access
+
+--------------------------------------------------------
+			Choose DB	- Section-18
+--------------------------------------------------------
+175: no need to watch
+176: watch only if you dont know about trasaction logs and stand by Db benifit
+177:NA
+	availablity is ---can we access now. 
+	derability means ----we we have db after 1||2||10 years
+	gcp gives 4 9's availability, 11 9's durability
+178: NA
+179:watch it
+	RPO(recovery pint objective): MAX accaptable period of data loss
+	RTO(recovery time object) MAX accaptable downtime
+180: NA
+181:watch it
+	strong consistancy - syncronous replication to all replicas- this case performace issue 
+	Eventual consistancy - asynchronous replication- little lag in replica.
+	read-after-write consistancy - inserts are immediate but updates are asynchronous
+182: NA
+	releational DB is predefined schema with strong transactional capabilities
+	good for OLTP (online transaction processing)
+	RDB also used for OLAP (online analytics processing)
+183: NA
+	GCP OLTP RDS- in treditional RDM's clustoing is difficult
+	Cloud sql - PostgreySql, MySql, sql servel for regional upto few TB's(max 30TB storage, 416 GB RAM)
+	Cloud spanner- unlimited scale(multiple PB's) for global App's with horizontal saclling
+	cloud spanner is more availability(5 9's) compared to cloud sql
+	in cloud spanner horizontal scale up both read and writes. but cloudSql onlt read replicas
+184: watch it 
+	BigQuery - petabyte-scalable distributed data warehouse
+	OLAP data storage is different from OLTP. in OLTP entire table data stored in one place
+	whereas in OLAP only column data stored together- high compression and data distributed in nodes
+185: watch it
+	RDB gives strong consistancy but no-sql trade-off strong consistenacy by provide high scale and performace
+	No-SQL Cloud firestore(datastore)-for small mobile apps- provides tarcations and consistancy(but not strong as RDB)
+		and server less
+	No-SQL Cloud BigTable- for large data, we should create server then data, not good for transactional.
+186:in-memory database
+	MemoryStore- Mcahe, reddish
+187: watch it
+188: watch it
+--------------------------------------------------------
+			Explore DB	- Section-19
+--------------------------------------------------------
+189: watch it
+190: NA
+191: no need to watch, but pratice below
+	create mysql-cloud sql instance  and todo database
+	enable Cloud SQL admin api
+	gcloud sql instances patch mysqlinstance1 --no-deletion-protection  [do this to view dbs and restart server/instance and delete server/instance]
+	gcloud sql connect emsql1 --user=root --quiet
+	mysql>use mydb1     ---for choosing DB in server/instance
+	mysql>create table user(id integer, username varchar(30));
+	mysql>describe user;      -- to see table details
+	mysql>insert into user values (1, "first");
+192:NA
+193:NA
+194:NA
+	cloud sql export- use UI and gcloud
+195:NA
+	cloud spanner- is global distribution, infinite scalling, 99.999% hisgh availabilty
+	cloud spanner export- use UI or data flow (but can not use gcloud)
+	cloud sql- can not scale horizotally, we can have read replica, but we can not both  DB and replica at a time
+196:NA
+	while creating cloud spanner instance/server, we do not select mysql/postgress/sql server
+	Create Table Users( UserId INT64 NOT NULL, UserName STRING(1024)) PRIMARY KEY (UserId);
+197:watch it
+198:NA
+	while creating Firestore we do not create instance directly we database(no name is given) by selecting mode(native/datstore mode)
+	once you select mode you can not chnage it, one mode for one GCP project
+	colletion contains documants, document can also contain collection
+	indexes will be created for all fileds automatically, but we can create colmplex indexes
+	
+199:watch it
+	Bigtable for larg incoming data
+	it supports only single row transactions
+	it is not serverless()
+	BigTable -you can not export using console, gcloud. use CBT tool to interact with it
+	for export use java application or Hbase API or Cloud Dataflow
+200:watch it for memeory store
+201:
+202:watch it
+	Bigquery-Datawarehouse-RDBMS
+	serverless
+203:
+204:
+205:
+206:
+	could sql -gclod tool, 
+	big query -bq tool, 
+	big table -cbt tool
+--------------------------------------------------------
+			Pub/Sub		-Section-20
+--------------------------------------------------------
+200:pub/sub is fully managed service.
+202:pull-client calls subscriber andtakes messages
+	pusn-subscriber will be configured to where message should be pushed
+--------------------------------------------------------
+			VPC		-Section-21
+--------------------------------------------------------
+213:no need to watch
+	VPC is global resource
+214:no need to watch
+	How to seperate publib accessable resorce and private resorce in vpc is by creating subnets
+	resouces in private subnet can nont be accessed via internet. 
+	but public subnet resource can access private subnet resorce
+	subnets are region specific
+215:no need to watch
+	by default every project has one dedefault VPC. create VPC with below options 
+	1.auto mode vpc- subnets are created automatically in each regions
+	2.Custom mode vpc- nothing will be created automatically
+	options when creating subnets
+	1.enable private google access-    allows vm's to connect google API using private IP's
+	2.enable flow logs-      to troubleshoot VPC network issues
+	vm can only be created in subnet, if you do not subnet any region for custom VPC then we can not create
+216:no need to watch
+	CIDR -classless inter domain routing blocks
+	69.208.0.0/28 means is it has total 32 bits but 28 are fixed. so we have 2^4 (0-15) ip's
+	ip4 means we have 32 bit
+217:no need to watch if you can create two vpc's and VMs in it
+	VPC1 vm1 can ping vm2 ip 
+	VPC1 vm1 can not ping VPC2 VM2 with out vpc network peering
+	
+218:watch it again
+	Firewall rule is stateful meaning if request is allowed then response also allowed
+	each firewall rule has priority(0-65535). 65535 is lowest priority
+	Default rule implied with 65535 priority
+		Allow all egress(inside to outside traffic), deny all igress(incoming traffic)
+		default rule can not be deleted, but can orverride with new rule priority 0-65534
+	Default VPC has four additional rules with 65534 priority
+		default-allow-internal- same network VM's can commmunicate eachother
+		default-allw-ssh- allow all incoming TCP trffic on port 22 (all incoming TCp traffic means from same vpc only)
+		default-allw-RDP- allow all incoming TCP trffic on port 3389(all incoming TCp traffic means from same vpc only)
+		default-allow-icmp- allow all ICMP from anysource in n/w(we can ping any in n/w ip 
+		and check if resource is up or not )
+219:watch it again
+	Shared VPC(in same Org)- to creat it you should have shared VPC admin role.
+	in this we have one host project and multiple servicce projects
+220:watch it again
+	how to connect VPC's accorss different Orgs - VPC peering
+	all communication happens with internal IP address(google IP address). 
+	not accessable from internet. no data transfer charges for data b/w services
+221:watch it again
+	Hybrid n/w (onperm - cloud) options
+	Cloud VPN
+		implemented using IPSec VPN Tunel. traffic goes through internet(public)
+		and traffic encripted using Internet Key Excahnge protocal.
+		HA VPN- only dyanmic routing - 99.99% availability
+		classic VPN- both dynamic and static routing. 99.9 % availability
+	Cloud Interconnect
+		physical connection b/w onperm to cloud. High availability and High throughput.
+		dedicated interconnect- 10Gbps to 100 Gbps
+		parter interconnect- 50 Mbps to 10Gbps
+	Direct peering	
+		not GCP service, not recomended
+--------------------------------------------------------
+		cloud operations -Section-22 (monitor, log, audit)
+--------------------------------------------------------
+215:Cloud monitoring -workspace
+	- allows monitor multiple projeccts in one place even AWS projects.
+	-one project will have cloud monitoring workspace, and others prjects resource(vm) will agents to send logs to workspace
+216:Clod logging
+		install loging Agent in VM to send logs to Cloud logging 
+		GKE, App Engine, Cloud Run automaticlly sends logs to Cloud logging
+		to send on perm logs use BindPlane tool(recomended). we can also use logging agent.
+217: watch it gain
+218: watch it gain
+219:create cloud function for bucket to trigger event when object is created.
+	you can edit code of function. nodeJs
+222: Cloud trace is distributed tracing system 
+	Cloude tracing is supported for Compute Engine, GKE, App engine, 
+	tracing clint library is vailable for application.
+--------------------------------------------------------
+		IAM    -Section-23
+--------------------------------------------------------
+226: GCP hierarchy 
+	Organization>folder>project>resource
+227:different types of billing account data export
+	BigQuery - for query and visualization
+	Cloud Storage - for history
+228: App engine deployer - can deploy new version but can not shift traffic
+	 App engine service admin - can shift traffic but not deploy new version
+229: Fedarate- Google cloud with your identity provider(SAML)
+230:who should have role and account if project A want access to project B
+	since Project A resource want access to B resource- Then project A resource should have both
+234:Billing account creater-  can creat account
+	Billing account admin- he can not create account
+	Billing account user- he can assign account to project
+	Billing account view- he can see billing details
+235:Compute engine Admin- complete rights
+	Compute instance Admin - only instance and disks
+	Compute engine network admin-
+	Compute engine security admin- full security access (firewall and SSL)
+	Compute storage admin - not instance acees but disks , snapshot, images
+	Compute engine viewer - 
+	Compute OS admin Login - can login as Admin
+	Compute Os login-  login as standard user
+236:App engine creater - to create and delete applications	
+	App engine Admin - R U role in application and CURD role on service, instance and version
+	App engine viewer -
+	App engine code viewer - only role to view code 
+	App engine deployer -  application(R), version(CRD), service(R) - deploy
+	App engive service admin - application(R), version(RUD), service/instance(CURD) -switch traffic,start, stop
+
+	Appe engine roles can not view or download logs, can not see charts in cloud console
+238:Kubernetes Engine Admin -	full 
+	Kubernetes Engine cluster Admin - only cluster not (API objects, deployment, pods)
+	Kubernetes Engine Developer - manage API objects and just read cluster info
+	Kubernetes Engine viewer -
+239: Strogare Admin- buckets and Objects
+	Storage Object Admin- full rights on only objects
+	Storage Object Creater - only object creation
+	Storage Object Viewer - only object view
+	Continer registory stores inmages in Cloud storage, so use cloud strogare roles to control image access
+240:BigQuery admin - full
+	BigQuery data owner - no job access(can not query). but full on table/models/datasets/routines
+	BigQuery data viewer -no job access(can not query). but view on table/models/datasets/routines
+	BigQuery data editor -no job access(can not query). but edit on table/models/datasets/routines
+	BigQuery Job user - create jobs, run query but can not see data
+	BigQuery User - view data + list jobs
+241:logging.viewer -read all logs except access transparancy and data logs
+	logging.privateLogViewer - viewer + access transparancy and data logs
+	logging.admin - all
+	ServiceAccountAdmin - create and manage service accounts
+	ServiceAccountUser - run operations on service accounts
+	ServiceAccountTokenCreater - outh tokens
+	ServiceAccountKeyAdmin -
+242:roles/iam.securityAdmin - get and set any iam policy
+	roles/iam.securityReviewer - list resource and policies
+	roles/iam.OrganizationRoleAdmin - Administer all custom roles in Org and project
+	roles/iam.OrganizationRoleViwer - read all custom roles in Org and project
+	roles/iam.RoleAdmin - provide access to all custom roles in project
+	roles/iam.RoleViwer -provide read access to all custom roles in project
+	roles/iam.browser -
+	
+	
+
+	
+-----------
+247:
+
+--------
+251:deployment manager
+
+Dataflow
+dataproc
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

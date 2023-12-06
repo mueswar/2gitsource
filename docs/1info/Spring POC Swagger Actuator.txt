@@ -1,0 +1,17 @@
+/swagger-ui.html
+/v2/api-docs
+/v3/api-docs is working for openapi 3.0
+
+
+
+Actuator(2.x)
+------------------------------------------------
+Actuator(2.X) is now technology-agnostic whereas in 1.x it was tied to MVC, therefore to the Servlet API.
+Unlike in previous versions, Actuator comes with most endpoints disabled.
+Thus, the only two available by default are /health and /info.
+/env
+/health
+
+actuator
+actuator/info
+actuator/health

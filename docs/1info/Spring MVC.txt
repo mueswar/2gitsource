@@ -1,0 +1,289 @@
+
+######################################################
+#########         Spring MVC        ##################
+######################################################
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+    <version>4.3.6.RELEASE</version>
+</dependency>
+<web-app>
+	<servlet>
+		<servlet-name>example</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>example</servlet-name>
+		<url-pattern>/example/*</url-pattern>
+	</servlet-mapping>
+</web-app>
+register custom configuration class
+<web-app>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/root-context.xml</param-value>
+	</context-param>
+	<servlet>
+	<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value></param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/*</url-pattern>
+	</servlet-mapping>
+	<listener>
+		istener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+</web-app>
+both DispatcherServlet and ContextLoaderListener loads configuraion. ContextLoaderListener loads context based on path-value in context parameter
+DispatcherServlet loads context based on path-value in init parameter
+if we want to use DispatcherServlet configuration with xml and context configuration with annotation the we need context parameter with contextClass.
+<context-param>
+	<param-name>contextClass</param-name>
+	<param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+	</param-value>
+</context-param>
+//general way of DispatcherServlet registration i.e servlet 3.0 configuration
+public class MyWebApplicationInitializer implements WebApplicationInitializer {
+	@Override
+	public void onStartup(ServletContext container) {
+		ServletRegistration.Dynamic registration = container.addServlet("dispatcher", new
+		DispatcherServlet());
+		registration.setLoadOnStartup(1);
+		registration.addMapping("/example/*");
+	}
+}
+//more srping specific way of DispatcherServlet registration
+public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+	@Override
+	protected String[] getServletMappings() {
+	return new String[] { "/" };
+	}
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+	return new Class<?>[] { RootConfig.class };
+	}
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+	return new Class<?>[] { WebConfig.class };
+	}
+	@Override
+	protected Filter[] getServletFilters() {// to add filters to DispatcherServlet
+	return new Filter[] { new MyFilter() };
+	}
+}
+AbstractAnnotationConfigDispatcherServletInitializer is implimentation of WebApplicationInitializer
+//to add more servlets or filters we can add as many WebApplicationInitializer we need.
+public class MyWebApplicationInitializer1 implements WebApplicationInitializer {
+	@Override
+	public void onStartup(ServletContext servletContext) {
+		javax.servlet.FilterRegistration.Dynamic filter = servletContext.addFilter("myFilter", MyFilter.class);
+		filter.addMappingForUrlPatterns(null, false, "/custom/*");
+	}
+}
+
+ENABLING SPRING MVC
+	option1: there’s an <mvc:annotation-driven> element that you can use to enable annotation-driven Spring MVC.
+	option2:@EnableWebMvc
+		@Configuration
+		@EnableWebMvc
+		public class WebConfig {
+		}
+the above does not do features like view resolver, component scan and static content handling, we have to configure those
+@Configuration
+@EnableWebMvc
+@ComponentScan("spitter.web")
+public class WebConfig extends WebMvcConfigurerAdapter {
+	@Bean
+	public ViewResolver viewResolver() {
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		resolver.setExposeContextBeansAsAttributes(true);
+		return resolver;
+	}
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+		configurer.enable();
+	}
+}
+@Controller
+public class HomeController {
+	@RequestMapping(value="/", method=GET)
+	public String home() {
+		return "home";
+	}
+}
+here return string is considered as view name(not response like RestController)
+@Controller
+@RequestMapping({"/", "/homepage"})
+public class HomeController {
+	.....
+}
+@RequestMapping(method=RequestMethod.GET)
+public String spittles(Map model) {
+	model.put("spittleList",spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+	return "spittles";
+}
+here view name is spittles
+@RequestMapping(method=RequestMethod.GET)
+public List<Spittle> spittles() {
+	return spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+}
+here retype is not view. it is object(Model or collection) So view nmae is comes from path mapping.
+the model data is copied into the request as request attributes.
+@RequestMapping(method=RequestMethod.GET)
+public String spittles(Map model) {
+	model.put("spittleList",spittleRepository.findSpittles(Long.MAX_VALUE, 20));
+	return "spittles";
+}
+we can also use map as model to write spring free code.
+//Taking input via path parameters
+/spittles/12345 is better than one for /spittles/show?spittle_id=12345 as per resource-orientation perspective.
+@RequestMapping(value="/{spittleId}", method=RequestMethod.GET)
+public String spittle(@PathVariable("spittleId") long spittleId, Model model) {
+	model.addAttribute(spittleRepository.findOne(spittleId));
+	return "spittle";
+}
+
+special beans
+HandlerMapping: Maps incoming requests to handlers
+HandlerAdapter: Helps the DispatcherServlet to invoke a handler
+ViewResolver: Resolves logical String-based view names to actual View types.
+HandlerExceptionResolver: Maps exceptions to views
+for each special bean the DispatcherServlet maintains a list of implementations to use by default. This information is kept in the file DispatcherServlet.properties
+For example if you configure an InternalResourceViewResolver, the default list of ViewResolver implementations is ignored.
+
+Spring 2.5 introduced an annotation-based programming model for MVC controllers that uses annotations such as @RequestMapping, @RequestParam, @ModelAttribute, and so on.
+@Controller
+public class HelloWorldController {
+	@RequestMapping("/helloWorld")
+	public String helloWorld(Model model) {
+		model.addAttribute("message", "Hello World!");
+		return "helloWorld";
+	}
+}
+To enable autodetection of such annotated controllers, you add component scanning to your configuration.
+<context:component-scan base-package="org.springframework.samples.petclinic.web"/>
+@Controller
+@RequestMapping("/appointments")
+public class AppointmentsController {
+	private final AppointmentBook appointmentBook;
+	@Autowired
+	public AppointmentsController(AppointmentBook appointmentBook) {
+		this.appointmentBook = appointmentBook;
+	}
+	@RequestMapping(method = RequestMethod.GET)
+	public Map<String, Appointment> get() {
+	return appointmentBook.getAppointmentsForToday();
+	}
+	@RequestMapping(value="/{day}", method = RequestMethod.GET)
+	public Map<String, Appointment> getForDay(@PathVariable @DateTimeFormat(iso=ISO.DATE) Date day,
+	Model model) {
+	return appointmentBook.getAppointmentsForDay(day);
+	}
+	@RequestMapping(value="/new", method = RequestMethod.GET)
+	public AppointmentForm getNewForm() {
+	return new AppointmentForm();
+	}
+	@RequestMapping(method = RequestMethod.POST)
+	public String add(@Valid AppointmentForm appointment, BindingResult result) {
+	if (result.hasErrors()) {
+	return "appointments/new";
+	}
+	appointmentBook.addAppointment(appointment);
+	return "redirect:/appointments";
+	}
+}
+@RequestMapping(value="/owners/{ownerId}", method=RequestMethod.GET)
+public String findOwner(@PathVariable("ownerId") String theOwner, Model model) {
+	// implementation omitted
+}
+A @PathVariable argument can be of any simple type such as int, long, Date, etc. 
+Spring automatically converts to the appropriate type or throws a TypeMismatchException if it fails to do so.
+@Controller
+@RequestMapping(value = "/pets", method = RequestMethod.POST, consumes="application/json", produces="application/json")
+public void addPet(@RequestBody Pet pet, Model model) {
+// implementation omitted
+}
+Supported method argument types
+	Request or response objects(ServletRequest or HttpServletRequest)
+	Session object (HttpSession)
+	WebRequest, NativeWebRequest, java.util.Locale, java.util.TimeZone, java.io.InputStream / java.io.Reader, java.io.OutputStream / java.io.Writer
+	@PathVariable @RequestParam @RequestHeader @RequestBody @RequestPart HttpEntity<?>
+	Command or form objects to bind request parameters to bean properties
+	Errors, BindingResult
+@RequestMapping(method = RequestMethod.POST)
+public String processSubmit(@ModelAttribute("pet") Pet pet, Model model, BindingResult result) { ... }
+Invalid ordering of BindingResult and @ModelAttribute there is a Model parameter in between Pet and BindingResult.
+@RequestMapping(method = RequestMethod.POST)
+public String processSubmit(@ModelAttribute("pet") Pet pet, BindingResult result, Model model) { ... }
+
+new controler annotations from 4.3 @GetMapping ,@PostMapping ,@PutMapping ,@DeleteMapping ,@PatchMapping
+@PathVariable can be used to mapp URI templete to method parameter
+
+@PostMapping(path = "/pets", consumes = "application/json")
+@GetMapping(path = "/pets/{petId}", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+
+
+Handler mappings:
+----------------------
+In previous versions of Spring, users were required to define one or more HandlerMapping beans in the web application context to map incoming web requests to appropriate handlers. With the introduction of annotated controllers, you generally don’t need to do that because the RequestMappingHandlerMapping automatically looks for @RequestMapping annotations on all @Controller beans. However, do keep in mind that all HandlerMapping classes extending from AbstractHandlerMapping have the properties that you can use to customize their behavior
+
+Interceptors can be configured using the interceptors property, which is present on all HandlerMapping classes extending from AbstractHandlerMapping
+
+Interceptors located in the handler mapping must implement HandlerInterceptor from the org.springframework.web.servlet package. This interface defines three methods: preHandle(..) is called before the actual handler is executed; postHandle(..) is called after the handler is executed; and afterCompletion(..) is called after the complete request has finished. 
+
+the Spring adapter class HandlerInterceptorAdapter makes it easier to extend the HandlerInterceptor interface.
+
+Resolving views
+---------------------------
+The two interfaces that are important to the way Spring handles views are ViewResolver and View. The ViewResolver provides a mapping between view names and actual views. The View interface addresses the preparation of the request and hands the request over to one of the view technologies.
+
+AbstractCachingViewResolver
+XmlViewResolver   looks into views.xml
+ResourceBundleViewResolver  looks into views.properties
+UrlBasedViewResolver
+InternalResourceViewResolver subclass of UrlBasedViewResolver
+
+
+
+//multipart resolver
+DispatcherServlet doesn’t implement any logic for parsing the data in a multipart request. Instead, it delegates to an implementation of Spring’s MultipartResolver strategy interface to resolve the content in a multipart request.
+CommonsMultipartResolver—Resolves multipart requests using Jakarta Commons FileUpload (even before Spring 3.1)
+StandardServletMultipartResolver—Relies on Servlet 3.0 support for multipart requests (since Spring 3.1)
+@Bean
+public MultipartResolver multipartResolver() throws IOException {
+	return new StandardServletMultipartResolver();
+}
+public class MyWebApplicationInitializer implements WebApplicationInitializer {
+	@Override
+	public void onStartup(ServletContext context) {
+	DispatcherServlet ds = new DispatcherServlet();
+	Dynamic registration = context.addServlet("appServlet", ds);
+	registration.addMapping("/");
+	registration.setMultipartConfig(new MultipartConfigElement("/tmp/spittr/uploads"));
+	}
+}
+public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+-----
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+	registration.setMultipartConfig(
+		new MultipartConfigElement("/tmp/spittr/uploads"));
+	}
+}
+For example, suppose you want to limit files to no more than 2 MB, to limit the entire request to no more than 4 MB, and to write all files to disk.
+new MultipartConfigElement("/tmp/spittr/uploads",2097152, 4194304, 0));
+
+<input type="file" name="profilePicture" accept="image/jpeg,image/png,image/gif" /><br/>
+@RequestMapping(value="/register", method=POST)
+public String processRegistration(@RequestPart("profilePicture") byte[] profilePicture, @Valid Spitter spitter, Errors errors) {
+	...
+}

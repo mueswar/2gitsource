@@ -1,0 +1,98 @@
+install java8
+install NodeJs 12
+install Python
+install AWS CLI version 2
+install eclipse
+install IntellliJ
+install visual studio
+install PyCharm
+install git
+install mvn
+install Docker desktop(loginto dokerhub mueswar for software)
+install sourcetree
+install Insomnia
+install Postman
+install Mongo Comppass
+install Mongo DB
+install Mongo DB shell
+install shell
+
+Bitbucket
+
+
+
+install NodeJs 12
+--------------------------------------------------------------------------------------------------------------------------------------
+step1: download nodejs msi file
+step2: try to install, it will try to install at C:\Program Files\nodejs\ (64bit)
+step3: it will also automatically adds path and npm also installed automatically
+
+uninstall
+uninstall is from control pannel and remove C:\Users\461469\AppData\Roaming\npm   and npm-cache
+
+install Python
+--------------------------------------------------------------------------------------------------------------------------------------
+step1: check python --version
+step2: download https://www.python.org/downloads/
+
+while installing python select check box to add path
+C:\Users\Arha\AppData\Local\Programs\Python\Python310
+
+
+install AWS CLI version 2
+--------------------------------------------------------------------------------------------------------------------------------------
+step1: download MSI file from AWS website
+step2: it installs bydefault in C:\Program Files\Amazon\AWSCLIV2\
+step3: it will also automatically adds path
+
+
+install sourcetree
+--------------------------------------------------------------------------------------------------------------------------------------
+sourcetree - 0.no install just download
+			 1.git- it picks pre installed git from local system
+			 2.Mercurial
+			 3.when we open download file it creates folder C:\Users\userOne\AppData\Local\SourceTree\
+Bitbucket
+	personal account mu.eswar email and N
+	basic pass doenot work
+	check for pin in password.txt
+	
+GitHub
+--------------------------------------------------------------------------------------------------------------------------------------
+to push from locally it asks us to login in browser
+password will be saved in control panel> user accounts
+
+install Mongo DB
+--------------------------------------------------------------------------------------------------------------------------------------
+7.0.1
+	https://www.mongodb.com/try/download/community
+	
+to test connection we need compass/mongo shell
+
+install Mongo Comppass
+--------------------------------------------------------------------------------------------------------------------------------------
+install
+	
+to connect local mongo db 
+	open MongoDBCompass.exe file from installed folder
+	hostname:localhost
+	port:27017
+	authentication: none
+to connect remote db
+	host:cluster0-an86k.mongodb.net
+	enable SRV record so that it will not ask port
+	authentication:username/password
+	Authentication Database:admin
+	SSL:System CA/Atlas deployment
+	
+install Mongo DB shell
+--------------------------------------------------------------------------------------------------------------------------------------
+install
+	
+to connect mongo DB 
+	open powershell 
+	cd C:\two\install\mongodbshell-4.2.3\bin
+	mongo "mongodb+srv://cluster0-an86k.mongodb.net/"  --username emummasani
+
+
+

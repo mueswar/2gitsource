@@ -1,0 +1,22 @@
+Authorization
+
+
+service to external call
+---------------------------------------------------------------------------------------------------
+	call token service passing passing client id and secret
+		we can save token since client and secret does not chnage 
+		based on token expiration
+		it is b2b so client id and secret doenot change
+		but in case of user to app, client id(username) changes
+	call external API through apigateway
+		on apigateway, authorizer will be called passing token
+		authorizer(lambda) validates token calling Azure
+		on successful call to authorozer, apigateway redirects call to service
+		
+	how to evict cache for token 
+	
+service to service internal call
+---------------------------------------------------------------------------------------------------
+we do not need to access token, we can call directly through nlb url/service discover url
+Because all will be in same vpc
+ 

@@ -1,0 +1,135 @@
+17 hours videos
+---------------------
+play again
+133,146,151,159,176,180,194,195,196,197,217,218,220,221,227
+
+maybe:190,204,209
+
+do not play:152, 153, 154, 155, 156, 157, 160, 161, 162, 163, 165, 166, 167, 168, 169, 170,
+172, 174, 175, 177,178,179,182,183,184,185,186,188,189,191,192,193,199,200,201,205,206,207,
+208,210, 211, 212,213,214,216,222,226
+
+
+region, zone
+different types of vm instance creation
+discounts
+vpn, regions
+
+Compute engine(IAAS) -gcloud compute
+	more responsibility like scaling, OS, hardware
+
+App Engine(PAAS) - gcloud app
+	different kind of appengine
+	billing criteria
+	scaling
+	appengine features
+	AppEngine hierarchy
+	cloud build task what role does it need
+	how do we control traffic when deploy new version
+	dispatch.yaml, queue.yaml
+GKE(CAAS) - gloud continer, kubectl
+	differnt type clusters
+	how to deploy deployment into cluster
+	how do u expose deployment 
+	when actual service will be created(not deployment)
+	what is relation between pod and node
+	what are the resource being shared when there are multiple continers in pod
+	what is replica job
+	different types of GKE services
+Cloud function
+	billing?
+	can we use for job? when do we use
+	does all invocations run in same instance
+	scalling?
+	when we deploy cloud fucntion which Pipeline triggered
+Cloud Run - gcloud run
+	what is difference between cloud function and cloud run
+	what is anthos
+	scaling?
+File storage
+	what are different kind of storages
+	what are the different kind of disks
+	which disk support snapshot
+	what are different types of persistance disks
+	faster way of creating disk
+	faster way of creating snapshot
+	what storage is best for sharing
+	what is best for high durability
+Cloud Storage
+	stndard/nearline/codeline/archive
+	stackdriver
+
+
+Cloud operations
+	who need cloud logging agent, does cloud run need explicit agent?
+	different types of logs
+	what type of logs are enabled by default
+	what permission you need to see data access logs
+	what is router, log storage, sink, log explorer
+	what is retention period for log storage
+	what are cloud monitoring features? what is uptimecheck
+
+IAM
+	GCP resource structure
+	different billing accounts
+	different types of billing account data export
+	what are different appengine roles
+	what is fedaration
+	who should have role and account if project A want access to project B
+	what is difference between organization policy and IAM
+	what are the different billing account predefined roles
+	what are the compute engine predefined roles
+	what are the App engine predefined roles
+	what are the GKE predefined roles
+	what are the Cloud storage predefined roles
+	how to controll access to continer images
+	what are the Cloud BigQuery predefined roles
+	
+other services
+	what is deployment manager
+	
+
+
+
+
+
+
+
+
+
+25-50
+see stackdriver logs for user activity on bucket
+in one stackdriver account we can add all projects
+signed url for limited time access to external company
+appengine application does not need explicit pubsub role
+billing manager can create billing account
+verify iam roles under roles section in project
+service account maybe global but roles are specific to project
+if app engine is serving for one region and want to switch different region. create new, old can not do it
+GKE node auto upgrade feature ensures stability
+gsutil parllel composit upload enables rapids file transper
+store database object in screct object
+if app engine is not deployed to intended project, then review config - gloud config list
+on host maintance = Migrate VM to make system available on maintance
+cloud storage object content type to application/pdf - pdf open directlty in browser
+to increase VM momory, stop VM and increase it 
+different region subnets with different CIDR in same VPC can communicate over internal IP without aditional routes
+51-75
+create helth check on port 443 for https application
+bigquery jobuser role to perform quries
+if gKE containe sending more logs disable logs for GKE continer lavel itself
+perform rolling-action start-update maxsurge=1 maxunavilable=0
+if gke and vm are in different VPC, VM should use GKE loadbalancer address to communicate
+to read pub/sub message from cloudrun, create account with cloud runinvoke and assine it to pubsub, pubsub push messages
+acquired compnay gcp projects can be linked to existing billing account to track in single place
+assin monitoring.viewer role to support team, this does not allow to view database table data
+send logs to BQ dataset, logagent in VM, filter in clodlogging for VM logs, export, sink serice- BQ, sink destination- dataset
+75-100
+if there are two vpc's in same org, then we can share vpc to communicate Compute engines
+we can Use gcloud to expand the IP range of the current subnet
+if everyone have G suite email ids, then add IAM role Gsuite ids
+we can create table in BQ and point cloud storage. without loading data to BQ
+firwall->UDP-> VM	
+billing administrator can create billing alert
+in Stackdriver Logging console we can filter logs to check when cloud spanner IAM are given
+100-125

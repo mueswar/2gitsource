@@ -1,0 +1,278 @@
+
+##########################################################
+#############        Java Brains    ######################
+##########################################################
+
+25 
+HQL
+SessionFactory sf = new Configuration.configure().buildSessionFactory();
+Session s = sf.openSession();
+s.beginTransaction();
+
+Query q = s.createQuery("from Entity1 where ep1>5");
+List u = q.list();
+
+s.getTransaction().commit();
+s.close();
+
+26
+Query q = s.createQuery("from Entity1 where ep1>5");
+List<Entity1> u = (List<Entity1>)q.list();
+
+pagination
+Query q = s.createQuery("from Entity1");
+q.setFirstResult(5);
+q.setMaxResults(4);
+List<Entity1> u = (List<Entity1>)q.list();
+
+fetching single column
+Query q = s.createQuery("select ep1 from Entity1");
+List<String> u = (List<String>)q.list();//here list doest return collection entity
+
+fetching two columns
+Query q = s.createQuery("select ep1,ep2 from Entity1");
+List<List> u = (List<List>)q.list();//here list does not return collection entity
+
+Query q = s.createQuery("select max(ep2) from Entity1");//we can use all agrigation functions
+Query q = s.createQuery("select new Map(ep1,ep2) from Entity1");// returns List<Map>
+
+27
+String minUserid ="5";
+Query q = s.createQuery("from Entity1 where ep1 >"+minUserid);//this causes SQL injection issue, user can send below details
+String minUserid ="5 or 1=1"; // even drop table commands
+solution is postion place holders
+Query q = s.createQuery("from Entity1 where ep1 > ?");
+q.setInteger(0,Integer.parseInt(minUserid));
+named parameters
+Query q = s.createQuery("from Entity1 where ep1 > :ID");
+q.setInteger("ID",Integer.parseInt(minUserid));
+
+28
+named quries
+on enity NamedQuery(name="detailsByID",query="from Entity1 where ep1 = ?")//this is JPA Annotation and HQL query
+Query q = s.getNamedQuery("detailsByID");
+q.setInteger(0,Integer.parseInt(minUserid));
+
+NamedNativeQuery(name="detailsByID",query="Select * from table1 where column1 = ?", resultClass=Entity1.class);
+we can run procedure with NamedNativeQuery
+
+29
+Criteria c = s.createCriteria(Entity1.class)
+c.add(Restrictions.eq("ep1","5"));
+List<Entity1> u = (List<Entity1>)c.list();
+
+31
+Criteria c = s.createCriteria(Entity1.class)
+			.setProjection(Projections.propety("ep1"))//to get only one column
+Criteria c = s.createCriteria(Entity1.class)
+			.setProjection(Projections.max("ep1"))
+Prjections.count("ep1");
+
+how to use Example
+Entity1 e = new Entity1();
+e.ep1("5");
+e.ep1("Ram");
+Example ex = new Example(e);
+Criteria c = s.createCriteria(Entity1.class).add(ex);
+
+with example does not work on primary key column
+exmple ingnore nulls
+
+##########################################################
+from refence doc
+
+
+
+
+##########################################################
+#############         FAQ         ########################
+##########################################################
+Id must be configured in entity else we get error
+Can we have bean without default constructor?
+what are allowed access modifiers to constructor?
+when do we go for option of accessing instance variables instedof access methods?
+what is the attribute we use to access instance variables?
+insert=false?
+update=false?
+immutable=false?
+dynamic-insert?
+dynamic-update?
+<class  schema="AUCTION"> ?
+<hibernate-mapping default-schema="AUCTION">?
+<hibernate-mapping package="org.hibernate.auction.model">?
+can we modify configuration files at runtime?
+what is the Object identity?
+what is the Object equality?
+what is the Database identity?
+can we have duplication of rows in relational database?
+what is the object of entity type?
+what is the object of value type?
+How do we define bidirectional association?
+How do we define parent-child association?
+What is hibernate session
+	It is used to get a physical connection with a database. A session object is designed to instantiate each time 
+	an interaction is required with the database, whereas the persistent objects are retrieved using a session object.
+	The session objects are not thread-safe and must be created and destroyed as per the requirement.
+What is first level cache
+	It is session cache and mandatory cache. All requests for persistance objects should go thrrogh session first.
+What is lazy loading
+	 the child objects are not loaded while the parent is loaded.
+	 Since the Hibernate 3 version, the lazy loading is by default enabled
+what is second level cache
+	It is an application level cache for storing entity data. 
+	it does not store Entity, it stores entity data only
+	like for Person Entity it will have some HashMap, keys wiil be peson id, Values will be person record values
+	one database record = one hashMap record
+	second level cache is builed when load object like entitymanager.find();
+	@Entity       
+	@Cache(usage=CacheConcurrencyStrategy.READ_ONLY,    region="yourEntityCache")
+	public class SomeEntity {...	}
+	by default child are not cached, to cache it 
+	@OneToMany
+    @Cache(usage=CacheConcurrencyStrategy.READ_ONLY, region="yourCollectionRegion")
+    private Set<OtherEntity> other; 
+	
+What is query level Cache
+	stores query results only.
+	it does not store entity, it stores query and entity identies
+	one HashMap record= one query and all entity ids for that query
+	when query exicuted first it takes entity ids from query cache and data from second level cache
+	The query cache gets populated when a cacheable JPQL/HQL query gets executed.
+	@NamedQuery(name="account.queryName", query="select acct from Account ...",
+	   hints={ QueryHint(name="org.hibernate.cacheable", value="true") }     
+	})
+	we can also enable at criteia 
+	
+common configuration for second level and query
+	<prop key="hibernate.cache.use_second_level_cache">true</prop>
+	<prop key="hibernate.cache.use_query_cache">true</prop>
+	<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+	<prop key="net.sf.ehcache.configurationResourceName">/your-cache-config.xml</prop>
+	your-cache-config.xml will have cache regions settings
+Difference between get() vs load() 
+	load() will throw an exception if an object with id passed to them is not found
+	get will not throw an exception and return null
+	load can return proxy without hitting the database
+	get always hits database
+difference between save() and saveOrUpdate()
+
+merge() and update()
+	Update: if you are sure that the session does not contains an already persistent instance with the same identifier,then use update to save the data in hibernate
+
+	Merge: if you want to save your modifications at any time with out knowing about the state of an session, then use merge() in hibernate.
+
+What different fetching strategies are of hibernate?
+	it is used to optimize the Hibernate generated select statement.
+	The fetching strategy is declared in the mapping relationship to define how Hibernate fetch its related collections and entities.
+	1. Join Fetching
+		@Fetch(FetchMode.JOIN): it disables lazy loading(only one select)
+	2. Batch Fetching
+	3. Select Fetching  default fetching
+		@Fetch(FetchMode.SELECT) : it enables lazy loading
+	4. Sub-select Fetching
+
+what is N+1 select problem and solutions
+
+How to handle hibernate transactions programatically
+	tx = session.beginTransaction(); 
+what is ACID
+	Atomacity: either all of its operations are executed or none.
+	Durability:If a transaction commits but the system fails before the data could be written on to the disk, 
+		then that data will be updated once the system springs back into action.
+	Isolation: No transaction will affect the existence of any other transaction.
+	consistent:If the database was in a consistent state before the execution of a transaction, 
+		it must remain consistent after the execution of the transaction as well.
+
+
+
+
+
+
+-----------------------Start of POC--------------------------
+create Spring boot with web and JPA
+
+add
+		<dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3.0</version>
+        </dependency>
+  <repositories>
+    <repository>
+      <id>com.oracle</id>
+      <url>http://afpbuildserver:8081/nexus/content/repositories/thirdparty</url>
+    </repository>
+  </repositories>
+  
+server.port=8081
+
+spring.datasource.url=jdbc:oracle:thin:@dcup62d.us.aegon.com:1831:DAFPADM
+spring.datasource.username=emummasani
+spring.datasource.password=WAR1234
+spring.datasource.driver-class=oracle.jdbc.driver.OracleDriver
+spring.datasource.hikari.connection-timeout=60000
+spring.datasource.hikari.maximum-pool-size=5
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+logging.level.org.hibernate.SQL=debug
+
+with three classes will get plicy numbers based on product
+Sone.java
+Done.java
+Emp.java
+Sone.java
+	package com.example.demo1;
+	import java.util.List;
+	import org.springframework.beans.factory.annotation.Autowired;
+	import org.springframework.web.bind.annotation.PathVariable;
+	import org.springframework.web.bind.annotation.RequestMapping;
+	import org.springframework.web.bind.annotation.RequestMethod;
+	import org.springframework.web.bind.annotation.RestController;
+	@RestController
+	public class Sone {
+		@Autowired
+		private Done d;
+		@RequestMapping(method=RequestMethod.GET, value="/hello1/{id}")
+		public List<Emp> mone1(@PathVariable("id") String s) {
+			return d.findByName(s);
+		}
+	}
+Done.java
+	package com.example.demo1;
+	import java.util.List;
+	import org.springframework.data.repository.CrudRepository;
+	public interface Done extends CrudRepository<Emp, Long>{
+		List<Emp> findByName(String name);
+	}
+Emp.java
+	package com.example.demo1;
+	import javax.persistence.Column;
+	import javax.persistence.Entity;
+	import javax.persistence.Id;
+	import javax.persistence.Table;
+	@Entity
+	@Table(name="plcy_cov", schema="AFP_POLL")
+	public class Emp {
+		@Id
+		@Column(name = "PLCY_NBR")
+		private String id;
+		@Column(name = "PRDT_CD")
+		private String name;
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+	}
+-------------------------end of poc-------------------------
+
+
+
+
+

@@ -1,0 +1,15 @@
+eclipse
+#######################################
+
+Windows -> Preferences >general network connections> active provider = direct
+
+CVS
+##########################
+Merge branh1 change to head
+step 1. check out head code into eclipse
+step2. right click on module
+step3. team>merge
+step4. brouse and select branch1 in march to be merged
+step5. select preview the in syn veiw
+
+Note: compare before commit to head with branch1 some times new properties file may miss

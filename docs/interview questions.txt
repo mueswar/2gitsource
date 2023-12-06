@@ -1,0 +1,236 @@
+Last 3 hours review
+
+any question to interviewer
+----------------
+specific project hair
+technology
+backed team and frontend team
+support - it customer facing with huge customer or internal app
+requirment flow
+team hirachy
+architects
+
+
+design patterns
+	buider/singleton/factory/prototype
+	adapter/proxy/facade
+core java
+	oops- abstraction/encapsulation/inheritance/polymoriphisim
+	string contanct pool 1. new string 2. string litteral
+	string v buffer v builder
+	abstarct vs interface
+	interface default methods
+	interface static methods
+	interface functinal interface /examples
+	euqals and hash code
+	comparator v comparable
+	
+	
+	iterator v enumarator
+        for (String elem : list) {
+            if (elem.equals("a")) {
+                list.remove(elem);
+            }
+        }	
+		above code throws expection. Since the enhanced for loop uses an Iterator internally to traverse elements in a Collection, 
+		running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator
+	Maps
+		ConcurrentHashMap, HashMap, Hashtable, LinkedHashMap, TreeMap
+		see code of haspmap, hash table, concurrent hash map get, put, interrator
+	hash map, concurrent hash map
+	stream v parllel stream
+	flat map
+	optional
+	marker interfaces -examples
+	functional interfaces- examples
+	
+	thread v runnable
+	
+RDMS
+	what kind of caching techniques are you using
+	transaction isolation levels
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Faced interview questions
+1. write producer, consumer code if que is full producer has to wait, if empty consumer has to wait
+2. LinkedHashMap internal logic to maintain order
+3. dates
+
+
+
+Angular
+what is service
+How to access service
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+						Last 3 hours review (1.core java, 2.spring, 3. DB and Hibernate)
+-----------------------------------------------------------------------------------------------------------------------
+1. Basic annotations
+2. 12 factor
+3. Bean scopes
+4. spring-boot-actuator
+5. what is diff b/w propagation and isolation
+6. ACID properies
+7. POST vs PUT
+
+
+
+String methods
+List methods
+Set Methods
+Map methods
+
+Interface default methods
+Interface static methods
+Finctional interface
+Functional programming
+write comparator program with list
+write producer consumer program
+callable(What is relation with Feature)
+Exicutors
+CompleatableFeature vs Feature
+fork/join frame work
+
+
+Date Api in java 8
+
+
+
+
+
+
+
+Srping answers
+----------------------
+1. Basic annotations
+	@SpringBootApplication  - it triggers component scanning and auto-configuration
+	@EnableFeignClients
+	@RestController
+	@ReuestMapping   - at class level 
+	@GetMapping
+	@PostMapping
+	@PutMapping
+	@RequestBody
+	@PathVariable
+	@RequestParam
+	@Component
+	@Service
+	@Repository
+	
+2 12 factor
+	it is just 12 best practices,
+	1.Code version  - git
+	2.Dependencies  - pom.xml, build.gradle
+	3.configurations -
+	4.logs
+	5.build
+	6.Backing services
+	
+3. Bean scopes in v6
+	singleton (default- only one instance per IoC)
+	prototype
+	request, session, application, websocket
+4. spring-boot-actuator
+	it gives production ready features like healt, metrics
+	actuator provides dependency managment and auto-configuration for Micrometer Tracing.
+	Spring boot ships acuto-configuration for Zipkin tracer
+5
+6
+7. The difference between POST and PUT is that PUT requests are idempotent. That is, calling the same PUT request multiple times will 	
+	always produce the same result. In contrast, calling a POST request repeatedly have side effects of creating the same resource
+	multiple times.
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+Finctional interface
+	Funtional interface can have only one abstract method but many default methods and static methods.
+	Lambda expressions can be used to represent the instance of a functional interface. Before Java 8, we had to create anonymous inner class objects or implement these interfaces.
+Functional programming
+	Improved Code Reusability and Modularity
+		By following a declarative style, functional programming allows developers to focus on what needs to be done rather than how it should be done. 
+		Complex logic can be broken down into small, reusable functions with functional programming, making it easier to test and debug.
+	Better Scalability and Performance Optimization
+		functional programming enables the composition of functions, where the output of one function becomes the input of another. This composability further enhances code modularity, making reasoning about and maintaining complex software systems easier.
+	Reduced Complexity and Improved Debugging
+		the immutability of data ensures that functions can be safely executed in parallel without the need for complex synchronization mechanisms.
+		functional programming encourages the use of lazy evaluation, where computations are only performed when their results are actually needed.
+callable
+	Java 5 introduced java.util.concurrent.Callable interface in concurrency package that is similar to Runnable interface but it can return any Object and able to throw Exception.
+	Callable interface has call method
+	We can exicute callable with ExecutorService.submit, submit returns Future.
+	when we submit main thread does not get blocked , main thread continue to exicute state ments after submit method 
+	we have Feature.get method to get callable return object.
+	When we call Feature.get method main thread gets blocked until callable completes task and returns value
+	feature.get()
+	feature.get(time)//it avoid getting blocked for longer
+	feature.isDone() and isCancelled()  // to know the status of callable
+Exicutors
+	By providing a simple and efficient way to manage task execution, the Executor Framework can help developers improve the performance and scalability of their applications while minimizing the risk of threading errors and other concurrency issues.
+	The framework includes several key components, including the Executor, ExecutorService, ScheduledExecutorService, and ThreadPoolExecutor. 
+	An Executor is normally used instead of explicitly creating threads. generally to run runnable task we have to create thred using new Thread passing runnable task and we call start method. But with Executor we call execute method.
+	Executor executor = new ThreadPoolExecutor(1, 10,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
+	executor.execute(runnableTask);
+	ExecutorService is an extended version of Executor with more methods and features.
+	An ExecutorService provides methods to manage termination and methods that can produce a Future for tracking the progress of one or more asynchronous tasks.
+	When an ExecutorService is terminated then it has no tasks actively executing, no tasks waiting for execution, and no new tasks can be submitted.
+	Hence an unused ExecutorService should be shut down to allow the reclamation of its resources.
+	ExecutorService has methods like submit(), invokeAny, invokeAll.
+	The ThreadPoolExecutor is an implementation of ExecutorService and provides a pool of threads that executes the runnable or callable tasks.
+	ExecutorService executorService = new ThreadPoolExecutor(1, 10,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
+	We also have Executors class
+	ExecutorService executorService = Executors.newFixedThreadPool(10);
+CompleatableFeature vs Feature
+	CompletableFuture(java 8) is non blocking
+		it is easy to combile multiple async calls
+		thenApply(), thenAccept(), join(), thenCompose(), thenCombine(), and allOf()
+	Feature(java 5) is blocking feature
+		get() -it blocks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+11/28
+-------------------------------
+remove duplicates in string
+post vs put difference
+202, 403 status codes
+AWS EKS
+node.js event loops
+@contoller vs @restcontoller
+circular dependency with constructor injection
+@service vs @component

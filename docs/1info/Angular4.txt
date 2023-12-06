@@ -1,0 +1,559 @@
+https://www.youtube.com/watch?v=Bv_5Zv5c-Ts   (Tony Alicea)
+
+general web problems
+------------------------
+html does not support custom attributes(Html5 supports data attributes)
+Javascript global scope issue(solve with encapsulation)
+// without Dependency injection
+	var person = fuction(fname, lname){
+		this.fanme=fname;
+		this.lanme=lname;
+	}
+	fuction logPerson(){
+		var john= new person("fone","lone");
+		console.log(john);
+	}
+	logPerson();
+//with dependency injection (create fuction to accepect object and create object outside)
+	fuction logPerson(person){
+		console.log(person);
+	}
+	var john= new person("fone","lone");
+	logPerson(john);
+
+benifits of AngularJs
+---------------------
+we can build UI without depending on business logic technology(.net/java).
+Another difference to note about using AngularJS instead of JSP is that we would prefer not to use HTML forms 
+	and the traditional form submissions to pass data to the server side. Instead, we will prefer to encapsulate form submissions in a JSON object 
+
+
+history
+-----------------
+	AngularJS 1 released in 2012.
+	Angular 4 released in March 2017
+	Angular 4 is almost the same as Angular 2. It has a backward compatibility with Angular 2.
+	Angular 4 is updated to a recent version of TypeScript, which is 2.2. 
+	Angular 2 uses TypeScript version 1.8.
+	AngularJS is based on the model view controller, whereas Angular 2 is based on the components structure
+
+Angular 4 - Environment Setup
+-------------------------------------------
+	step1: install node.js
+		Nodejs
+		Npm
+		node –v 
+		npm –v
+	Step2: Angular CLI
+		c:\angular9>npm install –g @angular/cli@latest  // to install angular cli on your system.(create new folder)
+		c:\angular9>ng -v
+		c:\angular9>ng --version
+		software will be installed  at C:\Users\2121313\AppData\Roaming\npm\node_modules\@angular\cli
+		note: ng -v maynot work, but try ng new proj1
+		note2: for access issue, remove C:\Users\username\AppData\Roaming\npm\ng.ps1
+	Step3: create project
+		c:\angular9>ng new proj1 // name of the project
+		c:\angular9>cd proj1
+		c:\angular9\proj1>ng serve -o //command builds the application and starts the web server(port 4200).
+		http://localhost:4200/
+		ng serve --host 0.0.0.0 –port 4205 // to change port
+	VS code
+		download  Visual Studio code IDE https://code.visualstudio.com/
+		Ctrl+Shift+P
+		tips:https://code.visualstudio.com/docs/getstarted/tips-and-tricks#vscode
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+	
+what is difference between AngularJS and Angular 2
+	AngularJS is based on the model view controller, whereas Angular 2 is based on the components structure
+how to create project folder
+	src will have (App folder, index.html, main.js, main.ts, style.css)
+	App folder will have (app.module.ts, app.module.js, app.component.ts, app.component.html)
+what is componet
+	if class is decoratored with @Component then that becomes Component
+what is Module
+	if class is decoratored with @NgModule then that becomes Module
+what is service	
+	if class is decoratored with @Injectable() is service
+how to import Component
+	import { Component } from "@Angular/core"
+what are the component peoperties
+	selector, templete, templeteUrl, styleUrls, providers
+what is derective in html page
+	component property selecter value becomes derective in html
+	@Component({
+		selector:'my-app',
+		template:`<h1> hello{{name}}</h1>` //if html has multiple lines then we shoud use Backtick(~) charcter
+	})
+	index.html
+		<my-app> loading ...</my-app> // loading will be replaced with templete value
+how to use component templeteUrl property
+	@Component({
+		templeteUrl:'app/app.component.html'//here we need to give relative path of index.html
+	})
+different kind of datatypes
+	string, number, any, boolean
+how to define variable in component 
+	message: String ="abc";
+how to access component variable in html 
+	use double curly brases {{message}} also called interpolation
+how to call method
+	we can call method with   {{mone(4,7)}}
+How do we checck collection length with if condition(we have ngIf directive)
+	<div *ngIf="items.length > 0">items are:</div>
+how do we loop collection (use ngFor directive), we can ngFor as attrubute to any html element
+	<p *ngFor=" let item of items">item</p>
+How to call method on button click
+	<button (click)="mone()"> expand/toggle</button> (here we are using parantasis)
+How to created nested component
+	create new commponent in app componet 
+		create employee folder in app folder
+		create employee.componet.html and employee.component.ts in employee folder
+	in app.module.ts file
+		import employee component 
+			import { EmployeeComponent } from './employee/employee.component'
+		and change decalration
+			@NgModule({
+				delaration : [AppComponet, EmployeeComponent],
+			})
+	add employee selecter in app.component.html
+what are different types of bindings
+	interpolation, property, attribute, class, style,event bindings
+what is interpolation
+	<h1>{{message}},/h1>// this is interpolation we are accessing component properties in view
+	{{ 'Message :'+message}} // we can concatinate in interpolation
+	{{10+20+60}}// we can do calculations also
+	{{ header ? header : 'no header'}}//we can use termani operator
+what is property binding
+	in property binding also data flows from componet to view
+	interpolation will be automatically converted to property binding
+	<img [src]='pro2' />
+	<img src='http://abc{{img2}}'/> this is interpolation. here we can not use property binding
+	<button [disable]='isDisable'>click </button> // we should property binding in case of non sting value here isDisable is boolean
+	<button disable='{{isDisable}}'>click </button>// this does not work since isDisable is not string
+	<span [innerHtml]='pro2'/>// this property binding
+	<span bind-innerHtml='pro2'/>// this cenonical form property binding
+what is difference beteen html attribute and DOM property
+	HTML attributes and DOM properties are different things
+	attributes job is just initialize DOM properties.
+	Angular binding works with properties and events and not attributes
+	attribute value does not change but property
+		<input id='id2' type='text' value='Tom'>
+		load this page in browser and open developer tools
+			id2.getAttribute('value') then enter//this will print attribute value as Tom
+			id2.value then enter//this will give us value of property value as Tom
+		now edit textfield value and do not reload just edit text in text box
+			now we can see diiferent value for property but attribute value is still same
+what is attribute binding
+	sometimes we can not use property binging, since DOM many not have property 
+	to corresponding html element attribute. like colspan
+	<th colspan="{{size}}">//does not work because we have colspan html attribute but we do not have colspan DOM property
+	<th attr.colspan="{{size}}">// this works because here we used angular attribute binding
+what is class binding
+	style.css
+	.colorClass{ color:red; }
+	.boldClass{ font-weight:bold; }
+	<button class="colorClass">ok</button>// here we hardcoded class name directly So this works
+	<button class="colorClass" [class]='boldClass'>ok</button>//[class] overrides existing class
+	<button class="colorClass" [class]='applyBold'>ok</button>//here applyBold is calss property
+	<button class="colorClass" [class.boldClass]='true'>ok</button>//this does not override
+	<button class="colorClass" [class.boldClass]='isBold'>ok</button>//here isBold is calss property
+what is ngClass
+	we can use ngClass directive to apply multiple classes
+	<button class="colorClass" [ngClass]='addClasses()'>ok</button>//here addClasses is method
+	wich return object, that object keys are classes names and values will be true or false
+what is style binding
+	<button style='color:red'>ok</button>//this is hard coded
+	<button style='color:red' [style.font-weight]="isBold ? 'bold' : 'normal'">ok</button>
+	//here isBold is class property
+	<button style='color:red' [style.fontWeight]="isBold ? 'bold' : 'normal'">ok</button>//it works too
+	<button style='color:red' [ngStyle]="addStyles()">ok</button>// @ngStyle
+	export class AppComponent {
+		isBold: boolean = true;
+		fontSize: number =30;
+		isItalic: boolean = true;
+		addStyles(){
+		 let styles ={
+			'font-size.px': this.fontSize,
+			'font-style':this.isItalic ? 'italic':'normal',
+			'font-weight':this.isBold ? 'bold':'normal',
+		 };
+		 return styles;
+		}
+	}		
+what is event binding
+	event binding (html to property)
+	<button (click)='mone()'>ok</button>//here we are using parantasis insted of sqire bracktes
+	export class AppComponent {
+		mone():void{
+			cnsole.log('button clicked');
+		}
+	}
+	<button on-click='mone()'>ok</button>//canonical form
+
+what is two way binding how we can achive it
+	FormsModule in app.module.ts file
+		import {FormsModule} from '@angular/platform-browser'
+		@NgModule({
+			imports:[FormsModule],
+		})
+	<input type="text" [(ngModel)] ="fname"/> (banana in the box syntax)
+	{{fname}}
+
+	and define fname variable in componet class
+	fname:string ="xyz";
+	Now what ever we type in text box that will reflect in display
+how to hide few rows in table
+	<tr *ngIf='showDetails'><td>{{firstName}}</td></tr>
+	<tr *ngIf='showDetails'><td>{{lastName}}</td></tr>
+	<button (click)='mone()'>ok</button>
+	export class AppComponent {
+		firstName :string ="fone";
+		lastName :string ="lone";
+		showDetails: boolean = false;
+		mone():void{
+			this.showDetails=!showDetails;
+		}
+	}
+how to display list 
+	export class AppComponent {
+	 arry1 :any[] ={ {p1: 'v1',p2:'v2'}, {p1: 'v21',p2:'v22'} }
+	}
+	<tr ngFor="let x of arry1">
+		<td>{{p1}}</td>	<td>{{p2}}</td>
+	</tr>
+	<tr ngIf="!arry1 || arry1.length==0">
+		<td>no elements</td>
+	</tr>
+
+	
+How to create interface
+	create employee.ts in eployee folder
+	export Interface IEmployee{
+		name:string;// by default it is public and we can add public keyword
+		gender:string;
+	}
+	import IEmployee
+		import {IEmployee} from './employee'
+	use it in class
+		export class Employee{
+			employeeList:IEmployee[];
+			constructor(){
+				this.employeeList =[ {name:'none', gender:'male'}, {name:'ntwo', gender:'male'} ]
+			}
+		}
+How to implement interface
+	export Cone implements IEmployee{
+		public name:string;
+		public gender:string;
+		constructor(name:string, gender:string){
+			this.name=name;
+			this.gender=gender;
+		}
+	}
+	the above code we can convert to short hand form
+	export Cone implements IEmployee{
+		constructor(public name:string, public gender:string){
+		}
+	}
+how to write method in interface
+	mone(sal:number):number;
+how to implement interface method
+	mone(sal:number):number { return 500;}
+how to define optional property in interface
+	pone?:string;//here ? indicates this is optional
+what are angular lifecycle hooks
+	ngOnInt()//gets called after constructor
+	ngOnChanges()//
+	ngOnDestroy()//for clean up before destroy
+	there are others also
+how to impliment service
+	create file employee.service.ts//file name
+	import Injectable and decorate class with Injectable(Injectable is used to inject dependency)
+		import { Injectable } from '@angular/core';
+		import { IEmployee } from '@./employee';
+		@Injectable()
+		export class EmployeeService {
+			getEmployees():IEmployee[]{
+				return [
+				{code: 'v1',name:'v2'}'
+				{code: 'v1',name:'v2'}
+				];
+			}
+		}
+how to call service 
+	import service first
+	inject service
+		@NgComponent({
+			providers:[EmployeeService]
+		})
+	inject service in component
+		private _employeeService:EmployeeService;
+		constructor(_employeeService:EmployeeService;){
+			this._employeeService=_employeeService;
+		}
+		or in shorthad
+			remove private variable and private keyword in constructor and remove assignment in constructor
+			employees: IEmployee[];
+			constructor(private _employeeService:EmployeeService;){
+				this.employees = this._employeeService.getEmployees();
+			}
+		or use best way with ngOnInit hook to call service method
+			import OnInit and implement ngOnInit hook
+				import { Component, OnInit } from '@angular/core';
+				import { IEmployee } from '@./employee';
+				import { EmployeeService } from '@./employee.service';
+				@Component({
+					selector: 'employee',
+					templateUrl: 'app/employee/employee.component.html',
+					styleUrls: ['app/employee/employee.component.css'],
+					providers: [EmployeeService]
+				})
+				export class EmployeeComponent implements OnInit {
+					employees: IEmployee[];
+					constructor(private _employeeService:EmployeeService;){
+					}
+					ngOnInit() {
+						this.employees = this._employeeService.getEmployees();
+					}
+				}
+		note we can also providers in module and that is the best option to get single instance for service
+How to call webservice
+-------------------------------
+	import HttpModule in app.module.ts
+		import { HttpModule } from '@angular/http';
+		@NgModule({
+			imports: [ BrowserModule, FormsModule, HttpModule],
+		})
+
+	import Http and Observable in service 
+	inject Http using short hand form
+		import { Http, Response } from '@angular/http';
+		import { Observable } from 'rxjs/Observable';
+		import 'rxjs/add/operator/map';
+	return Observable from Service method
+		@Injectable()
+		export class EmployeeService {
+			constructor(private _http: Http) { }
+			getEmployees(): Observable<IEmployee[]> {
+				return this._http.get('http://localhost:24535/api/employees')
+					.map((response: Response) => <IEmployee[]>response.json());
+			}
+		}
+	Sbscribe to Observable in component.ts(Observer)
+			ngOnInit() {
+				this._employeeService.getEmployees()
+					.subscribe(employeesData => this.employees = employeesData);
+			}	.subscribe(employeesData => this.employees = employeesData);
+
+	use ngFor to wait view until ngOnInt metod exicution completes employee.component.html
+		<tbody>
+			<ng-container *ngFor="let employee of employees;">
+				<tr>
+					<td>{{employee.code | uppercase}}</td>
+					<td>{{employee.name }}</td>
+				</tr>
+			</ng-container>
+			<tr *ngIf="!employees">
+				<td colspan="5">Loading data. Please wait...</td>
+			</tr>
+			<tr *ngIf="employees && employees.length==0">
+				<td colspan="5"> No employee records to display</td>
+			</tr>
+		</tbody>
+
+error handling
+---------------------
+	import catch and throw in service
+		import 'rxjs/add/operator/catch';
+		import 'rxjs/add/Observable/throw';
+	append catch method to map method
+	rethrow exception
+		return Observable.throw(error);
+
+		@Injectable()
+		export class EmployeeService {
+
+			constructor(private _http: Http) { }
+
+			getEmployees(): Observable<IEmployee[]> {
+				return this._http.get('http://localhost:24535/api/employees')
+					.map((response: Response) => <IEmployee[]>response.json())
+					.catch(this.handleError);
+			}
+
+			handleError(error: Response) {
+				console.error(error);
+				return Observable.throw(error);
+			}
+		}
+	catch exception in component again
+	catch exception in subscribe method second parameter
+		export class EmployeeComponent implements OnInit {
+			employees: IEmployee[];
+			statusMessage: string = 'Loading data. Please wait...';
+			ngOnInit() {
+				this._employeeService.getEmployees()
+					.subscribe(
+					employeesData => this.employees = employeesData,
+					error => {
+						this.statusMessage =
+							'Problem with the service. Please try again after sometime';
+					});
+		}
+
+how add bootstrap and jquery
+	install bootstrap in project folder from command promt
+		npm install bootsrap@3 jquery --save
+	include jquery.min.js in index.html
+		<script src=""/>
+	include and bootstrap css and js files
+routing
+---------------------------------------------------
+1:create new components Home and pagenotfound, we do not need selector for this components
+	since we are routing to these components, we only need selector we want to add this in other component
+	create new folder home
+	home.component.ts
+2:resiter home and pagenotfound components in App model
+3: changes in index.html
+	<base href="/src/">
+4: import RouterModule and Routes modeles in app module
+	and define constant with type Routes arry
+	import { RouterModule, Routes } from '@angular/router';
+	const appRoutes: Routes = [
+		{ path: 'home', component: HomeComponent },
+		{ path: 'employees', component: EmployeeListComponent },
+		{ path: '', redirectTo: '/home', pathMatch: 'full' },//this is redirect
+		{ path: '**', component: PageNotFoundComponent }
+	];
+	@NgModule({
+		imports: [
+			BrowserModule, FormsModule, HttpModule,
+			RouterModule.forRoot(appRoutes)
+		],
+	})
+5:Tie the routes to application menu. Modify the root component (app.component.ts) as shown below
+	import { Component } from '@angular/core';
+	@Component({
+		selector: 'my-app',
+		template: `
+						<div style="padding:5px">
+							<ul class="nav nav-tabs">
+								<li routerLinkActive="active">
+									<a routerLink="home">Home</a>
+								</li>
+								<li routerLinkActive="active">
+									<a routerLink="employees">Employees</a>
+								</li>
+							</ul>
+							<br/>
+							<router-outlet></router-outlet>//this is to tell where content should be desplayed
+						</div>
+				  `
+	})
+
+
+what is route parameter
+	let say we want to display emp details when we click one of the emp record in dispalyed list
+	add router
+		const appRoutes: Routes = [
+			{ path: 'employees', component: EmployeeListComponent },
+			{ path: 'employees/:code', component: EmployeeComponent },
+		];
+	add routerLink directive to convert emp id to clickable link
+		<a [routerLink] =['/empComponet', emp.id]>{{emp.id}}</a>
+	create new method in service 
+		getEmpById(id:string)
+	import ActivatedRoute service in emp component and inject through dependency injection
+	and retive route parameter value with ActivatedRoute service sanpshot method in ngOnInit method
+		let id:string = this._activatedRoute.snapshot.param['id'];
+		this._empService.getEmpById(id).subcribe(.....);
+
+how to convert employ record in employ component to link to display details
+---------------------------------------------------------------------------
+1: add parameter router in app module
+	const appRoutes: Routes = [
+    { path: 'home', component: HomeComponent },
+    { path: 'employees', component: EmployeeListComponent },
+    { path: 'employees/:code', component: EmployeeComponent },
+2: conver record name as link in employee.component.html
+	<td>
+		<a [routerLink]="['/employees',employee.code]">
+			{{employee.code | uppercase}}
+		</a>
+	</td>
+3: changes in employee.service.ts
+	getEmployeeByCode(empCode: string): Observable<IEmployee> {
+		return this._http.get("http://localhost:31324/api/employees/" + empCode)
+			.map((response: Response) => <IEmployee>response.json())
+			.catch(this.handleError);
+	} 
+
+
+
+
+	
+
+*********************************************
+************     Java Brains  ***************
+*********************************************
+create project from Angular CLI
+	$ng new firstprojecct
+	run server(ng serve) (port will be 4200)
+you can test it now http://localhost:4200/ (that's it)
+
+when we try to access application by default it loads index.html
+index.html contains root component that is app component.
+
+create component in CLI
+	$ng generate component hello-world
+	it create four files in src/app/hello-world/
+	hello-world-component.ts, html, css, spec.ts
+	and also updates src/app/app.module.ts
+
+to use hello-world component in app.compo.html, just add hello-world selector.
+
+how to displlay dynamic time without refreshing the page(use setInterval method)
+constructor(){
+	setInterval(()=>{
+	let currentDate = new Date();
+	this.message = currentDate.toDateString()+' '+currentDate.toLocaleTimeString();
+	},
+	1000);
+}
+
+How to get any attribute value in component(we can use @input)
+	if we have like <app-emp name="emp1"></app-emp> then 
+	in component class
+	@Input("name")username:string;
+	user:string;
+	ngOnInit(){
+		this.user=this.username;
+	}
+	but you can not do it in constructor. constructor is exicuted when instance is created but vallues will be after object instation.
+
+
+How to pass object(Emp) to component
+	first create ts file Emp then
+	html should have something like <app-emp [name]="emp1"></app-emp> then
+	in emp component class
+	@Input("name")username:Emp;
+	but where do we intiaze Emp?
+	we can do it in app componet (if app component html passing emp to emp component)
+	emp:Emp
+	constructor(){
+	this.emp= new Emp();
+	this.emp.fname="ab";
+	this.emp.lname="xy";
+	}
+
+
+#############################################
+how to invoke secured webservices
+how to handle errors
+how to validate user input data
+how to develope form data
+logging
+have you ever used javascript tag library

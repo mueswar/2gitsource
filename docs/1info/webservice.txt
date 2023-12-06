@@ -1,0 +1,456 @@
+1xx: Informational	Communicates transfer protocol-level information.
+2xx: Success	Indicates that the client’s request was accepted successfully.
+3xx: Redirection	Indicates that the client must take some additional action in order to complete their request.
+4xx: Client Error	This category of error status codes points the finger at clients.
+5xx: Server Error	The server takes responsibility for these error status codes.
+400 BAD REQUEST: The request was invalid or cannot be otherwise served. An accompanying error message will explain further. 
+401 UNAUTHORIZED: The authentication credentials are missing, or if supplied are not valid or not sufficient to access the resource.
+403 FORBIDDEN: The request has been refused. See the accompanying message for the specific reason (most likely for exceeding rate limit).
+404 NOT FOUND: The URI requested is invalid or the resource requested does not exists.
+406 NOT ACCEPTABLE: The request specified an invalid format.
+410 GONE: This resource is gone. Used to indicate that an API endpoint has been turned off.
+429 TOO MANY REQUESTS: Returned when a request cannot be served due to the application’s rate limit having been exhausted for the resource.
+500 INTERNAL SERVER ERROR: Something is horribly wrong.
+502 BAD GATEWAY: The service is down or being upgraded. Try again later.
+503 SERVICE UNAVAILABLE: The service is up, but overloaded with requests. Try again later.
+504 GATEWAY TIMEOUT: Servers are up, but the request couldn’t be serviced due to some failure within our stack. Try again later.
+HTTP GET
+200 OK: The request was successful and the response body contains the representation requested.
+302 FOUND: A common redirect response; you can GET the representation at the URI in the Location response header.
+304 NOT MODIFIED: There is no new data to return.
+HTTP POST or PUT
+201 OK: The request was successful, we updated the resource and the response body contains the representation.
+202 ACCEPTED: The request has been accepted for further processing, which will be completed sometime later.
+HTTP DELETE
+202 ACCEPTED: The request has been accepted for further processing, which will be completed sometime later.
+204 OK: The request was successful; the resource was deleted.
+
+org.springframework.http.HttpStatus
+OK(200, "OK"),
+CREATED(201, "Created"),
+ACCEPTED(202, "Accepted"),
+BAD_REQUEST(400, "Bad Request")
+NOT_FOUND(404, "Not Found")
+
+@ResponseStatus(NOT_FOUND)
+public class CusNotFoundException extends RuntimeException {}
+
+History
+---------------------------------------
+Web services have been around a while now. First there was SOAP. But SOAP only described what the messages looked like. Then there was WSDL. 
+But WSDL didn't tell you how to write web services in Java™. Then along came JAX-RPC 1.0. After a few months of use, 
+the Java Community Process (JCP) folks who wrote that specification realized that it needed a few tweaks, so out came JAX-RPC 1.1. 
+After a year or so of using that specification, the JCP folks wanted to build a better version: JAX-RPC 2.0. 
+A primary goal was to align with industry direction, but the industry was not merely doing RPC web services, they were also doing message-oriented web services. 
+So "RPC" was removed from the name and replaced with "WS" (which stands for web Services, of course). 
+Thus the successor to JAX-RPC 1.1 is JAX-WS 2.0 - the Java API for XML-based web services.
+
+SOAP
+-------------------
+The SOAP specification does not provide a programming model or even an API for the construction of SOAP messages; it simply defines the XML schema to be used 
+in packaging a SOAP message. When you construct a SOAP message using SAAJ, you do not have to specify which model you’re following.
+SOAP 1.2:
+There is really not a lot of difference, from a programming model point of view, between SOAP 1.1 and SOAP 1.2. As a Java programmer, 
+the only place you will encounter these differences is when using the handlers, which we will cover in a future tip. SAAJ 1.3 has been updated to support SOAP 1.2.
+
+
+(SAAJ) SOAP with Attachments API for Java (JEE 5 docs)
+--------------------------------------------------
+SOAP with Attachments API for Java (SAAJ) is used mainly for the SOAP messaging that goes on behind the scenes in JAX-WS handlers and JAXR implementations.
+The SAAJ API allows you to do XML messaging from the Java platform.
+By simply making method calls using the SAAJ API, you can read and write SOAP-based XML messages
+Types of SOAP messages: The two main types of SOAP messages are those that have attachments and those that do not.
+Messages with No Attachments:this message has elements
+SOAP message 
+SOAP part
+SOAP envelope
+SOAP header (optional)
+SOAP body
+The SAAJ API provides the SOAPMessage class to represent a SOAP message, the SOAPPart class to represent the SOAP part, the SOAPEnvelope interface to represent the SOAP envelope. When you create a new SOAPMessage object, it will automatically have the parts that are required to be in a SOAP message. In other words, a new SOAPMessage object has a SOAPPart object that contains a SOAPEnvelope object. The SOAPEnvelope object in turn automatically contains an empty SOAPHeader object followed by an empty SOAPBody object. If you do not need the SOAPHeader object, which is optional, you can delete it.
+
+Messages with Attachments: A SOAP message may include one or more attachment parts in addition to the SOAP part. The SOAP part must contain only XML content; as a result, if any of the content of a message is not in XML format, it must occur in an attachment part. So if, for example, you want your message to contain a binary file, your message must have an attachment part for it. Note that an attachment part can contain any kind of content, so it can contain data in XML format as well. The SAAJ API provides the AttachmentPart class to represent an attachment part of a SOAP message. A SOAPMessage object automatically has a SOAPPart object and its required subelements, but because AttachmentPart objects are optional, you must create and add them yourself. If a SOAPMessage object has one or more attachments, each AttachmentPart object must have a MIME header to indicate the type of data it contains. When a SOAPMessage object has one or more AttachmentPart objects, its SOAPPart object may or may not contain message content.
+The SAAJ APIs extend their counterparts in the org.w3c.dom package like
+The Node interface extends the org.w3c.dom.Node interface.
+The SOAPPart class implements the org.w3c.dom.Document interface.
+SAAJ Connections:
+SOAPConnectionFactory factory = SOAPConnectionFactory.newInstance();
+SOAPConnection connection = factory.createConnection();
+. . .// create a request message and give it content
+java.net.URL endpoint = new URL("http://fabulous.com/gizmo/order");
+SOAPMessage response = connection.call(request, endpoint);
+Creating a Message
+MessageFactory factory = MessageFactory.newInstance();
+SOAPMessage message = factory.createMessage();
+Accessing Elements of a Message example1
+SOAPPart soapPart = message.getSOAPPart();
+SOAPEnvelope envelope = soapPart.getEnvelope();
+SOAPHeader header = envelope.getHeader();
+SOAPBody body = envelope.getBody();
+Accessing Elements of a Message example2
+SOAPHeader header = message.getSOAPHeader();
+SOAPBody body = message.getSOAPBody();
+
+Adding Content to the Body
+The SOAPBody object contains either content or a fault. To add content to the body, you normally create one or more SOAPBodyElement objects to hold the content.When you create any new element, you also need to create an associated javax.xml.namespace.QName object so that it is uniquely identified.
+QName bodyName = new QName("http://wombat.ztrade.com", "GetLastTradePrice", "m");
+SOAPBodyElement bodyElement = body.addBodyElement(bodyName);
+QName name = new QName("symbol");
+SOAPElement symbol = bodyElement.addChildElement(name);
+symbol.addTextNode("SUNW");
+<SOAP-ENV:Envelope
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
+  <SOAP-ENV:Body>
+    <m:GetLastTradePrice xmlns:m="http://wombat.ztrade.com">
+      <symbol>SUNW</symbol>
+    </m:GetLastTradePrice>
+  </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
+The SAAJ API is focused primarily on reading and writing messages. After you have written a message, you can send it using various mechanisms (such as JMS or JAXM). The SAAJ API does, however, provide a simple mechanism for request-response messaging(SOAPConnectionFactory)
+
+adding attachments
+AttachmentPart attachment = message.createAttachmentPart();
+String stringContent = "Update address for Sunny Skies  Inc., to 10 Upbeat Street, Pleasant Grove, CA 95439";
+attachment.setContent(stringContent, "text/plain");//content type should be metioned
+attachment.setContentId("update_address");//we can add multiple attacments so we need content id when we try to retrive
+message.addAttachmentPart(attachment);
+
+Accessing an AttachmentPart Object
+java.util.Iterator iterator = message.getAttachments();
+while (iterator.hasNext()) {
+    AttachmentPart attachment = (AttachmentPart)iterator.next();
+    String id = attachment.getContentId();
+    String type = attachment.getContentType();
+    System.out.print("Attachment " + id + " has content type " + type);
+    if (type.equals("text/plain")) {
+        Object content = attachment.getContent();
+        System.out.println("Attachment contains:\n" + content);
+    }
+}
+
+SAAJ defines two packages:
+javax.xml.soap: you use the objects in this package to define the parts of a SOAP message and to assemble and disassemble SOAP messages. 
+You can also use this package to send a SOAP message without the support of a provider.
+javax.xml.messaging: you use the objects in this package to send a SOAP message using a provider and to receive SOAP messages.
+
+The SOAPMessage object is a collection of objects divided in two parts: a SOAP part and an attachment part. 
+The main thing to remember is that the attachment part can contain non-xml data.
+The SOAP part of the message contains an envelope that contains a body (which can contain data or fault information) and an optional header. 
+When you use SAAJ to create a SOAP message, the SOAP part, envelope, and body are created for you: you need only create the body elements. 
+To do that you need to get to the parent of the body element, the SOAP body.
+	SOAPPart MyPart = MyMsg.getSOAPPart();
+	SOAPEnvelope MyEnv = MyPart.getEnvelope();
+	SOAPBody MyBody = envelope.getBody(); 
+At this point, you can create a name for a body element (as described in Namespaces) and add the body element to the SOAPMessage.
+For example, the following code line creates a name (a representation of an XML tag) for a body element:
+ Name bodyName = envelope.createName("Temperature"); 
+The next code line adds the body element to the body:
+ SOAPBodyElement myTemp = MyBody.addBodyElement(bodyName); 
+Finally, this code line defines some data for the body element bodyName :
+ myTemp.addTextNode("98.6");
+ 
+ 
+ 
+
+JAXB 1.0 specified the mapping of XML Schema-to-Java, but not Java-to-XML Schema.)
+JAXB 1.0 provided validation at unmarshal time and also enabled on-demand validation on a JAXB content tree. JAXB 2.0 only allows validation at unmarshal and marshal time.
+
+
+
+JAX-WS(xml web service)
+-----------------------------------------------------------
+JAX-WS allows developers to write message-oriented as well as Remote Procedure Call-oriented (RPC-oriented) web services.
+In JAX-WS, a web service operation invocation is represented by an XML-based protocol, such as SOAP.
+These calls and responses are transmitted as SOAP messages (XML files) over HTTP.
+Although SOAP messages are complex, the JAX-WS API hides this complexity from the application developer. With JAX-WS, the developer does not generate or parse SOAP messages. 
+It is the JAX-WS runtime system that converts the API calls and responses to and from SOAP messages.
+A JAX-WS client can access a web service that is not running on the Java platform, and vice versa.
+Business methods that are exposed to web service clients must have JAXB-compatible parameters and return types. 
+
+Dynamic Proxy Client
+ServiceFactory serviceFactory = ServiceFactory.newInstance();
+Service helloService = serviceFactory.createService(WsdlLocation, new QName(nameSpaceUri, serviceName));
+HelloIF myProxy = (HelloIF) helloService.getPort(new QName(nameSpaceUri, portName),HelloIF.class);
+
+Dynamic Invocation Interface
+ServiceFactory factory = ServiceFactory.newInstance();
+Service service = factory.createService(new QName(qnameService)); //<service name="MyHelloService">
+Call call = service.createCall(new QName(qnamePort));  //<portType name="HelloIF">
+call.setTargetEndpointAddress(endpoint); //<soap:address>
+call.setProperty(Call.SOAPACTION_USE_PROPERTY,new Boolean(true));
+call.setProperty(Call.SOAPACTION_URI_PROPERTY,"");
+call.setProperty("javax.xml.rpc.encodingstyle.namespace.uri","http://schemas.xmlsoap.org/soap/encoding/");
+call.setReturnType(new QName("http://www.w3.org/2001/XMLSchema", "string"));
+call.setOperationName(new QName("urn:Foo","sayHello"));
+call.addParameter("String_1", new QName("http://www.w3.org/2001/XMLSchema", "string"), ParameterMode.IN);
+
+What remains the same?
+Before we itemize the differences between JAX-RPC 1.1 and JAX-WS 2.0, we should first discuss what is the same.
+•	JAX-WS still supports SOAP 1.1 over HTTP 1.1, so interoperability will not be affected. The same messages can still flow across the wire.
+•	JAX-WS still supports WSDL 1.1, so what you've learned about that specification is still useful. A WSDL 2.0 specification is nearing completion,
+ but it was still in the works at the time that JAX-WS 2.0 was finalized.
+•	What is different?
+•	SOAP 1.2 
+•	JAX-RPC and JAX-WS support SOAP 1.1. JAX-WS also supports SOAP 1.2.
+•	XML/HTTP 
+•	The WSDL 1.1 specification defined an HTTP binding, which is a means by which you can send XML messages over HTTP without SOAP. JAX-RPC ignored the HTTP binding.
+ JAX-WS adds support for it.
+•	WS-I's Basic Profiles 
+•	JAX-RPC supports WS-I's Basic Profile (BP) version 1.0. JAX-WS supports BP 1.1. (WS-I is the web services interoperability organization.)
+•	New Java features 
+•	JAX-RPC maps to Java 1.4. JAX-WS maps to Java 5.0. JAX-WS relies on many of the features new in Java 5.0.
+•	Java EE 5, the successor to J2EE 1.4, adds support for JAX-WS, but it also retains support for JAX-RPC, which could be confusing to today's web services novices.
+•	The data mapping model 
+•	JAX-RPC has its own data mapping model, which covers about 90 percent of all schema types. Those that it does not cover are mapped to javax.xml.soap.SOAPElement.
+•	JAX-WS's data mapping model is JAXB. JAXB promises mappings for all XML schemas.
+•	The interface mapping model 
+•	JAX-WS's basic interface mapping model is not extensively different from JAX-RPC's; however:
+•	JAX-WS's model makes use of new Java 5.0 features.
+•	JAX-WS's model introduces asynchronous functionality.
+•	The dynamic programming model 
+•	JAX-WS's dynamic client model is quite different from JAX-RPC's. Many of the changes acknowledge industry needs: 
+•	It introduces message-oriented functionality.
+•	It introduces dynamic asynchronous functionality.
+•	JAX-WS also adds a dynamic server model, which JAX-RPC does not have.
+•	MTOM (Message Transmission Optimization Mechanism) 
+•	JAX-WS, via JAXB, adds support for MTOM, the new attachment specification. Microsoft never bought into the SOAP with Attachments specification; 
+but it appears that everyone supports MTOM, so attachment interoperability should become a reality.
+•	The handler model has changed quite a bit from JAX-RPC to JAX-WS.
+•	JAX-RPC handlers rely on SAAJ 1.2. JAX-WS handlers rely on the new SAAJ 1.3 specification.
+
+
+JAX-RS
+
+Benefits of REST Over SOAP
+---------------------------------
+REST allows a greater variety of data formats, whereas SOAP only allows XML.
+REST provides superior performance, particularly through caching for information that’s not altered and not dynamic.
+REST is generally faster and uses less bandwidth.
+
+Java API for XML-Based RPC (JAX-RPC) is a Legacy Web Services Java API, it uses SOAP and HTTP to do RPCs over the network and enables building of Web services and Web applications based on the SOAP 1.1 specification, Java SE 1.4 or lower, or when rpc/encoded style must be used.
+
+You can use the JAX-RPC programming model to develop SOAP-based web service clients and endpoints. JAX-RPC enables clients to invoke web services developed across heterogeneous platforms. Likewise, JAX-RPC web service endpoints can be invoked by heterogeneous clients. JAX-RPC requires SOAP and WSDL standards for this cross-platform interoperability.
+
+JAX-RPC lets people develop a web service endpoint using either a Servlet or Enterprise JavaBeans (EJB) component model. The endpoint is then deployed on either the Web or EJB container, based on the corresponding component model. Endpoints are described using a Web Services Description Language (WSDL) document.(This WSDL document can be published in a public or private registry, though this is not required). A client then uses this WSDL document and invokes the web service endpoint.
+
+JAX-RPC in J2ee 1.4 supports 4 types of stubs and invocations: static stub, dynamic proxy, Dynamic Invocation Interface (DII) and Application client.
+Static Stub Client
+Web service client makes a call through a stub, a local object that acts as a proxy for the remote service. Because the stub is created by wscompile at development time (as opposed to runtime), it is usually called a static stub.
+
+Example: Invoking a Stub Client
+Stub stub = (Stub) (new MyHelloService_Impl().getHelloIFPort());
+stub._setProperty (javax.xml.rpc.Stub.ENDPOINT_ADDRESS_PROPERTY,endpoint_address_string);
+HelloIF hello = (HelloIF)stub;
+System.out.println(hello.sayHello("Duke!"));
+
+Dynamic Proxy Client
+In contrast, the client call a remote procedure through a dynamic proxy, a class that is created during runtime. Although the source code for the static stub client relies on an implementation-specific class, the code for the dynamic proxy client does not have this limitation.
+
+Example: Dynamic Proxy
+javax.xml.rpc.Service service = ServiceFactory.newInstance().createService(...);
+com.example.StockQuoteProvider sqp = (com.example.StockQuoteProvider)service.getPort(portName, StockQuoteProvider.class);
+float price = sqp.getLastTradePrice("ACME");
+
+Dynamic Invocation Interface Client
+With the dynamic invocation interface (DII), a client can call a remote procedure even if the signature of the remote procedure or the name of the service is unknown until runtime. In contrast to a static stub or dynamic proxy client, a DII client does not require runtime classes generated by wscompile.
+
+Example: Dynamic Invocation Interface
+javax.xml.rpc.Service service = ServiceFactory.newInstance().createService(...);
+javax.xml.rpc.Call call = service.createCall(portName, "getLastTradePrice");
+// This example assumes that addParameter and setReturnType methods are not required to be called
+Object[] inParams = new Object[] {"ACME"};
+Float quotePrice = (Float)call.invoke(inParams);
+
+Application Client
+Unlike the stand-alone clients, for an application client, because it's a J2EE component, an application client can locate a local web service by invoking the JNDI lookup method.
+
+Example: Application Client
+Context ic = new InitialContext();
+MyHelloService myHelloService = (MyHelloService)
+ic.lookup("java:comp/env/service/MyJAXRPCHello");
+appclient.HelloIF helloPort = myHelloService.getHelloIFPort();
+((Stub)helloPort)._setProperty(Stub.ENDPOINT_ADDRESS_PROPERTY,args[0]);
+System.out.println(helloPort.sayHello("Jake!"));
+
+
+Service Endpoint Model
+JAX-RPC supports a client model for the service consumer, and a service endpoint model for the service producer.
+
+Application-Level Interaction Modes
+JAX-RPC specifies three client application interaction models:
+* Synchronous request-response two-way RPC
+* Asynchronous (non-blocking) request-response two-way RPC
+* One-way RPC
+
+
+Benefits of SOAP Over REST
+--------------------------
+if you need more robust security, SOAP’s support for WS-Security can come in handy. It offers some additional assurances for data privacy and integrity. It also provides support for identity verification through intermediaries rather than just point-to-point, as provided by SSL (which is supported by both SOAP and REST).
+Another advantage of SOAP is that it offers built-in retry logic to compensate for failed communications.
+some use cases require greater transactional reliability than what can be achieved with HTTP (which limits REST in this capacity). If you need ACID-compliant transactions, SOAP is the way to go.
+
+
+JAX-RS annotations are runtime annotations; therefore, runtime reflection will generate the helper classes and artifacts for the resource.
+A Java EE application archive containing JAX-RS resource classes will have the resources configured, the helper classes and artifacts generated, and the resource exposed to clients by deploying the archive to a Java EE server.
+
+@Path @ApplicationPath
+@GET @POST @PUT @DELETE @HEAD
+@PathParam @QueryParam
+@Consumes @Produces
+@Provider
+
+@Path("users/{username: [^/]+?}")
+A @Path value isn't required to have leading or trailing slashes (/). 
+
+Methods decorated with request method designators must return void, a Java programming language type, or a javax.ws.rs.core.Response object.
+
+Entity Providers supply mapping services between representations and their associated Java types.
+MessageBodyWriter
+MessageBodyReader 
+Response.ResponseBuilder
+
+By default, a resource class can respond to and produce all MIME media types of representations specified in the HTTP request and response headers. The value of @Produces is an array of String of MIME types or a comma-separated list of MediaType constants. @Produces can also use the constants defined in the javax.ws.rs.core.MediaType class to specify the media type. 
+@Produces(MediaType.APPLICATION_XML)
+@GET
+public Customer getCustomer() { ... }
+
+@Produces({"application/xml", "application/json"})
+public String doGetAsXmlOrJson() {
+    ...
+}
+The doGetAsXmlOrJson method will get invoked if either of the media types application/xml or application/json is acceptable. If both are equally acceptable, the former will be chosen because it occurs first. 
+
+SOAP and REST protocals
+------------------
+REST uses HTTP
+SOAP uses HTTP, MQ, SMTP
+
+Rest supports different data formats
+performance and scalability is better in Rest
+Rest can be cached.
+
+SOAP supports SSL and WS-security that adds some enterprise security fetures
+SOAP suuports AICD transactions supports
+SOAP provides multi-phase commit across different distributed transactional resources
+
+
+
+PUT and POST
+------------
+Better is to choose between PUT and POST based on idempotence of the action.
+PUT implies putting a resource - completely replacing whatever is available at the given URL with a different thing. 
+By definition, a PUT is idempotent. Do it as many times as you like, and the result is the same. x=5 is idempotent.
+
+POST updates a resource, adds a subsidiary resource, or causes a change. A POST is not idempotent, in the way that x++ is not idempotent.
+
+GET and POST
+----------------------
+GET requests can be cached
+GET requests can remain in the browser history
+GET requests can be bookmarked
+GET requests can be distributed & shared
+GET requests can be hacked 
+Our users… because they may not realise that they are sharing sensitive data when they share a URL or that it can be viewed in the browser history by other people using the same computer.*
+Although the RFC doesn’t lay down any length-related guidelines, Internet Explorer – with its insistence on finding ways to make things difficult for us – enforces a maximum URL length of 2,048 characters.
+
+
+Security
+--------------------
+policy
+<wsp:Policy xmlns:wsp=..>
+	<wsp:ExactlyOne>
+		<wsp:All>
+			<wsp:wssUserTonken10/>
+		</wsp:All>
+	</wsp:ExactlyOne>
+</wsp:Policy>
+
+//how to add WS security in cxf
+Note: even though we add configuration seprate CallbackHandler impelentatios, we do not change actual service and client code. WS security is plugable without disturbing actual service
+add dependency in pom 
+<dependency>
+    <groupId>org.apache.cxf</groupId>
+    <artifactId>cxf-rt-ws-security</artifactId>
+    <version>3.2.5</version>
+</dependency>
+add intercepor in spring beans.xml(context file)
+        <jaxws:endpoint id="auth"
+                        implementor="com.company.auth.service.AuthServiceImpl" 
+                        address="/corporateAuth">
+            <jaxws:inInterceptors>
+                <bean class="org.apache.cxf.binding.soap.saaj.SAAJInInterceptor"></bean>
+                <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+                    <constructor-arg>
+                        <map>
+                            <entry key="action" value="UsernameToken" />
+                            <entry key="passwordType" value="PasswordText" />
+                            <entry key="passwordCallbackClass" value="com.company.auth.service.ServerPasswordCallback"></entry>
+                        </map>
+                    </constructor-arg>
+                </bean>
+            </jaxws:inInterceptors>
+        </jaxws:endpoint>
+add CallbackHandler impementation		
+public class ServerPasswordCallback implements CallbackHandler {
+
+
+}
+
+at client side also add <jaxws:outInterceptors> and CallbackHandler impementation to set password
+
+//how to add encription in cxf
+Note: even though we add configuration seprate CallbackHandler impelentatios, we do not change actual service and client code. encription is plugable without disturbing actual service
+add dependency in pom 
+<dependency>
+    <groupId>org.apache.cxf</groupId>
+    <artifactId>cxf-rt-ws-security</artifactId>
+    <version>3.2.5</version>
+</dependency>
+add intercepor in spring beans.xml(context file)
+        <jaxws:endpoint id="auth"
+                        implementor="com.company.auth.service.AuthServiceImpl" 
+                        address="/corporateAuth">
+            <jaxws:inInterceptors>
+               <bean class="org.apache.cxf.ws.security.wss4j.WSS4JInInterceptor">
+                    <constructor-arg>
+                        <map>
+                            <entry key="action" value="Encript" />
+                            <entry key="decryptionPropFile" value="secpro1.properties" />
+                            <entry key="passwordCallbackClass" value="com.company.auth.service.ServerPasswordCallback"></entry>
+                        </map>
+                    </constructor-arg>
+                </bean>
+            </jaxws:inInterceptors>
+        </jaxws:endpoint>
+only difference is <entry key="action" value="Encript" />
+
+//interceptors
+how to create phase interceptor
+by extending Abstractphaseinterceptor and override handlemessage(Message m) method
+
+how to create soap interceptor
+by extending Abstractsoapinterceptor and override handlemessage(SoapMessage m) method
+
+//invoker
+By extending AbstractInvoker and overriding getServiceObject()
+
+//dynamic clients
+JaxDynamicClientFactory dc =JaxDynamicClientFactory.newInstance();
+Client c = dc.createClient("url");
+Object[] res = c.invoke("method1")
+//Asyncronous messaging
+
+//service over JMS
+http is not transaction, it is state less. id does not garentee transaction success.
+JMS does all thesethings
+
+################################################################
+                        FAQ
+################################################################
+what are the status codes
+how to upload file with rest service
+what is partial update in rest
+what is difference between filter and interceptor
+can we send request body in DELETE method
+which methods accepect request body
+
+

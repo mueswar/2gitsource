@@ -1,0 +1,74 @@
+design patterns
+https://dzone.com/articles/design-patterns-for-beginners-with-java-examples
+
+	Creational Patterns
+		Creational patterns deal with the creation of objects.
+			prototype pattern
+				create instance with intial setup and create more by cloning when ever required
+				every new chese game will have same intial setup
+			Builder Pattern
+				when we want to create instance with only subset of properties
+			Singleton Pattern
+			Factory Method Pattern
+				based on user input object will be created from family of objects(Men or women)
+	Structural Patterns
+		Structural patterns deal with the composition of objects.
+			proxy pattern
+				proxy aboject should work as it acual object(remote object) in local machine
+				example: ejb Home and ejb remote
+				credit and back account
+			Facade pattern
+				example event manger(go to person)
+				client interact with one service(interface) this service interacts with mulitple sevices and gives what client need
+				it reduces network latency
+			Adapter pattern
+				you interact different system both have different formats but client need always same format
+	Behavioral Patterns
+		behavior of objects or interactions between objects.
+
+
+
+Factory pattern
+------------------------------------------
+public abstract class Car {
+	protected abstract void construct();
+}
+public class LuxuryCar extends Car { protected void construct() {}}
+public class SmallCar extends Car {protected void construct() {} }
+public class CarFactory {
+    public static Car buildCar(CarType model) {
+        Car car = null;
+        switch (model) {
+        case SMALL:
+            car = new SmallCar();
+            break;
+        }
+        return car;
+    }
+}
+
+DAO
+--------------------------------------
+interface AgentDao  
+{ 
+    public List<Agent> getAllAgents(); 
+} 
+ 
+class AgentDaoImpl implements AgentDao  
+{ 
+
+}
+
+------------------------------------------------------
+What is difference between factory and abstract factory pattern
+
+
+Visitor
+---------------------------------------------------------------------------------
+https://www.digitalocean.com/community/tutorials/visitor-design-pattern-java
+
+
+
+
+
+

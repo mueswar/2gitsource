@@ -1,0 +1,71 @@
+########################################################
+############ Spring loging                        ######
+########################################################
+#logging.level.root=debug
+logging.level.org.hibernate.SQL=debug
+logging.file=logs/app1.log
+// with slf4j method internally uses logback implimentaion
+package com.example.demo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+@RestController
+public class One {
+	private static final Logger LOGGER = LoggerFactory.getLogger(One.class);
+	@GetMapping(path="/one")
+	public String mone() {
+		LOGGER.info("****************");
+		LOGGER.debug("****************");
+		return "";
+	}
+}
+by default log level is info
+application.properties
+logging.level.root=debug
+//with log4j: we need to add required jars
+note log4j also use slf4j internally
+package com.example.demo;
+import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+@RestController
+public class One {
+	private static final Logger LOGGER = Logger.getLogger(One.class);
+	@GetMapping(path="/one")
+	public String mone() {
+		LOGGER.info("****************");
+		LOGGER.debug("****************");
+		return "";
+	}
+}
+//logging with logback
+create logback.xml in resource
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="DEV_HOME" value="logs" />
+	<appender name="FILE-AUDIT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${DEV_HOME}/debug.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+			</Pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${DEV_HOME}/archived/debug.%d{yyyy-MM-dd}.%i.log
+                        </fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+	<logger name="com.example.demo" level="debug" additivity="false">
+		<appender-ref ref="FILE-AUDIT" />
+	</logger>
+	<root level="info">
+		<appender-ref ref="FILE-AUDIT" />
+	</root>
+</configuration>

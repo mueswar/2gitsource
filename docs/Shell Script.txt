@@ -1,0 +1,328 @@
+Shell Script
+# this is comment
+$clear
+$cat /etc/shells #to find different shells
+$cd Desktop #to go to desktop
+$mkdir dir1 # to create directory
+$touch hello.sh  #to create file
+how can we add content to file
+$cat file1 # to view file contents
+$cat >file1 press enter ($cat >> file1 to append text at end)
+then ehere we can type file content
+then Ctrl+d to exit from cat command
+$ls for just display file/directory names
+$ls -al # to see permissions
+-rw-rw-r-- (last r indicates only read for users)
+$chmod +X hello.sh #to change exicute permision to user
+$chmod -w hello # to remove write permission
+#! /bin/bash
+echo "hello world"
+$./hello.sh #to run
+$echo $BASH
+$echo $BASH_VERSION
+$echo $HOME
+$echo $PWD
+How to define variable and access it in shell script
+name=Mark #no quotes and no semicolon
+echo The name is $name #no quotes and no semicolon
+Variable name should not start with number
+how can we take input from keyword
+echo "Enter name:"
+read name
+echo "Enterd name : $name"
+
+echo "Enter names:"
+read name1 name2 name3
+echo "Enterd name : $name1, $name2, $name3"
+how to acepect input in same line
+read -p 'username :' user_var
+read -sp 'password :' pass_var #with sp inpust text does not display when we type
+echo "username; $user_var"
+echo "password; $pass_var"
+
+echo "enter names"
+read -a names #how can we accepect multiple names
+echo "names : ${names[0]},${names[1]} "
+
+echo "enter name"
+read  #here we are not giving any variable name
+echo "name : $REPLY " #by default it is stored in REPLY system variable
+how to pass arguments with scripts
+echo $0 $1 $2 ' are entered args '
+$./hello.sh mark tom
+o/p .hello.sh mark tom are entered values # file name goes to $0 and remaining goes to $1 , $2 and so on
+
+args=("$@") #accepecting arguments as array
+echo ${args[0]},${args[1]} 
+$./hello.sh mark tom
+o/p mark tom # here zero index not for file name
+
+echo $@ # this will print all arguments
+echo $# #this will print no of arguments passed to script
+
+-ep, -ne, -gt, -ge, -lt, -le
+==, !=,  >, >= <, <=
+
+count=10
+if [$count -eq 10]
+then
+	echo "condition is true"
+fi
+
+if (($count -> 9)) # use double parantasis when we compare numbers with symbols
+then
+	echo "condition is true"
+fi
+
+count=a
+if [[$count -> "b"]] # use double squre brakets when we compare strings with symbols but for == and != not required
+then
+	echo "condition is true"
+fi
+how to write if else condition
+count=a
+if [[$count == "b"]] 
+then
+	echo "condition is true"
+else
+	echo "condition is true"
+fi
+how to else if condition
+count=a
+if [[$count == "b"]] 
+then
+	echo "condition b is true"
+elif [[$count == "a"]] 
+then
+	echo "condition a is true"	
+else
+	echo "condition is true"
+fi
+
+if [ "$age" -gt 18 ] && [ "$age" -lt 30 ]
+if [ "$age" -gt 18 -a "$age" -lt 30 ]
+if [[ "$age" -gt 18 && "$age" -lt 30 ]]
+if [ "$age" -eq 18 ] || [ "$age" -eq 30 ]
+if [ "$age" -eq 18 -o "$age" -eq 30 ]
+if [[ "$age" -eq 18 || "$age" -eq 30 ]]
+
+num1=20
+num2=5
+echo $(( num1 + num2 ))
+echo $(( num1 - num2 ))
+echo $(( num1 * num2 ))
+echo $(( num1 / num2 ))
+echo $(( num1 % num2 ))
+echo $(expr $num1 + $num2 )
+echo $(expr $num1 - $num2 )
+echo $(expr $num1 \* $num2 ) # we should escape symbol for multiplication
+echo "20.5+5" | bc
+echo "scale=2;20.5/5" | bc #we should give scale here
+echo "$num1+$num2" |bc
+num=27
+echo "scale=2;sqrt($num)" | bc -l #we should give l (library)
+
+how to check file is exist or not
+echo -e "enter file name: \c"
+read file_name
+if[ -e $file_name]
+then
+	echo "$file_name found"
+else
+	echo "$file_name not found"
+fi
+
+if[ -f $file_name] # to check if it is regular file
+if[ -d $file_name] # to check  if it is directory
+if[ -b $file_name] # to check  if it is block special file
+if[ -c $file_name] # to check  if it is charactor special file
+if[ -s $file_name] # to check if it is empty file
+-r for checking read permition, -w for checking write permision, -x to check exicute permision
+picture and video are block special file
+text files are charactor special files
+
+how add content to file
+if[ -w $file_name]
+then
+ echo "enter some text and press ctrl+d"
+ cat>> $file_name
+fi
+How can we write case statement
+vehicle=$1
+case $vehicle in
+	"car" )
+		echo "";;
+	"van" )
+		echo "";;
+	* )
+		echo "";;
+esac
+
+echo -e "enter letter: \c"		
+read val
+case $val in
+	[a-z] )
+		echo "";;
+	[A-Z] )
+		echo "";;
+	? )
+		echo "";;
+	* )
+		echo "";;
+esac
+How can we define array, find length, fetch by index, add element, remove element, update element
+os=('ubuntu' 'windows' 'kali')
+os[3]='mac'
+os[0]='ubuntu 18'
+unset os[2] #removes element
+echo "${os[@]}" #gives all elemets
+echo "${os[0]}"
+echo "${!os[@]}" #gives only indexes
+echo "${#os[@]}" #gives length
+
+n=1
+while [ $n -le 10 ]
+do
+	eho "$n"
+	n=$(( n+1 ))
+done
+
+while (( $n <= 10 ))
+do
+	eho "$n"
+	n=$(( n++ ))
+done
+
+while (( $n <= 10 ))
+do
+	eho "$n"
+	n=$(( n++ ))
+	sleep 1 #it will sleep one second
+done
+how we can read file
+while read p
+do
+	echo $p
+done <hello.sh
+Read file with cat and |(pipe)
+cat hello.sh | while read p
+do
+	echo $p
+done
+
+IFS(internal field seprator)
+while IFS=' ' read -r p
+do
+	echo $p
+done <hello.sh
+
+n=1
+until [ $n -ge 10 ] #until fails code in loop will be exicuted
+do
+	eho "$n"
+	n=$(( n+1 ))
+done
+
+for i in 1 2 3 4 5
+do
+	echo $i
+done
+
+for i in {1..10}
+for i in {1..10..2}
+for (( i=0; i<5; i++))
+how can we exicute command from script
+for c in ls pwd date
+do
+	echo "------------$c-----------"
+	$c
+done
+
+for item in *
+do
+	if [ -d $item ]
+	then
+		echo $item
+	fi
+done
+
+select name in mark tom mike
+do
+	echo "$name selected"
+done
+o/p
+1)mark
+2)tom
+3)mike
+#?2
+tom selected
+#?
+
+for (( i=0; i<=10; i++))
+do
+	if [ $i -gt 5 ]
+	then
+		break
+	fi
+	echo $i
+done
+
+for (( i=0; i<=10; i++))
+do
+	if [ $i -eq 5 -o $i -eq 6 ]
+	then
+		continue
+	fi
+	echo $i
+done
+
+how to define function and call it
+function hello(){
+	echo "Hello"
+}
+quit () {
+	exit
+}
+
+Hello
+quit
+echo "foo"
+
+how can we call function with argument
+function Print(){
+	echo "hello $1"
+}
+Print Tom
+ 
+function Print(){
+	name=$1
+	echo "hello $name"
+}
+name="Mike"
+echo "hello $name" # prints Mike
+Print Tom # prints Tom
+echo "hello $name" # prints Tom
+
+function Print(){
+	local name=$1
+	echo "hello $name"
+}
+name="Mike"
+echo "hello $name" # prints Mike
+Print Tom # prints Tom
+echo "hello $name" # prints Mike
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

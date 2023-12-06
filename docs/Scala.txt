@@ -1,0 +1,308 @@
+Scala
+ youtube:ProgrammingKnowledge
+--------------------------------
+scala is statically typed
+
+install Scala IDE
+	just download it and extract
+create helloworld programme
+	create scala project (like java)
+	create scala object
+	file name One.scala
+	object One {
+	  def main(args: Array[String]) {
+		println("Hello, world!")
+	  }
+	}
+comments
+		same as java
+String interpolation
+	val anme ="mark"
+	val age=18
+	println(name+" is"+age+" years old")
+	println(s"$name is $age years old")//s interpolation
+	println(f"$name%s is $age%d years old")//f interpolation is type safe
+	println(s"hello \nworld")//world will be printed in next line 
+	print(raw"hello \nworld")// in case of raw interpolation \n will be printed as it is
+if condition
+	val x = 20
+	val res =""
+	if(x ==20){
+		res ="x is 20"
+	}else{
+		res="x is not 20"
+	}
+	same  with if expression
+	val res2 = if(x ==20) "x is 20" else "x is not 20"
+below syntaxs are not allowed in scala
+	x++
+	X--
+	++x
+	--x
+wile loop and do while loops are same as java
+foor loop
+	for(i <- 1 to 5){// here to is method
+		println(i)
+	}
+	for(i <- 1 until 6){// here until is method
+		println(i)
+	}
+	for(i <- 1 to 5; j <- 1 to 3){
+		println(i+"  j:"j)
+	}
+	val lst = List(1,2,3,5,6,3,7)
+	for(i <- lst){
+		println(i)
+	}
+	for(i <- lst; if i <3){// here we are using filter
+		println(i)
+	}
+for loop expresssions
+	var res = for{i <- lst; if i <3} yield {
+		i*i
+	}
+	printlin(res)//here res is list
+	we can also remove semicolan ; in curly baraces {}
+	var res = for{
+	i <- lst 
+	if i <3} yield {
+		i*i
+	}
+	printlin(res)//here res is list
+Match expression
+	val age =18;
+	age match {
+		case 20 => println(age);
+		case 18 => println(age);
+		case 30 => println(age);
+		case 40 => println(age);
+		case _ => println("default");
+	}
+	val age ="18";
+	age match {
+		case "20" => println(age);
+		case "18" => println(age);
+		case "30" => println(age);
+		case "40" => println(age);
+		case _ => println("default");
+	}
+	var res = age match {
+		case "20" => age;
+		case "18" => age;
+		case "30" => age;
+		case "40" => age;
+		case _ => "default";
+	}
+	println(res)
+how to create function 
+	def fone (x:Int, y:Int):Int = {
+		return x+y;
+	}
+	def fone (x:Int, y:Int):Int = {
+		x+y;//no need to write return
+	}
+	def fone (x:Int, y:Int):Int =  x+y;//removed curly braces
+	def fone (x:Int, y:Int) = x+y; removed return type also
+how to caall function
+	def main (a: Array[String]){
+		fone(2,5)
+	}
+how to call method of object
+	object Demo{
+		object Math{
+			def fone (x:Int, y:Int) = x+y;
+			def two(x:int) = x*x;
+		}
+		def main (a: Array[String]){
+			println(Math.fone(2,5));
+			println(Math ftwo 5);// if it takes only one argument
+		}
+	}
+How to provide default value to parameters
+	def fone (x:Int=20, y:Int=30) = x+y;
+	fone();//this gives us 50
+	fone(40);//this gives us 70
+how to write function which does not return any
+	def fone (x:Int, y:Int):Unit = {
+		print(x+y);
+	}
+how to write Anonymous function
+	var add = (x:Int, y:Int) => x+y; 
+	println(add(20,30));// how to call Anonymous function
+What is higher order function
+	
+how to define higher order function
+	object Demo{
+		def math(x:Double, y:Double, f:(Double, Double)=>Double):Double = f(x,y);
+		def main (a: Array[String]){
+			val res= math(20,30, (x,y)=>x+y);
+			println(res);
+		}
+	}
+	object Demo{
+		def math(x:Double, y:Double, z:Double, f:(Double, Double)=>Double):Double = f(f(x,y),z);
+		def main (a: Array[String]){
+			val res= math(20,30,40, (x,y)=>x+y);
+			val res2= math(20,30,40, _+_);
+			println(res);
+			println(res2);
+		}
+	}
+	
+how to checkc minimum value of two values
+	x min y;
+
+Partially applied function
+	var sum = (a:Int, b:Int, c:Int)=>a+b+c;
+	val f=sum(10, 20, _:Int);
+	println(f(30));
+	
+	def log(date : Date, message: String) = {
+		println(date + "   "+message);
+	}
+	val date = new Date();
+	val newLog = log(date, _:String);
+	newLog("sql error");
+what is closure
+	var y = 20;
+	val add = (x:int) => x+y;
+	println(add(20));//prints 40
+	function whic uses variables defined outside function
+what is Currying
+	techniuqe of transforming a function that takes multiple arguments into a function
+	that takes a single argument
+	def add(x:Int, y:Int) = x+y;
+	def add2(x :Int) = (y:Int) =>x+y;
+	def add2(x :Int) (y:Int) =>x+y;
+	println(add2(20)(10));
+	println(add3(20)(10));
+Scala uses java String class for strings
+How to define arry
+	val a1:Array[Int] =new Array[Int](5);
+	val a2 =new Array[Int](5);
+	val a3 = Array(1,4,6,8,5);
+	//in java String a[] ={"",""}; int b[] = {2,5}; int c[] = new int[10];
+how to add element to array
+	b(0)=5;
+	b(1)=7;
+how to iterate array
+	for (x <- b){ println(x);}
+	for (x <- 0 to (b.length -1)){ println(x);}
+Array default values
+	val s = new Array[String](5);
+	for (x <- s){ println(x);}// here it prints null 5 times
+how to contact arrays
+	val res = concat(arr2, arr3); //here both arrays should be same type
+what are the arrays methods
+	arr2.min(); 
+	arr2.max();
+	arr2.size();
+	arr2.last();
+what is difference between arrays and list
+	arrays are mutable
+	lists are immutuble
+how to define Lists
+	val l2 : List[Int] = List(1,2,3,5,6,8);
+	val l3 : List[String] = List("dsad","gdg","tr");
+	l2(0)=6;//this is compilte time error
+	print(0::l2); it prints 0,1,2,3,5,6,8 but it does not change l2 values
+	:: is called as cons
+List properties
+	l2.head
+	l2.tail
+	l2.isEmpty
+	l2.reverse
+	l2.max
+what is fill
+		println(List.fill(5)(2));// gives List(2,2,2,2,2)
+		print(Nil);// gives List()
+how to iterate
+	l2.foreach(println);
+	for(x <- l2){
+		println(x);
+	}
+how to fetch element
+	l2(0);
+how to define Sets
+	we can not have duplicates in sets
+	we have two different sets, mutable and immutable
+	Sets are not ordered
+	val s2 : Set[Int] = Set(1,2,3,5,6,8);
+	val s3 : Set[String] = Set("dsad","gdg","tr");
+	var s4 = scala.collection.mutable.Set(1,4,5,7,8,3);//mutable Set
+	println(s2+10);//Set(1,10,2,3,5,6,8)
+	println(s2);//Set(1,2,3,5,6,8)
+how to check value is present or not
+	println(s2(8))// gives true here 8 is element value not index
+Set properties
+	s2.head
+	s2.tail
+	s2.isEmpty
+	s2 ++ S3
+	s2.++(s3)
+	s2.&(s3)//intesect
+	s2.intesect(s3)
+how to iterate
+	s2.foreach(println);
+	for(x <- s2){
+		println(x);
+	}
+how to define Maps
+	these are two types mutable ans immutable
+	keys are unique
+	val m2:Map[Int][String] = Map( 801 ->'abc', 802 ->'pqr', 804 ->'xyz');
+	m2(802);// fetching value by key
+	m2.keys//gives keys
+	m2.values //gives values
+	m2.isEmpty
+	m2.contins(802)// to check key exist or not
+	m2 ++ m3
+How to iterate
+	m2.keys.foreach{ key =>
+		println("Key "+key);
+		println("Value "+m2(key));
+	}
+how to define tuples
+	tupes can have diiferent types
+	it is fixed size
+	it is immutable
+	val t2 = (1,2, "hello",true)
+	val t4 = new Tuple3(1,2, "hello");// we do not have just Tuple keyword
+	pritln(t3._2)// gives second element
+how to iterate
+	t2.productIterator.foreach{
+		i =>println(i);
+	}
+how to apply map method on list
+	val l2 : List[Int] = List(1,2,3,5,6,8);
+	l2.map(_ *2);//every element will be doubled
+	l2.map(x=> x*2);//this also does same
+how to apply map method on Map
+	val m2:Map[Int][String] = Map( 801 ->'abc', 802 ->'pqr', 804 ->'xyz');
+	m2.mapValues(x=> "Hi "+x);//Map( 801 ->'Hi abc', 802 ->'Hi pqr', 804 ->'Hi xyz');
+how to apply map on String
+	"hello".map(_.toUpper);
+what is flatten
+	List(List(1,2,3), List(4,5,6)).flatten; //gives List(1,2,3,4,5,6)
+what is flatMap
+	val l2 : List[Int] = List(1,2,3,5,6,8);
+	l2.flatMap(x=>List(x, x+1));//List(1,2,2,3,3,4,5,6,6,7,8,9)
+How to apply filter
+	filter used with predicate
+	l2.filter(x=>x%2==0);// it gives even numbers
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

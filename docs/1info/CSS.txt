@@ -1,0 +1,361 @@
+CSS
+
+<link type="text/css" href="one.css"/>
+
+body{
+	color:red; //yellow, white, purple, Navy, green, 
+	//Aqua, grey, maroon, Lime, Olive, Silver
+	background-color:rgb(240,28,235);
+	background-color: #ffcf79;// hexa code
+}
+
+h1, h2{
+	border-bottom: 4px solid black;// 
+	border:1px solid black;//this will create box
+}
+p{
+	background-color : green;
+	color:red;
+	font-family:Helvetica;
+	font-size:20px;
+	font-size:150%;
+	font-size:1.2em;
+	font-weight:lighter;//normal, bold,bolder
+	line-height: 1.5em;
+}
+p.class2{
+	color:red;
+}
+.class3{
+	color:blue;
+	text-decoration:underline;
+	text-decoration:overline;
+	text-decoration:line-through;
+}
+
+<p style="color:black; font-size:25px;"> inline style</p>
+every element has 4 boxes: content, padding, border, margin
+	p{
+		background-color:gray;
+		padding:20px;
+		padding:20px 10px 5px 5px;//top, right, bottom, left i.e clock wise
+		border: black 2px solid;
+		border-style: solid;//dashed, dotted
+		border-width: 2px;
+		border-color: black;
+		morgin:5px;
+		morgin-top: 7px;
+		border-redius:10px;// works in chrome rounded corners
+		border-top-left-redius:10px;
+	}
+<img class="class2" src="one.jpg">//no end tag for img
+.class2{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+p{
+	background-image:url(one.jpg);
+	text-align:center;//right, left
+}
+div- around element
+span- within element
+a:link{
+	color:blue;
+}
+a:visited{
+	color:red;
+}
+a:hover{
+	color:green;
+}
+. used for classes
+: used for sudo classes(sudoclasses no need to add explicitly to element)
+
+blocking and inline elements
+	block elements <p>, <h1>, <div>
+	inline elements <img>, <span>, <a>, <input>
+	block element takes space from list to right completly. but we can change it by specifing witdth
+	inline elements stacked side by side
+	span element can have margin on sides only not on top and bottom
+	but image element can have same as block element
+How to convert inline into block element
+	display:block;
+How to float div elements i.e two divs side by side
+	div.class2{
+		width:300px;
+		float:left;
+	}
+	if change floating behavior, browser keeps next element next to our custome flotaing element
+	but not at down of our custome flotaing element. Since browser does not no about our custom folating
+	note: default float is static
+How to place element at absolute position
+	div{
+		position:absolute;
+		top:50px;
+		left:50px;
+	}
+	with this we can keep one element on another
+what is difference between absolute and fixed
+	in case of fixed even we resize window and scroll it the fexed element does not move
+	eg. ads are fixed at some place
+what is over flow
+	we can use overflow in cases like we fixed div height and there is more text
+	div{
+		height:50px;
+		overflow:scroll;
+	}
+how to change cursor behavior
+	a:hover{
+		cursor:crosshair;
+		cursor:none;//it removes cursor
+		cursor:url("mail.ico"),default;
+	}
+how to keep text after image
+	.classIm{
+		float:left;
+	}
+	without float only one like will be at image left and remaining text will be down
+	with float there will be many lines at image left based on image height
+	<div>
+	<p>
+	<img class="classIm" src="one.jpg">
+	kjdjlasjdlksajdlasjdlas
+	jkdsdkjsahd
+	dsasda
+	</p>
+	note img tag should be inside <p>
+Relative- position determined by first static element
+absolute- position determined by first non-static element
+
+if there are two divs div one has 3 <p> and div two has 3 <p> and one nested div
+ if we make div two position rlative and the absolute element in div two is position based on div2 
+ not based on browser position
+
+ul{
+	list-style:none; this will remove bullets of unordered list
+	padding:0px;
+	margin:0px;
+}
+ul li a{
+	text-decoration:none;//removes underline of anchot tag
+	background-color:red; // with this items background withd are different and euwal to text size
+	display:block;// this makes <a> to block elemet and all widths become browser width
+	width:80px;// this makes all items width as 80px
+}
+how to create horizontal menu
+	<div id="id2">
+		<ul>
+			<a>One</a>
+			<a>Two</a>
+		</ul>
+	</div>
+	#id2{
+		background-color:green;
+	}
+	#id2 ul{
+		list-style-type:none;
+	}
+	#id2 li{
+		display:inline;//to place items in horizontal
+	}
+what is difference between inline, block, inline-block
+	let us assume we have span element with class Class2 in <p>
+	.class2{
+		background-color:green;
+		height=20px;
+		display:inline;// it ignores height		
+	}
+	.class2{
+		background-color:green;
+		height=20px;
+		display:block;// it makes sapn as new line and height is 20px and width is window size		
+	}
+	.class2{
+		background-color:green;
+		height=20px;
+		display:inline-block;// it sets height and but the width will be still text size 
+								no new line
+	}
+How to create table without using tr and td
+	<form id="id2">
+	 <div class="class2">
+	 	<lable for="name"> Name:</lable>
+		<input type="text" name="" id="name">
+	</div>
+	</form>
+	#id2{
+		display:table;
+	}
+	.class2{
+		display:table-row;
+	}
+	.class2 label{
+		display:table-cell;
+	}
+	.class2 input{
+		display:table-cell;
+	}
+what is decendant selector
+	div p{
+		//rmemeber here we do not have comma (,)
+	}
+what is child selector
+	it should be direct selector
+	<blockquote class="class2">
+	<b> dfsdfdsfsd</b>
+	</blockquote>
+	blockquote.class2>b{
+		clolor:red;
+	}
+how to handle common code
+	<div id="id2"> fsdfdsf</div>
+	<div id="id3"> fsdfdsf</div>
+	<div id="id4"> fsdfdsf</div>
+	#id2{
+		background-color:green;
+	}
+	#id2{
+		background-color:red;
+	}
+	#id2{
+		background-color:blue;
+	}
+	#id2, #id3, #id4{
+		border: solid 2px green;
+	}
+how to select sibling selectors
+	<div id="id2"> <h2>fsdfdsf<h2><p>asa</p> <p>rer</p></div>
+	<div id="id3"> <h2>fsdfdsf<h2><p>asa</p> <p>rer</p></div>
+	<div id="id4"> <h2>fsdfdsf<h2><p>asa</p> <p>rer</p></div>
+	h2+p{
+		clolor:red; // this will change color of P wich is after h2
+	}
+	h2~p{
+		clolor:red; // this will change color of all P wich are after h2
+	}
+what is attribute selector
+	<p lang="en-us">asa</p>
+	<p lang="fr">asa</p>
+	<p lang="fr ko">asa</p>
+	p[lang] {
+		background-color:red;
+	}
+	p[lang="fr"] {
+		background-color:green;
+	}
+	p[lang^="fr"] {// carrot symbol selects begins
+		background-color:green;
+	}
+	p[lang$="fr"] {// $ symbol selects ends with
+		background-color:green;
+	}
+	p[lang*="fr"] {// wild card symbol selects anywhere
+		background-color:green;
+	}
+what is nth child selector
+	<div id="id2">
+	<p>rer</p><p>rer</p>
+	<p>rer</p>
+	<p>rer</p>
+	</div>
+	#id2 p:nth-child(odd){
+		background-color:green;
+	}
+	#id2 p:nth-child(even){
+		background-color:green;
+	}
+	#id2 p:nth-child(3){
+		background-color:green;
+	}
+	#id2 p:nth-child(3n){// selects every third element
+		background-color:green;
+	}
+what is not selector
+	p{
+		background-color:green;
+	}
+	:not(p){ this will change all elements ecpect <p> to red
+				but p in bracket() is not element it is selector 
+				so we should define p selector in css p{}
+		background-color:red;
+	}
+what is first letter selecter
+	p::first-letter{
+		font-weight:bold;
+		font-size:24;
+	}
+	p:first-line{
+		color:green;
+	}
+what is opacity
+	opacity is transaparent
+	<div id="id2">
+		<p>rer</p>	
+	</div>
+	#id2 {
+		background-color:green;
+		opacity:0.5;// color will be reduced here
+	}
+	#id2:hover {
+		opacity:1.0;// color comes to 100 percent
+	}
+what is gradient
+	#id2 {
+		background-color:green;
+		background: liner-gradient(to right, blue, yellow);
+		//more blue will at left and and yellow will be added as you go right
+		background: liner-gradient( blue, yellow 20%); // more yellow it is bit confuse %
+	}
+How to add shadow to text
+	#id2 {
+		text-shadow: 3px 3px 5px orange, 6px 6px 10px blue;
+	}
+How to add shadow to box
+	#id2 {
+		box-shadow: 3px 3px 5px orange;
+	}
+How to set divs side by side
+	we can do it by adding float:right and width:250px for first div, then second automatically fit in remaining space
+	and we should also add padding rigt of second div 250+second div padding and margin: By setting this 
+	even we resize window it will fit perfetly, second div with change automatically as per window size
+How to add two divs in right hand and two divs in left hand only widths are equal
+the heights are dynamic, the second right had div should start after first right divand just below 
+	you neew to place right hand divs one after other and top
+	and then lefft hand divs
+	we alo need to add clear:right
+how to add footer when we have multiple divs as two columns and the footer always below the divs 
+and the width shlod	be 100% and should not over lap with any side divs
+	and clear:both to footer
+how to conver unorder list to buttons menu
+	list-type-style:none;//apply for ul to remove bullets
+	display:inline;//apply for li to display side by side
+	text-decoration:none;//apply for anchor tags in li to remove underline
+How to keep text in center of div in vertically
+		position:relative
+		top:50%
+		-webkit-transform: translateY(-50%);
+		-ms-transform: translateY(-50%);
+		transform: translateY(-50%);
+
+
+
+
+
+
+html 5
+------------------------------
+<input type='tel' name="">// here type is not text
+<input type='email' name="">// here type is not text
+what is use of label
+	<lable for="name"> Name:</lable>
+	<input type="text" name="" id="name">
+	even if we click on lable the text box will be highlited 
+
+
+
+
+
+
+
+

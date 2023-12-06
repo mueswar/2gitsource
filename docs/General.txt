@@ -1,0 +1,4 @@
+Speakers
+
+if you have problem with audio when we connect doking station.
+	disble all divices audion keeping only laptop. contolpanel>hardware and audio> sound>payback

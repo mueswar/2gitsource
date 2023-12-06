@@ -1,0 +1,1022 @@
+Spring tool suite https://start.spring.io/
+from Spring 4.0 we need minimum java6 and supports 7 and 8
+from Spring 5.0 we need java8
+
+we can define any util calss as Component to autowaire in another class
+java beans should not be as final class to work as spring beans
+
+The default scope is singleton, but you can override this with the @Scope annotation
+
+Core Container
+---------------------------------------------------
+The Core Container consists of the spring-core, spring-beans, spring-context, spring-context-support, and spring-expression (Spring Expression Language) modules.
+spring-context-support provides support for integrating common third-party libraries into a Spring application context for caching (EhCache, Guava, JCache), mailing (JavaMail), scheduling (CommonJ, Quartz) and template engines (FreeMarker, JasperReports, Velocity).
+
+ApplicationContext is a sub-interface of BeanFactory
+the BeanFactory provides the configuration framework and basic functionality
+the ApplicationContext adds more enterprise-specific functionality
+
+Naming beans:
+In XML-based configuration metadata, you use the id and/or name attributes to specify the bean identifier(s). The id attribute allows you to specify exactly one id.
+If you want to introduce other aliases to the bean, you can also specify them in the name attribute, separated by a comma (,), semicolon (;), or white space. 
+Specifying all aliases where the bean is actually defined is not always adequate, however. It is sometimes desirable to introduce an alias for a bean that is defined elsewhere. 
+<alias name="fromName" alias="toName"/>
+
+Motivations for not supplying a name are related to using inner beans and autowiring collaborators.
+
+Instantiating beans:
+ If you want to configure a bean definition for a static nested class, you have to use the binary name of the nested class. 
+ class="com.example.Foo$Bar"
+Instantiation with a static factory method
+The following bean definition specifies that the bean will be created by calling a factory-method. The definition does not specify the type (class) of the returned object, only the class containing the factory method.  
+ <bean id="clientService" class="examples.ClientService"    factory-method="createInstance"/>
+
+Instantiation using an instance factory method
+we use factory-bean attribute
+
+Dependency Injection:
+your classes become easier to test, in particular when the dependencies are on interfaces or abstract base classes, which allow for stub or mock implementations to be used in unit tests.
+<bean id="exampleBean" class="examples.ExampleBean">
+    <constructor-arg type="int" value="7500000"/>
+    <constructor-arg type="java.lang.String" value="42"/>
+</bean>
+<bean id="exampleBean" class="examples.ExampleBean">
+    <constructor-arg index="0" value="7500000"/>
+    <constructor-arg index="1" value="42"/>
+</bean>
+
+Since you can mix constructor-based and setter-based DI, it is a good rule of thumb to use constructors for mandatory dependencies and setter methods or configuration methods for optional dependencies. Note that use of the @Required annotation on a setter method can be used to make the property a required dependency.  Sometimes, when dealing with third-party classes for which you do not have the source, the choice is made for you. For example, if a third-party class does not expose any setter methods, then constructor injection may be the only available form of DI.
+
+Resource resource=new ClassPathResource("applicationContext.xml");  
+BeanFactory factory=new XmlBeanFactory(resource); 
+
+ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");  
+
+<bean id="e" class="com.javatpoint.Employee">  
+	<constructor-arg value="10" type="int"></constructor-arg>  
+</bean>  
+<constructor-arg>  
+	<list>  
+	<value>Java is a programming language</value>  
+	<value>Java is a Platform</value> 
+	</list>  
+</constructor-arg>  
+ 
+<constructor-arg>  
+<list>  
+	<ref bean="ans1"/>  
+	<ref bean="ans2"/>  
+</list>  
+</constructor-arg> 
+
+<constructor-arg>  
+<map>  
+	<entry key="Java is a Programming Language"  value="Ajay Kumar"></entry>  
+	<entry key="Java is a Platform" value="John Smith"></entry>
+</map>  
+</constructor-arg> 
+
+<property name="answers">  
+	<list>  
+	<value>Java is a programming language</value>  
+	<value>Java is a Platform</value> 
+	</list>  
+</property>
+
+private Map<Answer,User> answers;  
+<property name="answers">  
+	<map>  
+	<entry key-ref="answer1" value-ref="user1"></entry>  
+	<entry key-ref="answer2" value-ref="user2"></entry>  
+	</map>  
+</property>  
+using parent
+<bean id="e1" class="com.javatpoint.Employee">  
+	<constructor-arg value="101"></constructor-arg>  
+	<constructor-arg  value="Sachin"></constructor-arg>  
+</bean> 
+<bean id="e2" class="com.javatpoint.Employee" parent="e1">  
+	<constructor-arg ref="address1"></constructor-arg>  
+</bean> 
+
+  
+Java bassed configuration
+***************************
+@Configuration
+public class AppConfig {
+	@Bean
+	public MyService myService() {
+	return new MyServiceImpl();
+	}
+}
+When @Bean methods are declared within classes that are not annotated with @Configuration they are referred to as being processed in a lite mode.
+Unlike full @Configuration, lite @Bean methods cannot easily declare inter-bean dependencies.
+
+public static void main(String[] args) {
+	ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+	MyService myService = ctx.getBean(MyService.class);
+	myService.doStuff();
+}
+
+@Configuration
+@ComponentScan(basePackages = "com.acme")
+public class AppConfig {
+...
+}
+In the example above, the com.acme package will be scanned, looking for any @Componentannotated classes, and those classes will be registered as Spring bean definitions within the container.
+A WebApplicationContext variant of AnnotationConfigApplicationContext is available with AnnotationConfigWebApplicationContext. This implementation may be used when configuring the Spring ContextLoaderListener servlet listener, Spring MVC DispatcherServlet, etc.
+
+@Bean annotation supports some of the attributes offered by <bean/>, such as: init-method, destroy-method, autowiring and name.
+Any classes defined with the @Bean annotation support the regular lifecycle callbacks and can use the @PostConstruct and @PreDestroy annotations from JSR-250
+The @Bean annotation supports specifying arbitrary initialization and destruction callback methods, much like Spring XML’s init-method and destroy-method attributes on the bean element
+public class Foo {
+	public void init() { // initialization logic }
+}
+public class Bar {
+	public void cleanup() {	// destruction logic 	}
+}
+@Configuration
+public class AppConfig {
+	@Bean(initMethod = "init")
+	public Foo foo() { 	return new Foo(); 	}
+	@Bean(destroyMethod = "cleanup")
+	public Bar bar() { 	return new Bar(); 	}
+}
+The default scope is singleton, but you can override this with the @Scope annotation
+@Configuration
+public class MyConfiguration {
+	@Bean
+	@Scope("prototype")
+	public Encryptor encryptor() { 	// ... 	}
+}
+@Bean(name = "myFoo")
+public Foo foo() {	return new Foo(); }
+@Bean(name = { "dataSource", "subsystemA-dataSource", "subsystemB-dataSource" })
+public DataSource dataSource() {}
+//<import/>
+@Configuration
+public class ConfigA { }
+@Configuration
+@Import(ConfigA.class)
+public class ConfigB {}
+
+//bean dependecy with another bean which is in different config class
+@Configuration
+public class RepositoryConfig {
+	@Autowired
+	private DataSource dataSource;
+	@Bean
+	public AccountRepository accountRepository() {
+	return new JdbcAccountRepository(dataSource);
+	}
+}
+@Configuration
+@Import({ServiceConfig.class, RepositoryConfig.class})
+public class SystemTestConfig {
+	@Bean
+	public DataSource dataSource() {
+	// return new DataSource
+	}
+}
+
+8. Resources
+--------------------------------------------------
+Java’s standard java.net.URL class and standard handlers for various URL prefixes unfortunately are not quite adequate enough for all access to low-level resources.
+While the Resource interface is used a lot with Spring and by Spring, it’s actually very useful to use as a general utility class by itself in your own code, for access to resources, even when your code doesn’t know or care about any other parts of Spring.
+Built-in Resource implementations:  UrlResource, ClassPathResource, FileSystemResource, ServletContextResource
+The ResourceLoader interface is meant to be implemented by objects that can return (i.e. load) Resource instances.
+public interface ResourceLoader {
+    Resource getResource(String location);
+}
+All application contexts implement the ResourceLoader interface, and therefore all application contexts may be used to obtain Resource instances.
+ClassPathXmlApplicationContext ctx=.....
+Resource template = ctx.getResource("some/resource/path/myTemplate.txt");
+the above snippet returns ClassPathResource.
+FileSystemXmlApplicationContext uses FileSystemResource
+WebApplicationContext returns ServletContextResource
+we can also force contexts to use specific resource like below
+Resource template = ctx.getResource("classpath:some/resource/path/myTemplate.txt");
+Resource template = ctx.getResource("file:///some/resource/path/myTemplate.txt");
+Resource template = ctx.getResource("http://myhost.com/resource/path/myTemplate.txt");
+
+
+9. Validation, Data Binding, and Type Conversion
+-----------------------------------------------------------
+Spring features a Validator interface that you can use to validate objects. we need to impliment below methods
+• supports(Class) - Can this Validator validate instances of the supplied Class? 
+• validate(Object, org.springframework.validation.Errors) - validates the given object and in case of validation errors, registers those with the given Errors object 
+public class Person {
+    private String name;
+    private int age;
+}
+public class PersonValidator implements Validator {
+    public boolean supports(Class clazz) {
+        return Person.class.equals(clazz);
+    }
+
+    public void validate(Object obj, Errors e) {
+        ValidationUtils.rejectIfEmpty(e, "name", "name.empty");
+        Person p = (Person) obj;
+        if (p.getAge() < 0) {
+            e.rejectValue("age", "negativevalue");
+        } else if (p.getAge() > 110) {
+            e.rejectValue("age", "too.darn.old");
+        }
+    }
+}
+While it is certainly possible to implement a single Validator class to validate each of the nested objects in a rich object, it may be better to encapsulate the validation logic for each nested class of object in its own Validator implementation. A simple example of a 'rich' object would be a Customer that is composed of two String properties (a first and second name) and a complex Address object. Address objects may be used independently of Customer objects, and so a distinct AddressValidator has been implemented. If you want your CustomerValidator to reuse the logic contained within the AddressValidator class without resorting to copy-and-paste, you can dependency-inject or instantiate an AddressValidator within your CustomerValidator, and use it
+public class CustomerValidator implements Validator {
+    private final Validator addressValidator;
+
+    public CustomerValidator(Validator addressValidator) {
+        if (addressValidator == null) {
+            throw new IllegalArgumentException("The supplied [Validator] is " +
+                "required and must not be null.");
+        }
+        if (!addressValidator.supports(Address.class)) {
+            throw new IllegalArgumentException("The supplied [Validator] must " +
+                "support the validation of [Address] instances.");
+        }
+        this.addressValidator = addressValidator;
+    }
+    public void validate(Object target, Errors errors) {
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "field.required");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "surname", "field.required");
+        Customer customer = (Customer) target;
+        try {
+            errors.pushNestedPath("address");
+            ValidationUtils.invokeValidator(this.addressValidator, customer.getAddress(), errors);
+        } finally {
+            errors.popNestedPath();
+        }
+    }
+}
+Validation errors are reported to the Errors object passed to the validator. In case of Spring Web MVC you can use <spring:bind/> tag to inspect the error messages, but of course you can also inspect the errors object yourself. 
+
+11 Aspect Oriented Programming with Spring
+-----------------------------------------------------------
+Spring AOP defaults to using standard JDK dynamic proxies for AOP proxies. Spring AOP can also use CGLIB proxies. This is necessary to proxy classes rather than interfaces. CGLIB is used by default if a business object does not implement an interface.
+Types of advice:
+Before advice: Advice that executes before a join point, but which does not have the ability to prevent execution flow proceeding to the join point (unless it throws an exception). 
+• After returning advice: Advice to be executed after a join point completes normally: for example, if a method returns without throwing an exception. 
+• After throwing advice: Advice to be executed if a method exits by throwing an exception. 
+• After (finally) advice: Advice to be executed regardless of the means by which a join point exits (normal or exceptional return). 
+• Around advice: Advice that surrounds a join point such as a method invocation. This is the most powerful kind of advice. Around advice can perform custom behavior before and after the method invocation
+
+Since Spring AOP, like AspectJ, provides a full range of advice types, we recommend that you use the least powerful advice type that can implement the required behavior. For example, if you need only to update a cache with the return value of a method, you are better off implementing an after returning advice than an around advice, although an around advice can accomplish the same thing. 
+
+Spring AOP currently supports only method execution join points (advising the execution of methods on Spring beans). Field interception is not implemented, although support for field interception could be added without breaking the core Spring AOP APIs. If you need to advise field access and update join points, consider a language such as AspectJ.
+
+Enabling @AspectJ Support with Java configuration
+@Configuration
+@EnableAspectJAutoProxy
+public class AppConfig {
+
+}
+Enabling @AspectJ Support with XML configuration
+<aop:aspectj-autoproxy/>
+
+we need aspectjweaver.jar 
+Declaring an aspect: annotate classes with @Aspect
+Declaring a pointcut: A pointcut declaration has two parts: a signature comprising a name and any parameters, and a pointcut expression that determines exactly which method executions we are interested in. the method serving as the pointcut signature must have a void return type
+
+@Pointcut("execution(* transfer(..))")// the pointcut expression
+private void anyOldTransfer() {}// the pointcut signature
+Spring AOP supports the following AspectJ pointcut designators (PCD) for use in pointcut expressions:
+• execution - for matching method execution join points, this is the primary pointcut designator you will use when working with Spring AOP 
+• within - limits matching to join points within certain types (simply the execution of a method declared within a matching type when using Spring AOP) 
+and -this -target args -@target, @args, @within, @annotation
+
+Declaring advice
+@Aspect
+public class BeforeExample {
+    @Before("com.xyz.myapp.SystemArchitecture.dataAccessOperation()")
+    public void doAccessCheck() {
+        // ...
+    }
+}
+
+@Aspect
+public class AfterReturningExample {
+    @AfterReturning("com.xyz.myapp.SystemArchitecture.dataAccessOperation()")
+    public void doAccessCheck() {
+        // ...
+    }
+
+}
+
+
+##########################################
+##########  Handling exceptions  #########
+##########################################
+Certain Spring exceptions are automatically mapped to specific HTTP status codes.
+MissingServletRequestParameterException   400 - Bad Request
+MissingServletRequestPartException        400 - Bad Request
+MethodArgumentNotValidException           400 - Bad Request
+TypeMismatchException                     400 - Bad Request
+NoSuchRequestHandlingMethodException      404 - Not Found
+Although these built-in mappings are helpful, they do not do good for any application exceptions that may be thrown.
+@RequestMapping(value="/{spittleId}", method=RequestMethod.GET)
+public String spittle(@PathVariable("spittleId") long spittleId, Model model) {
+	Spittle spittle = spittleRepository.findOne(spittleId);
+	if (spittle == null) {
+	throw new SpittleNotFoundException();
+	}
+	model.addAttribute(spittle);
+	return "spittle";
+}
+package spittr.web;
+@ResponseStatus(value=HttpStatus.NOT_FOUND, reason="Spittle Not Found")
+public class SpittleNotFoundException extends RuntimeException {
+}
+//handling exceptions with methods
+@ExceptionHandler(DuplicateSpittleException.class)
+public String handleDuplicateSpittle() {
+return "error/duplicate";
+}
+What’s especially interesting about @ExceptionHandler methods is that they handle their exceptions from any handler method in the same controller.
+@ControllerAdvice
+public class AppWideExceptionHandler {
+	@ExceptionHandler(DuplicateSpittleException.class)
+	public String duplicateSpittleHandler() {
+		return "error/duplicate";
+	}
+}
+from Spring 3.2 we can use ControllerAdvice to handle same exception from multiple controllers
+
+
+
+what are RequestMappingHandlerMapping and AbstractHandlerMapping
+How to use Consumes/produces mediaType?
+How to enable autodetection of annotated controllers?
+whar are the init parameters of DispatchServlet?
+what are different types of special beans in Spring MVC?
+how to configure Dispatchservlet and webcontext?
+
+
+
+###########################
+properties
+###########################
+reading properties with @PropertySource and @Value
+config.properties
+	mongodb.url=1.2.3.4
+	mongodb.db=hello
+@Configuration
+@ComponentScan(basePackages = { "com.mkyong.*" })
+@PropertySource("classpath:config.properties")
+public class AppConfigMongoDB {
+	//1.2.3.4
+	@Value("${mongodb.url}")
+	private String mongodbUrl;
+	//hello
+	@Value("${mongodb.db}")
+	private String defaultDb;
+
+	@Bean
+	public MongoTemplate mongoTemplate() throws Exception {
+		MongoClient mongo = new MongoClient(mongodbUrl, mongoOptions);
+		MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo, defaultDb);
+		return new MongoTemplate(mongoDbFactory);
+	}
+}
+reading properties with @PropertySource and Environment
+@Configuration
+@ComponentScan(basePackages = { "com.mkyong.*" })
+@PropertySource("classpath:config.properties")
+public class AppConfigMongoDB {
+	@Autowired
+	private Environment env;
+	@Bean
+	public MongoTemplate mongoTemplate() throws Exception {
+		String mongodbUrl = env.getProperty("mongodb.url");
+		String defaultDb = env.getProperty("mongodb.db");
+	}
+}
+configure multiple files
+	@PropertySource({
+		"classpath:config.properties",
+		"classpath:db.properties" //if same key, this will 'win'
+	})
+configure multiple files in spring 4
+	@PropertySources({
+		@PropertySource("classpath:config.properties"),
+		@PropertySource("classpath:db.properties")
+	})
+XML-based configuration
+<beans>
+    <context:property-placeholder location="classpath:com/example/app.properties"/>
+</beans>
+
+
+########################################################
+############ security for MVC         ################## 
+########################################################
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+	  auth.inMemoryAuthentication().withUser("mkyong").password("123456").roles("USER");
+	  auth.inMemoryAuthentication().withUser("admin").password("123456").roles("ADMIN");
+	  auth.inMemoryAuthentication().withUser("dba").password("123456").roles("DBA");
+	}
+
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+
+	  http.authorizeRequests()
+		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+		.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
+		.and().formLogin();
+		
+	}
+}
+html equilavent
+
+security.xml
+	<http auto-config="true">
+		<intercept-url pattern="/admin**" access="ROLE_ADMIN" />
+		<intercept-url pattern="/dba**" access="ROLE_ADMIN,ROLE_DBA" />
+	</http>
+
+	<authentication-manager>
+	  <authentication-provider>
+	    <user-service>
+		<user name="mkyong" password="123456" authorities="ROLE_USER" />
+		<user name="admin" password="123456" authorities="ROLE_ADMIN" />
+		<user name="dba" password="123456" authorities="ROLE_DBA" />
+	    </user-service>
+	  </authentication-provider>
+	</authentication-manager>
+
+
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+
+public class SpringSecurityInitializer extends AbstractSecurityWebApplicationInitializer {
+   //do nothing
+}
+html equilavent
+web.xml
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy
+                </filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+######################################################################
+################        Java Brains  Spring framework           ######
+######################################################################
+01. understanding Dependency injection
+assume that we have code which create objects of Triangle and Cricle class and calls Draw method.
+to remove dependency intraduce Interface Shape with draw method. Now code has Shape at left side of instantion 
+Shape s = New Trangle()
+But still we have Triangle and Cricle calls in code
+to remove dependence create method that takes Shape as paraqmeter and other class pass actual object
+doIt(Shape s){s.draw()}
+So now depency moved to other class. Spring plays the other class role
+04
+BeanFactory f = new XmlBeanFactory(new FileSystemResource("abc.xml"));
+Triangle t= (Triangle)f.getBean("b1");
+05
+ApplicationContext c = new ClassPathXmlApplicationContext("abc.xml");
+Triangle t= (Triangle)c.getBean("b1");
+we can use message resorce with application context
+we can use event handling with application context
+08
+inner bean configuration when bean is not used for other beans
+<bean id="" class="">
+ <property name="" ref=""/>
+ <property name="" >
+	<bean class="">
+		<property name="" value=""/>
+	</bean>
+ </property>
+</bean>
+10
+in autowiring bean ids should be as as property names.
+<bean id="" class="" autowire="byNmae" scope="singleton">
+</bean>
+autowire="byType" inthis case you shloud have only one bean config for one type in xml
+autowire="constructor" works as same bytpe here also condition is you shloud have only one bean config for one type in xml
+by default no autowire works
+11
+default scope is Singleton and initilises at context creation time and one object for one context
+Prototype- new object everytime we call getBean() or referencing
+Request, Session
+12
+how to get bean out side of spring bean: Impliment ApplicationContextWare to use getBean method.
+or save application contect in Session or Singltion class and get context and call getBean method
+when we need ApplicationContextWare is assume like Bean one is defined as single and we need dependent beans as new copy even though
+we define dependent beans as proptoty we do not get fresh copy as it bean one is defined as singleton
+13
+bean defenation inheritance
+<bean id="parentTriangle" class="com.eswar.reddy.Triangle">
+ <property name="preNmae1" ref="bean1"/>
+</bean>
+<bean id="triangle1" class="com.eswar.reddy.Triangle" parent="parentTriangle">
+ <property name="preNmae2" ref="bean2"/>
+</bean>
+with lists
+<bean id="parentTriangle" class="com.eswar.reddy.Triangle">
+ <property name="preNmae">
+	<list>
+			<ref bean="id1"/>
+	</list>
+ </property>
+</bean>
+<bean id="triangle1" class="com.eswar.reddy.Triangle" parent="parentTriangle">
+ <property name="preNmae">
+	<list merge="true">
+			<ref bean="id2"/>
+	</list>
+ </property>
+</bean>
+14
+bean life cycles
+InitilizingBean.afterPropertiesSet()
+Disposablebean.destroy()
+AbstractApplicationContext.registerShutdownHook()
+or 
+<bean id="parentTriangle" class="com.eswar.reddy.Triangle" init-method="mone" destroy-method="mtwo">
+AbstractApplicationContext.registerShutdownHook()
+16
+propertyPlaceholderConfigure
+<bean id="parentTriangle" class="com.eswar.reddy.Triangle">
+ <property name="preNmae" value="${com.pro1}">
+</bean>
+<bean class="org.spring.propertyPlaceholderConfigure>
+ <property name="locations" value="propertiesFile1">
+</bean>
+18
+@required
+public void setPro1(...){}
+<bean class="org.springframework....RequiredAnnotationBeanPostProcesser"> or <context:annotation-config/>
+19
+@Autowired
+public void setPro1(...){}
+<bean class="org.springframework....AutowiredAnnotationBeanPostProcesser">
+or <context:annotation-config/>
+
+@Autowired
+@Qualifier("qu1")
+public void setPro1(...){}
+<bean class="org.springframework....AutowiredAnnotationBeanPostProcesser">
+or <context:annotation-config/>
+<bean id="id1" class="com.eswar.reddy.Triangle">
+ <qualifier value="qu1"
+ <property name="preNmae" value="xyz">
+</bean>
+ and namespaces should be added in xml
+20
+JSR250
+@Resource
+public void setPro1(...){}
+@Resource(name="p1")
+public void setPro1(...){}
+
+@PostConstructor
+public void m1(...){}
+@PreDestroy
+public void m1(...){}
+AbstractApplicationContext.registerShutdownHook()
+
+21
+@Component
+public class Cricle{
+}
+<context:componentscan base-package="org.abc"/>
+steriotype annotation component disadvatage is we can not define once calss with multiple names(multiple defenation)
+@Controller
+@Repositry
+@Service
+
+22
+<bean id="messageSource" class="org.springframework....ResourceBundleMessageSource">
+	<property name="basenames">
+		<list><value>mymessages</value></list>
+	</property>
+</bean>
+@Autowired
+private MessageSource ms;
+in any method this.ms.getMessage("mkey1",null,"default message", null)
+
+context.getMessage("mkey1",null,"default message", null)
+23
+ApplicationEventpublishAware
+ApplicationEventPublisher.publishEvent()
+
+to create event extend ApplicationEvent
+to create listener extend ApplicationListner
+
+<context:component-scan/>
+
+###############################################################################
+###################       Spring boot java brains   ###########################
+###############################################################################
+
+12
+JSON object output
+@RestController
+public class Contoller1 {
+	@RequestMapping("/topics")
+	public List<Topic> hello() {
+		return Arrays.asList(new Topic("abc","xyz"),new Topic("123","pqr"));
+	}
+}
+public class Topic {
+	private String name;
+	private String name1;
+	Topic(String name,String name1){this.name=name;this.name1=name1;}
+	//settters and getters
+}
+
+17 and 18
+add service layer and request parameter
+@RestController
+public class Contoller1 {
+	@Autowired
+	private Service1 service;
+	@RequestMapping("/topics/{id}")
+	public List<Topic> topics(@PathVariable("id") String x) {
+		System.out.println(x);
+		return service.topics();
+	}
+}
+@Service
+public class Service1 {
+	public List<Topic> topics() {
+		return Arrays.asList(new Topic("abc","xyz"),new Topic("123","pqr"));
+	}
+}
+19
+how to handle post request(@RequestBody)
+@RestController
+public class Contoller1 {
+	@Autowired
+	private Service1 service;
+	@RequestMapping(method=RequestMethod.POST, value="/topics/")
+	public void addTopic(@RequestBody Topic topic) {
+		return service.addTopic(topic);
+	}
+}
+use postman plugin in chrome to test
+20
+@RestController
+public class Contoller1 {
+	@Autowired
+	private Service1 service;
+	@RequestMapping(method=RequestMethod.PUT, value="/topics/{id}")
+	public void updateTopic(@RequestBody Topic topic,@PathVariable("id") String x) {
+		return service.updateTopic(topic,x);
+	}
+}
+by default spring restController returns JSON format
+for XML format we need to add @XmlRootElement in custom return type class
+@RequestMapping(method=RequestMethod.GET, value="hello5", produces=MediaType.APPLICATION_XML_VALUE)
+	public Topic1 mone5() {
+		return new Topic1("name1","desc1");
+	}
+@XmlRootElement
+public class Topic {
+}
+25
+How to change port
+resource/application.properties
+server.port=8081
+
+28
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+ mvn install:install-file -Dfile=C:\1work\jars\ORM_HOME\ojdbc6.jar -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=12.1.0 -Dpackaging=jar
+
+@Entity
+public class Topic {
+	@Id
+	private String id;
+	private String name;
+	private String name1;
+}
+29
+@Service
+public class Service1 {
+	@Autowired
+	private TopicRepository dao;
+	public Topic getTopic(String id) {
+		return dao.findOne(id);
+	}
+	public void saveTopic(Topic topic) {
+		dao.save(topic);
+	}
+	public void updateTopic(String id, Topic topic) {
+		dao.save(topic);
+	}
+	public void deleteTopic(String id) {
+		dao.delete(id);
+	}
+	public List<Topic> topics() {
+		List<Topic> topics = new ArrayList<>();
+		dao.findAll().forEach(topics::add);
+		return topics;
+	}
+}
+public interface TopicRepository extends CrudRepository<Topic, String>{
+	
+}
+
+for save and update we have only one method save in CrudRepository
+CrudRepository takes two generic types one is Entity and another one is Id
+
+31
+whatch 30 and 31. very good
+
+
+@SpringBootApplication can be replaced with @Configuration, @EnableAutoConfiguration, @ComponentScan({"main class package","contollers package"})
+add below properties in application.properties to support Views
+spring.mvc.view.prefix=/WEB-INF/jsp/
+spring.mvc.view.suffix=.jsp
+
+	@Id
+	@SequenceGenerator(name="emailAddress.generator", sequenceName="AFP_AWD.EMAIL_ADDR_SEQ")	
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "emailAddress.generator")
+	@Column(name = "EMAIL_ADDR_SID")
+	private long id;
+
+
+**********************************************
+*************     Spring 2.5      ************
+**********************************************
+web.xml
+	<servlet>
+		<servlet-name>mvc-dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring-mvc-config.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+
+  <servlet-mapping>
+ 	<servlet-name>mvc-dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+  </servlet-mapping>
+  
+mvc-dispatcher-servlet.xml
+
+    <bean name="/welcome.htm"
+		class="com.mkyong.common.controller.HelloWorldController" />
+
+    <bean id="viewResolver"
+    	class="org.springframework.web.servlet.view.InternalResourceViewResolver" >
+        <property name="prefix">
+            <value>/WEB-INF/pages/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+	
+	<context:component-scan base-package="com.mkyong.common.controller" />
+
+public class HelloWorldController extends AbstractController{
+	@Override
+	protected ModelAndView handleRequestInternal(HttpServletRequest request,
+		HttpServletResponse response) throws Exception {
+		ModelAndView model = new ModelAndView("HelloWorldPage");
+		model.addObject("msg", "hello world");
+		return model;
+	}
+}
+
+#######################################################
+           Spring 3
+#######################################################
+
+
+<bean id="a" class="org.sssit.A" autowire="byName"></bean>  
+<bean id="a" class="org.sssit.A" autowire="byType"></bean>  
+<bean id="a" class="org.sssit.A" autowire="constructor"></bean>  
+
+1) A static factory method that returns instance of its own class. It is used in singleton design pattern.
+public class A {  
+	private static final A obj=new A();  
+	private A(){System.out.println("private constructor");}  
+	public static A getA(){  
+		System.out.println("factory method ");  
+		return obj;  
+	} 
+}
+<bean id="a" class="com.javatpoint.A" factory-method="getA"></bean>  
+
+2)A non-static factory method that returns instance of another class. It is used instance is not known and decided at runtime.
+public class PrintableFactory {  
+	//non-static factory method  
+	public Printable getPrintable(){  
+		return new A();//return any one instance, either A or B  
+	}  
+}  
+<bean id="pfactory" class="com.javatpoint.PrintableFactory"></bean>  
+<bean id="p" class="com.javatpoint.PrintableFactory" factory-method="getPrintable"  factory-bean="pfactory"></bean> 
+
+3. A static factory method that returns instance of another class. It is used instance is not known and decided at runtime.
+<bean id="b" class="com.javatpoint.A" factory-method="getB"></bean>  
+public interface Printable {  
+	void print();  
+} 
+public class A implements Printable{  
+    @Override  
+    public void print() {  
+        System.out.println("hello a");  
+    }  
+}  
+ And we have Class B also like class A
+ public class PrintableFactory {  
+	public static Printable getPrintable(){  
+		//return new B();  
+			return new A();//return any one instance, either A or B  
+}
+
+
+
+////////////////////////////////////////////////////////////////
+we need to add Oracle driver extranally to spring boot(ojdbc14 does not work)
+		<dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3.0</version>
+        </dependency>
+  <repositories>
+    <repository>
+      <id>com.oracle</id>
+      <url>http://afpbuildserver:8081/nexus/content/repositories/thirdparty</url>
+    </repository>
+  </repositories>
+
+server.port=8081
+  
+spring.datasource.url=jdbc:oracle:thin:@dcup62d.us.aegon.com:1831:DAFPADM
+spring.datasource.username=emummasani
+spring.datasource.password=WAR1234
+spring.datasource.driver-class=oracle.jdbc.driver.OracleDriver
+spring.datasource.hikari.connection-timeout=60000
+spring.datasource.hikari.maximum-pool-size=5
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+logging.level.org.hibernate.SQL=debug
+
+
+we can confiure log4j without any issues by just adding jars in pom.xml and log4j properties in resource folder
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@      POC            @@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+simple app1 (rest webservice with h2 database)
+----------------------------------------------
+	https://start.spring.io/
+	version 2.1.5
+	Spring web Starter
+	Spring Data JPA
+	H2 database
+one.java	
+	package com.example.demo;
+
+	import org.springframework.boot.SpringApplication;
+	import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+	@SpringBootApplication
+	public class DemoApplication {
+		public static void main(String[] args) {
+			SpringApplication.run(DemoApplication.class, args);
+		}
+	}	
+
+Testing
+http://localhost:8080/one
+
+simple app2 (how to access h2 database)
+----------------------------
+add below thing to app1
+application.properties
+	spring.h2.console.settings.trace=true
+	spring.datasource.driver-class-name=org.h2.Driver
+	spring.datasource.url=jdbc:h2:mem:tt_data_arl;DB_CLOSE_DELAY=-1
+	spring.datasource.username=test
+	spring.datasource.password=pass
+	spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+data.sql
+	CREATE SCHEMA IF NOT EXISTS tt_data_arl;
+	DROP TABLE IF EXISTS tt_data_arl.master_agent_reference;
+
+Testing
+	http://localhost:8080/h2-console/
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@      FAQ            @@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Spring boot version -2.7.14
+Spring version -5
+
+get bean with Beanfactory
+get bean with ApplicationContext
+use setter injection
+use constructor injection
+injects objects
+get bean using alias ,name ,id,idref
+list and maps
+get dependecy with autowire
+scopes Singleton and proptotype
+bean defination inheritance with lists
+what is factory method use in dependency
+how to read properties
+	@Value("key1")
+How to configure objects that have been created outside the control of an IoC container.
+how to instantiate a Spring IoC container
+how to solve Circular Dependency in spring
+how to build spring mavc with spring boot
+
+What is maximum payload in post in RESTful
+Different kind of rest methods
+Rest status codes
+URL versioning 
+Rest security
+how to handle logging
+how to handle exceptions
+How to read external properties
+Integration testing
+File/Image sending through RestFul
+how to combine declarative and programetic transactions
+
+SPring+ JPA+ transactions
+	JpaTransactionManager it needs LocalContainerEntityManagerFactoryBean
+	LocalContainerEntityManagerFactoryBean needs DataSource and JpaVendorAdapter
+	JpaVendorAdapter is HibernateJpaVendorAdapter
+	@Transactional(isolation = Isolation.SERIALIZABLE)
+	When using JPA outside of a dependency injection container, transactions need 
+	to be handled programatically by the developer:
+	@PersistenceContext
+	private EntityManager em;
+	UserTransaction utx = entityManager.getTransaction(); 
+	utx.begin();utx.commit();utx.rollback(); 
+	propagation: REQUIRED, REQUIRES_NEW, MANDATORY, NESTED, SUPPORTS
+	isolation:DEFAULT, READ_COMMITTED, READ_UNCOMMITTED, REPEATABLE_READ, SERIALIZABLE 
+	DEFAULT is lets DB to deceide it
+	readOnly - whether the transaction is read-only or read/write
+	timeout — transaction timeout
+Spring logging with AOP
+	ImportAware
+	ApplicationListener
+	@Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)
+	@Target(value = { java.lang.annotation.ElementType.TYPE })
+	@Documented
+	@Import({LoggerHeaderConfigurator.class})
+	public @interface EnableLoggerHeader {
+
+
+
+
+
+ 
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

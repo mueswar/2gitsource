@@ -1,0 +1,4 @@
+ctrl+Space
+Ctrl+shift+I
+shift+Alt(select code)
+Alt+F8(evaluvate expression in debug)

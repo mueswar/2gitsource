@@ -1,0 +1,83 @@
+build.gradle
+
+Gradle can run multiple tasks with a single command by providing the names of all the tasks to run. The names of the tasks to run should be separated by a space. Here is an example of a Gradle command running multiple tasks: 
+c:\work>gradle clean build
+Each task will only get executed once, regardless of how many times it is found as part of the listed tasks or the tasks the listed tasks depend on. Thus, this command will only execute the clean task once
+c:\work>gradle clean clean
+Gradle just need enough of the task name to be able to distinguish it uniquely from other tasks in your Gradle build script
+A b is enough to uniquely identify the task build in a Gradle build script if no other tasks start with the letter b. If other tasks start with a b too, you may have to provide more of the task name. These Gradle command examples show how that could look: 
+c:\work>gradle bu
+c:\work>gradle bui
+c:\work>gradle buil
+You can exclude tasks from execution using the -x flag. Excluding tasks is mostly useful to exclude a task which another task depends on, typically to speed up the build process by excluding tasks you know you don't need to execute. 
+c:\work>gradle build -x test
+You can run gradle in a "quiet mode" which means that the Gradle command leaves out a lot of the status messages it normally prints to the command line when executing. 
+c:\work>gradle -q
+c:\work>gradle tasks      You can list all tasks in a build script
+c:\work>gradle tasks --all
+
+apply java plugin
+apply plugin: 'java'
+by default java plugin generates jar file with project name
+define project name in settings.gradle file
+rootProject.name = 'gtwo'
+
+to create war file
+apply plugin: 'war'
+now it creates only war file not jar file. this war file includes all compile dependency jars. it creates web-inf folder, classes and lib
+
+
+oneEar application
+---------------------------------------------------------------------
+create gradle oneEar project in eclipse
+edit build.gradle
+apply plugin: 'java'
+apply plugin: 'ear'
+apply plugin: 'eclipse-wtp'
+repositories {
+}
+dependencies {
+	dependencies {
+		deploy project(path: ":oneWar", configuration: 'archives')
+	}
+}
+edit settings.gradle
+rootProject.name = 'oneEar'
+include 'oneWar'
+create oneWar folder in root directory
+create src/main/java in oneWar
+create build.gradle and settings.gradle in oneWar
+
+run build/assemble in oneEar
+run ide/eclipse  in oneEar
+run ide/eclipseWtp in oneEar
+
+
+issue1
+----------------------------------------------------------------------
+check vpn onemore time
+check proxy settings hhtp and https
+no need local installation
+add gradle.properties for Inteleji
+	gradle.properties
+	-----------------
+	systemProp.http.proxyHost=internet.xyzCompany.com
+	systemProp.http.proxyPort=83
+	systemProp.https.proxyHost=internet.xyzCompany.com
+	systemProp.https.proxyPort=83
+	systemProp.http.nonProxyHosts=*.xyzCompany.com|localhost
+	
+import existing project
+----------------------------------------------------------------------
+issue1:
+	 Could not fetch model of type 'GradleBuild' using connection to Gradle distribution from company Nexus 
+	 Solution:
+		update gradle-wrapper.properties under gradle/wrapper folder
+issue2:
+	compile, runtime, testCompile, and testRuntime are removed in Gradle 7.0
+	implementation, runtimeOnly, testImplementation, and testRuntimeOnly
+issue3:
+	http is not allowed by default in Gradle 7.0
+	Solution: repositories {maven { url 'http://www.nexus.abc.com/content/groups/public' ; allowInsecureProtocol = true}}
+
+

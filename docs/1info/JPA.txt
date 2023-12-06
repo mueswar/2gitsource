@@ -1,0 +1,153 @@
+JPA
+@Entity
+@Table(name="Tb1")
+@Id
+@GeneratedValue
+@GeneratedValue(strategy=GenerationType.SEQUENCE)//all databases does not support
+@TableGenerator(name="g1", table="tbTemp", pkColumnName="tempColumn1",pkColumnValue="tempColumn2", allocationSize=1)
+@GeneratedValue(strategy=GenerationType.TABLE, generator="g1")
+@Column(name="cl1", nullable=false)
+@Transient - no column in table
+@Temporal(TemporalType.DATE)
+@Temporal(TemporalType.TIME)
+@Embeddable
+@Embedded
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE),InheritanceType.JOINED,InheritanceType.TABLE_PER_CLASS
+@oneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+CascadeType.MERGE, PERSIST, REFRESH
+FetchType.EAGER is default for one to one
+FetchType.LAZY is default for one to many and many to many
+@oneToOne(mappedBy="propertynameOFc2 in c1", cascade=CascadeType.ALL)
+@oneToMany(targetEntity=c2.class, mappedby="p3 of c2")
+
+one calss and two tables
+	@Entity
+	@Table(name="Tb1")
+	@SecondaryTable(name="Tb2")
+	@Column(table="Tb2")//on getters methods
+	thats it hibernate takes care referncial intigrity and save in two tables
+Two classes and one table
+	create two classes c1, c2
+	annotate c1 with @Entity
+	annotate c2 with @Embeddable
+	create c2 reference in c1 and annotate with @Embedded
+create primary with multiple columns
+	move primary key columns to class c2 and annotate with @Embeddable
+	create c2 reference in c1 and getter with @Id
+	c2 should be serializable
+
+inheritance
+	c2 extends c1
+	annotate c1 with @Entity and @Id
+	annotate c2 with @Entity
+	annotate c1 with @Inheritance(strategy=InheritanceType.SINGLE_TABLE) this is not mandatory as it is default
+	InheritanceType.SINGLE_TABLE one table for two classes
+	InheritanceType.JOINED //two tables t1 with c1 propeties, t2 with c2 propeties and c1 primarykey 
+	InheritanceType.TABLE_PER_CLASS //two tables t1 with c1 propeties, t2 with c2 propeties and c1 propeties
+one to one unidirectional
+	create two entities c1 , c2 with @Entity,@Id, @GeneratedValue, both have two properties (c1pk,c1notpk,c2pk,c2notpk)
+	create reference c2 in c1 and annotate with @oneToOne(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	now Hibernate creates two tables with 3 columns in c1(one additional column in c1 for c2 reference) and 2 colums c2
+	if we need our own name for forgine key column, then add @JoinColumn(name="fc1") on c2 referance getter in c1 and @Column(name="fc2") on c2 pk property
+one to one bidirectional
+	create c1 reference in c2 and annotate @oneToOne(mappedBy="propertynameOFc2 in c1", cascade=CascadeType.ALL)
+one to many
+	c1 has p1(pk),p2 and p3(collection of c2 reference)
+	c2 has p1(pk),p2,p3(c1 reference)
+	on c1p3(collection of c2 reference) getter @oneToMany(targetEntity=c2.class, mappedby="p3 of c2")
+	on c2p3(c1 reference)getter @ManyToOne, @JoinColumn(name="different name c1fk")
+	T1 is cread with 2 coumns(collection property column is not created)
+	T2 is created with 3 columns, for c1 reference in c2 one column created but with differeent name(JoinColumn name)
+many to many
+	c1 has p1(pk),p2 and p3(collection of c2 reference)
+	c2 has p1(pk),p2,p3(collection of c1 reference)
+	onc1p3
+	@ManyToMany
+	@JoinTable(name="table3", JoinColumns={@JoinColumn(name="c1p1")},
+							  inverseJoinColumns={@JoinColumn(name="c2p1")})
+	onc2p3
+	@ManyToMany
+	@JoinTable(name="table3", JoinColumns={@JoinColumn(name="c2p1")},
+							  inverseJoinColumns={@JoinColumn(name="c1p1")})
+						  
+
+						  
+###################################################################################################
+###################################       FAQ             #########################################
+###################################################################################################
+what is best way to create multiple custom entity(only few columns) for single table
+
+Id must be configured in entity else we get error
+How to define composit key
+	@Embeddable
+	public class CusID implements Serializable{
+		@Column(unique = true, nullable = false, length = 15)
+		private String cone;
+		@Column(unique = true, nullable = false, length = 15)
+		private String ctwo;
+	}
+	@Entity
+	@Table(name = "Tone")
+	public class ChildOne extends AbstractEntity {
+		@EmbeddedId
+		private cthree id;
+	}
+	@MappedSuperclass
+	public class AbstractEntity implements Serializable {
+	}
+@OneToMany(cascade=REMOVE, mappedBy="customer")
+	ALL, DETACH, MERGE, PERSIST, REFRESH, REMOVE
+EntityManagerFactory is thread safe
+EntityManager is not thread safe
+how can we get entity manager
+	@Autowired
+	private EntityManagerFactory entityManagerFactory;
+	we will call emf.createEntityManager(); in every method
+Application-managed entity managers don't automatically propagate the JTA transaction context.
+How to handle transaction in JPA
+		@PersistenceUnit EntityManagerFactory emf;
+		EntityManager em;
+		@Resource
+		UserTransaction utx;
+		em = emf.createEntityManager();
+		utx.begin();
+		em.remove(ThirdEntity);
+		utx.commit();
+Entity instances are in one of four states: new, managed, detached, or removed.
+	new- no persistance ID
+	managed- has ID and assosicated with persistance context
+	detachedd - has ID and not assosicated with persistance context
+	removed - has ID and assosicated with persistance context and scheduled to remove from DB
+What are the entity manger methods
+	find(Class<T> entityClass, Object primaryKey)
+	persist(Object entity)
+	remove(Object entity)
+	detach(Object entity)
+	merge(T entity)
+	flush() - Synchronize the persistence context to the underlying database.
+	clear() -Clear the persistence context, causing all managed entities to become detached.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

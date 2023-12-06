@@ -1,0 +1,11 @@
+Ctrl+/ --single line comments
+Ctrl+Shift+/ --multiple line cooments
+Ctrl+Space -- for auto complete component name
+Ctrl+Shift+U   Upper Case
+
+import grouping
+File > Settings > Editor > code style> Java
+
+import organize
+	ctrl+alt+O
+

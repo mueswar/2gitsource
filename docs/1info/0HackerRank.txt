@@ -1,0 +1,183 @@
+Hacker Rank
+eswara.cv@gmail.com/No
+
+How to read input
+	Scanner in = new Scanner(System.in);
+	int n = in .nextInt();
+data types
+---------------------------------------------------------------------------------------------------
+chat 2 bytes
+short 2 bytes
+int 32 bit 4 bytes, long 64 bit 8 bytes
+float 32 bit 4 bytes, double 64 bit 8 bytes
+
+float a = 0.0f// f mandatory 6 decimal digits
+double a = 0.0d// d not mandatory  15 decimal digits
+
+obj instanceof Student//remember format
+
+convert
+doble to long : (long)doubleValue= long
+
+Array
+---------------------------------------------------------------------------------------------------
+Arrays a = new Arrays();// we can not create array like this
+Arrays<Integer> a = new Arrays<>();//This is also does not work.
+we do not have Array class. So any array can have length property. but no methods.
+we have Arrays calss with private constructor. asList and stream methods
+int[] a = new int[n];
+for(int i = 0 ; i < n; i++){
+    a[i] = sc.nextInt();
+}
+int[] x = {1,2,3};
+String has length method
+Arrays have length property
+Collection has size method
+
+int[] x = {1,2,3};
+for(int i : x){
+
+}
+
+String
+---------------------------------------------------------------------------------------------------
+s.charAt(0);
+s.subString(0); 
+s.subString(0,1);
+s.split(","); returns String[] a 
+s.isEmpty();
+s.isBlank()//from java 11
+s.concat("abc")// we need to assign it, else we loose change
+String.valueOf()//convert any data type into String
+
+Wrapper
+---------------------------------------------------------------------------------------------------
+Integer.valueOf() premetive int or string can be converted into wraper Integer 
+	i.intValue() wraper int converted into premetive int
+	i.longValue() wraper int converted into premetive long
+	i.doubleValue() wraper int converted into premetive double
+	i.toString() wraper int converted into String
+	min, mx, sum
+Same methods to Long, Double
+one type of wrapper value can be converted into all premetive values
+	
+
+
+StringBuffer
+---------------------------------------------------------------------------------------------------
+sb.append
+sb.insert
+sb.delete
+sb.deleteCharAt
+sb.setCharAt
+sb.reverse
+sb.subString
+
+
+
+
+java.lang.Math.sqrt(2);
+java.lang.Math.pow(10, 2);//10 power2
+
+Collections.sort(x); shorts numbers and integers
+how to check 2 dimentional array size;
+
+
+Exception
+---------------------------------------------------------------------------------------------------
+throw new Exception("n or p should not be negative.");
+
+
+---------------------------------------------------------------------------------------------------
+public enum Directions{
+	  EAST, 
+	  WEST, 
+	  NORTH, 
+	  SOUTH
+}
+Directions dir = Directions.valueOf("EAST");
+if(dir == Directions.EAST) {
+	    System.out.println(dir);
+} 
+
+Collections
+---------------------------------------------------------------------------------------------------
+create list 
+	String a[]= new String[] { "A", "B", "C", "D" };
+	List<String> list = Arrays.asList(a); //gives immutable ArrayList
+create Stream	
+	Stream.of("This", "is", "Java8", "Stream").forEach(System.out::println);
+	
+	String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
+	Arrays.stream(stringArray).forEach(System.out::println);
+
+
+*****************************************************
+***************   written test   **********************
+*****************************************************
+char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+
+for (int i = 0; i < vowels.length; ++ i) {}
+for (char item: vowels) {}
+if (expression1) {}
+else if (){}
+switch (operator) {
+	case '+': System.out.println()
+	break;
+switch (week) {
+	case 1:     day = "Sunday";
+	break;
+
+ArrayList 
+	add(""); add(2,"");set(2,"");size();indexOf(""); get(2);clear();
+	contains("");
+	remove("");remove(3);remove(list);removeIf()
+Set
+	add("");isEmpty();size();clear();clone();contains("");
+Map
+	put("",""),isEmpty();size();clear();clone();containsKey("");containsValue("");get();
+	keySet(); putAll(Map m);
+Collection<String> vals = Arrays.asList("abc","abcde","a","abc");
+	vals.removeIf(s->s.length()>3);//only in java 8
+	vals.replaceAll(s-> s+"123");//only in java 8
+List<string> students
+List<Student> names = students.stream().map(Student::getName)
+	.filter(name->name.startsWith("A")).collect(Collectors.toList());
+
+List<String> a= Arrays.asList("","",""); gives immutable ArrayList
+
+IntStream.rangeClosed(1, 10).forEach(num -> System.out.print(num));// ->12345678910
+IntStream.range(1, 10).forEach(num -> System.out.print(num));// ->123456789
+strings.stream().filter(string -> string.isEmpty()).count();
+List<Integer> squaresList = numbers.stream().map( i -> i*i)
+	.distinct().collect(Collectors.toList());
+	
+Junit:
+------------------------------------
+see jnuit doc
+
+
+-------------------------------------------------------
+how to convert any data type into string with wrapper and String class
+how to get wrapper from String value
+how to compare two strings
+how to add someting to string
+how to find length of string
+how to get subString
+how to get case sensitive strings
+how to create arrys 
+how to create list from existing array
+how to create list from fixed values
+what is difference between filter and map 
+how to convert one list of objects into other data type list objects
+how to convert one list of objects into other data type list objects and print
+iterate array
+iterate list
+iterate set
+iterate map
+create enum  and print single value
+compare enum constant with Sting value
+create Comparator for userdefined class, and sort collection
+replace white space without replace method "abcd   xyz"
+java 11 date for date and time
+localdate,localtime

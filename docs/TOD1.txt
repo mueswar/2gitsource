@@ -1,0 +1,133 @@
+How to test flow from middle of flow
+	let say there are 3 backend endpoints
+
+two objects have same method need to call that method, we can create generic method 
+	private void mone(T o){
+		o.run();
+	}
+list.forEach() does not return but we need return value
+	T t = new T();
+	list.forEach( l - one(t, l));
+	//now we have modified t available
+	
+how to create class inside class(inner calss will be created as public static but )
+	with Intellij
+		move one file on to other file
+	problem: all method parameters will have extra outer class name
+	
+to delete 200k records it taking 1 hr(without index)
+
+first method takes x returns y and pass it to second method,
+	in change request(CR) requirment, second method needs some thing from first method
+	
+use builder pattern	
+do not pass entire object as parameter if you need just one or two propeties needed
+do not call method until it actuall needed
+	(like call method A, and do some logc and use method A optout- this is wrong)
+do not call method c in method A
+	methodA(){
+		var c= method c();
+		methodB(c)
+	}
+	here insted of calling method C in method A, we can directly call method C in method B only
+but do not call method in loops if you are not passing to method from loop iteration item
+if we are checking same condition multiple times in one mthod
+	move code to new method  check condition only one time
+	mone (){
+		------
+		codition1{
+			-----
+		}
+		
+		----
+		codition1{
+			-----
+		}
+	}
+	change above code to something like below
+	mone (){
+		------
+		codition1{
+			mtwo()
+		}else {
+			---
+		}
+		-----
+	}
+	
+	mtwo(){
+		----
+	}
+	
+	
+how to combine two queries results in to single resultset, what are pre conditions to combine
+
+
+Collections.EMPTY_LIST //do not use
+Collections.emptyList() // use this
+.stream().mapToDouble(amt -> amt.getAmount() != null ? amt.getAmount() : 0).sum() //sum of one field of collection objects
+
+Refactor
+-----------------------------------------------------------------
+always think that feature requirment is same as existing but only last method call we need to chage
+	mone()-->l1- l2 -l3
+	mtwo()-->l1- l2 -l5
+	l1 , l2 should not be duplicated in mtwo() requirment
+
+
+one end point is call service method 
+	but service method S1m1() has to to invoke multiple vendors
+		vendor A, B we seprate feign client 
+		in service method  i have 4 method calls
+			1.AVendorReqCreate
+			2.AVendorResCreate
+			3.BVendorReqCreate
+			4.BVendorResCreate
+New requirment 
+ create new endponit 
+	endpoint two service method S2m1() has to call Vendor B and C
+	but B methods are in service S1 
+Solution: create service calsses for each vendor
+
+
+
+
+VM
+--------------------------------------
+what do we need to build application
+	access to computer
+	what type of computer
+	how much hard disk/ ram
+	OS
+	program softwares
+	
+----------------------------
+zero trust authentication
+https/grpc
+
+	
+
+Object storage
+----------------------------
+what name should we give to store, think about uniqness
+where can we store, local? VM? third party, location?
+how frequent we can access?
+how much size
+is it serverless?
+how can we store?drang and drop?upload?CLI?programme?
+how can we access?direct url hit? download?CLI?programme?
+what kind of data can we store?
+single object size
+remmeber all storage class names and availability, durability
+lifecycle
+versions
+how can we reduce cost of storage
+what kind of encriptions
+what is the command to create bucket/copy/move
+how can you give temporary access	
+
+opensource code
+-----------------------------------------------------------------
+see spring security 
+EhCacheCacheManager
+ConcurrentMapCacheManager

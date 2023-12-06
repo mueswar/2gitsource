@@ -1,0 +1,7 @@
+https://shipilev.net/
+
+https://www.baeldung.com/jvm-compressed-oops
+
+https://javabydeveloper.com/constructor-reference-java-8/
+https://mkyong.com/java8/java-8-bifunction-examples/
+https://dzone.com/articles/java-object-size-estimation-measuring-verifying

@@ -1,0 +1,274 @@
+comments same as Java
+declaration var s string = "abs", default value be assigned when we do not assign
+no end ;
+in loops no ()
+function defination
+	func
+	access speicfier
+	return type
+
+
+
+
+Tools
+---------
+1.we can do programmes on golang.org itself
+2.VS code with go plugin(GO should be installed)
+
+single line comments
+	//single line comments
+block comments
+	/* line1
+	line2
+	line3 */
+hello world program
+	import fmt
+	func main(){
+		fmt.Println("Hello world")
+	}
+run go program
+	>go run pone.go
+Data types
+	int, float/32/64, String, Boolean, Array, Map, pointers
+variable declaration	
+	func main(){
+		var a int = 5
+		var b float32 = 4.3
+		const pi float64 = 3.145
+		x,y := 12,13
+		var t bool = true
+		s:=false
+		var n string ="GO"//here s is small in string
+	}
+How to find type
+	func main(){
+		a := 5
+		fmt.Println("%T", a)
+	}
+aritmetic operations
+	func main(){
+		x,y := 5,2
+		fmt.Println("x+y is ",x+y)
+		fmt.Println("x mod y is ",x%y)
+	}
+How to display address of the varible
+	func main(){
+		x,y := 5,2
+		fmt.Println(x)
+		fmt.Println(&x)
+	}	
+How to change varible value in clled function
+	func main(){
+		x := 5
+		one(&x)
+		fmt.Println(x)
+	}
+	func on(x *int){
+		*x= 2
+	}
+What is formating print, how do we get type of varible
+	func main(){
+		var x int =5
+		const pi float64 =3.1456777
+		fmt.Printf("%T",x)// prints int
+		fmt.Printf("%.3f",pi)// prints up to 3 decimal points
+	}
+	
+What are the string functions
+	func main(){
+		var n string = "program"
+		fmt.Println(len(n))
+		fmt.Println(n +"developer")
+	}
+loops
+	for i:=1;i<=5;i++
+	for i<=5
+	
+	no parantasis and declaration is different
+	for i:=1;i<=5;i++ {
+		fmt.println(i)
+	}
+	do while kind of loop
+	i:=1
+	for i<=5 {
+		fmt.println(i)
+		i++
+	}
+	if else condition
+	i:=18
+	if i>19{
+		fmt.println(less)
+	} else {
+		fmt.println(more)
+	}
+	
+	switch case
+	i:=18
+	switch i {
+		case 16: fmt.println(16)
+		case 18:fmt.println(18)
+		case 20: fmt.println(20)
+		default: fmt.println("none")
+	}
+Arrays
+	func main(){
+		var a[5] int
+		a[0] = 2
+		a[1] = 5
+		fmt.println(a[1])
+	}
+	func main(){
+		a :=[5]int{2,4,6,8,9}
+		fmt.println(a[1])
+	}
+	func main(){
+		a :=[5]int{2,4,6,8,9}
+		for _,value := range a{
+			fmt.println(value)//this prints values in array
+		}
+	}
+	func main(){
+		a :=[5]int{2,4,6,8,9}
+		for i,value := range a{
+			fmt.println(value, i)//this prints values and index in array
+		}
+	}
+	func main(){
+		a :=[]int{2,4,6,8,9}
+		fmt.println(a[2,4])//68 here second index and 3rd index
+		fmt.println(a[0:])//24689  starting from 0th index till end
+		slice1 :=append(a,10,11,12)// it appends values and slice1 will have all elements
+		slice2 :=make([]int,5,10)
+		copy(slice2,a)// slice2 will have all elements of a
+	}
+Maps
+	func main(){
+		StudentAge :=make(map[string],int)
+		StudentAge["son"] = 20
+		StudentAge["father"] = 40
+		fmt.println(StudentAge)
+		fmt.println(StudentAge["father"])
+		fmt.println(len(StudentAge))//to get length of map same as string
+	}
+
+Functions
+	write add function and call it from main
+		func main(){
+			x,5:=5,6
+			fmt.Println(add(x,y))
+		}
+		func add(n1,n2 int) int {
+			return n1+n2
+		}
+		func add1(n1 int,n2 int) int {
+			return n1+n2
+		}
+	how to return two values
+		func add(n1,n2 int) (int,int) {
+			return n1+n2, n1-n2
+		}
+	how to return two values with labels
+		func add(n1,n2 int) (z1 int, z2 int) {
+			z1=n1+n2
+			z2= n1-n2
+			return 
+		}
+	how to write function within function
+		func main(){
+			test := func(){
+				fmt.Println("hello")
+			}
+			fmt.Println(test())
+		}
+	How to call function imeditly after defination
+		func main(){
+			test := func(x int) int{
+				return x * -1
+			}(8)
+			fmt.Println(test)
+		}	
+	How to pass function as argument
+		func mone(m func(int) int){ //here instedof data type we use method declaration
+			fmt.Println(m(7))
+		}
+		func main(){
+			test := func(x int) int{
+				return x * -1
+			}
+			mone(test)
+		}	
+	how to return function (function closure )
+		func mone(x String) func(){
+			return func(){fmt.Println(x)}
+		}
+		func main(){
+			mone("Hello")()//here we are getting function and calling immediately
+		}
+	function closure  is function which uses outer function variable// check again for correct defination
+
+Struct
+	how to define struct
+		type Point struct{// here type and struct are predefined key words
+			var x int32
+			var y bool
+		}
+		func main(){
+			var a Point = Point{5, true}
+			a2:=Point{6, false}
+			a3:=Point{x:7}
+			fmt.println(a.x)
+		}
+	How to pass struct as pointer to other function and change value
+		type Point struct{
+			var x int32
+			var y int32
+		}
+		func chnage(a *Point){
+			a.x=10
+		}
+		func main(){
+			p:=&Point{5,6}
+			fmt.Println(p)// this prints as &{5,6}
+			chnage(p)
+			fmt.Println(p)// this prints as &{10,6}
+		}
+	How to use one struct in anthor struct
+		type Point struct{
+			var x int32
+			var y int32
+		}
+		type Circle struct{
+			var radius float32
+			var center *Point
+		}
+		func main(){
+			c:= Circle{3, &Point{5,6}}
+			fmt.Println(c.center.x)// here we used intermediate varible
+		}
+	How to avoid intermediat variable to to call from one struct to other struct variables	
+		type Point struct{
+			var x int32
+			var y int32
+		}
+		type Circle struct{
+			var radius float32
+			*Point // see how we are including other struct
+		}
+		func main(){
+			c:= Circle{3, &Point{5,6}}
+			fmt.Println(c.x)// here we did not use intermediate varible
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

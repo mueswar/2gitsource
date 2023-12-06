@@ -1,0 +1,875 @@
+1.Javascript
+2.javascript from java brains
+3 objects and prototypes from Java brains
+4 socpes and closures from Java brains
+5 The Net Ninja Object
+6 The Net Ninja DOM
+7 Javascript FAQ
+
+Javascript is dynamic type script(function does not have return type, function parameter does not have type)
+javascript is case sensitive(alert("") and Alert("") are not same)
+if function is in same file, you can call function before function definition
+if class is in same file, we can not initiate object before class definition
+you can not use variable before its declaration.
+Javascript is single thread and syncronize behaviour
+only Inheritance and Encapsulation are applicable to javascriprt
+if function name starts with Capital letter that function is class
+we can also define calls with Class keyword
+what is difference bewteen object literal functions and Class functions(class does not have comma(a) after every method)
+
+when do we use new keyword in functions
+is NodeJs thread safe?
+what are the new features in ES6
+
+quick notes
+-----------------------------------------------------------------------------------------------------------------------
+single line comments and multiline comments are same as Java
+	//
+	/*     */
+number, string literal, array literal, array Object and Date Object declaration are same as Java but on left side we do have type.
+	var a = 30;
+	var b= "abc";
+	var c= ["x","y","z"]; //java array initialization and javascript array initialization are different.
+	var d= new Array();
+	var e=new Date();
+if, ifelse, for loop, switch, do, continue and break work as Java
+common functions
+	parseInt()
+	parseFloat()
+	isNan()
+	string- length, concat, toUpper, toLower, trim, substr, replace
+	Arrays- length, push, pop, unshift, shift, sort
+	
+create empty and fully intialize object without class defination/data type
+	var a ={};
+	var b= {"a":"x",fone(){return "abc";}};
+	
+function-
+
+
+nodeJS modules
+	fs module
+		read file sync/async/chunk
+		write file
+		check if exist
+		create folder and delete it
+
+1.Javascript
+-----------------------------------------------------------------------------------------------------------------------
+//single line comments
+/*
+multi line comment
+*/
+<script type="text/javascript">
+	//
+</script>
+<script type="text/javascript" src="file1.js">
+	//
+</script>
+alert("alert1");
+alert(document.getElementById('Id1').value);
+//even or odd check function
+function isEven(){
+	var val1 = document.getElementById('Id1').value;
+	if(val1 %2 == 0){
+		alert(val1+" is even");
+	} else{
+		alert(val1+" is odd");
+	}
+}
+//below script works with in body section but not in header section
+<script>
+	document.getElementById('Id1').style.backgroundColor ='red';
+</script>
+//if we refer expernal js file, when html parser hits sprict tag it spots parsing html document until browser downloads external js file
+so if there are external js files it is better to include those just before body end tage</body>
+<script async type="text/javascript">//async indicates that it is safe to parse html while browser is downloading external js file
+as per http 1.1 specipication broswer can download max 2 files at a time.
+
+
+var v1 = 10;
+var v2 = 20;
+var c =v1+v2// output is 30
+var v1 = "abc";
+var v2 = "xyz";
+var c =v1+v2// output is abcxyz
+var v1 = "abc";
+var v2 = 20;
+var c =v1+v2// output is abc20
+var v1 = "10";
+var v2 = 20;
+var c =v1+v2// output is 1020
+but with - operation we get different result
+var v1 = "10";
+var v2 = 20;
+var c =v1-v2// output is -10
+//how to chnage value in text when button is clicked
+var val1 = document.getElementById('Id1').value;//if it is 10
+var val2 = document.getElementById('Id2').value;//if it is 20
+document.getElementById('Id1').value = val1+val2;//the output will be 1020
+//parseInt method
+var val1 = parseInt(document.getElementById('Id1').value);//if it is 10
+var val2 = parseInt(document.getElementById('Id2').value);//if it is 20
+document.getElementById('Id1').value = val1+val2;//the output will be 30
+//parseInt() methos ignorse decimal, if you want decimal then use parseFloat
+//isNaN() to check weather string is numer or not
+var val1 = document.getElementById('Id1').value;
+	if(isNaN(val1){
+		alert("please enter number");
+	}
+	
+strings
+----------------
+concatination
+var val1 = "hello "+"world";// hello world
+var val1 = "hello ".concat("world", " nice");//hello world nice
+var val1 = "bac '123' xyz"; // bac '123' xyz
+var val1 = 'bac \'123\' xyz'; // bac '123' xyz
+var val1 = "hello";
+val1.toUpperCase();
+val1.toLowerCase();
+val1.length;
+val1.trim();
+val1.replace("ab","xy");
+var val1 = "the Blue bottle blue leqid";
+val1.replace('/blue/g',"green");//case sensitive
+val1.replace('/blue/gi',"green");//case insensitive
+val1.substring(5);
+val1.substring(5,10);//here second parameter is also position
+val1.substr(5);
+val1.substr(5,5);//here second parameter is count
+sustr wrok from IE8
+//indexOf use
+var val1 = email.substring(0, email.indexOf('@'));
+var val2 = email.substring(indexOf('.')+1);
+//lastIndexOf use
+var val1 = ""www.abc.acy.com;
+var domain = val1.lastIndexOf('.');
+//if condition and Number and prompt function
+var val1 = Number(promt("please enter number",""));
+
+loops
+------------------------
+if(val1 == 0){alert("your number is 0");}
+if else(val1 == 1){alert("your number is 1");}
+else{alert("your number is not 0 or 1");}
+//switch
+switch(){
+	case 0:
+		alert("your number is 0");
+		break;
+	case 1:
+		alert("your number is 1");
+		break;
+	default:
+		alert("your number is not 0 or 1");
+		break;
+//for 0 we get two alerts
+switch(){
+	case 0:
+		alert("your number is 0");
+	case 1:
+		alert("your number is 1");
+		break;
+	default:
+		alert("your number is not 0 or 1");
+		break;
+//
+switch(){
+	case 0:
+	case 1:
+		alert("your number is 0 or 1");
+		break;
+	default:
+		alert("your number is not 0 or 1");
+		break;
+//ternary operator
+var message = val1 % 2 == 0 ? "your number is even": "your number is odd";
+alert(message);
+//ternary operator with multiple statements
+var message = val1 % 2 == 0 ? (alert("your number is even"),alert("your number is"+val1)): (alert("your number is odd"),alert("your number is"+val1));
+//ternary operator replaces the if else condition
+var message = val1 == 1 ? "jan"
+				: val1 == 2 ? "Feb"
+				: val1 == 3 ? "Mar"
+				: "unknow"
+alert(message);
+//while
+while(val1 <= 10){
+	document.write(val1);
+	val1++;
+}
+//continue and break works as it is in java
+//do while works as it is in java
+//for loop syntax is same as in java
+
+//arrays
+-----------------------------------------------------------------------------------------------------------------------
+crete arrey 1. as empty 2. with fixed values 3. with class name 4. without class name
+add element 1.with index 2. with method
+arrays methods
+	forEach
+	filter
+	sort
+	slice
+	push, pop, length
+	
+var var1 = [];
+var var1 = [10,20,30];
+	alert(var1.length);//3
+var var1 = [10,20,30,'abc','xyz']; //we can combine numbers and strings in same array
+var var1 = [];
+var1[0] =10;
+var1[1] =10;
+	alert(var1.length);//2
+var var1 = new Array(10);
+	alert(var1.length);//10
+var var1 = new Array(10,20,30);
+	alert(var1.length);//3
+//add elements with push and size of array changes evertime we push
+var var1 = [];
+var1.push(10);
+alert(var1.length);//1
+var1.push(20);
+alert(var1.length);//2
+//arrays pop retrives last elements first and reduce size
+//arrays unshift adds elemts at fisr postion not at the end like push
+//arrays shift retrives first elements first and reduce size
+mutators are mothds which modifies array
+non-mutator methods are contains, indexOf, lastIndexOf
+arrays default sort method works for only for stings
+var var1 = ['a','x','c'];
+var1.sort();//acx
+var var1 = [10,30,20 ,50];
+var1.sort(function(a,b){return a-b});//10203050
+var var1 = [10,30,20 ,50];
+var1.sclice(2,1); //it says from position to 2 remove one element
+outpit is 10,30,50
+var var1 = [10,30,20 ,50];
+var1.sclice(2,0,6,9); //it says do not remove and add 6 and 9
+//second parameter says how many elements to be removed
+//all elements from third parameter we need to add to array
+
+-----------------------------------------------------------------------------------------------------------------------
+//objects
+const a = {
+	x :x,
+	y:y
+};
+if key and values are same in object then we write in short hand form like elements insted of key value pair
+const a = {
+	x,
+	y
+};
+
+-----------------------------------------------------------------------------------------------------------------------
+//callback functions
+call back function syntax
+function callbackFunction(value,index, array)
+<script type="text/javascript">
+	var myarry =[1,2,3,4,5,6,7,8];
+	function isEven(value, index, array){
+		return value %2 ==0;
+	}
+	var result = myarry.filter(isEven);
+	document.write(result);
+</script>
+
+
+
+
+// functions
+document.write("");
+alert("");
+prompt(""'"");
+Number("");
+isNaN("");
+pareInt("");
+pareFloat("");
+vArray.push(5);
+vArray.pop();
+vArray.unshift(5);
+vArray.shift();
+vArray.sort();
+vArray.sclice();
+
+//Date
+var ms = new Date().getTime()+3000;
+while(new Date()< ms){//this waits 3 seconds
+
+}
+
+class
+-------
+
+
+Modules
+--------
+every file is considered as one module in ES6
+to access variable which is in different module variable needs to be exported
+to export variable just add export keyword in front of variable
+to export function/class just add export keyword in front of funtion/class
+we can not change exported variable value in imported file
+we can change Object property value in imported file
+in imported file we can give alias name to imported variable/function
+	Module1.js
+		export let fname = 'abc';
+	Module2.js
+		import {fname} from "./Module1.js"
+		console.log(fname);
+how to export multiple variables
+	let fname="abc";
+	let lname="xyz";
+	export{fname, lname}
+
+
+************************************
+2.javascript from java brains
+************************************
+what are the different premitive types
+	number
+	string
+	boolean
+	undifined
+	null
+how do we find out typeof varible
+	var a=10;
+	console.log(typeof a);//the o/p is number
+	var b;
+	console.log(typeof b);//the o/p is undifined
+	var c=null;
+	console.log(type of c);//the o/p is object. but it is bug in javascript
+what is coersion(r silent)?
+	interpritor auto conversion to perform operation is called coersion
+	example
+	var a="abc";
+	var b=2;
+	var c= a+b;
+
+== does auto type convertion and verifys
+===(triple equal) does not do auto conversion
+var a=10;
+var b="10";
+if(a==b){
+	consile.log("euqal");
+}
+if(a===b){
+	consile.log("euqal");
+}
+if condition with number and strings
+	var a =10;
+	if(a){console.log("true");}//the o/p is true
+	in java the above code does not work but in c and javascript it does works.
+	only zero is considered as false
+	all sring values are considerd as true expect empty string(var a="";)
+how do we create empty object
+	var a={};
+how do we add property to an existing object
+	var a={};
+	a.p1="pone";
+	console.log(a);
+what will happen if you access the property which is not defined in object
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	console.log(a.p3);//the o/p is undifined
+we can also use braket notation [] to invoke object property
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	console.log(a["p2"]);
+	note that inside braket property is give as string.
+var a={
+	"p1":10,
+	"1":"abc"
+	};
+console.log(a.1);// here we get syntax error that means if property name is invalid we can not use dot notation.
+console.log(a[1]);//here the o/p is abc
+we can not use dot notation if the property name is dynamic.
+var a={
+	"p1":10,
+	"p2":"abc"
+	};
+var ptwo = "p2";
+console.log(a[ptwo]);//this is only way to access it now not with dot notation
+and remember property name is not given in string format
+but dot notation is faster
+how can we delete property from object
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	delete a.p2;
+
+var a =["x","y","z"];
+	a[0];//returns x
+	a[3];//returns undefined but not out of boundary exception
+	a[3]="p";//this adds element into array
+	a.length;//gives 4
+an array is object
+	if we create an object like var a =["x","y","z"]; this will be converted like
+	var a = {"0":"x","1":"y","2":"3"};
+	so we can use braket notation to get values but not dot notation since key starts with number
+	a["0"];//gives x and see zero is given as string
+	a[0];//gives x here javascript coresion is happening.
+var a =["x","y","z"];
+	a[400]="p";//now the array length is 401
+	a["foo"]="q";//this does not change length but the peoprty will be added. so better to use numbers
+
+var a="hell world";
+	a.length;//it gives 10 but string is premitive how does it working
+	this is working because of java conversionis happening when we call length
+method overloading is not possible in javascript
+	function sayhello(name, time){console.log("hello "+name+"time of day"+time);}
+	sayhello("eswar");//o/p is hello eswar time of day undefined, but no error
+	sayhello("eswar","after noon","india");//o/p is hello eswar time of day after noon, but no error
+	javascript is very flexible in arguments
+how to assign function to varible and call it
+	var a = function hello(){console.log("abc");};//this is called as function expression
+	a();
+pass function as argument
+	var a = function hello(){console.log("abc");};
+	function b(x){x();}
+	b(a);
+function as object property
+	var obj ={"p1":"pone"};
+	obj.p2=function(){console.log("hi")};
+	obj.p2();
+how to access implicit arguments
+	var add = function(a,b){
+		var i,sum=0;
+		for(i=0; i<arguments.length; i++){
+			sum+=arguments[i];
+		}
+		return sum;
+	}
+	console.log(add(10,30,4,5,6));//o/p is 55
+	here arguments is an implicit object
+
+Array methods: push, pop
+	var myarr = ["10","20","hello",{}];
+	myarr.push(10);// this adds elemnt 10 and returns length
+	myarr.pop();// deletes the lasst elemnt and returns last element
+	myarr.shift();//removes first element and returns same
+	myarr.unshift("abc");// adds element at first
+forEach
+	var myarr = ["10","20","hello"];
+	var fone = function(item){console.log("items are"+item);};
+	myarr.forEach(fone);
+	the above line calls fone function for every element and passes that element as argument.
+	it can also send index to function and complete array
+	myarr.forEach(function(item,index,array){console.log("items are");});
+
+Math, Date
+
+AnguarJS, and React are client side frameworks
+NodeJS and express are serverside frameworks
+************************************
+3 objects and prototypes from Java brains
+************************************
+
+//different ways of create object
+type1:
+	var p1 = {"fname":"f1","lname":"l1"};
+type2:
+	function person(fname,lname){
+		var p={};
+		p.fname=fname;
+		p.lname=lname;
+		return p;
+	}
+type3:
+	var p2= person("f2","l2");
+	function Person(fname,lname){
+		this.fname=fname;
+		this.lname=lname;
+	}
+	var p3= Person("f3","l3");
+
+function foo(){console.log(this)};//here this reference window object you can test it by calling method;
+foo();
+
+var obj ={"prop":"abc"};
+obj.foo =function(){console.log(this)};//here this refers the obj object you can test it by calling method;
+obj.foo();
+
+function foo(){console.log(this)};//here this refers newly created object if you call method with new keyword;
+new foo();
+
+function Car(speed, tirePressure){
+	this.speed = speed;
+	this.tirePressure = tirePressure;
+	this.inflateTires = function(){
+		this.tirePressure +=3;
+	}
+}
+var c= new Car(3,20);
+c.inflateTires;//it works fine and pressure will be increased
+
+what if try to aasign car anaymous function to differt object?
+function Mechanic(name){this.name=name}
+var m = new Mechanic("Mike");
+m.tires=c.inflateTires;
+m.tires();//this does not work, now anaymous function this refferce the Mechanic object, tirePressure is not defined
+but if you want this to refer car object we need call like below
+m..tires().call(c);
+
+function foo(){}
+	if we call foo.a; then it first checck a in foo object then it checks in foo prototype object called __proto__
+	if a does not exist in both places then we get undifined
+	we can access foo prototype object value like foo.__proto__.a
+
+how to create common function for two objects
+	function foo(name){this.name=name;}
+	var f1= new foo("one");
+	var f2 = new foo("two");
+	foo.prototype.mone = function(){console.log("hi");};
+	now mone function will be available for both functions
+
+__proto__ is called dunder proto
+
+function can have propety called prototype
+object created function can have propety called dunder proto
+prototype object can have property called constructor
+
+we will always have one global function called Object function(this function we no need to define)
+	var o = new Object();
+	o.__proto__;//we can call dunder proto which points prototype object
+
+lets assume we have Emp and Manger functions how do we access Emp prototype function with manger
+function Emp(name){this.name=name;}
+function Manger(name,dept){this.name=name;this.dept=dept}
+Emp.prototype.getName=function(){this.name}
+Manger.prototype.getDept=function(){this.dept}
+var e= new Emp();
+var m= new Manger();
+we can call getName on Emp and get on manger since we have those methods in respective prototype objects
+but we can not call getName on manger object. to do that we need to do is
+m.__proto__.__proto__=Emp.prototype;
+m.getName();
+************************************
+4 socpes and closures from Java brains
+************************************
+in javascript just block does not create new scope but function creates new scope
+
+if(2<5){
+	var a="abc";
+}
+wee can call varible a outside if block
+function mone(){
+	var b="xyz";
+}
+wee can not call varible b outside for block
+
+generally global variables are bad, there are chnace to have same global varible in multiple files
+
+its ok to use variable in write operation without defining but its not ok to use in read operation
+example1
+foo =10;//its write operation
+console.log(foo);
+
+example 2
+console.log(foo);// if we run just this line we get syntax error
+
+window is global object. all global variables will be in window object.
+
+//closures
+var a=10;
+function outer(){
+	var b=20;
+	function inner(){
+		console.log(a);
+		console.log(b);
+	}
+	inner();
+}
+outer();
+the o/p will be 10 and 20. here inner function is called inside outer function
+var a=10;
+function outer(){
+	var b=20;
+	var inner =function(){
+		console.log(a);
+		console.log(b);
+	}
+	return inner;
+}
+var infun =outer();
+infun();
+the o/p will be 10 and 20. here inner is invoked outside outer function but still inner function remembers outer function variables. the inner function remembers its scope even if it is executed in different file. inner function holds reference to variable b.
+
+closurer is function which remembers its scope.
+
+var a=10;
+function outer(){
+	var b=20;
+	var inner =function(){
+		a++;
+		b++;
+		console.log(a);
+		console.log(b);
+	}
+	return inner;
+}
+var infun =outer();
+infun();
+var infun2 =outer();
+infun2();
+infun();
+here the o/p is 11,21,12,21,13,22
+when ever we call outer function it resets outer function variables;
+
+var a=10;
+function outer(){
+	console.log(a);
+}
+setTimeout(outer,5000);
+console.log("done");
+o/p is done and then 10 setTimeout here ensures that function exicution waits for 5 seconds
+
+var a=10;
+function outer(){
+	a++;
+	console.log(a);
+}
+setTimeout(outer,5000);
+console.log("done");
+console.log(a);
+a++;
+console.log(a);
+o/p:// done 10,11,12
+//what is Module pattern
+	var person={
+		var firstName ="fone";
+		var lastName ="lone";
+		"getFname":function(){return firstName;},
+		"getLname":function(){return lastName;}
+	}
+	with above object creation we can access filed name directly and with get function
+	person.getFname();
+	person.firstName;
+	but we can preventd direct access of fields with Module pattern
+	function createPerson(){
+		var firstName ="fone";
+		var lastName ="lone";
+		var reObj={
+			"getFname":function(){return firstName;},
+			"getLname":function(){return lastName;},
+			"setFname":function(name){this.firstName=name;},
+			"setLname":function(name){this.lastName =name;}
+		};
+		return reObj;
+	}
+var p = createPerson();
+console.log(p.getFname());//returns fone
+console.log(p.setFname("foo"));
+console.log(p.getFname());//returns foo
+
+var i;
+var print = function(){console.log(i);};
+for(i=0; i<10; i++){setTimeout(print,10000);}
+the above code prints 10 ten times
+watch video(Scopes and Closures In-depth 22 - Solving async with closures) very good from java brain.
+
+************************************************
+5		The Net Ninja Object
+************************************************
+how to create object
+how to create function in object
+how to change object property value
+how to access property of object
+how to create new property of object outside object
+how to create new function of object outside object
+	var one= {
+		pone:'abc',
+		login(){ //this ES6 style of fynction as object property
+				// no function keyword
+			console.log(this.pone, 'logged in');
+		},
+		logout(){
+			console.log(this.pone,'logged out');
+		},
+	};
+	one.pone="xyz";
+	console.log(one.pone);
+	console.log(one['pone']);// here we are using single quotes and property name
+	var x = 'pone';
+	console.log(one[x]);// here no single quotes and using dynamic string
+	console.log(one.x);// this gives undfined
+	one.ptwo="pqr";// new property will be created in object
+	console.log(one);
+	one.ptwo= function(){
+	};
+how to create multiple objects like one
+	class User{ // class keyword is from ES6 model
+		constructor(name){
+			this.pone=name;
+		}
+		logout(){
+			console.log(this.pone,'logged out');
+		}
+		login(){
+			console.log(this.pone,'logged in');
+		}
+		//here we are not using comma(,) after every method or after constructor like object literal types
+	}
+	var a = new User('abc');	var b = new User('xyz');
+	console.log(a); console.log(b);
+	a.logout();
+	encapsulation: defining and binding properties in class in encapsulation.
+what is method chain
+	class User{
+		constructor(name){
+			this.pone=name;
+		}
+		update(){
+			console.log('updated');
+			return this;
+		}
+	}
+	var a = new User('abc');
+	a.update().update().update();
+what is inheritence
+	class Admin extends User{
+		deleteUser(user){
+			users = users.filter(u => {
+				return u.pone != user.pone;
+			})
+		}
+	}
+	var admin =new new Admin('mno');
+	var users = [a,b];
+	admin.deleteUser(b);
+how to ceate User class without Class keyword
+	function User(name){
+		this.pone=name;
+		this.login = function(){
+			console.log(this.pone,'logged in');
+		}
+	}
+	here we do not seperate property by comma but semicolan
+what is prototype
+	the above funtion in function is not proper defination
+	function User(name){
+		this.pone=name;
+	}
+	User.prototype.login = function(){
+			console.log(this.pone,'logged in');
+		}
+	var a = new User('abc');
+	console.log(a);
+	a.login();
+inheritance without extends
+	function Admin(...args){
+		User.apply(this,args);//apply method
+	}
+	Admin.prototype = Object.create(User.prototype);
+	Admin.prototype.deleteUser = function(u){
+		users = users.filter(u => {
+				return u.pone != user.pone;
+			})
+	}
+	var admin = new Admin('mno');
+	var users = [a,b];
+	console.log(admin);
+************************************************
+	6		The Net Ninja DOM
+************************************************
+var x = document.getElementById('Id2');// id will be unique
+var y = document.getElementsByClassName('class2'); //class is not unique
+	so y is htmlCollection
+	y[0];
+var x = document.getElemenstByTagName('li');
+	for(i=0; i<x.length; i++){
+		console.log(x[i]);
+	}
+	or
+	console.log(Array.isArray(x));// to is it Array or not
+	var y = Array.from(x);// converting htmlCollection into Array
+	y.forEach(function(i){
+		console.log(i);
+	})
+var x = document.querySelector('#id2');
+var x = document.querySelector('#id2 li:nth-child(2) .class2');
+var x = document.querySelector('#id2 li .class2');// it returns only first element
+var x = document.querySelectorAll('#id2 li .class2');// it returns all elements
+	var y = Array.from(x);// no need to use this since it is nodeList but you can use it
+	y.forEach(function(i){
+		console.log(i);
+	})
+how to get text content
+	y.forEach(function(i){
+		console.log(i.textContent);
+	})
+how to change text content
+	y.forEach(function(i){
+		i.textContent ='fdfd';
+	})
+how to find element name and type
+	const x = document.querySelector('#id2');
+	console.log(x.nodeType);
+	console.log(x.nodeName);
+	console.log(x.hasChildNodes());//true or false
+how to clone node
+	const y = x.cloneNode(true);
+how to get parent node
+	x.parentNode
+	x.parentElement
+	x.parentElement.parentElement
+how to get child element
+	x.childNodes// it bring line break also
+	x.children
+how to fetech sibling
+	x.nextSibling
+	x.nextElementSibling
+	x.previousSibling
+	x.previousElementSibling
+how to modify one of the element in previous element
+	x.previousElementSibling.querySelector('p').innerHtml+='<br/> cool'
+Add event
+	var x = document.querySelector('#id2');
+	x.addEventListener('click', function(e){
+		console.log(e.target);
+		console.log(e);
+	})
+Add event to remove li when we click delete button on corresponding li
+	var x = document.querySelector('#id2 .buttonclass2');//all buttons have .class2
+	Array.from(x).forEach(function(y){
+		y.addEventListener('click', function(e){
+			const li = e.target.parentElement;
+			li.parentNode.removeChild(li);
+			//we can not delete element we need get parent element and then delete
+		})
+	})
+	here we are attaching to every li elemnt
+how to disable a tag navigation
+	e.preventDefault();
+what is event bubling
+	if we click any elemnt the parent element callback function will be fired
+	var list = document.querySelector('#listid2 ul');
+	list.forEach(function(y){
+		if(y.target.classname =='delete'){
+			const li = y.target.parentelement;
+			list.removeChild(li);//to remove element we need parent element
+		}
+	})
+
+
+################################################################################
+7      Javascript FAQ
+################################################################################
+https://jsfiddle.net/   use it for running examples
+
+what is difference between == and ===
+	=== checks type also
+how to get element value
+	document.getElementById('Id1').value
+how to style element
+	document.getElementById('Id1').style.backgroundColor ='red';
+how to set value to element
+	document.getElementById('Id1').value = val1+val2;
+what is map in javascript
+how to iterate JSON and create table in javascript
+what is evaule function

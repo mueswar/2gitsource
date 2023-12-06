@@ -1,0 +1,18 @@
+Maven
+
+
+issues:
+	VPN connection
+	proxi sttings in settings.xml
+	configure settings.xml in eclipse
+	remove remove artifact(spring-boot-starter-parent) from m2 folder  if message is like below in pom 
+		transfer from https://repo.maven.apache.org/maven2 during a previous attempt. This failure was cached in the local repository and resolution is not reattempted until the update interval of central has elapsed or updates are forced. Original error: Could not transfer artifact org.springframework.boot:spring-boot-starter-parent:pom:2.6.6 from/to central (https://repo.maven.apache.org/maven2):
+	
+
+mvn -version
+mvn archetype:generate//first time this generates bunch og dependencies and asks choose archetype i.e project type
+mvn compile
+mvn test
+mvn package
+mvn install //publishes in local repository not in server
+mvn deploy // publish in remote repository not in server

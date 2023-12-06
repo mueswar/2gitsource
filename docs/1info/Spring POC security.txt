@@ -1,0 +1,16 @@
+
+with just below changes request redirected to login page, even though we did not add any web page.
+	step1:
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+	step2:
+		import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+		import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+
+		@EnableWebSecurity
+		@EnableGlobalMethodSecurity(prePostEnabled = true)
+		public class WebSecurityConfiguration {
+
+		}		

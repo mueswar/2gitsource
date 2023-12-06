@@ -1,0 +1,600 @@
+https://www.pythontutorial.net/
+
+install type1
+------------------------
+in cmd >python --version
+just install python anconda
+python comes with jupiter notebook
+
+
+install type2
+------------------------
+in cmd >python --version
+https://www.python.org/downloads/
+
+while installing python select check box to add path
+
+how to open python interactive promt
+open cmd
+>python
+>>>
+this will allow to write only one line code at a time.
+
+>>>print('hello') click enter it prints hello we can use '' or "" and no semicolan at end of statement
+hello
+>>>
+how can we exit from interactive promt
+>>>exit()
+
+
+
+IDLE can be used to write python files
+start programs> python 3.6>IDLE
+
+how can we run .py file from command promt
+>python c:\one.py click enter
+
+--------------------------------------------------------------------------------
+
+comments
+# can be used to comment the code.
+
+'''
+multi line comments
+
+'''
+
+define variables in python
+	a = "sss" or we can use single quotes
+	a = true
+	a = 1234
+	a = 3333L
+	a = 12222.444
+ptinting variable
+	print(a)
+finding variable type
+	print(type(a))
+convet boolean and float variable into int
+	print(int(booleanVariable))
+	print(int(floatVariable))
+	print(float(intVariable))
+
+arithmetic variables
+-----------------------------
+	a = True #t should be capital letter
+	b = False
+
+	print(a == b)
+	print(a != b)
+	a = 10
+	b = 3
+	print(a == b
+	print (a != b)
+	print (a >= b)
+	print (a <= b)
+	print (a + b)
+	print(a/b)#3.33333
+	print(a//b)#3
+	print(a%b)#1
+	print(a**b)#1000
+	a=2.9
+	print(round(a))#3
+	print(abs(-2.9))#2.9
+	num1 ='10'
+	num2 ='20'
+	print(num1+num2)#1020
+	print(int(num1)+int(num2))#30
+	num=3
+	num1=3.14
+	print(type(num))#returns int
+	print(type(num1))#returns float
+	print(3/2)#1.5 in python3 1 in python2
+	print(3//2)#1.5
+	print(3**2)#9 i.e 3 suire
+	print(3%2)#1 is reminder
+
+math library functions
+-----------------------
+import math library
+import math
+
+print(math.ceil(2.9))#3
+print(math.floor(2.9))#2
+squrt(a)
+
+raw_input is to accepect user input data
+a = raw_input("enter name?")
+print "hello " +a
+
+print(:'c:\f1\f2')
+print('c:\f1\f2')
+print('c:\n1\n2')
+
+print("aaaa"+9)// error
+
+y=input('enter birth year: ')
+age= 2020-y//this throws error
+print(age)
+when we take input with input function the vale type will be string
+we need to convet it to int to work above line like below
+age=2020 -int(y)
+
+strings
+-----------------------------------------------------------------------------------------------------------------------
+	we can define string with either '' or "" or ''' '''
+	some times we shold use double quotes when sting its self has apostrophe symbel
+	a='abc xyz pqr'
+	print(a[0]) # prints a
+	a[0:5]# returns abc x it is will not fetch 5 index letter
+	a[:5]# returns abc x
+	a[6:]# returns z pqr
+	print(a[-1])#retirns r here we can use negative index
+	#what is formatted string inpython
+		fName="john"
+		lName="smith"
+		s=f'{fName} [{lName}] is coder'
+		print(s)#this prints john [smith] is coder
+		gereeting ='Hello'
+		name = 'Mike'
+		message = gereeting +' '+name
+		print(message)# Hello Mike
+		message = '{}, {}. welcome!'.format(gereeting,name)
+		print(message)# Hello, Mike. welcome!
+		message = f'{gereeting}, {name}. welcome!' #f strings are new
+
+	c='python for begginers'
+	print((len(c)))#print 20
+	print(c.upper())
+	print(c.lower())
+	print(c.find('p'))# returns 0
+	print(c.find('P'))# returns -1 it is case sensitive
+	print(c.find('begginers'))# returns 11 since it starts at 11 index
+	print(c.replace('begginers','Begginers'))
+	print(python in  c)#returns true this one also case sensitive
+	print(c.split(' '))#returns list with each word as one element
+	c.count('python')#returns 1
+	c.count('g')#returns 2
+	
+print(dir(name))# returns all available methods here name is variable
+print(help(str))#returns all help document here str is not variable
+print(help(str.lower))# returns lower method description
+
+Collections
+-----------------------------------------------------------------------------------------------------------------------
+List
+	list's are mutable objects
+	l = [1,4,6,8,9]
+	print(l)
+	print(len(l))     #how can we find length of array
+	print(l[0])       # how to get element by index
+	print(l[-1])      # returns 9
+	print(l[1,3])     # returns 4,6
+	print(l[:2])      #it returns 1,4
+	print(l[2:])      #returns 6,8,9
+	l[0]=0            #this modifys list
+
+	m=[ [1,2,3],
+		[4,5,6],
+		[7,8,9]]
+	print(m[0][0])#returns 1
+	for r in m
+		for c in r
+			print(c)
+	#print all elements one by one in new line
+	
+	l=[5,2,1,7,4]
+	l.append(9)    # 9 will be added at the end of the list
+	l.inser(0,10)  # 10 will be inserted at 0th index and existing elements pushed by one position
+	l2 =[25,30]
+	l.insert(0,l2) # [[25,30],10,5,2,1,7,4,9]
+	l.extend(l2)   # [10,5,2,1,7,4,9,25,30]
+	l.append(l2)   # [10,5,2,1,7,4,9,[25,30]] see diff append and extend
+	l.remove(5)    # remove valuse 5 . here 5 is not position
+	l.clear()      #removes all elements
+	l.pop()        #removes last element and returns
+	l.index(5)# gives index if exist else it throws exception
+	print(50 in l)#retruns False when element dosenot exist in the list
+	print(l.count(5))#returns number of 5's in the list
+	l.sort()       #it sorts in accending order
+	l.sort(reverse=True)# sorted number in desending order and Strings z to a
+	l.reverse()    #it reverses the existing order of elements
+	min(l)
+	max(l)
+	sum(l)
+	sorted(l)#sorted function does not alter actual list but it returns new list in sorted order
+	l2 = l.copy()  #here l and l2 are two different lists. modifing one list does not impact other list
+	l2 =l # if we modify l then l2 will be modified automatically
+	l=[2,3,4,3,2]# remove duplicates
+	l2=[]
+	for n in l:
+		if n not in l2:
+			l2.append(n)
+	print(l2)
+
+Tuples:
+	tuples are immutable objects. because of that we do not have insert, remote, add methods
+	we can do all operations what we can do with list expect the operations which modify lists
+	t=(2,5,7,4,6,9)
+	print(t[1])#returns 5
+	t[0]=10#throws expection
+	we can use tuples in expressions
+	t[0]*t[1]*t[2]
+	t1=t[0]
+	t2=t[1]
+	t3=t[2]
+	t1*t2*t3
+	t1,t2,t3= t #this called unpacking in python. this is same as above, feteching each element
+
+SET:
+	sets does not contain duplicate values
+	sets does not gaurntee insertion order
+	s1={'v1','v2','v1','v3'}
+	print(s1) #output=v1 v2 v3
+	sone = {'s1','s2','s3','s4'}
+	stwo = {'s1','s2','t1','t2'}
+	sone.intersection(stwo)# returns  s1, s2
+	sone.difference(stwo)#returns s3, s4
+	sone.union(stwo)#s1,s2,s3,s4,t1,t2
+
+Dictionary
+	dictionary holds key value pairs
+	d1={'k1':'v1','k2':'v2'}
+	for k, v in d1:
+		print(k+v)
+	output= k1v1
+	k2v2
+	print(d["k1"])#output= v1
+	print(d1)#output= 'k1':'v1','k2':'v2
+	we can not have duplicate keys in dictionary
+	print(d["K1"])#it will throws exception here key is case sensitive
+	print(d.get("K1"))#returns None and no exception
+	print(d.get("K1","default"))#returns default when there is no key in dictionary
+	d["k3"]="v3"#this will adds new key and value
+	d["k1"]="m1"#this modifis value of key k1 in dictionary
+
+	random.randrage(1,1000)#gives one randam in between 1 to 1000
+	print(str(10)+'hello')#str converts int into string
+
+empty_lone =[]
+empty_ltwo =list()
+empty_tone = ()
+empty_two =tuple()
+empty_sone = set()
+
+Loops
+---------------------------------------------
+elif ->elseif
+==,!=, >=,<=, >, <
+age = 27
+if age < 21:
+	print("no beer")
+if age == 21:
+	print("beer!!")
+	
+name = "lucky"
+if name is "Bucky":
+	print("Hi Bucky")
+elif name is "lucky":
+	print("Hi lucky")
+else:
+	print("no match")
+
+alist = [3, 5, 7, 9]
+if x in alist:
+	print(x)
+output: 3 5 7 9
+
+a =True
+b =False
+if a and b:
+	print("both are true")
+if a or b:
+	print("any of the condistion is true")
+if a and not b:  #how to use not operator
+	print("any of the condistion is true")
+
+
+food = ['a0','a1','a2','a3','a4']
+
+for f in food:
+	print(f)
+	print(len(f))
+
+for f in food[:2]
+	print(f)
+output> a0 a1 a2
+
+for x in range(5):
+	print(x)
+
+output: 0 1 2 3 4 
+
+for x in range(5,9):
+	print(x)
+output: 5 6 7 8 
+
+for x in range(10,30,5):
+	print(x)
+output: 10 15 20 25 
+
+for x in "python":
+	print(x)
+o/p:each character will be printed in seprate line
+
+How to display Flike below using nested for loop
+a=[5,2,5,2,2,]
+XXXXX
+XX
+XXXXX
+XX
+XX
+
+x = 5
+while x < 10:
+	print(x)
+outpot: 5555555....... 
+
+break and continue conditions are same as java break and contnue.
+while loop can have optional else block
+while else block will be exicuted when while loop codition fails i.e when loop does not break with break statement.
+
+Functions
+-----------------------------------------------------------
+def mone():
+	print("mone")
+def mtwo(x):
+	print(x*5)
+mone()
+mtwo(3)
+
+output mone
+15
+
+def mthree(x='unknown')
+	if x is'M':
+		print("Male")
+	elif x is'F':
+		print("female")
+	else:
+		print(x)
+mtree('M')
+mtree()
+output:  male
+unknown
+
+def mone(a1='d1',a2='d2',a3='d3'):
+	print(a1,a2,a3)
+mone(a3='m1')#in method call also we can specify argument name
+output= d1 d2 m1
+mone(a3='m3',m1,m2)#this does not work if we are mixing positional ang key word arguments
+positional argument should be passed first
+
+def mone(*a):
+	totatl=0
+	for x in a:
+		total=total+x
+		print(total)
+mone(5,10,20)
+output=35
+
+def mone(a1,a2,a3):
+	print(a1+a2+a3)
+m=[2,4,6]
+mone(*m)
+output=12
+
+retun statement
+def mone(n):
+	return n*n
+print(mone(3))#returns 9
+
+tuna.py
+def mone():
+	print('tuna')
+
+main.py
+import tuna
+
+tuna.mone()
+
+output=tuna
+
+how to download and save image to working folder
+	import urllib.request
+	def mone(urlValue)
+		fName ="a.jpg"
+		urllib.request.urlretrieve(urlValue,fName)
+	mone("http://abc.com/123.jpg")
+
+how create new file with some content
+	fw=open('fone.txt','w')
+	fw.write('sdasdas\n')
+	fw.write('bye\n')
+	fw.close()
+
+how to read file data from existing file
+	fr = open('fone.txt','r')
+	fileContent = fr.read()
+	print(fileContent)
+	fr.close()
+
+how to download CSV file from internet
+	from urllib import request
+
+	url="http:\\abc.com\one.csv"
+	def download1(url)
+		res = reuest.urlopen(url)
+		csv = res.read()
+		csv_str= str(csv)#make it as string
+		lines = csv_str.split(\\n)#split as line
+		dest_url=r'two.csv'
+		fw.=open(dest_url,'w')
+		for line in lines:
+			fw.write(line+"\n")
+		fw.close()
+
+
+	download1(url)
+		fw=open()
+how to check path exist or not
+	from pathlib import Path
+	path = Path("c:\one")
+	print(path.exists())#returns True or False
+	path.mkdir()#this create directory but returns None
+	path.rmdir()#removes the directory
+How to check all files in current folder
+	from pathlib import Path
+	path = Path()#if we do not pass path as argument then it reprasents current folder
+	path.glob('*')#returns generator with all files and folders
+	path.glob('*.*')#returns generator with all files
+	for f in path.glob('*.py'):
+		print(f)
+
+exception
+--------------
+while true:
+	try:
+		number = int(input("enter number\n"))
+		print(18/number)
+		break
+	except ValueError:
+		print("only numbers")
+	except ZeroDivisionError:
+		print("no zeros please")
+	except:
+		break
+	finally:
+		print("END")
+
+what is exception hierarchy
+classes
+----------------------------------------------
+one.py
+class Tuna:
+	def __init__(self):#constructor
+		print("xxxinit")
+	def one(self):
+		print("one")
+t = Tuna()
+t.one()
+
+oputput: XXXinit
+	one
+two.py
+class Girl:
+	gender='female'#class variable
+	def __init(self, name):
+		self.name= name#instance variable
+g = Girl("g1")
+g = Girl("g2")
+print(g1.gender)
+print(g2.gender)
+print(g1.name)
+print(g2.name)
+output:female
+female
+g1
+g2
+
+three.py
+class Cone():
+	def m1(self):
+		print("m1")
+class Ctwo(Cone):#inheritance
+	def m2(self):
+		print("m2")
+c = Ctwo()
+c.m1()
+c.m2()
+optput:m1
+m2
+
+four.py
+class Cone():
+	def m1(self):
+		print("m1")
+class Ctwo(Cone):
+	def m1(self):
+		print("m3")
+	def m2(self):
+		print("m2")
+c = Ctwo()
+c.m1()
+c.m2()
+optput:m3
+m2
+
+five.py
+class Cone():
+	def m1(self):
+		print("m1")
+class Ctwo():
+	def m2(self):
+		print("m2")
+class cthree(Cone,Ctwo):
+	pass#we can not have empty class. So we cn use pass to create empty class
+c=Cthree()
+c.m1()
+c.m2()
+optput:m1 m2
+
+how to import one file methods into another file
+one.py
+def mone(self):
+	print("mone")
+def mtwo(self):
+	print("mtwo")
+two.py
+import one#here we are importing all methods of one	
+from one import mtwo #here we are importing only mtwo method
+#class name and file name are no need to be same
+#without class also we can define method in different file
+#class name convention is same as java class name convetion
+#method and variable name convetions are different from java. no capital letter and words are separated from_
+
+packages
+create folder and create __init__.py file to make folder as package
+
+random module
+import random
+for i in range(3):
+	print(random.random())
+	print(random.randit())
+members = ["p1","p2","p3"]
+leader = random.choice(members)#picks random person from list
+print(leader)
+
+how can we install excel packages
+>pip install openpyxl
+
+import openpyxl as xl
+wb = xl.load_workboo('one.xlsx')
+sheet = wb['Sheet1']
+cell = sheet.cell(1,1)#returns cell
+print(cell.value)#returns value
+print(sheet.max_row)#returns number of rows in the sheet
+for row in range(1, sheet.max_row+1):
+	cell = sheet.cell(row,3)
+	corrected_value = cell.value*.9
+	cell2 = sheet.cell(rwo,4)#trurns cell at 4th column
+	cell2.value= corrected_value
+wb.save('two.xlsx')
+
+
+	
+----------------------------------------------------------------
+how do we write comment inpython?
+how do we define variable?
+does variable is type or untype?
+which function do you use to print anything?
+how can you find out type of varible?
+how can you convert float and boolean varible to int
+how do you convert int into float?
+what are arithmetic operaters we have in python?
+how do you accepect input data from user?
+
+
+
+
+scikit
+tenserflow

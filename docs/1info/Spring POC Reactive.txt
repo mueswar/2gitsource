@@ -1,0 +1,2 @@
+Reactive web programming is great for applications that have streaming data, and clients that consume it and stream it to their users. 
+It is not great for developing traditional CRUD applications.

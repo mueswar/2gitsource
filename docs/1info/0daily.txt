@@ -1,0 +1,7 @@
+see core methods
+	1.Data type methods 
+	2.collection methods
+poc1: convert gradle to maven or maven to gradel actual project
+
+Must learn: Angular, Node, react, kubernetes
+Learn2: python

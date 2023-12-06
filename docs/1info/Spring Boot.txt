@@ -1,0 +1,371 @@
+
+
+
+Zipkin and Jaeger
+Sleuth
+Spring Logger
+Spring security
+Apache Kafka
+Consul by HasiCorp
+Vault by HasiCorp
+Spring config  and propertices  
+
+Best practices
+-------------------------------------------------------------------------------------------------------------------
+Get - application logic should only return 200,299,404(not found). (401 Uthentication, 500 server are not business errors)
+		we can return 400 bad request, but it should be thrown before business logic and if misses required input 
+		or for any input validation. but if no data found for valid request then it shoud be 404.
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+SPRING INITIALIZR
+https://start.spring.io/
+
+we can not fetch more than 700K records from mongodB with normal select
+we are facing GC over time issue/ server restart f it has only one instance
+
+mvn -U clean spring-boot:run -Djavax.net.debug=SSL
+netstat -ano | findstr :8081
+taskkill /PID 9564 /F
+download cert by htting url in browser and click lock icon (del1.cer)
+keytool -import -alias sxmtoken -keystore "C:\Program Files\Java\jre1.8.0_251/lib/security/cacerts" -file C:\two\cert\del1.cer
+
+issues with monolithic
+------------------------------------------
+we can not upgrade to new technology
+As application grows, the development process become slower
+it will be difficult to understad and more bugs will occure when we try to enhance
+we can not rewrite
+testing will be challenging
+
+Issues with Microservice
+-------------------------------------
+we can not use distributed transactions
+For Dynamic Scale we need a number of technical components: a naming server, load balancers, 
+and monitoring tools to identify whether to scale in or scale out.
+There is clearly a need for a centralized log.
+it is very important for you to have sufficient fault tolerance in place in your system.
+
+Advantages:
+Dynamic scaling
+Continues delivery
+loosely coupled processes instead of loosely coupled components
+
+Eureka Server(service registory)
+--------------------------------
+spring-cloud-starter-parent 
+@EnableEurekaServer
+server:
+  port: 8761
+eureka:
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+	
+Eureka Client
+-------------------------------
+@EnableDiscoveryClient or @EnableEurekaClient.
+spring:
+  application:
+    name: application1
+server:
+  port: 0
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    preferIpAddress: true
+
+Create microservice
+1. create applicaton as server with web and eurekaServer
+2. add @EnableEurekaServer and @SpringBootApplication
+3. add server.port:8090 in application.properties
+a. create application as client1 with web ,eurekaServer and eurekaDiscovery
+b. add @EnableEurekaClient and @SpringBootApplication
+c. add propertices in application.properties
+	server.port:8091
+	eureka.client.serviceUrl.defaultZone=http://localhost:8090/eureka
+d. add propertices in bootstrap.properties
+	spring.application.name=client1
+
+	
+##########################################################	
+#######         Spring cloud service    ##################
+##########################################################
+You can define bootstrap context like below
+/META-INF/spring.factories
+org.springframework.cloud.bootstrap.BootstrapConfiguration=cnf1,conf2 //cnf1 nad 2 are @Configuration classes.
+keep bootstrap config classes in seprate packages. these are not component sacnned bydefault.
+The bootstrap process ends by injecting initializers into the main SpringApplication instance.
+Bydefault  bootstrap process addeds Spring Cloud Config Server as default property source for external configuration.
+you can add additional sources by adding beans of type PropertySourceLocator to the bootstrap context
+@Configuration
+public class CustomPropertySourceLocator implements PropertySourceLocator {
+    @Override
+    public PropertySource<?> locate(Environment environment) {
+        return new MapPropertySource("customProperty",
+                Collections.<String, Object>singletonMap("property.from.sample.custom.source", "worked as intended"));
+    }
+}
+
+The application listens for an EnvironmentChangeEvent. When an EnvironmentChangeEvent is observed, it has a list of key values that have changed, and the application uses those to:
+Re-bind any @ConfigurationProperties beans in the context and Set the logger levels for any properties in logging.level.*.
+You can verify that the changes are bound to @ConfigurationProperties beans by visiting the /configprops endpoint (a normal Spring Boot Actuator feature).
+When there is a configuration change, a Spring @Bean that is marked as @RefreshScope gets special treatment. 
+Sometimes, it might even be mandatory to apply the @RefreshScope annotation on some beans which can be only initialized once. 
+
+To use the encryption features in an application, you need to include Spring Security RSA in your classpath 
+For a Spring Boot Actuator application, some additional management endpoints are available. You can use:
+	POST to /actuator/env to update the Environment and rebind @ConfigurationProperties and log levels.
+	/actuator/refresh to re-load the boot strap context and refresh the @RefreshScope beans.
+	/actuator/restart to close the ApplicationContext and restart it (disabled by default).
+
+Patterns such as service discovery, load balancing, and circuit breakers lend themselves to a common abstraction layer that can be consumed by all Spring Cloud clients, independent of the implementation (for example, discovery with Eureka or Consul or Zookeeper Discovery).
+
+------------------------------
+Service discovery                  - netflix Eureka
+Dynamic routing and load balancer  - netflix ribbon
+circuit breaker                    - netflix hystrix
+edge server                        - netflix Zuul
+
+
+Spring Cloud Commons provides the @EnableDiscoveryClient annotation. This looks for implementations of the DiscoveryClient interface with META-INF/spring.factories.
+By default, implementations of DiscoveryClient auto-register the local Spring Boot server with the remote discovery server. 
+@EnableDiscoveryClient is no longer required. You can put a DiscoveryClient implementation on the classpath to cause the Spring Boot application to register with the service discovery server.
+
+***********************
+****  Spring archi  ***
+***********************
+
+*****************************************************************************************
+*********************           Zipkin and Jaeger
+*****************************************************************************************
+Zipkin - twitter
+Jaeger - Uber
+Zipkin helps you find out exactly where a request to the application has spent more time.
+Whether it’s an internal call inside the code or an internal or external API call to another service
+
+*****************************************************************************************
+******************              Sleuth
+*****************************************************************************************
+Sleuth is a tool from Spring cloud family. It is used to generate the trace id, span id and 
+add these information to the service calls in the headers and MDC, so that It can be used by tools 
+like Zipkin and ELK etc. to store, index and process log files
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-sleuth</artifactId>
+</dependency>
+
+
+*****************************************************************************************
+*********************           Spring Logger                 ***************************
+*****************************************************************************************
+implement ApplicationListener<ApplicationEnvironmentPreparedEvent>
+	vaultTokenUri = System.getProperty("vault.token.uri");
+	String vaultToken = new RestTemplate().getForObject(vaultTokenUri, String.class);
+	System.setProperty("spring.cloud.vault.token", vaultToken);
+	
+*****************************************************************************************
+*********************           Spring security                  ************************
+*****************************************************************************************
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+
+attemptAuthentication: where we parse the user's credentials and issue them to the AuthenticationManager.
+successfulAuthentication: which is the method called when a user successfully logs in. We use this method to generate a JWT for this user.
+
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+doFilterInternal: validates and redirects
+
+
+external Authorization Server: Facebook, google, AZURE AD, ADFS,
+
+
+*****************************************************************************************
+*********************           Apache Kafka                     ************************
+*****************************************************************************************
+<dependency>
+    <groupId>org.springframework.kafka</groupId>
+    <artifactId>spring-kafka</artifactId>
+    <version>2.2.2.RELEASE</version>
+</dependency>
+
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: group-id
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      bootstrap-servers: localhost:9092
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+@Service
+public class Producer {
+	private static final String TOPIC = "users";
+	@Autowired
+	private KafkaTemplate<String,String> kafkaTemplate;
+	public void sendMessage(String message){
+		this.kafkaTemplate.send(TOPIC,message);
+	}
+}
+@Service
+public class Consumer {
+	@KafkaListener(topics = "users", groupId = "group_id")
+	public void consume(String message){
+		logger.info(message));
+	}
+}
+*****************************************************************************************
+*********************           Consul by HasiCorp                     ******************
+*****************************************************************************************
+
+*****************************************************************************************
+*********************           Vault by HasiCorp                     *******************
+*****************************************************************************************
+spring:
+  profiles: dev
+  application:
+    name: app-one
+  cloud:
+    config:
+      uri: http://100.120.60.2333/configserver
+      enabled: true
+    vault:
+      host: vault-dev.io
+      port: 80
+      scheme: http
+      authentication: TOKEN
+      token: 5e2123-3b29-577d-a407-cffe333a28
+      enabled: true
+
+step1:
+download
+save file vaultconfig.hcl
+storage "file" {
+	path= "./vault-data"
+}
+listener "tcp" {
+  address = "127.0.0.1:8200"
+  tls_disable =1		
+}
+disable_mlock=true
+ui=true
+
+run in cmd 
+vault server -config ./vaultconfig.hcl   
+
+step2:	  
+set VAULT_ADDR=http://localhost:8200
+step3:
+vault operator init
+
+
+after vault operator init command output
+Unseal Key 1: NLTpBDI1hzCLwDJCGrRKHBKseiv5JoodeHSk2ziuQbcY
+Unseal Key 2: LdU/jAm2/ofoeiv4SQSemCFrH0dq8dLsRZDRt/M5N+rC
+Unseal Key 3: zV/QE5y4ZBHnV75T73sBastfSy3w7tEUtqE3z7L/55qN
+Unseal Key 4: AHW8ZtLsNczLzWpLzvBk8i5PCWfNNAwdppIARCk5ISrt
+Unseal Key 5: 2K8HzeqKX08PZ2LTJhXoJr0Ngoyk51ADBqG66BVI9Jz0
+
+Initial Root Token: s.bkmO6DLAqWDfntU5w5zxD8EK
+
+Vault initialized with 5 key shares and a key threshold of 3. Please securely
+distribute the key shares printed above. When the Vault is re-sealed,
+restarted, or stopped, you must supply at least 3 of these keys to unseal it
+before it can start servicing requests.
+
+Vault does not store the generated master key. Without at least 3 keys to
+reconstruct the master key, Vault will remain permanently sealed!
+
+It is possible to generate new unseal keys, provided you have a quorum of
+existing unseal keys shares. See "vault operator rekey" for more information.
+
+step:4
+set VAULT_TOKEN=s.bkmO6DLAqWDfntU5w5zxD8EK
+
+step5:
+vault status
+
+vault operator unseal NLTpBDI1hzCLwDJCGrRKHBKseiv5JoodeHSk2ziuQbcY
+vault operator unseal LdU/jAm2/ofoeiv4SQSemCFrH0dq8dLsRZDRt/M5N+rC
+vault operator unseal zV/QE5y4ZBHnV75T73sBastfSy3w7tEUtqE3z7L/55qN
+
+
+vault secrets enable -path=secret/ kv
+
+vault kv put secret/javainuseapp dbusername=root
+vault kv put secret/javainuseapp dbpassword=root
+
+
+spring:
+  application:
+    name: javainuseapp
+  cloud:
+    vault:
+      host: localhost
+      port: 8200
+      scheme: http
+      token: s.bkmO6DLAqWDfntU5w5zxD8EK
+
+
+
+*****************************************************************************************
+*********************           Spring config  and propertices        *******************
+*****************************************************************************************
+what is difference between @ConfigurationPropertices and @Value
+	with @Value, we always define on proper and we can not group it
+	with @ConfigurationPropertices, we can group the properties. we will add at class level
+		and each class represents onr group of properties. and the call is configured as bean
+
+Map properties
+	tire-pressure-conversion:
+	  map:
+		kpa:
+		  conversion: '0.1450377377'
+		  targetUnit: psi
+		bar:
+		  conversion: '14.5038'
+		  targetUnit: psi
+	@ConfigurationProperties(prefix = "tire-pressure-conversion", ignoreUnknownFields = false)
+	@Configuration
+	public class TirePressureConversionConfig {
+
+		private Map<String, Map<String, String>> map = new HashMap<>();
+
+		public Map<String, Map<String, String>> getMap() {
+			return this.map;
+		}
+
+		public Map<String, String> getConversionMap(String unit) {
+			return this.map.get(unit);
+		}
+	}
+
+
+
+
+
+
+
+*****************************************************************************************
+*********************           FAQ                         *****************************
+*****************************************************************************************
+how does one service identifies another service
+how does config service differenciate different services properties files
+
+
+
+
+
+
+
+
+
+
+
+
+

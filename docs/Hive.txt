@@ -1,0 +1,61 @@
+install Hive
+------------------------------------
+http://apache.claz.org/hive/stable/  download tar
+tar –xvf  apache-hive-1.2.0-bin.tar.gz  extract tar
+
+Hivee
+Hive 0.13 - does not support update and delete
+Hive 0.14 - supports update and delete
+Hive is an ETL and Data warehousing tool developed on top of Hadoop Distributed File System (HDFS).
+
+Hive as data warehouse designed for managing and querying only structured data that is stored in tables.
+Hive's SQL-inspired language separates the user from the complexity of Map Reduce programming.
+For single user metadata storage, Hive uses derby database and for multiple user Metadata or shared Metadata case Hive uses MYSQL.
+
+Local mode
+Map reduce mode
+By default, it works on Map Reduce mode and for local mode you can have the following setting.
+SET mapred.job.tracker=local;
+
+Hive data types
+----------------------
+Tinyint     1
+Smallint    2
+Int         4
+Bigint      8
+Float       4
+double      8
+String
+timestamp
+Map
+Strut
+Array
+
+#cat file1.txt (press enter to display data in file)
+#hdfs dfs -put file2.txt user/mat (press enter to create new hdfs file inunix box)
+
+show tables;
+hdfs dfs -ls /user/hive/warehouse
+warehouse directory
+conf directory
+hive.metastore.warehouse.dir=/user/hive/warehouse
+
+Managed table and external table
+managed table 
+creat table t1(c1 int, c2 string);
+DESCRIBE t1;
+hive>load data local inpath 'lp/p1' overwrite into table d1
+hive>load data inpath 'hp/p1' overwrite into table d1
+hive>insert overwrite table d1 select * from s1;
+hive>insert into table d1 values('cv1',cv2)
+
+drop external table: removes metadata only
+drop managed table: removes data and metadata
+
+create table emp_manged(id int, name String) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TEXTFILE;
+textfile, sequence file, ORC file, RC file, Parquet file, Avro file
+
+create table external emp_manged(id int, name String) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TEXTFILE;
+hive>load data local inpath '/user/mat/emp1.txt' overwrite into table employee
+hive>select c1,c2,c3 from t1 where cd1 group by c1 order by c2 limit n1;
+

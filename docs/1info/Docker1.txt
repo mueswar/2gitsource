@@ -1,0 +1,99 @@
+###################################################################################################
+################                            docker/docker engine                ###################
+###################################################################################################
+how to install docker engine in windows
+	we can not install just docker, we have install docker desktop
+	docker desktop is combination of docker engine plus tools
+	every operating system will have one core software that is kernal 
+	but windows 10 has two kernals (windows and linuX)
+	docker engine works with kernal not with full OS
+DockeHub login/mueswar
+Docker Desktop:Hyper-V enable and restart
+
+run below commands in any terminal
+	docker --version
+	docker info
+	docker image ls
+	docker container ls
+	docker login docker.io --username=mueswar
+	docker pull ubuntu
+	docker run -it -d ubuntu
+	docker ps -a
+	docker exec -it containerId bash
+		exit
+	docker stop containerId
+	docker rm containerId
+	docker rmi imageId
+	
+	docker pull jenkins
+	docker run -p 8080:8080 jenkins_Image_Id
+	530ceba1287e44bf9586e74622120a95
+----------------------
+with recent docker release, docker can run directly in windows(no need midleman linux)
+docker = docker engine
+multiple docker containers can be hosted in one docker engine
+docker continer is runtime instance of docker image
+Docker Swarm :to run docker engines as clusters
+Docker compose :run multiple application at once.
+UI for Docker
+	Kitematic (just unzip folder)
+	Portiner
+docker client: docker CLI/ docker API
+
+docker File
+-------------
+	it should not have any extension
+	Name should be Docker
+	ARG CODE_VERSION=16.04
+
+	FROM ubunto:${CODE_VERSION}
+	RUN apt-get update -y
+	CMD ["bash"]
+How to build image
+	$docker build -t myapp .
+How to list docker images in local host
+	$docker images
+	$docker images mysql:4.0
+	$docker inspect image2:3.0
+How to remove docker image from local host
+	$docker image rm image2:tag2
+	$docker rmi 345262829 --force  //with id 
+How to run docker image
+	$docker run -itd --name continerN1 myapp
+how to check all running docker contines
+	$docker ps -a
+How to pull docker image from docker hub to local host
+	$docker image pull mysql:5.0
+How to login to docker hub to push image to docker registory from terminal 
+	$docker login
+	username:
+	password:
+
+How to push image to docker hub registory (reg2)
+	step1 tag local image 
+	$docker tag image2:ltag2 rhost2/reg2:rtag2
+	step2 
+	$docker image push rhost2/redg2:rtag2
+How to create container
+	$docker container create -it --name cone cbox:latest
+	$docker container start cone
+	$docker container stop cone
+	$docker container restart --time 5 cone
+	$docker container rename cone ctwo
+How to connect locally running container to ubentu terminal
+	$docker container attach cone
+	/#
+	/#
+	how to list continer directories
+	/#ls
+	How can we exit from continer terminal and come back to ubentu terminal
+	/#exit
+How to host port(8080) to continer port
+	$docker run -itd --name cone -p 8080:80/tcp image2
+how to check prort of continer
+	$docker continer port cone
+How to create network
+	$docker network create --driver bridge bone
+	$docker network create --driver bridge --subnet=192.168.0.0/16 --ip-range=192.168.5.0/24 btwo
+	$docker network ls
+

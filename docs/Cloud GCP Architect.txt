@@ -1,0 +1,40 @@
+https://www.udemy.com/course/google-cloud-professional-cloud-architect-certification/
+
+
+section-1
+section-2 regions
+section-3 compute engine
+
+
+section-1
+-----------------------------------------------------------------------------------------------
+v1: no need to watch
+v2: no need to watch
+v3: no need to watch
+v4: no need to watch
+v5: no need to watch
+v6: no need to watch
+
+-----------------------------------------------------------------------------------------------
+section-2 regions
+-----------------------------------------------------------------------------------------------
+v7: no need to watch
+v8: no need to watch
+-----------------------------------------------------------------------------------------------
+section-3 compute engine
+-----------------------------------------------------------------------------------------------
+v9: no need to watch
+v10:yes watch
+v11:do not watch it if you can create vm instance(name,http,serviceaccount,)
+v12:yes watch
+v13:no need to watch
+v14:
+v15:
+v16:
+v17:
+v18:
+v19:
+v20:
+-----------------------------------------------------------------------------------------------
+section-4 compute engine
+-----------------------------------------------------------------------------------------------

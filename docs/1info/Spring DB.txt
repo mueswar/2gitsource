@@ -1,0 +1,306 @@
+
+
+
+######################################################
+##############  Spring Database  #####################
+######################################################
+oracle.jdbc.driver.OracleDriver
+com.mysql.jdbc.Driver
+
+Spring framework provides following approaches for JDBC database access:
+ JdbcTemplate
+ NamedParameterJdbcTemplate
+ SimpleJdbcTemplate
+ SimpleJdbcInsert and SimpleJdbcCall
+
+<bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">  
+	<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />  
+	<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />  
+	<property name="username" value="system" />  
+	<property name="password" value="oracle" />  
+</bean>  
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+	<property name="dataSource" ref="ds"></property>  
+</bean>  
+ 
+<bean id="edao" class="com.javatpoint.EmployeeDao">  
+	<property name="jdbcTemplate" ref="jdbcTemplate"></property>  
+</bean>
+@Bean
+public DataSource dataSource() {
+	DriverManagerDataSource ds = new DriverManagerDataSource();
+	ds.setDriverClassName("org.h2.Driver");
+	ds.setUrl("jdbc:h2:tcp://localhost/~/spitter");
+	ds.setUsername("sa");
+	ds.setPassword("");
+	return ds;
+} 
+DriverManagerDataSource—Returns a new connection every time a connection is requested.
+SingleConnectionDataSource—Returns the same connection every time a connection is requested.
+
+@Bean
+public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+	return new JdbcTemplate(dataSource);
+}
+@Bean
+public EmployeeDao empRepository(JdbcTemplate jdbcTemplate) {
+	return new EmployeeDao(jdbcTemplate);
+}
+or
+@Repository
+public class JdbcEmployeeRepository implements EmployeeRepository {
+	private JdbcOperations jdbcOperations;
+	@Inject
+	public JdbcSpitterRepository(JdbcOperations jdbcOperations) {
+	this.jdbcOperations = jdbcOperations;
+	}
+}
+//get jdbc templete with jndi
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
+		<property name="dataSource" ref="dataSource2"></property>  
+	</bean> 
+	<bean id="dataSource2" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>jdbc/pds</value>
+		</property>
+	</bean>
+//get data source with Java configuration
+@Bean
+public JndiObjectFactoryBean dataSource() {
+	JndiObjectFactoryBean jndiObjectFB = new JndiObjectFactoryBean();
+	jndiObjectFB.setJndiName("jdbc/SpittrDS");
+	jndiObjectFB.setResourceRef(true);
+	jndiObjectFB.setProxyInterface(javax.sql.DataSource.class);
+	return jndiObjectFB;
+}
+@Bean
+public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+	return new JdbcTemplate(dataSource);
+}
+public class EmployeeDao {  
+	private JdbcTemplate jdbcTemplate;  
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {  
+		this.jdbcTemplate = jdbcTemplate;  
+	}  
+	public int saveEmployee(Employee e){  
+     String query="insert into employee values(  
+     '"+e.getId()+"','"+e.getName()+"','"+e.getSalary()+"')";  
+     return jdbcTemplate.update(query);  
+	}  
+}
+
+//JDBC templete with prepared statement
+	public Boolean saveEmployeeByPreparedStatement(final Employee e){  
+		String query="insert into employee values(?,?,?)";  
+		return jdbcTemplate.execute(query,new PreparedStatementCallback<Boolean>(){  
+		@Override  
+		public Boolean doInPreparedStatement(PreparedStatement ps)  
+				throws SQLException, DataAccessException {  
+			ps.setInt(1,e.getId());  
+			ps.setString(2,e.getName());  
+			ps.setFloat(3,e.getSalary());  
+			return ps.execute();  
+		}  
+		});  
+	}  
+
+//JDBC templete with resultSet
+	public List<Employee> getAllEmployees(){  
+		return jdbcTemplate.query("select * from employee",new ResultSetExtractor<List<Employee>>(){  
+			@Override  
+			public List<Employee> extractData(ResultSet rs) throws SQLException,  
+					DataAccessException {  
+			List<Employee> list=new ArrayList<Employee>();  
+			while(rs.next()){  
+				Employee e=new Employee();  
+				e.setId(rs.getInt(1));  
+				e.setName(rs.getString(2));  
+				e.setSalary(rs.getInt(3));  
+				list.add(e);  
+				}  
+				return list;  
+			}  
+		});  
+	 } 
+ 
+//JDBC templete with rowmapper
+	public T mapRow(ResultSet rs, int rowNumber)throws SQLException  
+	 
+	public List<Employee> getAllEmployeesRowMapper(){  
+		return jdbcTemplate.query("select * from employee",new RowMapper<Employee>(){  
+			@Override  
+			public Employee mapRow(ResultSet rs, int rownumber) throws SQLException {  
+				Employee e=new Employee();  
+				e.setId(rs.getInt(1));  
+				e.setName(rs.getString(2));  
+				e.setSalary(rs.getInt(3));  
+				return e;  
+			}  
+			});  
+	}
+
+//NamedParameterJdbcTemplate
+	pubic T execute(String sql,Map map,PreparedStatementCallback psc)  
+	<bean id="jtemplate"   
+		class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">  
+		<constructor-arg ref="ds"></constructor-arg>  
+	</bean>
+	public  void save (Emp e){  
+		String query="insert into employee values (:id,:name,:salary)";  
+		Map<String,Object> map=new HashMap<String,Object>();  
+		map.put("id",e.getId());  
+		map.put("name",e.getName());  
+		map.put("salary",e.getSalary());  
+		template.execute(query,map,new PreparedStatementCallback() {  
+			@Override  
+			public Object doInPreparedStatement(PreparedStatement ps)  
+					throws SQLException, DataAccessException {  
+				return ps.executeUpdate();  
+			}  
+		});  
+	}  
+
+//SimpleJdbcTemplate
+	int update(String sql,Object... parameters)  
+	<bean id="jtemplate" class="org.springframework.jdbc.core.simple.SimpleJdbcTemplate">  
+		<constructor-arg ref="ds"></constructor-arg>  
+	</bean> 
+	public int update (Emp e){  
+		String query="update employee set name=? where id=?";  
+		return template.update(query,e.getName(),e.getId());  
+	}
+
+How to use Repositories
+@Configuration 
+@EnableJpaRepositories("com.concretepage.repository")
+public class JPAConfig {
+}
+public interface ArticleRepository extends CrudRepository<Article, Long>  {
+}
+public class ArticleService {
+   @Autowired
+   private ArticleRepository articleRepository;
+   ------
+}
+Article savedArticle = articleRepository.save(article); 
+Article obj = articleRepository.findById(articleId).get();
+Iterable<Article> articles = articleRepository.findAll(); 
+
+//Using a pooled data source
+If you’re unable to retrieve a data source from JNDI, the next best thing is to configure
+a pooled data source directly in Spring. Although Spring doesn’t provide a pooled
+data source, plenty of suitable ones are available, including the following open source
+>Apache Commons DBCP (http://jakarta.apache.org/commons/dbcp)
+>c3p0 (http://sourceforge.net/projects/c3p0/)
+>BoneCP (http://jolbox.com/)
+<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	p:driverClassName="org.h2.Driver"
+	p:url="jdbc:h2:tcp://localhost/~/spitter"
+	p:username="sa"
+	p:password=""
+	p:initialSize="5"
+	p:maxActive="10" />
+@Bean
+public BasicDataSource dataSource() {
+	BasicDataSource ds = new BasicDataSource();
+	ds.setDriverClassName("org.h2.Driver");
+	ds.setUrl("jdbc:h2:tcp://localhost/~/spitter");
+	ds.setUsername("sa");
+	ds.setPassword("");
+	ds.setInitialSize(5);
+	ds.setMaxActive(10);
+	return ds;
+}
+//Using profiles to select a data source
+@Configuration
+public class DataSourceConfiguration {
+	@Profile("development")
+	@Bean
+	public DataSource embeddedDataSource() {}
+	
+	@Profile("qa")
+	@Bean
+	public DataSource Data() {}
+}
+
+//how to work with multiple databases/schemas
+Configure multiple database properties in application.yml
+@Configuration
+public class AppConfig {
+	@Bean(name = "dbProfileService")
+	@ConfigurationProperties(prefix = "spring.dbProfileService")
+	public DataSource createProfileServiceDataSource() {
+		return DataSourceBuilder.create().build();
+	}
+
+	@Bean(name = "dbTaskService")
+	@ConfigurationProperties(prefix = "spring.dbTaskService")
+	public DataSource createTaskServiceDataSource() {
+		return DataSourceBuilder.create().build();
+	}
+
+	@Bean(name = "jdbcProfileService")
+	@Autowired
+	public JdbcTemplate creuteJdbcTemplute_ProfileService(@Qualifier("dbProfileService") DataSource prafileServiceDS) {
+		return new JdbcTemplate(prafileServiceDS);
+	}
+	
+	@Bean(name = "jdbcTaskService")
+	@Autowired
+	public JdbcTemplate creuteJdbcTemplute_TaskService(@Qualifier("dbTaskService") DataSource dbServiceDS) {
+		return new JdbcTemplate(dbServiceDS);
+	}
+}
+@Repository
+public class Dao1 {
+	@Qualifier("jdbcProfileService")
+	@Autowired
+	JdbcTemplate jt;
+	public int getCountUsers(){
+		return jt.queryForObject("", Integer.class);
+	}
+}
+
+Hibernate 3.2 and below 4.0 and xml mappings
+@Bean
+public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+	LocalSessionFactoryBean sfb = new LocalSessionFactoryBean();
+	sfb.setDataSource(dataSource);
+	sfb.setMappingResources(new String[] { "Spitter.hbm.xml" });
+	Properties props = new Properties();
+	props.setProperty("dialect", "org.hibernate.dialect.H2Dialect");
+	sfb.setHibernateProperties(props);
+	return sfb;
+}
+Hibernate 3.2 and below 4.0 and annotation-oriented persistence
+@Bean
+public AnnotationSessionFactoryBean sessionFactory(DataSource ds) {
+	AnnotationSessionFactoryBean sfb = new AnnotationSessionFactoryBean();
+	sfb.setDataSource(ds);
+	sfb.setPackagesToScan(new String[] { "com.habuma.spittr.domain" });
+	Properties props = new Properties();
+	props.setProperty("dialect", "org.hibernate.dialect.H2Dialect");
+	sfb.setHibernateProperties(props);
+	return sfb;
+}
+if you’re using Hibernate 4, you should use the LocalSessionFactoryBean from the org.springframework.orm.hibernate4 package. Although it shares a name with the LocalSessionFactoryBean from the Hibernate 3 package 
+Hibernate 4.0 and annotation-oriented persistence
+@Bean
+public LocalSessionFactoryBean sessionFactory(DataSource dataSource) {
+	LocalSessionFactoryBean sfb = new LocalSessionFactoryBean();
+	sfb.setDataSource(dataSource);
+	sfb.setPackagesToScan(new String[] { "com.habuma.spittr.domain" });
+	Properties props = new Properties();
+	props.setProperty("dialect", "org.hibernate.dialect.H2Dialect");
+	sfb.setHibernateProperties(props);
+	return sfb;
+}
+@Repository
+public class HibernateEmpRepository{
+	public HibernateEmpRepository(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	private Session currentSession() {
+		return sessionFactory.getCurrentSession();
+	}
+}

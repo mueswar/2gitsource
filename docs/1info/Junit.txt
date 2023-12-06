@@ -1,0 +1,403 @@
+Junit
+Junit - Java Brains
+Mokito
+TestNG
+
+************************************************************************
+******************      Java Brains           **************************
+************************************************************************
+Junit4 
+10 years old
+Momolithic
+only one jar
+Jupiter- junit api for new test cases
+Vintage- to support old test cases
+
+Junit 5 
+<dependency>
+	<groupId>org.junit.jupiter</groupId>
+	<artifactId>juint-jupiter-engine</artifactId>
+	<version>5.2</version>
+</dependency>
+<dependency>
+	<groupId>org.junit.jupiter</groupId>
+	<artifactId>juint-jupiter-api</artifactId>
+</dependency>
+assertEquals()
+assertArrayEquals()
+assertIterableEquals()
+assertThrows()
+
+To run test cases with maven insted of eclipse. we do not need this if we run with eclise like junit view>select test>rightclick>run
+run with mevn(project view>select test>rightclick>run mvn test). here we do not see green bar insted we see output in console
+<build>
+	<plugins>
+		<plugin>
+			<artifactId>maven.surefire-plugin</artifactId>
+			<version>2.22.1</version>
+		</plugin>
+	</plugins>
+</build>
+
+Junit creates one new instance of test class for every test method in test class
+
+@BeforeAll
+@AfterAll
+@BeforeEach
+@AfterEach
+@Test
+@Disabled
+assertAll(
+	() -> aaserEquals(4,mathUtil.multiply(2,2)),
+	() -> aaserEquals(0,mathUtil.multiply(2,0)),
+	() -> aaserEquals(-2,mathUtil.multiply(2,-1))
+);
+
+if Junit creates new test class instance for every method why do we need @BeforeAll
+@BeforeAll
+static void beforeAllInit(){sysout("beforeAll");}
+here we should use static keyword why because BeforeAll method will be called before we create instance for test calss
+@TestInstance(TestInstance.Lifecycle.PER_METHOD) //this is default annotation at class level, this creates new teast calss instance per method
+TestInstance.Lifecycle.PER_ClASS// this will change default behavior and creates one instance for test class 
+TestInstance.Lifecycle.PER_ClASS// in this case beforeAll bethod will run on test class instance and we do not need static keyword
+
+@Tag("Math") //method level annotation maven build/eclipse can skip test cases based on tag values
+@DisplayName("addition")//method level annotation to define method discription
+TestRepoter is usesful to write something to maven console like log timings 
+or about test method discription which we can get from TestInfo class
+
+
+
+
+************************************************************************
+******************                            **************************
+************************************************************************
+assertEquals(2,list.size());
+
+(org.juint.*)
+@BeforeClass
+@Before
+@Test
+@After
+@AfterClass
+
+//create test sute
+import org.juint.runner.RunWith;
+import org.juint.runner.Suite;
+import org.juint.runner.SuiteClasses;
+@RunWith(Suite.class)
+@SuiteClasses({Test1.class,Test2.class})
+public class class1{
+}
+//running testsute with test runners
+public class class1{
+	public static void main(String arg[]){
+		Result result = JUintCore.runClasses(Test1.class,Test2.class);
+		for(Failure fa : reult.getFailures()){
+			sysout(fa.toString());
+		}
+		sysout(result.wasSuccessful());
+	}
+}
+//Assert class methods
+void assertEquals(a1,a2);
+void assertFalse(boolean b)
+void assertTrue(boolean b)
+void assertNotNull(Object o)
+void assertNull(Object o)
+void fail();
+
+import junit.framework.TestCase
+public class class1 extends TestCase {
+	@Override
+	@Before
+	public void setUp(){
+	}
+	@Test
+	public void m1(){
+	}
+	@Override
+	@after
+	public void tearDown(){
+	}
+}
+
+spring MVC testing
+-----------------------------------------
+@Controller
+public class HomeController {
+	@RequestMapping(value="/", method=GET)
+	public String home() {
+		return "home";
+	}
+}
+public class HomeControllerTest {
+	@Test
+	public void testHomePage() throws Exception {
+	HomeController controller = new HomeController();
+	MockMvc mockMvc = standaloneSetup(controller).build();
+	mockMvc.perform(get("/")).andExpect(view().name("home"));
+	}
+}
+
+Mockito
+------------------------------------------
+//how to mock service(when business impl class depends on service)
+TodoService tsMock = mock(TodoService);
+when(tsMock.getmone()).thenReturn("product 1");
+TodoServiceImpl imp = new TodoService(tsMock);
+String val = imp.mtwo();
+assertEquals("product 1",val);
+//how to return different values when you call multiple times
+when(tsMock.getmone()).thenReturn("product 1").thenReturn("product 2");
+//how to mock List class in clollection
+List listMock = mock(List.class);
+assertEquals(null,listMock.get(0));
+assertEquals(null,listMock.get(1));
+//how to use argument matcher anyInt() 
+when(listMock.ge(anyint())).thenReturn("product 1")
+assertEquals("product 1",listMock.get(0));
+assertEquals("product 1",listMock.get(1));
+//test exception
+@Test(expected = RuntimeException.class)
+public void testmone(){
+	List listMock = mock(List.class);
+	when(listMock.ge(anyint())).thenExceptio(new RuntimeException)
+	listMock.get(0);
+}
+
+@RunWith(MockitoJUnitRunner.class)
+public class cone{
+	@Mock
+	TodoService tsMock;
+	@InjectMocks
+	TodoBusinessImpl imp;
+	@Test
+	public void testmone(){
+		when(tsMock.getmone()).thenReturn("product 1");
+		String val = imp.mtwo();
+		assertEquals("product 1",val);
+	}
+
+}
+
+************************************************************************
+*******************      TestNG     Supriya Baru    ********************
+************************************************************************
+install TestNG plugin in eclipse
+
+org.testng.annotations.Test;
+org.testng.annotations.BeforeTest;
+org.testng.annotations.BeforeMethod;
+org.testng.Assert;
+
+generally test cases are exicuted in alphabetical oreder
+how can we change the order of test case exicution
+@Test(priority=2)
+@BeforeTest //before all testcases exicution in test class (one time exicution)
+@AfterTest //after all testcases exicution in test class (one time exicution)
+@BeforeMethod
+@AfterMethod
+@Test(dependsOnMethods="insert") //insert is method name
+@Test(enabled = false)
+
+
+Assert.assertEquals("actual","expected");
+
+how to run all test cases
+how do include test cases with regular expressions
+project>Right click>TestNG>convert TestNG
+<suite name = "Suite1">
+   <test name = "exampletest1">
+      <classes>
+         <class name = "Test1" />
+		 <class name = "Test2" >
+			<methods>
+				<include name="method1"/>
+				<exclude name="method2"/>
+			</methods>
+		 </class>
+      </classes>
+   </test>
+   <test name = "exampletest2">
+      <classes>
+         <class name = "Test3" >
+			<methods>
+				<include name="methodTest.*"/>
+			</methods>
+		 </class>
+      </classes>
+   </test>
+</suite>
+
+How to run all tests in given pacakage
+<suite name = "Suite1">
+   <test name = "exampletest1">
+      <packages>
+		<package name="org.ap"></package>
+		<package name="com.ap"></package>
+      </packages>
+   </test>
+</suite>
+
+How to run group of test cases
+@Test(groups={"regression"})
+<suite name = "Suite1">
+   <test name = "exampletest1">
+	<groups>
+		<run>
+			<include name="regression"/>
+		</run>
+	</groups>
+      <classes>
+         <class name = "Test1" />
+		 <class name = "Test2" >
+		 </class>
+      </classes>
+   </test>
+</suite>
+
+How to pass parameters/db properties to Test class
+<suite name = "Suite1">
+   <test name = "exampletest1">
+	<parameter name="pone" value="vone"/>
+	<parameter name="ptwo" value="vtwo"/>
+      <classes>
+         <class name = "Test1" />
+		 </class>
+      </classes>
+   </test>
+</suite>
+@Parameters({"pone","ptwo"})
+@Test
+public void one(String ar1, String ar2){
+	sysout(ar1+ar2);
+}
+Note:we are explicit mapping between pone and ar1
+
+How to use dataprovide
+@Dataprovider(name="data1")
+public String[] done(){
+	String[] s = new String[3];
+	s[0]="val0";	s[1]="val1";	s[2]="val2";
+}
+@Test(dataProvider="data1")
+public void mone(String a){
+	sysout(a);
+}
+Note: mone will be invoked three times
+
+------------syntel junit couse------------------------------
+import org.junit.Test for @Test
+import org.junit.Assert.*; for assertTrue(true);
+@Test(expected=ArithmeticException.class)
+Reult r = JUnitCore.runClasses(Tone.class,Ttwo.class);
+r.getrunCount()//rerutns no of test mecthods exicuted
+r.getIgnoreCount();
+r.getRunTime();
+r.getFilureCount();
+for(Failure f = r.getFailures()){
+	s.o.p(f.toString());
+}
+// to run Tone and Ttwo one after one
+Computer c= new Computer();
+Reult r = JUnitCore.runClasses(c,Tone.class,Ttwo.class);
+// to run Tone and Ttwo paralle
+Computer c= new ParalleComputer(true,true);
+Reult r = JUnitCore.runClasses(c,Tone.class,Ttwo.class);
+assertTrue("good", con1&Con2);//good will be printed when condition is true
+assertEquals("two longs compare", l1,l2);// compares two longs
+assertEquals("short and int compare", s1,i1)//short and int will converted to logs and compared here implicitly
+assertEquals("two double compare", d1,d2);//this will fail beacuse this is depricated we shold pass precesion
+assertEquals("two double compare", d1,d2,0.01);// this works
+assertEquals("two float compare", f1,f2,0.00001);// this works
+assertEquals("two strings compare", s1,s2);
+assertEquals("two objects compare", o1,o2);//when we impliment equals and hash code
+assertNotEquals("two strings compare", s1,s2);
+assertNull("obj is null",ob1);//to check null
+assertNotNull("obj is not null",ob1);//to make sure it is not null
+int a[] ={1,2,3};
+int b[] ={1,2,3};
+int c[] =a;
+assertEquals(a,b);//false it will fail
+assertEquals(a,c);//true
+assertArrayEquals(a,b);//true
+there is no arrayNotEqual assert method
+@Test(expected=AssertionError.class)
+assertThat("",s1,anything(s2))//it will pass always
+String s= null;
+assertThat("",s,nullValue());//it will pass
+String s= "";
+assertThat("",s,notNullValue());//it will pass
+checking assertEquals in different form
+String s1= "abc";
+String s2= "abc";
+assertThat("",s1,equalTo(s2));//it will pass
+assertThat("",s1,is(s2));//it will pass
+assertThat("",s1,not(s2));//it will fail
+assertThat("",s1,sameInstance(s2));
+assertThat("",s1,instanceOf(String.class));
+assertThat("",s1,isA(String.class));
+assertThat("",s1,containsString(s2));
+assertThat("",s1,startsWith(s2));
+assertThat("",s1,endsWith(s2));
+assertThat("",s1,not(endsWith(s2)));
+assertThat("",s1,allOf(startsWith(s2),endsWith(s2)));
+assertThat("",s1,anyOf(startsWith(s2),endsWith(s2)));
+String a[] ={"a","b","c","d"}
+Collection<String> coll = Arrays.asList(a);
+assertThat("",coll,hasItem("b"));
+assertThat("",coll,hasItems("b","c"));
+String a[] ={"aasdd","bdddd","ceeee","dfff"}
+Collection<String> coll = Arrays.asList(a);
+assertThat("",coll,hasItem(startsWith("df")));
+assertThat("",coll,everyItem(not(startsWith("df"))));
+to create custom mather we need to extend Bascimatcher and override mather metod
+assumeFalse("", false); like assertFalse
+assumeTrue("",true);
+@Before exicutes before every test method and data everytime will be reseted
+@BeforeClass exicutes only once per class
+//how to run multiple test classes
+@RunWith(Suite.class)
+@SuiteClasses(Tone.class, Ttwo.class, Tthree.class)
+public class cone{
+
+}
+//how to run only some group of methods
+@RunWith(Categories.class)
+@IncludeCategory(SearchTest.class)
+@SuiteClasses(Tone.class)
+public class cone{ }
+public class Tone{
+@Test
+@Category(SearchTest.class)
+public void m1(){ }
+@Test
+@Category(SearchTest.class)
+public void 2(){ }
+@Test
+@Category(CurdTest.class)
+public void m3(){ }
+}
+@Test
+public void m4(){ }
+}
+public interface SearchTest{}
+public interface CurdTest{}
+the above code runs only m3 and m4
+@Ignore//to ignore test
+Test(timeout=2000)//timeout exception comes when exicution is more than 2 sec
+@RunWith(Junit4.class)//
+@RunWith(MockitoJUnitRunner.class)//runs with mockito framework
+you can creeate our own runner by extending Runner abstract class
+@FixeMethodorder(MethodSorters.NAME_ASCENDING)//add at class level
+
+
+
+############################################################
+				FAQ
+############################################################
+How to write test case for private method
+how to write test case for static method
+how can we write test case for void method
+
