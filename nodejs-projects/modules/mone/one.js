@@ -6,8 +6,8 @@ const xyz = function (){
     console.log('mone - one- mone xyz');
 };
 exports.add = function (x, y) {
-    console.log(x);
-    console.log(y);
+    console.log("int put x: "+x);
+    console.log("int put y: "+y);
     return x + y;
 };
 module.exports.m1= abc;

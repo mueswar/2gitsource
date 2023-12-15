@@ -1,9 +1,8 @@
-const one = require('./mone/one')
-const two = require('./mone/two')
-function test(){
-    console.log('test js');
-}
-test();
-one.m1();
-one.m2();
-one.add(2,3);
+const mone = require('./mone/one')
+const mtwo = require('./mone/two')
+
+
+mone.m1();
+mone.m2();
+mone.add(2,3);
+//test module two
