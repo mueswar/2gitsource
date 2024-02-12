@@ -6,3 +6,4 @@ mone.m1();
 mone.m2();
 mone.add(2,3);
 //test module two
+mtwo.a(2,5);

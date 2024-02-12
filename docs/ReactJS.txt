@@ -1,0 +1,11 @@
+https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16
+
+
+
+Hellow world project
+-----------------------------
+step1: need node.js
+step2: run npx create-react-app poject1R
+step3: cd poject1R
+step4: npm start
+

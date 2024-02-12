@@ -12,6 +12,7 @@ realtime async usecases
 	to make multiple backed calls and combine outputs, it is latency issue.
 	
 Index
+---------------------------------------------------------------------------------------------------
 	local module- commanJS
 	local module- ES -Node.js 14
 	Built-in module {path, events, fs, stream, http}
@@ -31,19 +32,18 @@ loging
 properties
 	cloud config properties
 	AWS SSM parameters
-	
+
+install Node
+---------------------------------------------------------------------------------------------------
+	install Node
+	check node 	>node -v	
 	
 run with commandline
 ---------------------------------------------------------------------------------------------------
-	install nodeJs
-	create javascript file one.js in c:\project1
-	to run it open commandline and run below command 
-	c:\project1>node one
+	create      c:\project1\one.js
+	run         c:\project1>node one
 Run Heloowrld program  with VS
 ---------------------------------------------------------------------------------------------------
-	install Node
-	check node
-	>node -v
 	create project folder node1
 	open visual studio code 
 	c:>node1>code .

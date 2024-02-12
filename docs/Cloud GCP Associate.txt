@@ -1,5 +1,7 @@
 https://www.udemy.com/course/google-certified-associate-cloud-engineer-practice-exams-gcp/
 
+https://texttomp3.online/
+tracy voice
 
 
 VPC -Section-21  --
@@ -32,7 +34,7 @@ v14:do not watch it if you can create VM server and access apache server
 	apt -y install apache2
 	echo "Hello ...." > /var/www/index.html
 	sudo service apache2 start
-v15:do not watch it if you what internal ip, external ip and static ip
+v15:do not watch it if you know what internal ip, external ip and static ip is
 	external ip address changes when we stop and start, but static ip does not change
 	we can create and and assign static ip to VM instance, this will not change on every server restart
 	we have to release/delete static ip if we do need it, otherwise you would be billed
