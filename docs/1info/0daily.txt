@@ -5,3 +5,8 @@ poc1: convert gradle to maven or maven to gradel actual project
 
 Must learn: Angular, Node, react, kubernetes
 Learn2: python
+
+
+Interview
+----------------------------
+read 0HackerRank.txt

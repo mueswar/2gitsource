@@ -1,4 +1,5 @@
 https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16
+https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d   net ninja
 
 
 
@@ -12,7 +13,7 @@ typescript
 
 why react
 -----------------------------------------------------------------------------------------------------------------------
-without react wee will have code with DOM for page render, but with react we do not need to touch DOM
+without react wee will have to code with DOM for page render, but with react we do not need to touch DOM
 
 Tools
 -----------------------------------------------------------------------------------------------------------------------
