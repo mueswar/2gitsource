@@ -1,0 +1,32 @@
+Node js Mysql
+----------------------------------------------------------------------------------------------------------
+Simple connection programm
+	step1: install mysql package
+			npm install mysql
+	step2:
+		const {createPool} = require('mysql')
+		
+		const pool = createPool({host:"", user:"", password:"", connectionLimit:10}})
+		pool.query(`select * from db1.users`, (err, res) => {
+			return console.log(res)
+		})
+
+
+Node js PostgreSQL
+----------------------------------------------------------------------------------------------------------
+Simple connection programm
+	step1: install pg package
+			npm install pg
+	step2:
+		const {Client} = require('pg')
+		
+		const client = new Client({host:"", port:5432, user:"", password:"", database:""});
+		client.connect();
+		client.query(`select * from users`, (err, res) => {
+			if(!err){
+				console.log(res.rows);
+			}else {
+				console.log(err.message);
+			}
+			client.end;
+		})

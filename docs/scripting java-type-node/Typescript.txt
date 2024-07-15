@@ -1,0 +1,141 @@
+typescriptlang.org
+
+
+net ninja- youtube
+
+
+Tools
+-------------------------
+node.js   -  for installing typescript compiler
+typescript
+
+
+test programme
+-------------------------------
+install node
+npm install -g typescript 
+compile ts to js 
+tsc one.ts one.js
+
+
+data types 
+-------
+number
+string
+boolean
+object
+any
+string[]
+any[]
+
+define varibles
+	let age : number = 20;
+	let name : string = "abc";
+	let myflag : boolean = true;
+	
+in typescript we can not change variable type once you define variable 
+	let name ='abc';//here typescript infers type, no need to give explicitly
+	name=20;// this is does not work
+	name='def';// this works 
+	
+in typescript we define function without explicitly mentioning argumen type, but that is not good idea
+that means we are not using typescript features
+	const a = (a) {return a};
+	const b = (a:number) {return a};
+	both a and b work fine in typescript, but we can not give type safety with a.
+we can not add different type of elements to array once it is defined	
+	let a =['ab','bc','cd'];
+	a.push('de');// this adds element
+	a.push(3);// this does not work
+	a[0]=3;// this does not work
+	
+	let x: string|number; // this is mixed datatype
+	x='bc';//this works 
+	x=30;//this works 
+we can define mixed type array
+	let a =['ab',3,'cd', 4, true];
+	a.push('de');// this adds element
+	a.push(3);// this adds element
+	a[0]=3;// this replaces the element
+	
+	let b :string[];
+	b=['a','b'];//this works 
+	
+	let c :string[];
+	c.push('a');//this does not work, because we have not initialized yet. but no compile time error, but run time. 
+	
+	let d :(string|number)[]=[];//this is mixed array
+	d.push('as');//this works 
+	d.push(2);//this works 
+	
+we can not change object property data type once it is defined. and we can not add new property
+	let a = {
+		name='xyz',
+		age=30
+	}
+	a.name= 234;//does not work 
+	a.address ='asd'//does not work
+	a = {
+		name='564',
+		age=40
+	}//this works
+	a= ['a','b'];// this does not work
+	a = {
+		name='564',
+		age=40,
+		address='asd'
+	}//this doe not works (we can not add new filed)
+	a = {
+		name='564'
+	}//this doe not works (we can not remove filed)
+	
+	let x : object;
+	x={name='bc', age=20};
+	x='axy';//this does not work, string is not object
+	x=[]; this works, array is object
+	
+	let p : {name:string, age:number}
+	p={name='bc', age=20};//this works
+	p={name='bc', age=20, address='xvb'};//this does not works
+	p={}; // this does not work
+
+dynamic type
+	let a:any =20;
+	a=40;
+	a=true; this works
+	a='abc';//this works
+	a= {name='xcv'};
+	
+	let b:any[] =[];
+	b.push('abc');
+	b.push(2);
+
+Functions
+---------------------------
+	function addTwo(a :number, b :number) : number {
+		return a+b;
+	}
+
+
+	add = (a :number, b :number) : number => { return a+b}
+	
+	add(2,5);
+	add(2);//does not work we have to pass 2 values
+	
+	add = (a :number, b ?:number) : number => { return a+b}
+	add(2);// this works now b is optional
+	
+	add = (a :number, b :number =10) : number => { return a+b}
+	add(2);// this works now b has default value
+	
+	define optional parameter at end, othewise we wil get confiused.
+	
+how do we define function parameter if it is object
+	const add = (x :{a :number, b :string}) : number => { return x.a+x.b}
+how do we define above function with type aliases
+	type custtype1 = {a :number, b :string};
+	const add = (x :custtype1) : number => { return x.a+x.b}
+how do we declare varable as function
+	let a: Function;
+	
+	let greet:(a:number, b:string)=> void;

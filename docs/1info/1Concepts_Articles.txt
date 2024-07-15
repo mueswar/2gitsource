@@ -8,6 +8,12 @@ https://medium.com/tag/venkat-subramaniam/archive
 https://blog.stackademic.com/faster-than-single-java-concurrency-740278540a93
 
 
+Videos
+--------------------------------
+venkat
+Asynchronous Programming in Java : https://www.youtube.com/watch?v=1zSF1259s6w   --in progress
+
+
 
 
 

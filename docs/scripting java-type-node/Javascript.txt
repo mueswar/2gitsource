@@ -1,3 +1,5 @@
+https://jsfiddle.net/   use it for running examples
+
 1.Javascript
 2.javascript from java brains
 3 objects and prototypes from Java brains
@@ -14,12 +16,15 @@ you can not use variable before its declaration.
 Javascript is single thread and syncronize behaviour
 only Inheritance and Encapsulation are applicable to javascriprt
 if function name starts with Capital letter that function is class
-we can also define calls with Class keyword
+we can also define class with Class keyword
 what is difference bewteen object literal functions and Class functions(class does not have comma(a) after every method)
 
 when do we use new keyword in functions
 is NodeJs thread safe?
 what are the new features in ES6
+
+AnguarJS, and React are client side frameworks
+NodeJS and express are serverside frameworks
 
 quick notes
 -----------------------------------------------------------------------------------------------------------------------
@@ -34,9 +39,9 @@ number, string literal, array literal, array Object and Date Object declaration 
 	var e=new Date();
 if, ifelse, for loop, switch, do, continue and break work as Java
 common functions
-	parseInt()
-	parseFloat()
-	isNan()
+	parseInt(dynamic val)
+	parseFloat(dynamic val)
+	isNan(dynamic val)
 	string- length, concat, toUpper, toLower, trim, substr, replace
 	Arrays- length, push, pop, unshift, shift, sort
 	
@@ -202,6 +207,13 @@ while(val1 <= 10){
 //continue and break works as it is in java
 //do while works as it is in java
 //for loop syntax is same as in java
+forEach
+	var myarr = ["10","20","hello"];
+	var fone = function(item){console.log("items are"+item);};
+	myarr.forEach(fone);
+	the above line calls fone function for every element and passes that element as argument.
+	it can also send index to function and complete array
+	myarr.forEach(function(item,index,array){console.log("items are");});
 
 //arrays
 -----------------------------------------------------------------------------------------------------------------------
@@ -250,6 +262,28 @@ var1.sclice(2,0,6,9); //it says do not remove and add 6 and 9
 //second parameter says how many elements to be removed
 //all elements from third parameter we need to add to array
 
+var a =["x","y","z"];
+	a[0];//returns x
+	a[3];//returns undefined but not out of boundary exception
+	a[3]="p";//this adds element into array
+	a.length;//gives 4
+an array is object
+	if we create an object like var a =["x","y","z"]; this will be converted like
+	var a = {"0":"x","1":"y","2":"3"};
+	so we can use braket notation to get values but not dot notation since key starts with number
+	a["0"];//gives x and see zero is given as string
+	a[0];//gives x here javascript coresion is happening.
+var a =["x","y","z"];
+	a[400]="p";//now the array length is 401
+	a["foo"]="q";//this does not change length but the peoprty will be added. so better to use numbers
+
+Array methods: push, pop
+	var myarr = ["10","20","hello",{}];
+	myarr.push(10);// this adds elemnt 10 and returns length
+	myarr.pop();// deletes the lasst elemnt and returns last element
+	myarr.shift();//removes first element and returns same
+	myarr.unshift("abc");// adds element at first
+
 -----------------------------------------------------------------------------------------------------------------------
 //objects
 const a = {
@@ -261,6 +295,47 @@ const a = {
 	x,
 	y
 };
+
+how do we create empty object
+	var a={};
+how do we add property to an existing object
+	var a={};
+	a.p1="pone";
+	console.log(a);
+what will happen if you access the property which is not defined in object
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	console.log(a.p3);//the o/p is undifined
+we can also use braket notation [] to invoke object property
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	console.log(a["p2"]);
+	note that inside braket property is give as string.
+var a={
+	"p1":10,
+	"1":"abc"
+	};
+console.log(a.1);// here we get syntax error that means if property name is invalid we can not use dot notation.
+console.log(a[1]);//here the o/p is abc
+we can not use dot notation if the property name is dynamic.
+var a={
+	"p1":10,
+	"p2":"abc"
+	};
+var ptwo = "p2";
+console.log(a[ptwo]);//this is only way to access it now not with dot notation
+and remember property name is not given in string format
+but dot notation is faster
+how can we delete property from object
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	delete a.p2;
 
 -----------------------------------------------------------------------------------------------------------------------
 //callback functions
@@ -294,10 +369,15 @@ vArray.sort();
 vArray.sclice();
 
 //Date
+-------------------------------------
 var ms = new Date().getTime()+3000;
 while(new Date()< ms){//this waits 3 seconds
 
 }
+
+
+Math
+----------------------
 
 class
 -------
@@ -362,61 +442,6 @@ if condition with number and strings
 	in java the above code does not work but in c and javascript it does works.
 	only zero is considered as false
 	all sring values are considerd as true expect empty string(var a="";)
-how do we create empty object
-	var a={};
-how do we add property to an existing object
-	var a={};
-	a.p1="pone";
-	console.log(a);
-what will happen if you access the property which is not defined in object
-	var a={
-		"p1":10,
-		"p2":"abc"
-		};
-	console.log(a.p3);//the o/p is undifined
-we can also use braket notation [] to invoke object property
-	var a={
-		"p1":10,
-		"p2":"abc"
-		};
-	console.log(a["p2"]);
-	note that inside braket property is give as string.
-var a={
-	"p1":10,
-	"1":"abc"
-	};
-console.log(a.1);// here we get syntax error that means if property name is invalid we can not use dot notation.
-console.log(a[1]);//here the o/p is abc
-we can not use dot notation if the property name is dynamic.
-var a={
-	"p1":10,
-	"p2":"abc"
-	};
-var ptwo = "p2";
-console.log(a[ptwo]);//this is only way to access it now not with dot notation
-and remember property name is not given in string format
-but dot notation is faster
-how can we delete property from object
-	var a={
-		"p1":10,
-		"p2":"abc"
-		};
-	delete a.p2;
-
-var a =["x","y","z"];
-	a[0];//returns x
-	a[3];//returns undefined but not out of boundary exception
-	a[3]="p";//this adds element into array
-	a.length;//gives 4
-an array is object
-	if we create an object like var a =["x","y","z"]; this will be converted like
-	var a = {"0":"x","1":"y","2":"3"};
-	so we can use braket notation to get values but not dot notation since key starts with number
-	a["0"];//gives x and see zero is given as string
-	a[0];//gives x here javascript coresion is happening.
-var a =["x","y","z"];
-	a[400]="p";//now the array length is 401
-	a["foo"]="q";//this does not change length but the peoprty will be added. so better to use numbers
 
 var a="hell world";
 	a.length;//it gives 10 but string is premitive how does it working
@@ -447,25 +472,8 @@ how to access implicit arguments
 	}
 	console.log(add(10,30,4,5,6));//o/p is 55
 	here arguments is an implicit object
+	
 
-Array methods: push, pop
-	var myarr = ["10","20","hello",{}];
-	myarr.push(10);// this adds elemnt 10 and returns length
-	myarr.pop();// deletes the lasst elemnt and returns last element
-	myarr.shift();//removes first element and returns same
-	myarr.unshift("abc");// adds element at first
-forEach
-	var myarr = ["10","20","hello"];
-	var fone = function(item){console.log("items are"+item);};
-	myarr.forEach(fone);
-	the above line calls fone function for every element and passes that element as argument.
-	it can also send index to function and complete array
-	myarr.forEach(function(item,index,array){console.log("items are");});
-
-Math, Date
-
-AnguarJS, and React are client side frameworks
-NodeJS and express are serverside frameworks
 ************************************
 3 objects and prototypes from Java brains
 ************************************
@@ -739,7 +747,7 @@ what is inheritence
 			})
 		}
 	}
-	var admin =new new Admin('mno');
+	var admin =new Admin('mno');
 	var users = [a,b];
 	admin.deleteUser(b);
 how to ceate User class without Class keyword
@@ -855,6 +863,190 @@ what is event bubling
 			list.removeChild(li);//to remove element we need parent element
 		}
 	})
+	
+	
+###############################################################################
+								ES6
+###############################################################################
+https://scrimba.com/dashboard
+
+object litterls
+--------------------------
+city='abc';
+state='TX';
+const a ={city:city, state:state};//if object property name and peoprty value name same 
+we can short like below
+const a ={city, state};
+
+for of loop
+-----------------------
+let a = [2,4,5];
+let total=0;
+for (const v of a){
+	total+=v
+}
+
+let b ="abcdefgh";
+for(const v of b){
+	console.log(v)
+}
+
+spread operator
+--------------------
+let a = ['p','q'];
+let b= a; //here just referencing, if we add elevemt to a , then b also will have same new element.
+let c= [...a];//here we are creating new list and assigning to c, if we modify a now, c does not effected
+let c= [x,...a,z];// this gives optput x,z
+
+let d= {name="xyz, city="tx"};
+let e = {...d, salaroy= 5000}; //now here e gets d properties as well.
+
+function add(...z){ //it accepects any number of arguments, here we call it as rest operator.
+	console.log(z);
+}
+add(1,2,3,4);
+
+arrow functions
+---------------------
+
+default parameters
+---------------------
+const a = (person = "Someone") => `${person} sings song`;
+a();//this prints - Someone sings song
+
+includes(a)
+--------------
+const b = ['x','y','z'];
+if(b.includes('y')){
+	console.log("b has y");
+}
+
+var,let, const
+---------------------
+if(){
+	var a = 10;
+}
+console.log(a);// this returns null since var is in if block scope
+
+if(){
+	let a = 10;
+}
+console.log(a);// this returns error "ReferenceError" becose is not define out side to access outside
+
+const a = 10;
+a=15;
+console.log(a);// this returns error "SyntaxError"
+
+const a = [];
+a.push(15);
+console.log(a);// this works fine
+
+const a = [];
+a = 5;
+console.log(a);// this returns error "SyntaxError"
+
+const a = {};
+a.name ='abc');
+console.log(a);// this works fine
+
+import and export
+--------------------
+data.js
+export const add = (p,q) => {return p+q;};
+
+import { add } from "./data.js"
+let result = add(2,3);
+
+padStart(10, x), padEnd(10,Y)
+---------------------
+let a = "abcsde";
+a.padStart(10, x)// xxxxabcsde
+a.padEnd(10,Y)// abcsdeyyyy
+
+
+classes
+---------------------
+pojo.js
+export class Animal{
+	constructor(type, legs){
+		this.type=type;
+		this.legs=legs;
+	}
+	makeNoise(){ console.log("loud noice"); }
+	
+	static eat(){console.log("rice");}
+	get metadata(){console.log(`${this.type}`);}
+}
+
+export class Horse extends Animal(){
+	makeNoise(){ console.log("horse loud noice"); } //we can override it
+}
+
+import { Animal, Horse } from "./pojo.js"
+let dog = new Animal('Dog',4);
+console.log(Animal.eat()); //we are calling with class name
+console.log(dog.metadata); //we are not using paranthasis
+
+Promise
+------------------------------------------
+const byFlightTickets = () => {
+  return new Promise((resolve, regect) => {
+  	console.log('start');
+		const error = false;
+    if(error){
+    	regect();
+    }
+    else{
+    	resolve();
+    }
+  })
+}
+byFlightTickets()
+.then(()=>{console.log('success');})
+.catch(()=>{console.log('success');});
+
+if we call byFlightTickets method it is creating promise object and promise is taking one function, 
+that function again taking two functions as parameters
+but promise exicutes only one parameter function based no success or filure.
+but both functions implementations are defined in then and catch methods.
+but in books explanation will be revers.
+promise function exicutes asyncronously 
+one of the parameneter function exicutes by end of promise function based condition.
+
+fetch
+---------------------------------------------
+fetch we can use to make call URL, fetch returns Promise
+
+async and wait
+--------------------------------------------
+lets say we want use async functionality but we do not need dynamic function exicution based on success or failure.
+but somewhere in the process we need to wait for promise result.
+
+const potos=[];
+async function upload(){
+	let status = new Promise((resolve, error)=>{
+		setTimeout(()={
+			photos.push('profile pic');
+			resolve("photouploded")
+		}, 3000)
+	})
+	let result = await status;
+	console.log(result);
+	console.log(photos.legth);
+}
+upload();
+the await makes code inside promise is exicuted before it goes to next line
+
+set
+--------------------------------------------
+const s = new Set([1, 1, 2,2]);
+s.add(3).add(4);
+console.log(s.delete(4));
+console.log(s.has(3));
+console.log(s.size());
+s.clear();
+
+
 
 
 ################################################################################

@@ -1,0 +1,84 @@
+https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16
+https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d   net ninja
+
+
+
+https://www.youtube.com/watch?v=NZy-65SUTlI  splunk
+https://www.youtube.com/watch?v=1OUcHtm8Yfw  deep learning
+
+prerequi
+-----------------------------------------------------------------------------------------------------------------------
+javascript
+typescript
+
+why react
+-----------------------------------------------------------------------------------------------------------------------
+without react wee will have to code with DOM for page render, but with react we do not need to touch DOM
+
+Tools
+-----------------------------------------------------------------------------------------------------------------------
+NodeJs
+Visuval studio code
+
+Hellow world project
+-----------------------------------------------------------------------------------------------------------------------
+step1: need node.js
+step2: run npx create-react-app poject1R
+step3: cd poject1R
+step4: npm start
+
+
+.ts file is tipesprict file 
+.tsx file is react typescript file
+in tsx file we see html tags, but that is not html, it is javascript xml.
+we can equivalent javascript for javascript xml in bablejs.io website
+
+functional component is just javascript fuction with return of javascript xml.
+class component- this old style
+
+we can not write if condition or any javascript in JSX,
+
+
+how to return two tags in functional component
+	we can not directly do it, but with following options
+	1. wrap with <div>
+	2. wrap with <div> is not good idea, use react fragment 
+		<>
+		<h1>
+		<h2>
+		</> this empty tage is fragment shortcut 
+		
+how to add bootstarp to react
+how to list of elements, assume you have list constant in function.
+	function Message(){
+		const items = ["a","b","c"]
+		return (
+			<>
+				<h1> list</h1>
+				{items.length === 0 ? <p> no items</p> : null}
+				{items.length === 0 && <p> no items</p> }//this line is better than above line but both same results
+				<ul className="list-group">
+					{items.map((item) => (
+						<li key={item}>{item}</li>
+					))}
+				</ul>
+			</>
+		)
+	}
+How to create event function
+	function Message(){
+		const items = ["a","b","c"];
+		const handleClick= (event: MouseEvent)=> console.log(event);//onlick functions gets recat MouseEvent reference
+		return (
+			<>
+				<h1> list</h1>
+				{items.length === 0 ? <p> no items</p> : null}
+				{items.length === 0 && <p> no items</p> }//this line is better than above line but both same results
+				<ul className="list-group">
+					{items.map((item) => (
+					<li key={item} onClick={handleClick}>{item}</li>//here we are not calling function, just passing
+					))}
+				</ul>
+			</>
+		)
+	}

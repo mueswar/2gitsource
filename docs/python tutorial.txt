@@ -24,7 +24,7 @@ this will allow to write only one line code at a time.
 hello
 >>>
 how can we exit from interactive promt
->>>exit()
+	>>>exit()
 
 
 
@@ -44,9 +44,86 @@ multi line comments
 
 '''
 
+Byheart
+-----------------------------------------------------------------------------------------------------------------------
+raw_input()
+input()
+print()
+type()
+int()
+float()
+round()
+abs()
+squrt()
+math.ceil()
+math.floor()
+len()
+s.upper()
+s.lower()
+s.find('p')
+s.replace('begginers','Begginers')
+s.split(' ')
+s.count('python')
+dir(name)
+help(s.lower)
+
+a = "sss" or we can use single quotes
+a = True
+a = 1234
+a = 3333L
+a = 12222.444
+
+if name is "Bucky":
+elif name is "lucky":
+else:
+
+if x in alist:
+if a and b:
+if a or b:
+if a and not b:
+
+for x in alist:
+for x in alist[:2]
+for x in range(5):
+for x in range(5,9):
+for x in range(10,30,5):
+
+empty_lone =[]
+empty_ltwo =list()
+empty_tone = ()
+empty_two =tuple()
+empty_sone = set()
+list1 = ['1', '2', '3']
+tuple1 = ('1', '2', '3')
+set1 = {'1', '2', '3'}
+dictionary1 ={'1':"one", '2':"two", '3':"three"}
+
+list[0]
+list[-1]
+list[1,3]
+list[:2]
+list[2:]
+list[0]=5
+list.append(9)
+list.insert(0,10)
+list.insert(0,list2)
+list.append(list2)
+list.extend(list2) 
+list.remove(5)
+list.clear()
+list.pop() 
+list.sort()
+list.sort(reverse=True)
+sorted(list)
+list.reverse()
+min(list)
+max(list)
+sum(list)
+
+-----------------------------------------------------------------------------------------------------------------------
 define variables in python
 	a = "sss" or we can use single quotes
-	a = true
+	a = True
 	a = 1234
 	a = 3333L
 	a = 12222.444
@@ -129,7 +206,7 @@ strings
 	a[:5]# returns abc x
 	a[6:]# returns z pqr
 	print(a[-1])#retirns r here we can use negative index
-	#what is formatted string inpython
+	#what is formatted string in python
 		fName="john"
 		lName="smith"
 		s=f'{fName} [{lName}] is coder'
@@ -184,7 +261,7 @@ List
 	
 	l=[5,2,1,7,4]
 	l.append(9)    # 9 will be added at the end of the list
-	l.inser(0,10)  # 10 will be inserted at 0th index and existing elements pushed by one position
+	l.insert(0,10)  # 10 will be inserted at 0th index and existing elements pushed by one position
 	l2 =[25,30]
 	l.insert(0,l2) # [[25,30],10,5,2,1,7,4,9]
 	l.extend(l2)   # [10,5,2,1,7,4,9,25,30]
@@ -321,7 +398,7 @@ for x in "python":
 	print(x)
 o/p:each character will be printed in seprate line
 
-How to display Flike below using nested for loop
+How to display F like below using nested for loop
 a=[5,2,5,2,2,]
 XXXXX
 XX
@@ -470,73 +547,73 @@ what is exception hierarchy
 classes
 ----------------------------------------------
 one.py
-class Tuna:
-	def __init__(self):#constructor
-		print("xxxinit")
-	def one(self):
-		print("one")
-t = Tuna()
-t.one()
+	class Tuna:
+		def __init__(self):#constructor
+			print("xxxinit")
+		def one(self):
+			print("one")
+	t = Tuna()
+	t.one()
 
-oputput: XXXinit
-	one
+	oputput: XXXinit
+		one
 two.py
-class Girl:
-	gender='female'#class variable
-	def __init(self, name):
-		self.name= name#instance variable
-g = Girl("g1")
-g = Girl("g2")
-print(g1.gender)
-print(g2.gender)
-print(g1.name)
-print(g2.name)
-output:female
-female
-g1
-g2
+	class Girl:
+		gender='female'#class variable
+		def __init(self, name):
+			self.name= name#instance variable
+	g = Girl("g1")
+	g = Girl("g2")
+	print(g1.gender)
+	print(g2.gender)
+	print(g1.name)
+	print(g2.name)
+	output:female
+	female
+	g1
+	g2
 
 three.py
-class Cone():
-	def m1(self):
-		print("m1")
-class Ctwo(Cone):#inheritance
-	def m2(self):
-		print("m2")
-c = Ctwo()
-c.m1()
-c.m2()
-optput:m1
-m2
+	class Cone():
+		def m1(self):
+			print("m1")
+	class Ctwo(Cone):#inheritance
+		def m2(self):
+			print("m2")
+	c = Ctwo()
+	c.m1()
+	c.m2()
+	optput:m1
+	m2
 
 four.py
-class Cone():
-	def m1(self):
-		print("m1")
-class Ctwo(Cone):
-	def m1(self):
-		print("m3")
-	def m2(self):
-		print("m2")
-c = Ctwo()
-c.m1()
-c.m2()
-optput:m3
-m2
+	class Cone():
+		def m1(self):
+			print("m1")
+	class Ctwo(Cone):
+		def m1(self):
+			print("m3")
+		def m2(self):
+			print("m2")
+	c = Ctwo()
+	c.m1()
+	c.m2()
+	optput:m3
+	m2
 
 five.py
-class Cone():
-	def m1(self):
-		print("m1")
-class Ctwo():
-	def m2(self):
-		print("m2")
-class cthree(Cone,Ctwo):
-	pass#we can not have empty class. So we cn use pass to create empty class
-c=Cthree()
-c.m1()
-c.m2()
-optput:m1 m2
+	class Cone():
+		def m1(self):
+			print("m1")
+	class Ctwo():
+		def m2(self):
+			print("m2")
+	class cthree(Cone,Ctwo):
+		pass#we can not have empty class. So we cn use pass to create empty class
+	c=Cthree()
+	c.m1()
+	c.m2()
+	optput:m1 m2
 
 how to import one file methods into another file
 one.py
