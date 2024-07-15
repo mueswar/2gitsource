@@ -43,7 +43,7 @@ that means we are not using typescript features
 	const a = (a) {return a};
 	const b = (a:number) {return a};
 	both a and b work fine in typescript, but we can not give type safety with a.
-we can not add different type of elements to array one it is defined	
+we can not add different type of elements to array once it is defined	
 	let a =['ab','bc','cd'];
 	a.push('de');// this adds element
 	a.push(3);// this does not work

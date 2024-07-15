@@ -207,6 +207,13 @@ while(val1 <= 10){
 //continue and break works as it is in java
 //do while works as it is in java
 //for loop syntax is same as in java
+forEach
+	var myarr = ["10","20","hello"];
+	var fone = function(item){console.log("items are"+item);};
+	myarr.forEach(fone);
+	the above line calls fone function for every element and passes that element as argument.
+	it can also send index to function and complete array
+	myarr.forEach(function(item,index,array){console.log("items are");});
 
 //arrays
 -----------------------------------------------------------------------------------------------------------------------
@@ -255,6 +262,21 @@ var1.sclice(2,0,6,9); //it says do not remove and add 6 and 9
 //second parameter says how many elements to be removed
 //all elements from third parameter we need to add to array
 
+var a =["x","y","z"];
+	a[0];//returns x
+	a[3];//returns undefined but not out of boundary exception
+	a[3]="p";//this adds element into array
+	a.length;//gives 4
+an array is object
+	if we create an object like var a =["x","y","z"]; this will be converted like
+	var a = {"0":"x","1":"y","2":"3"};
+	so we can use braket notation to get values but not dot notation since key starts with number
+	a["0"];//gives x and see zero is given as string
+	a[0];//gives x here javascript coresion is happening.
+var a =["x","y","z"];
+	a[400]="p";//now the array length is 401
+	a["foo"]="q";//this does not change length but the peoprty will be added. so better to use numbers
+
 Array methods: push, pop
 	var myarr = ["10","20","hello",{}];
 	myarr.push(10);// this adds elemnt 10 and returns length
@@ -273,6 +295,47 @@ const a = {
 	x,
 	y
 };
+
+how do we create empty object
+	var a={};
+how do we add property to an existing object
+	var a={};
+	a.p1="pone";
+	console.log(a);
+what will happen if you access the property which is not defined in object
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	console.log(a.p3);//the o/p is undifined
+we can also use braket notation [] to invoke object property
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	console.log(a["p2"]);
+	note that inside braket property is give as string.
+var a={
+	"p1":10,
+	"1":"abc"
+	};
+console.log(a.1);// here we get syntax error that means if property name is invalid we can not use dot notation.
+console.log(a[1]);//here the o/p is abc
+we can not use dot notation if the property name is dynamic.
+var a={
+	"p1":10,
+	"p2":"abc"
+	};
+var ptwo = "p2";
+console.log(a[ptwo]);//this is only way to access it now not with dot notation
+and remember property name is not given in string format
+but dot notation is faster
+how can we delete property from object
+	var a={
+		"p1":10,
+		"p2":"abc"
+		};
+	delete a.p2;
 
 -----------------------------------------------------------------------------------------------------------------------
 //callback functions
@@ -379,61 +442,6 @@ if condition with number and strings
 	in java the above code does not work but in c and javascript it does works.
 	only zero is considered as false
 	all sring values are considerd as true expect empty string(var a="";)
-how do we create empty object
-	var a={};
-how do we add property to an existing object
-	var a={};
-	a.p1="pone";
-	console.log(a);
-what will happen if you access the property which is not defined in object
-	var a={
-		"p1":10,
-		"p2":"abc"
-		};
-	console.log(a.p3);//the o/p is undifined
-we can also use braket notation [] to invoke object property
-	var a={
-		"p1":10,
-		"p2":"abc"
-		};
-	console.log(a["p2"]);
-	note that inside braket property is give as string.
-var a={
-	"p1":10,
-	"1":"abc"
-	};
-console.log(a.1);// here we get syntax error that means if property name is invalid we can not use dot notation.
-console.log(a[1]);//here the o/p is abc
-we can not use dot notation if the property name is dynamic.
-var a={
-	"p1":10,
-	"p2":"abc"
-	};
-var ptwo = "p2";
-console.log(a[ptwo]);//this is only way to access it now not with dot notation
-and remember property name is not given in string format
-but dot notation is faster
-how can we delete property from object
-	var a={
-		"p1":10,
-		"p2":"abc"
-		};
-	delete a.p2;
-
-var a =["x","y","z"];
-	a[0];//returns x
-	a[3];//returns undefined but not out of boundary exception
-	a[3]="p";//this adds element into array
-	a.length;//gives 4
-an array is object
-	if we create an object like var a =["x","y","z"]; this will be converted like
-	var a = {"0":"x","1":"y","2":"3"};
-	so we can use braket notation to get values but not dot notation since key starts with number
-	a["0"];//gives x and see zero is given as string
-	a[0];//gives x here javascript coresion is happening.
-var a =["x","y","z"];
-	a[400]="p";//now the array length is 401
-	a["foo"]="q";//this does not change length but the peoprty will be added. so better to use numbers
 
 var a="hell world";
 	a.length;//it gives 10 but string is premitive how does it working
@@ -465,13 +473,6 @@ how to access implicit arguments
 	console.log(add(10,30,4,5,6));//o/p is 55
 	here arguments is an implicit object
 	
-forEach
-	var myarr = ["10","20","hello"];
-	var fone = function(item){console.log("items are"+item);};
-	myarr.forEach(fone);
-	the above line calls fone function for every element and passes that element as argument.
-	it can also send index to function and complete array
-	myarr.forEach(function(item,index,array){console.log("items are");});
 
 ************************************
 3 objects and prototypes from Java brains

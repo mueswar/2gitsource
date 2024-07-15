@@ -1,6 +1,6 @@
 
 Exploring Collectors by Venkat Subramaniam 2:24:37 11/2019
--------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
 
 to iterate list, we do not need to call stream method, we can directly call forEach method on list instance.
 list.stream().filter(a -> a.name().length()<20).foreach(System.out::println);
@@ -15,8 +15,9 @@ pure function gives same output if we give same input as many times we call it.
 pure function does not depend on anything that possible change
 
 
-Asynchronous Programming in Java: Options to Choose from By Venkat Subramaniam  2:3921 10/2023
---------------------------------------------------------------------------------------------
+Asynchronous Programming in Java: Options to Choose from By Venkat Subramaniam  2:39:21 10/2023
+-----------------------------------------------------------------------------------------------------------------------
+https://www.youtube.com/watch?v=1zSF1259s6w
 Java 1.0 Threads
 java 5.0 Executors
 java 7 ForkJoin
@@ -27,8 +28,30 @@ but that is not good idea
 
 callbacks - callbacks also have drabacks and nested callbacks create even more problems
 
-promises- 
+promises
+--------- 
+functionPromiseCreater().then()
+						.catch()
+						.then()
+						.then()
+						.catch()
+we should be able to understand how above function works
 
-He will explain CompletableFuture with java script
+He explains java CompletableFuture with javaScript promises, why because both are same
 
-watched  60 min
+methodCompletableFutureCreater(int n){
+	return CompletableFuture.supplyAsync(()->compute(n));
+}
+
+methodCompletableFutureCreater(5).thenApply(data -> data+1;)
+								 .exceptionally()
+								 .thenAccepect(sysout())
+								 .thenRun(sysout())
+								 .exceptionally();
+								 
+	thenCombined()
+	thenCompose()
+1H 20 minutes - ends CompletableFuture.
+1:20 to 1:47  kotalin
+
+-----------------------------------------------------------------------------------------------------------------------

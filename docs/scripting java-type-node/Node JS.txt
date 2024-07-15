@@ -3,7 +3,7 @@ npmorg.com
 
 How nodeJs application is powerfull even it is single thready appliaction
 	it is powerfull because of it's asyncronous calls and callbacks
-	So need to understand howmany max threads can be ron for jave microservice and 
+	So need to understand howmany max threads can run for jave microservice and 
 	how single thread asyc call can handle the toomany calls
 NodeJs is not good for CPU intensive tasks, So what is CPU intensive task?
 	CPU task is generally computatinal logic(math functions like shorting bulk data)
@@ -16,6 +16,7 @@ Index
 	local module- commanJS
 	local module- ES -Node.js 14
 	Built-in module {path, events, fs, stream, http}
+	Express framework
 	
 
 
@@ -82,7 +83,7 @@ to stop Ctrl+C
 please check package.json to find strt point and to run app.
 
 Hapi farmework use cases
----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------
 server route method will have access to request and reply objects.
 how to return multiple values with function without Array.
 	function fone(){let a; let b; retrun {a,b}}//here no key value pair, just values
@@ -92,12 +93,16 @@ how to assign to variable if method returns more than one value
 
 
 validations with lodash
-------------------------
+----------------------------------------------------------------------------------------------------------------------------
 	_.isEmpty(a);
 	_.includes
 	
 mongoose	
-------------------------
+----------------------------------------------------------------------------------------------------------------------------
+
+
+http module
+----------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -270,11 +275,14 @@ how to send html from server to client
 how to send json from server to client
 	res.writeHead(200, {'content-type':'application/json'});
 	var myObj = {
-		name ='james', //see JSON key do not have single quotes
+		name ='james',
 		age=29
 	}
 	res.end(JSON.stringify(myObj));
 
+
+Express framework
+----------------------------------------------------------------------------------------------------------------------------
 how can we install express package using node pacakge manager
 	npm install express
 	npm uninstall express
