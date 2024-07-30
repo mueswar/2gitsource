@@ -1,11 +1,21 @@
+JAVAFile>_HOME
+	Project structure>project settings>project
+	check version build.gradle
+GRADLE_HOME
+	File>settings>Build, Exicution, Deployment>Bild tools> gradle
+
+invalidate Cache
+	File>invalidate cache
+
+import grouping
+	File > Settings > Editor > code style> Java
+
+import organize
+	ctrl+alt+O
+	
 Ctrl+/ --single line comments
 Ctrl+Shift+/ --multiple line cooments
 Ctrl+Space -- for auto complete component name
 Ctrl+Shift+U   Upper Case
 
-import grouping
-File > Settings > Editor > code style> Java
-
-import organize
-	ctrl+alt+O
 
