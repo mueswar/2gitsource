@@ -1,10 +1,5 @@
-https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16
-https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d   net ninja
-
-
-
-https://www.youtube.com/watch?v=NZy-65SUTlI  splunk
-https://www.youtube.com/watch?v=1OUcHtm8Yfw  deep learning
+https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16  codeevalution react videos
+https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d   net ninja react videos
 
 prerequi
 -----------------------------------------------------------------------------------------------------------------------
@@ -28,6 +23,19 @@ step3: cd poject1R
 step4: npm start
 
 
+plugins
+	Simple react snippets
+Settings
+	enable - emmit
+
+public/index.html 	will have <div id="root"></div>
+src/index.js      	will have document.getElementById('root')
+
+remove 
+		reportWebVitals.js file
+		remove reference in index.js
+	
+-----------------------------------------------------------------------------------------------------------------------
 .ts file is tipesprict file 
 .tsx file is react typescript file
 in tsx file we see html tags, but that is not html, it is javascript xml.

@@ -15,6 +15,7 @@ install Postman
 install Mongo Comppass
 install Mongo DB
 install Mongo DB shell
+install Mysql DB
 install shell
 
 Bitbucket
@@ -93,6 +94,14 @@ to connect mongo DB
 	open powershell 
 	cd C:\two\install\mongodbshell-4.2.3\bin
 	mongo "mongodb+srv://cluster0-an86k.mongodb.net/"  --username emummasani
-
-
+	
+install Mysql DB
+--------------------------------------------------------------------------------------------------------------------------------------
+      C:\Program Files\MySQL\MySQL Shell 8.0\bin\mysqlsh.exe
+	  to connect run  \connect root@localhost:3306
+	  give password
+	  
+	  database =schema in tomcat
+	  Note1: check service in running windows services
+	  Note2: coonect using Workbench UI
 

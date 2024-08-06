@@ -19,3 +19,13 @@ Ctrl+Space -- for auto complete component name
 Ctrl+Shift+U   Upper Case
 
 
+import existing project
+File> open> select proj from system > new window
+find file from source code : Ctrl+B
+for serching file :double shift 
+for serching file in jars :double shift +double shift(Alt+N)
+
+what is shortcut for import calss(eclipse Ctrl_shift+O)
+what is the shortcut for open method(eclipse Ctrl+O)
+
+
