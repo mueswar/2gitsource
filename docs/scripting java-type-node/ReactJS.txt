@@ -34,6 +34,8 @@ src/index.js      	will have document.getElementById('root')
 remove 
 		reportWebVitals.js file
 		remove reference in index.js
+		remove setpTests.js 
+		remove App.test.js
 	
 -----------------------------------------------------------------------------------------------------------------------
 .ts file is tipesprict file 

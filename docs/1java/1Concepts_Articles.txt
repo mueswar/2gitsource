@@ -1,3 +1,8 @@
+
+
+collect intresting articles and delete once read and documented
+-----------------------------------------------------------------------------------
+
 Functional programming  :  https://medium.com/tag/functional-programming/recommended
 java code samples for code test: https://www.geeksforgeeks.org/find-indices-of-all-occurrence-of-one-string-in-other/?ref=roadmap
 
@@ -7,11 +12,21 @@ https://medium.com/search?q=java+8
 https://medium.com/tag/venkat-subramaniam/archive
 https://blog.stackademic.com/faster-than-single-java-concurrency-740278540a93
 
+https://shipilev.net/
+
+https://www.baeldung.com/jvm-compressed-oops
+
+https://javabydeveloper.com/constructor-reference-java-8/
+https://mkyong.com/java8/java-8-bifunction-examples/
+https://dzone.com/articles/java-object-size-estimation-measuring-verifying
+
+
 
 Videos
 --------------------------------
 venkat
 Asynchronous Programming in Java : https://www.youtube.com/watch?v=1zSF1259s6w   --in progress
+The Amazing Features of Modern Java - Venkat Subramaniam :https://www.youtube.com/watch?v=nlZe-y2XvQY  -- in progress | not intresting
 
 
 
