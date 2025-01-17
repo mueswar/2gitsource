@@ -135,9 +135,9 @@ one  subnet will be availabe in one Zone.
 one subnet connect(associates) to one route table
 private subnet conects to rout tables but not internet gateway
 public subnet conects to rout tables and internet gateway
-
-S3 simple storage service
---------------------------
+***************************************************************************************************
+									S3 simple storage service
+***************************************************************************************************
 Standard  durability(99.99999999) availability(99.99)
 Reduced redundancy storage  durability(99.99) availability(99.99)
 infrequent access durability(99.99999999) availability(99.90)

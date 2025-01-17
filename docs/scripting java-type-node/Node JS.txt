@@ -1,4 +1,5 @@
-https://www.youtube.com/watch?v=ce90lLhDI_Y&list=PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY&index=12
+Node core     https://www.youtube.com/watch?v=ce90lLhDI_Y&list=PLC3y8-rFHvwh8shCMHFA5kWxD9PaPwxaY&index=12
+Node backend  https://www.youtube.com/watch?v=TIYWUSkKj00&list=PL-qmWjtEKf7jklvrbHSL8v9D64JvUsQCo&index=3
 npmorg.com
 
 How nodeJs application is powerfull even it is single thready appliaction

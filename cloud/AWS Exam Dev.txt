@@ -1,0 +1,49 @@
+
+
+Section 1:
+v3:
+	https://aws.amazon.com/
+	click on crate account and provide below details
+	1. root user email
+	2. AWS account name
+	3. verify accoumt email 
+	4. set root user password.
+	5. ph, address
+	6. credit card info
+	7. verify identity by validating phone text message
+	8. select plan
+	you can login with root user and password now
+Section 3: getting started with AWS
+---------------------------------------
+v8:
+	region is big (us-east, us-west), zone is small, it will be within region
+	Global services
+		IAM
+		Route 53
+		CloudFront
+		WAF
+	Region Scope
+		EC2(infrastructure as a service)
+		Elastic beantalk (Platform as service)
+		lambda( Function as service)
+V9:
+	all services are not there in all regions.
+	we can select region at top right corner
+	if you select any service, you can see is it global or your region service at top right
+v10: N/A 
+
+Section 4: IAM and AWS CLI
+---------------------------------------------
+v11:
+	group only contain users, but not other groups
+	user no need to belog any group, but that is not best practice
+	user can belog to multiple groups
+	user or group can be assigned to policy
+V12:
+	create IAM user
+	IAM->user->
+	provide username
+-----------------------------------------------------------------------------------------------------------------------	
+                                       Section 19: SQS, SNS, Kinesis
+-----------------------------------------------------------------------------------------------------------------------
+	
