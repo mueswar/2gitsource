@@ -729,18 +729,21 @@ java.util.stream.Collectors get additional methods to collect a Stream into unmo
 TextBlocks
 	we can place our text in between the triple quotes and have multiple double quoted strings inside it without having to use escape characters
 	we can use \s to add space and \ to remove new line
-Record types
-sealed classes
+
 
 ############################################################################################################################
 ######                                     JAVA 17 features                                                           ######
 ############################################################################################################################
+Sealed Classes
 
+remove:
+RMI Activation mechanism has been removed. But the rest of RMI remains unchanged. like Remote,Marshal,clone related classes.
+Experimental AOT and JIT Compiler have been removed.
 
 ############################################################################################################################
 ######                                    JAVA 21 features                                                            ######
 ############################################################################################################################
-
+Virtual Threads
 
 
 
