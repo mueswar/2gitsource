@@ -2,13 +2,13 @@ Last 3 hours review
 
 any question to interviewer
 ----------------
-specific project hair
-technology
-backed team and frontend team
-support - it customer facing with huge customer or internal app
-requirment flow
-team hirachy
-architects
+	specific project hair
+	technology
+	backed team and frontend team
+	support - it customer facing with huge customer or internal app
+	requirment flow
+	team hirachy
+	architects
 
 
 design patterns
@@ -49,19 +49,25 @@ core java
 RDMS
 	what kind of caching techniques are you using
 	transaction isolation levels
-
+Angular
+	what is service
+	How to access service
 
 -----------------------------------------------------------------------------------------------------------------------
 Faced interview questions
+
 1. write producer, consumer code if que is full producer has to wait, if empty consumer has to wait
 2. LinkedHashMap internal logic to maintain order
 3. dates
+4. gradle wrapper
+5. AWS ECS pipeline and architecture
+6. spring security configuration
+7. postgresql hibernate nad jpa integration
+8. what kfaka configuraions
 
 
 
-Angular
-what is service
-How to access service
+
 
 
 
