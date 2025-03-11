@@ -1,10 +1,12 @@
 https://www.pythontutorial.net/
+https://www.youtube.com/watch?v=mrhccLHtyN4&list=PLeo1K3hjS3utXiAr1FqrssqNU1Q0ai84x   OOPS
+
 
 install type1
 ------------------------
-in cmd >python --version
-just install python anconda
-python comes with jupiter notebook
+	in cmd >python --version
+	just install python anconda
+	python comes with jupiter notebook
 
 
 install type2
@@ -15,18 +17,15 @@ https://www.python.org/downloads/
 while installing python select check box to add path
 
 how to open python interactive promt
-open cmd
->python
->>>
-this will allow to write only one line code at a time.
+	open cmd
+	>python
+	>>>
+	this will allow to write only one line code at a time.
 
->>>print('hello') click enter it prints hello we can use '' or "" and no semicolan at end of statement
-hello
->>>
-how can we exit from interactive promt
-	>>>exit()
-
-
+	>>>print('hello') click enter it prints hello 
+	we can use '' or "" and no semicolan at end of statement
+	how can we exit from interactive promt
+		>>>exit()
 
 IDLE can be used to write python files
 start programs> python 3.6>IDLE
