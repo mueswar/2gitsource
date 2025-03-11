@@ -478,6 +478,8 @@ Functions
 
 	output=tuna
 
+Files
+-------------------------------------------------------
 how to download and save image to working folder
 	import urllib.request
 	def mone(urlValue)
@@ -530,7 +532,7 @@ How to check all files in current folder
 		print(f)
 
 exception
---------------
+-------------------------------------------------------
 while true:
 	try:
 		number = int(input("enter number\n"))
@@ -548,6 +550,10 @@ while true:
 what is exception hierarchy
 classes
 ----------------------------------------------
+	#class name and file name are no need to be same
+	#without class also we can define method in different file
+	#class name convention is same as java class name convetion
+	#method and variable name convetions are different from java. no capital letter and words are separated from_
 one.py
 	class Tuna:
 		def __init__(self):#constructor
@@ -618,46 +624,43 @@ five.py
 	optput:m1 m2
 
 how to import one file methods into another file
-one.py
-def mone(self):
-	print("mone")
-def mtwo(self):
-	print("mtwo")
-two.py
-import one#here we are importing all methods of one	
-from one import mtwo #here we are importing only mtwo method
-#class name and file name are no need to be same
-#without class also we can define method in different file
-#class name convention is same as java class name convetion
-#method and variable name convetions are different from java. no capital letter and words are separated from_
+	one.py
+		def mone(self):
+			print("mone")
+		def mtwo(self):
+			print("mtwo")
+	two.py
+		import one#here we are importing all methods of one	
+		from one import mtwo #here we are importing only mtwo method
 
-packages
-create folder and create __init__.py file to make folder as package
+	packages
+	create folder and create __init__.py file to make folder as package
 
 random module
-import random
-for i in range(3):
-	print(random.random())
-	print(random.randit())
-members = ["p1","p2","p3"]
-leader = random.choice(members)#picks random person from list
-print(leader)
+	import random
+	for i in range(3):
+		print(random.random())
+		print(random.randit())
+	members = ["p1","p2","p3"]
+	leader = random.choice(members)#picks random person from list
+	print(leader)
+	
+excel packages
+	how can we install excel packages
+	>pip install openpyxl
 
-how can we install excel packages
->pip install openpyxl
-
-import openpyxl as xl
-wb = xl.load_workboo('one.xlsx')
-sheet = wb['Sheet1']
-cell = sheet.cell(1,1)#returns cell
-print(cell.value)#returns value
-print(sheet.max_row)#returns number of rows in the sheet
-for row in range(1, sheet.max_row+1):
-	cell = sheet.cell(row,3)
-	corrected_value = cell.value*.9
-	cell2 = sheet.cell(rwo,4)#trurns cell at 4th column
-	cell2.value= corrected_value
-wb.save('two.xlsx')
+	import openpyxl as xl
+	wb = xl.load_workboo('one.xlsx')
+	sheet = wb['Sheet1']
+	cell = sheet.cell(1,1)#returns cell
+	print(cell.value)#returns value
+	print(sheet.max_row)#returns number of rows in the sheet
+	for row in range(1, sheet.max_row+1):
+		cell = sheet.cell(row,3)
+		corrected_value = cell.value*.9
+		cell2 = sheet.cell(rwo,4)#trurns cell at 4th column
+		cell2.value= corrected_value
+	wb.save('two.xlsx')
 
 
 	
