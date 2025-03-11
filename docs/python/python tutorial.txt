@@ -121,22 +121,28 @@ max(list)
 sum(list)
 
 -----------------------------------------------------------------------------------------------------------------------
+define variables
+arithmetic operaters
+math library functions
+strings
+
 define variables in python
+------------------------------
 	a = "sss" or we can use single quotes
 	a = True
 	a = 1234
 	a = 3333L
 	a = 12222.444
-ptinting variable
-	print(a)
-finding variable type
-	print(type(a))
-convet boolean and float variable into int
-	print(int(booleanVariable))
-	print(int(floatVariable))
-	print(float(intVariable))
+	ptinting variable
+		print(a)
+	finding variable type
+		print(type(a))
+	convet boolean and float variable into int
+		print(int(booleanVariable))
+		print(int(floatVariable))
+		print(float(intVariable))
 
-arithmetic variables
+arithmetic operaters
 -----------------------------
 	a = True #t should be capital letter
 	b = False
@@ -172,29 +178,29 @@ arithmetic variables
 
 math library functions
 -----------------------
-import math library
-import math
+	import math library
+	import math
 
-print(math.ceil(2.9))#3
-print(math.floor(2.9))#2
-squrt(a)
+	print(math.ceil(2.9))#3
+	print(math.floor(2.9))#2
+	squrt(a)
 
-raw_input is to accepect user input data
-a = raw_input("enter name?")
-print "hello " +a
+	raw_input is to accepect user input data
+	a = raw_input("enter name?")
+	print "hello " +a
 
-print(:'c:\f1\f2')
-print('c:\f1\f2')
-print('c:\n1\n2')
+	print(:'c:\f1\f2')
+	print('c:\f1\f2')
+	print('c:\n1\n2')
 
-print("aaaa"+9)// error
+	print("aaaa"+9)// error
 
-y=input('enter birth year: ')
-age= 2020-y//this throws error
-print(age)
-when we take input with input function the vale type will be string
-we need to convet it to int to work above line like below
-age=2020 -int(y)
+	y=input('enter birth year: ')
+	age= 2020-y//this throws error
+	print(age)
+	when we take input with input function the vale type will be string
+	we need to convet it to int to work above line like below
+	age=2020 -int(y)
 
 strings
 -----------------------------------------------------------------------------------------------------------------------
@@ -232,10 +238,88 @@ strings
 	c.count('python')#returns 1
 	c.count('g')#returns 2
 	
-print(dir(name))# returns all available methods here name is variable
-print(help(str))#returns all help document here str is not variable
-print(help(str.lower))# returns lower method description
+	print(dir(name))# returns all available methods here name is variable
+	print(help(str))#returns all help document here str is not variable
+	print(help(str.lower))# returns lower method description
 
+Loops
+---------------------------------------------
+	elif ->elseif
+	==,!=, >=,<=, >, <
+	age = 27
+	if age < 21:
+		print("no beer")
+	if age == 21:
+		print("beer!!")
+		
+	name = "lucky"
+	if name is "Bucky":
+		print("Hi Bucky")
+	elif name is "lucky":
+		print("Hi lucky")
+	else:
+		print("no match")
+
+	alist = [3, 5, 7, 9]
+	if x in alist:
+		print(x)
+	output: 3 5 7 9
+
+	a =True
+	b =False
+	if a and b:
+		print("both are true")
+	if a or b:
+		print("any of the condistion is true")
+	if a and not b:  #how to use not operator
+		print("any of the condistion is true")
+
+
+	food = ['a0','a1','a2','a3','a4']
+
+	for f in food:
+		print(f)
+		print(len(f))
+
+	for f in food[:2]
+		print(f)
+	output> a0 a1 a2
+
+	for x in range(5):
+		print(x)
+
+	output: 0 1 2 3 4 
+
+	for x in range(5,9):
+		print(x)
+	output: 5 6 7 8 
+
+	for x in range(10,30,5):
+		print(x)
+	output: 10 15 20 25 
+
+	for x in "python":
+		print(x)
+	o/p:each character will be printed in seprate line
+
+	How to display F like below using nested for loop
+	a=[5,2,5,2,2,]
+	XXXXX
+	XX
+	XXXXX
+	XX
+	XX
+
+	x = 5
+	while x < 10:
+		print(x)
+	outpot: 5555555....... 
+
+	break and continue conditions are same as java break and contnue.
+	while loop can have optional else block
+	while else block will be exicuted when while loop codition fails i.e when loop does not break with break statement.
+
+	
 Collections
 -----------------------------------------------------------------------------------------------------------------------
 List
@@ -332,149 +416,67 @@ Dictionary
 	random.randrage(1,1000)#gives one randam in between 1 to 1000
 	print(str(10)+'hello')#str converts int into string
 
-empty_lone =[]
-empty_ltwo =list()
-empty_tone = ()
-empty_two =tuple()
-empty_sone = set()
-
-Loops
----------------------------------------------
-elif ->elseif
-==,!=, >=,<=, >, <
-age = 27
-if age < 21:
-	print("no beer")
-if age == 21:
-	print("beer!!")
-	
-name = "lucky"
-if name is "Bucky":
-	print("Hi Bucky")
-elif name is "lucky":
-	print("Hi lucky")
-else:
-	print("no match")
-
-alist = [3, 5, 7, 9]
-if x in alist:
-	print(x)
-output: 3 5 7 9
-
-a =True
-b =False
-if a and b:
-	print("both are true")
-if a or b:
-	print("any of the condistion is true")
-if a and not b:  #how to use not operator
-	print("any of the condistion is true")
-
-
-food = ['a0','a1','a2','a3','a4']
-
-for f in food:
-	print(f)
-	print(len(f))
-
-for f in food[:2]
-	print(f)
-output> a0 a1 a2
-
-for x in range(5):
-	print(x)
-
-output: 0 1 2 3 4 
-
-for x in range(5,9):
-	print(x)
-output: 5 6 7 8 
-
-for x in range(10,30,5):
-	print(x)
-output: 10 15 20 25 
-
-for x in "python":
-	print(x)
-o/p:each character will be printed in seprate line
-
-How to display F like below using nested for loop
-a=[5,2,5,2,2,]
-XXXXX
-XX
-XXXXX
-XX
-XX
-
-x = 5
-while x < 10:
-	print(x)
-outpot: 5555555....... 
-
-break and continue conditions are same as java break and contnue.
-while loop can have optional else block
-while else block will be exicuted when while loop codition fails i.e when loop does not break with break statement.
 
 Functions
 -----------------------------------------------------------
-def mone():
-	print("mone")
-def mtwo(x):
-	print(x*5)
-mone()
-mtwo(3)
+	def mone():
+		print("mone")
+	def mtwo(x):
+		print(x*5)
+	mone()
+	mtwo(3)
 
-output mone
-15
+	output mone
+	15
 
-def mthree(x='unknown')
-	if x is'M':
-		print("Male")
-	elif x is'F':
-		print("female")
-	else:
-		print(x)
-mtree('M')
-mtree()
-output:  male
-unknown
+	def mthree(x='unknown')
+		if x is'M':
+			print("Male")
+		elif x is'F':
+			print("female")
+		else:
+			print(x)
+	mtree('M')
+	mtree()
+	output:  male
+	unknown
 
-def mone(a1='d1',a2='d2',a3='d3'):
-	print(a1,a2,a3)
-mone(a3='m1')#in method call also we can specify argument name
-output= d1 d2 m1
-mone(a3='m3',m1,m2)#this does not work if we are mixing positional ang key word arguments
-positional argument should be passed first
+	def mone(a1='d1',a2='d2',a3='d3'):
+		print(a1,a2,a3)
+	mone(a3='m1')#in method call also we can specify argument name
+	output= d1 d2 m1
+	mone(a3='m3',m1,m2)#this does not work if we are mixing positional ang key word arguments
+	positional argument should be passed first
 
-def mone(*a):
-	totatl=0
-	for x in a:
-		total=total+x
-		print(total)
-mone(5,10,20)
-output=35
+	def mone(*a):
+		totatl=0
+		for x in a:
+			total=total+x
+			print(total)
+	mone(5,10,20)
+	output=35
 
-def mone(a1,a2,a3):
-	print(a1+a2+a3)
-m=[2,4,6]
-mone(*m)
-output=12
+	def mone(a1,a2,a3):
+		print(a1+a2+a3)
+	m=[2,4,6]
+	mone(*m)
+	output=12
 
-retun statement
-def mone(n):
-	return n*n
-print(mone(3))#returns 9
+	retun statement
+	def mone(n):
+		return n*n
+	print(mone(3))#returns 9
 
-tuna.py
-def mone():
-	print('tuna')
+	tuna.py
+	def mone():
+		print('tuna')
 
-main.py
-import tuna
+	main.py
+	import tuna
 
-tuna.mone()
+	tuna.mone()
 
-output=tuna
+	output=tuna
 
 how to download and save image to working folder
 	import urllib.request

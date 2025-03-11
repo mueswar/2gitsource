@@ -1,52 +1,32 @@
-########################################################
-############ Secure RESTful with spring security  ######
-########################################################
-Basic Authentication
 
-step 1:create class extending WebSecurityConfigurerAdapter
-@Configuration
-@EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private static String REALM="MY_TEST_REALM";
-    @Autowired
-    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("ADMIN");
-        auth.inMemoryAuthentication().withUser("tom").password("abc123").roles("USER");
-    }
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-      http.csrf().disable()
-        .authorizeRequests()
-        .antMatchers("/user/**").hasRole("ADMIN")
-        .and().httpBasic().realmName(REALM).authenticationEntryPoint(getBasicAuthEntryPoint())
-        .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);//We don't need sessions to be created.
-    }
-    @Bean
-    public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint(){
-        return new CustomBasicAuthenticationEntryPoint();
-    }
-    /* To allow Pre-flight [OPTIONS] request from browser */
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
-    }
-}
-Step 2: create entry point class extending BasicAuthenticationEntryPoint
-public class CustomBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {
-    @Override
-    public void commence(final HttpServletRequest request, 
-            final HttpServletResponse response, 
-            final AuthenticationException authException) throws IOException, ServletException {
-        //Authentication failed, send error response.
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.addHeader("WWW-Authenticate", "Basic realm=" + getRealmName() + "");
-        PrintWriter writer = response.getWriter();
-        writer.println("HTTP Status 401 : " + authException.getMessage());
-    }
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        setRealmName("MY_TEST_REALM");
-        super.afterPropertiesSet();
-    }
-}
-step 3: no changes in restcontroller
+Ping Identity PingFederate
+	It supports identity standards like OAuth, OpenID Connect, SAML, and WS-Federation.
+	It can be deployed in the cloud or on-premises 
+
+
+Spring Security
+	6.3 
+	
+	features
+		Authentication
+		Authorization
+		Protection Against Exploits
+	Authentication
+		Authentication Mechanisms
+			Username and Password
+			OAuth 2.0 Login
+			SAML 2.0 Login
+	Authorization
+		Authorization is determining who is allowed to access a particular resource.
+			Request Based Authorization
+			Method Based Authorization
+
+
+
+	
+OAuth authorization 
+	It is responsible for authenticating the users and issuing access tokens containing the user data and proper access policies.
+	
+spring-boot-starter-oauth2-client
+	It provides the necessary configurations and dependencies to interact with OAuth2 authorization servers 
+	and handle the authentication and authorization processes.
