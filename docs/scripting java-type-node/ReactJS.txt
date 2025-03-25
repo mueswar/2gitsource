@@ -1,5 +1,6 @@
 https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16  codeevalution react videos
 https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d   net ninja react videos
+https://www.youtube.com/watch?v=e1IQAIBJiHQ&list=PL6n9fhu94yhVpO8VBlUXbxKUuG-n2b1bL&index=3  kudvenkat  nodejs 12
 
 prerequi
 -----------------------------------------------------------------------------------------------------------------------
@@ -10,27 +11,68 @@ why react
 -----------------------------------------------------------------------------------------------------------------------
 without react wee will have to code with DOM for page render, but with react we do not need to touch DOM
 
+notes
+--------------------------
+project name should be small letters
+ReactDOM.render()//is  Deprecated in react 18
+
 Tools
 -----------------------------------------------------------------------------------------------------------------------
 NodeJs
 Visuval studio code
 
+VS settings
+-------------
+	plugins
+		Simple react snippets
+	Settings
+		enable - emmit
+
 Hellow world project
 -----------------------------------------------------------------------------------------------------------------------
 step1: need node.js
-step2: run npx create-react-app poject1R
-step3: cd poject1R
+step2: run npx create-react-app project1
+step3: cd project1
 step4: npm start
 
 
-plugins
-	Simple react snippets
-Settings
-	enable - emmit
+below 3 files are importent files
 
-public/index.html 	will have <div id="root"></div>
-src/index.js      	will have document.getElementById('root')
+public/index.html
+-------------------
+	<html lang="en">
+	  <head>
+		<title>React App</title>
+	  </head>
+	  <body>
+		<noscript>You need to enable JavaScript to run this app.</noscript>
+		<div id="root"></div>
+	  </body>
+	</html>
+src/index.js 
+----------------
+	import React from 'react';
+	import ReactDOM from 'react-dom/client';
+	import './index.css';
+	import App from './App';
 
+	const root = ReactDOM.createRoot(document.getElementById('root'));
+	root.render(
+	  <React.StrictMode>
+		<App />
+	  </React.StrictMode>
+	);
+src/App.js
+------------------------
+	function App() {
+	  return (
+		<div className="App">
+		  Welcome
+		</div>
+	  );
+	}
+
+	export default App;
 remove 
 		reportWebVitals.js file
 		remove reference in index.js

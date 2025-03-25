@@ -1,3 +1,27 @@
+1 learning
+---------------------
+React.js
+kafka
+	spring kfka
+AWS- EKS, ECS, Lambda, S3, EC2
+Docker
+jenkins
+python-aws
+
+
+
+2 learning
+---------------------
+	python
+		discuss about tools, libs with working friend for AWS usecase
+	NodeJs, React
+	Terrafa
+	
+
+https://www.youtube.com/watch?v=o73kDW0xqlg
+https://www.youtube.com/watch?v=mVSFHgItaa4
+
+
 How to test flow from middle of flow
 	let say there are 3 backend endpoints
 

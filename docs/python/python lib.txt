@@ -1,8 +1,5 @@
 
 
-*Develop and maintain server-side logic using Python.
-*Write efficient, reusable, and modular code.
-*Conduct unit testing and debugging to ensure software functionality.
 *Build web applications using frameworks such as Django or Flask.
 *Implement and maintain RESTful APIs.
 *Create and update database models.

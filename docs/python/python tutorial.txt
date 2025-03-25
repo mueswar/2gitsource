@@ -1,5 +1,11 @@
 https://www.pythontutorial.net/
 https://www.youtube.com/watch?v=mrhccLHtyN4&list=PLeo1K3hjS3utXiAr1FqrssqNU1Q0ai84x   OOPS
+https://www.youtube.com/watch?v=qNxrPri1V0I   road to ML with python
+
+FastAPI, Flask, Pandas
+understand use case for scikit
+
+FastAPI logging, security, transaction, ORM, invoke secure API
 
 
 install type1
@@ -553,6 +559,8 @@ classes
 	#without class also we can define method in different file
 	#class name convention is same as java class name convetion
 	#method and variable name convetions are different from java. no capital letter and words are separated from_
+	#we can define class and call class methods in same py file, in java we do not create instance, where class is defined. 
+	#we can define super and subclass in same and invoke those
 one.py
 	class Tuna:
 		def __init__(self):#constructor
@@ -632,8 +640,9 @@ how to import one file methods into another file
 		import one#here we are importing all methods of one	
 		from one import mtwo #here we are importing only mtwo method
 
-	packages
-	create folder and create __init__.py file to make folder as package
+how to create packages
+	create folder and 
+	create __init__.py file to make folder as package
 
 random module
 	import random
