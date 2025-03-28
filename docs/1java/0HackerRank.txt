@@ -4,115 +4,159 @@ eswara.cv@gmail.com/No
 How to read input
 	Scanner in = new Scanner(System.in);
 	int n = in .nextInt();
+	
 data types
 ---------------------------------------------------------------------------------------------------
-chat 2 bytes
-short 2 bytes
-int 32 bit 4 bytes, long 64 bit 8 bytes
-float 32 bit 4 bytes, double 64 bit 8 bytes
+	chat 2 bytes
+	short 2 bytes
+	int 32 bit 4 bytes, long 64 bit 8 bytes
+	float 32 bit 4 bytes, double 64 bit 8 bytes
 
-float a = 0.0f// f mandatory 6 decimal digits
-double a = 0.0d// d not mandatory  15 decimal digits
+	float a = 0.0f// f mandatory 6 decimal digits
+	double a = 0.0d// d not mandatory  15 decimal digits
 
-obj instanceof Student//remember format
+	obj instanceof Student//remember format
 
-convert
-doble to long : (long)doubleValue= long
+	convert
+	doble to long : (long)doubleValue= long
 
 Array
 ---------------------------------------------------------------------------------------------------
-Arrays a = new Arrays();// we can not create array like this
-Arrays<Integer> a = new Arrays<>();//This is also does not work.
-we do not have Array class. So any array can have length property. but no methods.
-we have Arrays calss with private constructor. asList and stream methods
-int[] a = new int[n];
-for(int i = 0 ; i < n; i++){
-    a[i] = sc.nextInt();
-}
-int[] x = {1,2,3};
-String has length method
-Arrays have length property
-Collection has size method
+	Arrays a = new Arrays();// we can not create array like this
+	Arrays<Integer> a = new Arrays<>();//This is also does not work.
+	we do not have Array class. So any array can have length property. but no methods.
+	we have Arrays calss with private constructor. asList and stream methods
+	int[] a = new int[n];
+	for(int i = 0 ; i < n; i++){
+		a[i] = sc.nextInt();
+	}
+	int[] x = {1,2,3};
+	String has length method
+	Arrays have length property
+	Collection has size method
 
-int[] x = {1,2,3};
-for(int i : x){
+	int[] x = {1,2,3};
+	for(int i : x){
 
-}
+	}
+
+	java.lang.Math.sqrt(2);
+	java.lang.Math.pow(10, 2);//10 power2
+
+	Collections.sort(x); shorts numbers and integers
+	how to check 2 dimentional array size;
 
 String
 ---------------------------------------------------------------------------------------------------
-s.charAt(0);
-s.subString(0); 
-s.subString(0,1);
-s.split(","); returns String[] a 
-s.isEmpty();
-s.isBlank()//from java 11
-s.concat("abc")// we need to assign it, else we loose change
-String.valueOf()//convert any data type into String
+	s.charAt(0);
+	s.subString(0); 
+	s.subString(0,1);
+	s.split(","); returns String[] a 
+	s.isEmpty();
+	s.isBlank()//from java 11
+	s.concat("abc")// we need to assign it, else we loose change
+	String.valueOf()//convert any data type into String
 
 Wrapper
 ---------------------------------------------------------------------------------------------------
-Integer.valueOf() premetive int or string can be converted into wraper Integer 
-	i.intValue() wraper int converted into premetive int
-	i.longValue() wraper int converted into premetive long
-	i.doubleValue() wraper int converted into premetive double
-	i.toString() wraper int converted into String
-	min, mx, sum
-Same methods to Long, Double
-one type of wrapper value can be converted into all premetive values
+	Integer.valueOf() premetive int or string can be converted into wraper Integer 
+		i.intValue() wraper int converted into premetive int
+		i.longValue() wraper int converted into premetive long
+		i.doubleValue() wraper int converted into premetive double
+		i.toString() wraper int converted into String
+		min, mx, sum
+	Same methods to Long, Double
+	one type of wrapper value can be converted into all premetive values
 	
 
 
 StringBuffer
 ---------------------------------------------------------------------------------------------------
-sb.append
-sb.insert
-sb.delete
-sb.deleteCharAt
-sb.setCharAt
-sb.reverse
-sb.subString
+	sb.append
+	sb.insert
+	sb.delete
+	sb.deleteCharAt
+	sb.setCharAt
+	sb.reverse
+	sb.subString
 
-
-array 
----------------------------------------------------------------------------------------------------
-
-
-java.lang.Math.sqrt(2);
-java.lang.Math.pow(10, 2);//10 power2
-
-Collections.sort(x); shorts numbers and integers
-how to check 2 dimentional array size;
-
-
-Exception
----------------------------------------------------------------------------------------------------
-throw new Exception("n or p should not be negative.");
-
-
----------------------------------------------------------------------------------------------------
-public enum Directions{
-	  EAST, 
-	  WEST, 
-	  NORTH, 
-	  SOUTH
-}
-Directions dir = Directions.valueOf("EAST");
-if(dir == Directions.EAST) {
-	    System.out.println(dir);
-} 
 
 Collections
 ---------------------------------------------------------------------------------------------------
 create list 
 	String a[]= new String[] { "A", "B", "C", "D" };
 	List<String> list = Arrays.asList(a); //gives immutable ArrayList
-create Stream	
-	Stream.of("This", "is", "Java8", "Stream").forEach(System.out::println);
 	
+	List<String> list = new ArrayList<>();
+	List<String> list = new ArrayList<>();
+		list.size();
+		list.isEmpty();
+		list.clear();
+		list.toArray(new String[0]);
+		list.add("Apple");
+		list.add("Banana");
+		list.add(1, "Orange");  
+		list.remove(1);
+		list.remove("Banana");
+		list.removeAll(Arrays.asList("Apple", "Banana"));
+		list.get(0);
+		list.indexOf("Apple");
+		list.lastIndexOf("Apple");
+		list.contains("Apple");
+		list.sort((s1, s2) -> s1.length() - s2.length());
+		Collections.sort(list);
+		Collections.shuffle(list);
+		list.stream().filter(s -> s.startsWith("A")).findFirst();  // "Apple"
+		list.stream().filter(s -> s.length() > 5).findAny();
+		list.stream().filter(s -> s.length() > 5).collect(Collectors.toList());
+		list.stream().map(String::length).collect(Collectors.toList());//map converts list to another type of list
+		list.stream().sorted().collect(Collectors.toList());
+		list.stream().anyMatch(s -> s.startsWith("A"));  // true
+		list.stream().allMatch(s -> s.length() > 3);  // true
+		list.stream().filter(s -> s.length() > 5).count();
+		list.stream().max(Comparator.comparingInt(String::length));  // Longest string
+		list.stream().min(Comparator.comparingInt(String::length));  // Shortest string
+		list.stream().collect(Collectors.toSet());
+		list.stream().collect(Collectors.toMap(String::length, Function.identity()));
+		listWithNulls.stream().filter(Objects::nonNull).findFirst().orElse("No match"); //first non-null element
+	List<String> unmodifiableList = List.of("Apple", "Banana", "Orange"); // Java 9+ unmodifiable list
+	List<String> copiedList = List.copyOf(list);  // Java 10+ Create immutable copy
+	//convert nested list into flat list
+	List<List<String>> nestedList = Arrays.asList(Arrays.asList("A", "B"), Arrays.asList("C", "D"));
+	List<String> flatList = nestedList.stream().flatMap(List::stream).collect(Collectors.toList());
+	//Group Elements by Length
+	Map<Integer, List<String>> groupedByLength = list.stream()
+        .collect(Collectors.groupingBy(String::length));
+	//Find Duplicate Elements in List
+	List<String> list = Arrays.asList("Apple", "Banana", "Apple", "Cherry", "Banana");
+	List<String> duplicates = list.stream()
+			.filter(i -> Collections.frequency(list, i) > 1)
+			.distinct()
+			.collect(Collectors.toList());
+
+
+	
+create Stream	
+	Stream.of("This", "is", "Java8", "Stream").forEach(System.out::println);	
 	String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
 	Arrays.stream(stringArray).forEach(System.out::println);
 
+Exception
+---------------------------------------------------------------------------------------------------
+	throw new Exception("n or p should not be negative.");
+
+enum
+---------------------------------------------------------------------------------------------------
+	public enum Directions{
+		  EAST, 
+		  WEST, 
+		  NORTH, 
+		  SOUTH
+	}
+	Directions dir = Directions.valueOf("EAST");
+	if(dir == Directions.EAST) {
+			System.out.println(dir);
+} 
 
 *****************************************************
 ***************   written test   **********************
@@ -130,13 +174,13 @@ switch (week) {
 	case 1:     day = "Sunday";
 	break;
 
-ArrayList 
+ArrayList methods
 	add(""); add(2,"");set(2,"");size();indexOf(""); get(2);clear();
 	contains("");
 	remove("");remove(3);remove(list);removeIf()
-Set
+Set methods
 	add("");isEmpty();size();clear();clone();contains("");
-Map
+Map methods
 	put("",""),isEmpty();size();clear();clone();containsKey("");containsValue("");get();
 	keySet(); putAll(Map m);
 Collection<String> vals = Arrays.asList("abc","abcde","a","abc");

@@ -202,6 +202,8 @@ Comparable vs Comparator
 			return o1.getName().compareTo(o2.getName());
 		}	
 	}
+	Collections.sort(employees, new Bcomparator());
+	Collections.sort(employees); //use this when u implement Comparable
 
 Interface default methods
 	A default method allows you to define a method inside an interface with a body. They allow you to add new methods to interfaces without breaking the existing implementations.

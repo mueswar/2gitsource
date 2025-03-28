@@ -1,9 +1,16 @@
 1 learning
 ---------------------
+update resume, kfka, recat, kubern
 React.js
 kafka
 	spring kfka
 AWS- EKS, ECS, Lambda, S3, EC2
+	CloudBees to EKS
+		jar step
+		image storage
+	Jenkins to EKS
+	SSM parameters 
+	Config
 Docker
 jenkins
 python-aws
