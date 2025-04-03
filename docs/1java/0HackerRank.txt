@@ -7,7 +7,7 @@ How to read input
 	
 data types
 ---------------------------------------------------------------------------------------------------
-	chat 2 bytes
+	char 2 bytes
 	short 2 bytes
 	int 32 bit 4 bytes, long 64 bit 8 bytes
 	float 32 bit 4 bytes, double 64 bit 8 bytes
@@ -25,26 +25,28 @@ Array
 	Arrays a = new Arrays();// we can not create array like this
 	Arrays<Integer> a = new Arrays<>();//This is also does not work.
 	we do not have Array class. So any array can have length property. but no methods.
+	String has length method - 	Arrays have length property - 	Collection has size method
 	we have Arrays calss with private constructor. asList and stream methods
+	
 	int[] a = new int[n];
 	for(int i = 0 ; i < n; i++){
 		a[i] = sc.nextInt();
 	}
-	int[] x = {1,2,3};
-	String has length method
-	Arrays have length property
-	Collection has size method
 
 	int[] x = {1,2,3};
 	for(int i : x){
 
 	}
 
+
+Math
+---------------------------------------------------------------------------------------------------
 	java.lang.Math.sqrt(2);
 	java.lang.Math.pow(10, 2);//10 power2
 
-	Collections.sort(x); shorts numbers and integers
-	how to check 2 dimentional array size;
+Dates
+---------------------------------------------------------------------------------------------------
+
 
 String
 ---------------------------------------------------------------------------------------------------

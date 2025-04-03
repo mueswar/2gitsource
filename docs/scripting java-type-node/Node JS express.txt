@@ -1,0 +1,127 @@
+https://www.youtube.com/watch?v=H9M02of22z4   --express 2hr
+https://www.youtube.com/watch?v=nH9E25nkk3I
+
+
+
+Express framework
+----------------------------------------------------------------------------------------------------------------------------
+how can we install express package using node pacakge manager
+	npm install express
+	npm uninstall express
+	npm install express -save// it adds dependency to package.json
+	npm install // installs all pacakeges availabe in dependency section in package.json
+	npm install -g nodemon// installs nodemon globally
+
+node app.js// this can not track chnages
+nodemon app.js // this will track changes and restarts automatically
+
+pacjkages:
+	nodemon
+	dotenv
+	express async handler
+	mongoose npm -i mongoose
+
+
+// how to define routes with express
+	var express = require('express');
+	var app = express();
+	app.get('/',function(req, res){
+		res.send('this is homepage');
+	});
+	app.get('/contact',function(req, res){
+		res.send('this is contactpage');// this res is response object of express which send method
+	});
+	app.listen(3000);
+
+how to pass parameter values
+	app.get('/profile/:id',function(req, res){
+		res.send('you requested profile:'+req.params.id);
+	});
+
+how to send html with express routes
+	app.get('/contact',function(req, res){
+		res.sendFile(__dirname +'/contact.html');// for files we need to sendFile method
+	});
+
+how to send array to view and how to display array in view
+	npm install ejs --save
+	create folder called view
+	create file 'profile' with .ejs extension
+
+	app.set('view engine', ejs); // we no need to import ejs
+	app.get('/profile/:id',function(req, res){
+		var x ={age:29, job:'IT', hobbies:['singing','fishing']};
+		res.render('profile',{person:req.params.id, data:x}); //here we are using render method for daynamic view data
+	});
+	profile.ejs
+	<%= person %> //embeding object property whoes value is string
+	<%= data.age%> //embeding object property whoes value is object
+	<%= data.job =%>
+	<% data.hobbies.forEach(function(item){%> // iterate array wirh javaScript forEach function
+		<%= item %>
+	<% ))%>
+
+How to partial templete in another file
+	partials/nav.ejs
+	add all navigation links here <a ref="profile">profile</a>
+	profile.ejs
+	<% include partials/nav.ejs %>
+	contact.ejs
+	<% include partials/nav.ejs %>
+
+	app.get('/contact',function(req, res){
+		res.render(contact);here we are using render method
+	});
+	app.get('/profile',function(req, res){
+		res.render(profile);here we are using render method
+	});
+
+how to add static files like CSS (Middleware)
+app.use('/assets',function(req,res,next){
+	next();
+});
+
+or
+app.use('/assets', express.static('folderName1'));
+
+profile.ejs
+<head>
+	<link href="/assets/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+whithout app.use method express middleware service static content will not be picked.
+when we hit /profiles, internally another hit will happen with /assets/styles.css so we should configure /assets route and what to do next
+
+how can we access query string
+	app.get('/profile',function(req, res){
+		console.log(req.query);// this returns JS object for query string
+		res.render(profile);here we are using render method
+	});
+
+?dept=dept1&person=p1  will converted like  {dept:'dept1',person:'p1'}
+
+how can we render view with query string
+	app.get('/profile',function(req, res){
+		res.render('profile',{qs:req.query});here we are using render method
+	});
+
+<%= qs.dept%>//we can add this in ejs file
+
+How can we prepopulate form with query string
+	<form id="profile1">
+		<input name="name" value="qs.person">
+		<input name="dept" value="qs.dept">
+	</from>
+
+how can we read dat from post request
+<form id="profile1" method="post" action="/profile">
+	<input name="name" value="qs.person">
+	<input name="dept" value="qs.dept">
+</from>
+var bodyParser =require('body-parser');
+var app = express();
+var urlencodedParser = bodyParser.urlencoded({extended: false});
+	app.post('/profile',urlencodedParser,function(req, res){
+		console.log(req.body);// here we used body method
+		res.render('profile',{qs:req.query});here we are using render method
+	});

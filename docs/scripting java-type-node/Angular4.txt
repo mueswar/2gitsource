@@ -1,4 +1,5 @@
 https://www.youtube.com/watch?v=Bv_5Zv5c-Ts   (Tony Alicea)
+https://www.youtube.com/playlist?list=PL1BztTYDF-QNlGo5-g65Xj1mINHYk_FM9  v16
 
 general web problems
 ------------------------
@@ -42,10 +43,11 @@ Angular 4 - Environment Setup
 	step1: install node.js
 		Nodejs
 		Npm
-		node –v 
+		node –v  (v20)
 		npm –v
 	Step2: Angular CLI
 		c:\angular9>npm install –g @angular/cli@latest  // to install angular cli on your system.(create new folder)
+		c:\angular9>ng version //this is working version is 17
 		c:\angular9>ng -v
 		c:\angular9>ng --version
 		software will be installed  at C:\Users\2121313\AppData\Roaming\npm\node_modules\@angular\cli

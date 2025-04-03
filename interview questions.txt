@@ -1,80 +1,47 @@
-Last 3 hours review
+interview day
+----------------------------------------
+	Last 3 hours review
+	Last 15 minutes
 
-any question to interviewer
-----------------
-	specific project hair
-	technology
-	backed team and frontend team
-	support - it customer facing with huge customer or internal app
-	requirment flow
-	team hirachy
-	architects
+prepare1 interview when actively looking
+----------------------------------------
+	0HackerRank.txt (1Java SE.txt)  15min 
+	intelliJ C:\3java-code\interview-program 10 min
+	
+prepare2 interview when actively looking
+-----------------------------------------
+	update resume, kafka, recat, kubern
+	React.js
+	kafka
+		spring kfka
+	AWS- EKS, ECS, Lambda, S3, EC2
+		CloudBees to EKS
+			jar step
+			image storage
+		Jenkins to EKS
+		SSM parameters 
+		Config
+	Docker
+	jenkins
+	python-aws
 
+learn daily when I am in JOB
+-----------------------------------------
+	0Daily.txt
 
-design patterns
-	buider/singleton/factory/prototype
-	adapter/proxy/facade
-core java
-	oops- abstraction/encapsulation/inheritance/polymoriphisim
-	string contanct pool 1. new string 2. string litteral
-	string v buffer v builder
-	abstarct vs interface
-	interface default methods
-	interface static methods
-	interface functinal interface /examples
-	euqals and hash code
-	comparator v comparable
-	
-	
-	iterator v enumarator
-        for (String elem : list) {
-            if (elem.equals("a")) {
-                list.remove(elem);
-            }
-        }	
-		above code throws expection. Since the enhanced for loop uses an Iterator internally to traverse elements in a Collection, 
-		running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator
-	Maps
-		ConcurrentHashMap, HashMap, Hashtable, LinkedHashMap, TreeMap
-		see code of haspmap, hash table, concurrent hash map get, put, interrator
-	hash map, concurrent hash map
-	stream v parllel stream
-	flat map
-	optional
-	marker interfaces -examples
-	functional interfaces- examples
-	
-	thread v runnable
-	
-RDMS
-	what kind of caching techniques are you using
-	transaction isolation levels
-Angular
-	what is service
-	How to access service
 
 -----------------------------------------------------------------------------------------------------------------------
-Faced interview questions
-
-1. write producer, consumer code if que is full producer has to wait, if empty consumer has to wait
-2. LinkedHashMap internal logic to maintain order
-3. dates
-4. gradle wrapper
-5. AWS ECS pipeline and architecture
-6. spring security configuration
-7. postgresql hibernate nad jpa integration
-8. what kfaka configuraions
-
-
-
-
-
+                                Last 15 minutes
+-----------------------------------------------------------------------------------------------------------------------
+	speak slowly and clearly
+	record
 
 
 -----------------------------------------------------------------------------------------------------------------------
 						Last 3 hours review (1.core java, 2.spring, 3. DB and Hibernate)
 -----------------------------------------------------------------------------------------------------------------------
 Speak slowly with consciosness
+
 Spring
 ------------
 1. Basic annotations
@@ -263,8 +230,70 @@ CompleatableFeature vs Feature
 		get() -it blocks
 
 
-AWS
----------------------------------------------------
+ask interviewer
+----------------
+	specific project hair
+	technology
+	backed team and frontend team
+	support - it customer facing with huge customer or internal app
+	requirment flow
+	team hirachy
+	architects
+
+
+design patterns
+	buider/singleton/factory/prototype
+	adapter/proxy/facade
+core java
+	oops- abstraction/encapsulation/inheritance/polymoriphisim
+	string contanct pool 1. new string 2. string litteral
+	string v buffer v builder
+	abstarct vs interface
+	interface default methods
+	interface static methods
+	interface functinal interface /examples
+	euqals and hash code
+	comparator v comparable
+	
+	
+	iterator v enumarator
+        for (String elem : list) {
+            if (elem.equals("a")) {
+                list.remove(elem);
+            }
+        }	
+		above code throws expection. Since the enhanced for loop uses an Iterator internally to traverse elements in a Collection, 
+		running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator
+	Maps
+		ConcurrentHashMap, HashMap, Hashtable, LinkedHashMap, TreeMap
+		see code of haspmap, hash table, concurrent hash map get, put, interrator
+	hash map, concurrent hash map
+	stream v parllel stream
+	flat map
+	optional
+	marker interfaces -examples
+	functional interfaces- examples
+	
+	thread v runnable
+	
+RDMS
+	what kind of caching techniques are you using
+	transaction isolation levels
+Angular
+	what is service
+	How to access service
+
+-----------------------------------------------------------------------------------------------------------------------
+Faced interview questions
+
+1. write producer, consumer code if que is full producer has to wait, if empty consumer has to wait
+2. LinkedHashMap internal logic to maintain order
+3. dates
+4. gradle wrapper
+5. AWS ECS pipeline and architecture
+6. spring security configuration
+7. postgresql hibernate nad jpa integration
+8. what kfaka configuraions
 
 
 
