@@ -1,6 +1,10 @@
-https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16  codeevalution react videos
-https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d   net ninja react videos
-https://www.youtube.com/watch?v=e1IQAIBJiHQ&list=PL6n9fhu94yhVpO8VBlUXbxKUuG-n2b1bL&index=3  kudvenkat  nodejs 12
+https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16  codeevalution 
+https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d           net ninja 
+https://www.youtube.com/watch?v=e1IQAIBJiHQ&list=PL6n9fhu94yhVpO8VBlUXbxKUuG-n2b1bL&index=3   kudvenkat  nodejs 12
+https://www.youtube.com/watch?v=emzrev03Ppc&list=PL1BztTYDF-QMPh8UW3xxk8C6uk2WVfUS3           procademy
+
+
+C:\2gitsource\React-projects open VS code
 
 prerequi
 -----------------------------------------------------------------------------------------------------------------------
@@ -36,48 +40,7 @@ step3: cd project1
 step4: npm start
 
 
-below 3 files are importent files
 
-public/index.html
--------------------
-	<html lang="en">
-	  <head>
-		<title>React App</title>
-	  </head>
-	  <body>
-		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<div id="root"></div>
-	  </body>
-	</html>
-src/index.js 
-----------------
-	import React from 'react';
-	import ReactDOM from 'react-dom/client';
-	import './index.css';
-	import App from './App';
-
-	const root = ReactDOM.createRoot(document.getElementById('root'));
-	root.render(
-	  <React.StrictMode>
-		<App />
-	  </React.StrictMode>
-	);
-src/App.js
-------------------------
-	function App() {
-	  return (
-		<div className="App">
-		  Welcome
-		</div>
-	  );
-	}
-
-	export default App;
-remove 
-		reportWebVitals.js file
-		remove reference in index.js
-		remove setpTests.js 
-		remove App.test.js
 	
 -----------------------------------------------------------------------------------------------------------------------
 .ts file is tipesprict file 

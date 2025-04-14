@@ -2,6 +2,9 @@ interview day
 ----------------------------------------
 	Last 3 hours review
 	Last 15 minutes
+	
+	write programs to practise in eclipse in C:\4sourceCodeSpring\eclipse_workspace(my own coding test Q&A)
+	learn with Intelliji - C:\3java-code\interview-program
 
 prepare1 interview when actively looking
 ----------------------------------------
@@ -56,6 +59,8 @@ DB
 ----------
 what is diff b/w propagation and isolation
 ACID properies
+self join
+left self join
 
 
 core Java
@@ -79,7 +84,11 @@ fork/join frame work
 
 Date Api in java 8
 
-
+Angular
+--------------
+type and interface disffernce
+obsorvebale
+life cycles of component
 
 Srping answers
 ----------------------
@@ -115,6 +124,8 @@ Srping answers
 	it gives production ready features like healt, metrics
 	actuator provides dependency managment and auto-configuration for Micrometer Tracing.
 	Spring boot ships acuto-configuration for Zipkin tracer
+	/actuator/health , /actuator/env , /actuator/loggers, /actuator/threaddump
+	/actuator/info
 5. The difference between POST and PUT is that PUT requests are idempotent. That is, calling the same PUT request multiple times will 	
 	always produce the same result. In contrast, calling a POST request repeatedly have side effects of creating the same resource
 	multiple times.
@@ -297,31 +308,6 @@ Faced interview questions
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 11/28
 -------------------------------
 remove duplicates in string
@@ -332,3 +318,9 @@ node.js event loops
 @contoller vs @restcontoller
 circular dependency with constructor injection
 @service vs @component
+
+
+---------
+payment gateway
+SSO
+perfoemance tools

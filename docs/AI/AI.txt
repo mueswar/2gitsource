@@ -1,0 +1,10 @@
+https://www.youtube.com/watch?v=qNxrPri1V0I   road to ML with python
+https://www.khanacademy.org/math/statistics-probability  khan Acadamy
+
+python
+jupitor notbook
+pandas
+statistics and probability- khan Acadamy
+Algebra
+calculas
+Scikit learn

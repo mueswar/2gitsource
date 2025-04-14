@@ -205,6 +205,7 @@ Junit:
 see jnuit doc
 
 
+my own coding test
 -------------------------------------------------------
 how to convert any data type into string with wrapper and String class
 how to get wrapper from String value

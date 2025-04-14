@@ -501,20 +501,7 @@ public class Cone {
 	}
 }
 
-method reference
-()->method() //classname::methodname
-p->method(p) //classname::methodname
 
-//// differnt foreach
-if we have one list l1 then 4 types of loops
-		for(int i=0; i<l1.size();i++) {
-			System.out.println(l1.get(i));
-		}
-		for (String e : l1) {
-			System.out.println(e);
-		}
-		l1.forEach(a -> System.out.println(a));
-		l1.forEach(System.out::println);
 
 Default interface methods
 ---------------------------

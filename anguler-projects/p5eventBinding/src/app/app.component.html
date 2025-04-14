@@ -1,0 +1,10 @@
+
+<div>
+  <p> Type value in all 3 fields and see change </p>
+<p>Name:<input (input)="nameChange()" > {{name}}</p>
+<p>Name1:<input (input)="name1Change($event)" > {{name1}}</p>
+<p>Name2:<input (input)="name2Change($event)" > {{name2}}</p>
+
+<p>count<button (click)="countReduce()" > -</button>{{count}}<button (click)="countIncrement()" > +</button></p>
+
+</div>

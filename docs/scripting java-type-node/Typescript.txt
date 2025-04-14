@@ -110,6 +110,11 @@ dynamic type
 	b.push('abc');
 	b.push(2);
 
+Arrays
+--------------------------------------------
+
+
+
 Functions
 ---------------------------
 	function addTwo(a :number, b :number) : number {

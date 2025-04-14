@@ -1,6 +1,10 @@
 https://www.youtube.com/watch?v=Bv_5Zv5c-Ts   (Tony Alicea)
 https://www.youtube.com/playlist?list=PL1BztTYDF-QNlGo5-g65Xj1mINHYk_FM9  v16
 
+
+practice 1: create one reactive style form
+practice 2: create one templete driven style form
+
 general web problems
 ------------------------
 html does not support custom attributes(Html5 supports data attributes)
@@ -495,67 +499,177 @@ how to convert employ record in employ component to link to display details
 
 
 
+how to careate component as attribute insted of element itself 
+how to careate component as css class insted of element itself 
+how to careate component as id insted of element itself 
+what is data binding
+what is string iterpolation
+what is property binding
+why we need property binding when we string interpolation(disable,hidden,check)
+
+<div *ngFor="let item of [2,3,4,5]">
+	{{item}}
+</div>
+
+<div *ngFor="let i of items">
+	{{i}}
+</div>
+
+
+25
+@Input
+26
+@input
+how to add filter in productlist with productliter component
+	add filter radios in productliter html
+	get data from productlist to productfilter component
+	parent htmml has child component selecter, so the selector pass name and values as propery binding
+	and capture in child element component using @input
+27
+pass value from child to parent component using @Output decorator and EventBinder
+get value in parent componet event
+28
+	how to pass data between non related components
+	assuem there 3 components 1, continer 2,search, 3.product list
+	continer componet is in app componet
+	seacrh component, and productlist components are in continer component
+	search and productlist componet does not have parent child relation, 
+	but we have to pass data search to product to display only seached products in products page
+29
+	same example, but we only need to desplay results when we click search button
+	in previous example no need to click search, just need to type it in textbox
+	use templete reference variable
+30
+	<div>
+		<input #searchInput> 
+		<button (click)="updateSearchText(searchInput)">Search</button>
+	</div>
+	updateSearchText(inputEL : HtmlInputElement){
+		inputEL.value;
+	}
+	here we are passing input value when putton clicked to component method
+	
+	<div>
+		<input #searchInput> 
+		<button (click)="updateSearchText()">Search</button>
+	</div>
+	@viewChild('searchInput') searchEL: ElementRef;
+	updateSearchText(){
+		this.inputEL.nativeElement.value;
+	}
+	with above code, input element is available as soon as input element is loaded.
+
+
+38
+	for each selecter tag, one component ince is created
+	we can check it with writing log in constructor
+	but by the time components are inisialized, we only have property inisialized values.
+	but @input property value passed from parent component is not availavle
+	@ngOnChanges, @ngOnInit, @ngDoCheck, @ngDestroy
+	@ngAfterViewInit, @ngAfterViewChecked, @ngAfterContentInit, @ngAfterContentChecked
+
+59
+	view encasulation, CSS in one component only applicable to same component html
+	but there are othen encapsulation properties we can apply
+
+60
+	not much
+	so to pass data two non parent-chield compo , it was difficult with @input and event
+	we can achive same with services
+61
+	create service
+	service is just plan class in seprate ts file, this can be used any component methods
+62 
+		inject service as dependency injection insted of creating instance directly
+		
+		@Component({
+		  selector: 'app-hero',
+		  templateUrl: './hero.component.html',
+		  providers: [ServiceOne]
+		})
+		export class Cone{
+			constructor(private x : ServiceOne){
+			
+			}
+			
+			onsubscribe(){
+				this.x.subscribe();
+			}
+		
+		}
+	
+63
+	hierarachial dependency
+	if we inject service with provider that component seperate instance of service
+	if we do not use provider in child component, we can still use service, but this time we are sharing same service insce between parent and child componets
+	if inject in app module file it self then all components in that module can use injected service instance
+64
+	pratice code example for hierarachial dependency
+	componets are like app->admin>user
+	admin has form to collect userdata
+	user has deisplay logic for list of users
+	adimn and user component selecters are in app html one after other
+	use service class for creating user and adding into list
+	crete use model class as well
+65
+	how inject loger service in userservice
+	1.both include in module file
+	2. @Injectable() on the top of userservice 
+	3. constructor in userservice
+		constructor(private x : LoggerService){}
+	but when we inject service in component we do not add @Injectable() 
+	but we need this for service to service injection
+
 
 	
-
-*********************************************
-************     Java Brains  ***************
-*********************************************
-create project from Angular CLI
-	$ng new firstprojecct
-	run server(ng serve) (port will be 4200)
-you can test it now http://localhost:4200/ (that's it)
-
-when we try to access application by default it loads index.html
-index.html contains root component that is app component.
-
-create component in CLI
-	$ng generate component hello-world
-	it create four files in src/app/hello-world/
-	hello-world-component.ts, html, css, spec.ts
-	and also updates src/app/app.module.ts
-
-to use hello-world component in app.compo.html, just add hello-world selector.
-
-how to displlay dynamic time without refreshing the page(use setInterval method)
-constructor(){
-	setInterval(()=>{
-	let currentDate = new Date();
-	this.message = currentDate.toDateString()+' '+currentDate.toLocaleTimeString();
-	},
-	1000);
-}
-
-How to get any attribute value in component(we can use @input)
-	if we have like <app-emp name="emp1"></app-emp> then 
-	in component class
-	@Input("name")username:string;
-	user:string;
-	ngOnInit(){
-		this.user=this.username;
+68
+	observable is to hadle stream of data in async form with RxJS	
+69
+	when button clicked data should dispaly
+	x :any[]=[];
+	myObservable = new Observable((observer) ->{
+		observer.next(['1','2','3','4']);
+	});
+	getAsycData(){
+		this.myObservable.subscribe((val:any)=>{this.x=val;});
 	}
-	but you can not do it in constructor. constructor is exicuted when instance is created but vallues will be after object instation.
-
-
-How to pass object(Emp) to component
-	first create ts file Emp then
-	html should have something like <app-emp [name]="emp1"></app-emp> then
-	in emp component class
-	@Input("name")username:Emp;
-	but where do we intiaze Emp?
-	we can do it in app componet (if app component html passing emp to emp component)
-	emp:Emp
-	constructor(){
-	this.emp= new Emp();
-	this.emp.fname="ab";
-	this.emp.lname="xy";
+	
+	second ecample
+	x :any[]=[];
+	myObservable = new Observable((observer) ->{
+		setInterval(()=>{observer.next(['1'])},1000);
+		setInterval(()=>{observer.next(['2'])},2000);
+		setInterval(()=>{observer.next(['3'])},4000);
+		setInterval(()=>{observer.next(['4'])},6000);
+	});
+	getAsycData(){
+		this.myObservable.subscribe((val:any)=>{this.x.push(val);});
 	}
+	
+81,82
 
 
-#############################################
-how to invoke secured webservices
-how to handle errors
-how to validate user input data
-how to develope form data
-logging
-have you ever used javascript tag library
+113			[113-124-templete driven form]
+	templete driven form
+
+
+124			[124-135-Reactive form]
+	Reactive form
+
+
+
+
+136      [136-155-HttpClient]
+	http client
+137
+
+138
+	http: HttpClient = inject(HttpClient)
+	
+	this.http.post<{name:string}>('url',body,{headers:headers})
+			.subcribe( (response)=> {console.log(response)});
+139
+	this.http.get<{ [key:string]:Task}>('url')
+				.subcribe( (response)=> {console.log(response)});
+
+
