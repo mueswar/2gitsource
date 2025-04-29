@@ -144,3 +144,7 @@ how do we declare varable as function
 	let a: Function;
 	
 	let greet:(a:number, b:string)=> void;
+
+
+
+difference between Type and Interface

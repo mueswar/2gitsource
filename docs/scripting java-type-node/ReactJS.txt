@@ -6,24 +6,9 @@ https://www.youtube.com/watch?v=emzrev03Ppc&list=PL1BztTYDF-QMPh8UW3xxk8C6uk2WVf
 
 C:\2gitsource\React-projects open VS code
 
-prerequi
------------------------------------------------------------------------------------------------------------------------
-javascript
-typescript
-
 why react
 -----------------------------------------------------------------------------------------------------------------------
-without react wee will have to code with DOM for page render, but with react we do not need to touch DOM
-
-notes
---------------------------
-project name should be small letters
-ReactDOM.render()//is  Deprecated in react 18
-
-Tools
------------------------------------------------------------------------------------------------------------------------
-NodeJs
-Visuval studio code
+without react we will have to code with DOM for page render, but with react we do not need to touch DOM
 
 VS settings
 -------------
@@ -43,16 +28,57 @@ step4: npm start
 
 	
 -----------------------------------------------------------------------------------------------------------------------
+project name should be small letters
+Component name should be Caps and Camelcase
+ReactDOM.render()//is  Deprecated in react 18
 .ts file is tipesprict file 
 .tsx file is react typescript file
 in tsx file we see html tags, but that is not html, it is javascript xml.
-we can equivalent javascript for javascript xml in bablejs.io website
-
+we can get equivalent javascript for javascript xml in bablejs.io website
 functional component is just javascript fuction with return of javascript xml.
 class component- this old style
-
+end tag is very importent in JSX, but in html
+to apply css in JSX we cuse className insdted of class, why because class is reserved for other
+to apply CSS import css like just import and file relative path in single quoute.
+to import child component import componentname from file relative path
+child component is just js fucntion just export it
+Using JSX expression {}, we can call js variable and we call function, nothing special here
+here function can return just value or other JSX component or comination of both
 we can not write if condition or any javascript in JSX,
 
+<span style ="padding: 0px 2px"> Hello</span> this does not work like in html
+let a ={padding : 0px 20px}
+<span style ={a}> Hello</span> this will works
+<img src="path"></img> this does not work
+<img src={require("path")}></img> 
+every component have default props object
+
+how pass products arry to product component from AppCompent, we have to list products in appComponent
+
+Keyboard Events: onKeyDown, onKeyPress, onKeyUp
+Focus Events: onFocus, onBlur
+Form Events: onChange, onInput, onSubmit
+Mouse Events: onClick, onContextMenu, onDoubleClick, onDrag, onDragEnd, onDragEnter, onDragExit, onDragLeave, onDragOver, onDragStart, onDrop, onMouseDown, onMouseEnter, onMouseLeave, onMouseMove, onMouseOut, onMouseOver, onMouseUp
+
+how to call method on click event on button
+	<button onClick={nameChange}>accepect </button>
+	here we are using jsx expression {} and method name without ()
+	
+work1: lets assume there +, - buttons in page two times, when + clicked count should increase
+		implement with button and custom button
+	note: when we click button, it calls function and increases value of variable
+	but if variable is is used to dispaly with jsx, the display will not change
+	why beacuse the component section will be changed once it is loaded
+	to fix this issue we have to use useSate hook
+How to use useState
+     let [count, updateCount] =useSate(0)
+	 here count deafault value is 0, and updateCount is function we have to call from button function 
+	 but we do not define updateCount function, it is special function
+	
+
+fetch api
+
+axios api
 
 how to return two tags in functional component
 	we can not directly do it, but with following options
@@ -64,6 +90,7 @@ how to return two tags in functional component
 		</> this empty tage is fragment shortcut 
 		
 how to add bootstarp to react
+
 how to list of elements, assume you have list constant in function.
 	function Message(){
 		const items = ["a","b","c"]

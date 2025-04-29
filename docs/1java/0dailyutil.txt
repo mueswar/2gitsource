@@ -1,11 +1,3 @@
-netstat -ano | findstr 8080
-taskkill /F /pid 6684
-
-"pattern": "[\\w\\s\\-#:;'\\/,.$]*"
-
-equals
---------------------
-org.apache.commons.lang3.StringUtils.equalsAnyIgnoreCase("COnstant",varValue)
 
 Check null pointer
 --------------------
@@ -61,11 +53,3 @@ streams
 	
 flatMap
 collectors.joining()
-
----pricing service stream use service impl yet to look into it
-
-
-
-TODO
---------
-Arrays.copyOfRange

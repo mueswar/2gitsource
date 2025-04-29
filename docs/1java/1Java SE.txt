@@ -379,9 +379,9 @@ class Cone {
 }
 the aboe code does print values in seuence(12345..20)
 
-**************************************************
-########				JAVA 7                 ###
-**************************************************
+***********************************************************************************************************************
+                              				JAVA 7                  
+***********************************************************************************************************************
 we can use Strings in switch case
 we can use underscores in Numaric literals
 Handling More Than One Type of Exception
@@ -546,37 +546,37 @@ predicate
 
 collections
 ---------------
-Collection<String> vals = Arrays.asList("abc","abcde","a","abc");
-vals.removeIf(s->s.length()>3);
-vals.replaceAll(s-> s+"123");
+	Collection<String> vals = Arrays.asList("abc","abcde","a","abc");
+	vals.removeIf(s->s.length()>3);
+	vals.replaceAll(s-> s+"123");
 
 Null check for non optional object
 -----------------------------------------------------
-if(Objects.isNull(response)){ }
-if(Objects.nonNull(response)){}
-It's much easier and clearer to write .stream().filter(Objects::isNull) than to write .stream().filter(x -> x == null)
+	if(Objects.isNull(response)){ }
+	if(Objects.nonNull(response)){}
+	It's much easier and clearer to write .stream().filter(Objects::isNull) than to write .stream().filter(x -> x == null)
 
 Optinal
 -----------------------------------------------------
-isPresent()
-	Optional<String> empty = Optional.empty();
-	empty.isPresent();//returns false
-	String name = "baeldung";
-	Optional<String> opt = Optional.of(name); //how to create optinal object with non optional object
-	opt.isPresent();// returns true //how to check null condition on optional object
-	opt.get();//trurns actual object//how to get actual object from optional object
+	isPresent()
+		Optional<String> empty = Optional.empty();
+		empty.isPresent();//returns false
+		String name = "baeldung";
+		Optional<String> opt = Optional.of(name); //how to create optinal object with non optional object
+		opt.isPresent();// returns true //how to check null condition on optional object
+		opt.get();//trurns actual object//how to get actual object from optional object
 
-of() and ofNullable() which one is best to creat optional object
-	String name = null;
-    Optional.of(name);//throws NullPointerException
-	Optional<String> opt = Optional.ofNullable(name);// return empty Optional object
-How to return something if optional is empty
-	Optional<List<String>> trip = service.mone();
-	return trip.orElse(new ArrayList<>(););
+	of() and ofNullable() which one is best to creat optional object
+		String name = null;
+		Optional.of(name);//throws NullPointerException
+		Optional<String> opt = Optional.ofNullable(name);// return empty Optional object
+	How to return something if optional is empty
+		Optional<List<String>> trip = service.mone();
+		return trip.orElse(new ArrayList<>(););
 
 
 ***********************************************************************************************************************
-**************          streams       ******************
+                                   streams       
 ***********************************************************************************************************************
 Java 8 Streams API supports many parallel operations to process the data, while completely abstracting out the low level
  multithreading logic and letting the developer fully concentrate on the data and the operations to be performed on the data.
@@ -629,7 +629,7 @@ List<String> a= Arrays.asList("","",""); gives immutable ArrayList
 
 
 what is difference between filter and map 
-	both rerurns collections but filter returns entire object which satisfies condition and map returns part of object
+	both rerurns collections but filter returns entire object which satisfies condition and map returns different object
 
 constructor reference
 BiFunction
@@ -710,26 +710,26 @@ java.util.stream.Collectors get additional methods to collect a Stream into unmo
       .filter(i -> i % 2 == 0)
       .collect(Collectors.toUnmodifiableList());
 
-############################################################################################################################
-######                                               JAVA 11 features                                                 ######
-############################################################################################################################
+----------------------------------------------------------------------------------------------------------------------------
+                                                 JAVA 11 features                                                
+----------------------------------------------------------------------------------------------------------------------------
 TextBlocks
 	we can place our text in between the triple quotes and have multiple double quoted strings inside it without having to use escape characters
 	we can use \s to add space and \ to remove new line
 
 
-############################################################################################################################
-######                                     JAVA 17 features                                                           ######
-############################################################################################################################
+----------------------------------------------------------------------------------------------------------------------------
+                                                 JAVA 17 features                                                           
+----------------------------------------------------------------------------------------------------------------------------
 Sealed Classes
 
 remove:
 RMI Activation mechanism has been removed. But the rest of RMI remains unchanged. like Remote,Marshal,clone related classes.
 Experimental AOT and JIT Compiler have been removed.
 
-############################################################################################################################
-######                                    JAVA 21 features                                                            ######
-############################################################################################################################
+----------------------------------------------------------------------------------------------------------------------------
+                                                  JAVA 21 features                                                           
+----------------------------------------------------------------------------------------------------------------------------
 Virtual Threads
 
 
@@ -1129,27 +1129,3 @@ How to use predicate
 	Predicate<Integer> greaterThanTen = (i) -> i > 10;
 	Predicate<Integer> lowerThanTwenty = (i) -> i < 20;
 	boolean result = greaterThanTen.and(lowerThanTwenty).test(15);
-
-
-
-
-########################################################
-########## Third party utils              ##############
-########################################################
-com.google.common.base.Strings.isNullOrEmpty(obj)
-org.apache.commons.lang3.StringUtils.isBlank(guid)
-org.apache.commons.lang3.StringUtils.isNotEmpty(vin)
-org.apache.commons.lang3.StringUtils.isAllBlank()
-java.utils.Objects.nonNull(xCorrelationId)
-
-
-*****************************************************
-***************   next level   **********************
-*****************************************************
-JVM
-java class loading
-rt.jar
-lib/ext
-classpath
-Read area
-exicution

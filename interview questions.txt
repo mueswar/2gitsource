@@ -6,12 +6,13 @@ interview day
 	write programs to practise in eclipse in C:\4sourceCodeSpring\eclipse_workspace(my own coding test Q&A)
 	learn with Intelliji - C:\3java-code\interview-program
 
-prepare1 interview when actively looking
+prepare-1 interview when actively looking
 ----------------------------------------
-	0HackerRank.txt (1Java SE.txt)  15min 
+	0HackerRank.txt 15min 
+	1Java SE.txt    10min
 	intelliJ C:\3java-code\interview-program 10 min
 	
-prepare2 interview when actively looking
+prepare-2 interview when actively looking
 -----------------------------------------
 	update resume, kafka, recat, kubern
 	React.js
@@ -27,10 +28,6 @@ prepare2 interview when actively looking
 	Docker
 	jenkins
 	python-aws
-
-learn daily when I am in JOB
------------------------------------------
-	0Daily.txt
 
 
 -----------------------------------------------------------------------------------------------------------------------
@@ -54,6 +51,7 @@ Spring
 5. POST vs PUT
 6. what is diff b/w propagation and isolation
 7. ACID properies
+8.circle dependency
 
 DB
 ----------
@@ -70,6 +68,7 @@ List methods
 Set Methods
 Map methods
 
+SOLID princeples
 Comparable vs Comparator
 Interface default methods
 Interface static methods
@@ -85,13 +84,24 @@ fork/join frame work
 Date Api in java 8
 
 Angular
---------------
+-----------------------------------------------------------------------------------------------------------------------
+what happens when application loaded into browser
 type and interface disffernce
 obsorvebale
 life cycles of component
+hooks
+how do you give access to only few urls in frontend application
+
+Design patterns
+-----------------------------------------------------------------------------------------------------------------------
+solid princleples
+4 types polymoriphisim
+behavioral pattrens
+creational patterns 
+anti patterns
 
 Srping answers
-----------------------
+-----------------------------------------------------------------------------------------------------------------------
 1. Basic annotations
 	@SpringBootApplication  - it triggers component scanning and auto-configuration
 	@EnableFeignClients
@@ -138,30 +148,18 @@ Srping answers
 	Isolation: No transaction will affect the existence of any other transaction.
 	consistent:If the database was in a consistent state before the execution of a transaction, 
 		it must remain consistent after the execution of the transaction as well.
+8.@Component and @Service
+	It clearly communicates the role of the class to other developers. When someone sees @Service. Spring might introduce specific behavior or features for @Service annotated classes in the future (though currently, it largely behaves the same as @Component). Using @Service allows for more specific Aspect-Oriented Programming (AOP) pointcut expressions that target the service layer. For example, you could easily apply logging or transaction management to all @Service beans.
+9. how to implement with distribution trace id 
+10. if two methods involved in trasaction if something goes wrong how do we rool back it.
 
 
 
 
 -----------------------------------------------------------------------------------------------------------------------
-Read FAQ's in 1.Java SE.txt file
-Run java programs in git/java-code/interview-program
+Read FAQ - 1.Java SE.txt file
+Run      - git/java-code/interview-program
 
-String methods
-	charAt
-	chars
-	toCharArray
-	indexOf, lastIndexOf
-	length
-	concat
-	contains
-	endsWith, startsWith
-	isBlank, isEmpty
-	matches
-	replace, replaceAll, replaceFirst
-	substring
-	split, strip, trim
-List methods
-Set Methods
 	HashSet
 	add, remove, clear
 	for(String temp : s2) {
@@ -169,7 +167,7 @@ Set Methods
 		//s2.remove(temp);  //ConcurrentModificationException
 		}
 	s2.forEach(System.out::print);
-Map methods
+
 
 Comparable vs Comparator
 -----------------------
@@ -239,22 +237,23 @@ CompleatableFeature vs Feature
 		thenApply(), thenAccept(), join(), thenCompose(), thenCombine(), and allOf()
 	Feature(java 5) is blocking feature
 		get() -it blocks
-
-
-ask interviewer
-----------------
-	specific project hair
-	technology
-	backed team and frontend team
-	support - it customer facing with huge customer or internal app
-	requirment flow
-	team hirachy
-	architects
-
+List<String> flatList = listOfLists.stream().flatMap(Collection::stream)
+                .collect(Collectors.toList());
+				
+l.stream().flatMap(s -> s.chars().mapToObj(c -> (char) c)) // Convert each string to stream of characters
+                .map(c -> c.toString().toLowerCase())            // Convert to lowercase string
+                .collect(Collectors.joining(" ")); 
+DB
+-----------------------------------------------------------------------------------------------------------------------
+	what kind of caching techniques are you using
+	transaction isolation levels
 
 design patterns
+-----------------------------------------------------------------------------------------------------------------------
 	buider/singleton/factory/prototype
 	adapter/proxy/facade
+	
+	
 core java
 	oops- abstraction/encapsulation/inheritance/polymoriphisim
 	string contanct pool 1. new string 2. string litteral
@@ -287,16 +286,10 @@ core java
 	
 	thread v runnable
 	
-RDMS
-	what kind of caching techniques are you using
-	transaction isolation levels
-Angular
-	what is service
-	How to access service
 
------------------------------------------------------------------------------------------------------------------------
+
 Faced interview questions
-
+-----------------------------------------------------------------------------------------------------------------------
 1. write producer, consumer code if que is full producer has to wait, if empty consumer has to wait
 2. LinkedHashMap internal logic to maintain order
 3. dates
@@ -324,3 +317,17 @@ circular dependency with constructor injection
 payment gateway
 SSO
 perfoemance tools
+ALB, NLB
+level 4 security
+level 7 security
+
+
+ask interviewer
+----------------
+	specific project hair
+	technology
+	backed team and frontend team
+	support - it customer facing with huge customer or internal app
+	requirment flow
+	team hirachy
+	architects

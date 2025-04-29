@@ -1,6 +1,8 @@
 https://www.youtube.com/watch?v=Bv_5Zv5c-Ts   (Tony Alicea)
 https://www.youtube.com/playlist?list=PL1BztTYDF-QNlGo5-g65Xj1mINHYk_FM9  v16
 
+C:\2gitsource\anguler-projects
+
 
 practice 1: create one reactive style form
 practice 2: create one templete driven style form
@@ -77,12 +79,10 @@ what is difference between AngularJS and Angular 2
 how to create project folder
 	src will have (App folder, index.html, main.js, main.ts, style.css)
 	App folder will have (app.module.ts, app.module.js, app.component.ts, app.component.html)
-what is componet
-	if class is decoratored with @Component then that becomes Component
-what is Module
-	if class is decoratored with @NgModule then that becomes Module
-what is service	
-	if class is decoratored with @Injectable() is service
+if class is decoratored with 
+	@Component   Component
+	@NgModule    Module
+	@Injectable() is service
 how to import Component
 	import { Component } from "@Angular/core"
 what are the component peoperties
@@ -93,23 +93,12 @@ what is derective in html page
 		selector:'my-app',
 		template:`<h1> hello{{name}}</h1>` //if html has multiple lines then we shoud use Backtick(~) charcter
 	})
-	index.html
-		<my-app> loading ...</my-app> // loading will be replaced with templete value
-how to use component templeteUrl property
-	@Component({
-		templeteUrl:'app/app.component.html'//here we need to give relative path of index.html
-	})
-different kind of datatypes
-	string, number, any, boolean
 how to define variable in component 
 	message: String ="abc";
-how to access component variable in html 
-	use double curly brases {{message}} also called interpolation
-how to call method
-	we can call method with   {{mone(4,7)}}
-How do we checck collection length with if condition(we have ngIf directive)
+{{mone(4,7)}}
+
 	<div *ngIf="items.length > 0">items are:</div>
-how do we loop collection (use ngFor directive), we can ngFor as attrubute to any html element
+
 	<p *ngFor=" let item of items">item</p>
 How to call method on button click
 	<button (click)="mone()"> expand/toggle</button> (here we are using parantasis)
@@ -578,7 +567,7 @@ get value in parent componet event
 	we can achive same with services
 61
 	create service
-	service is just plan class in seprate ts file, this can be used any component methods
+	service is just plain class in seprate ts file, this can be used any component methods
 62 
 		inject service as dependency injection insted of creating instance directly
 		
@@ -650,20 +639,105 @@ get value in parent componet event
 
 
 113			[113-124-templete driven form]
-	templete driven form
-
-
+            ----------------------------------
+	import FormsModule
+	FormsModule converst form tage to templete driven form
+	
+	how to get HTMLFormElement in component class
+		<form class="form" (ngSubmit)="OnFormSubmitted(registrationForm)" #registrationForm>
+			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
+		</form>
+		OnFormSubmitted(form:HTMLFormElement){
+			console.log(form)
+		}
+	how to get NgForm (json form form of heml form)in component class
+		<form class="form" (ngSubmit)="OnFormSubmitted(registrationForm)" #registrationForm="ngForm">
+			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
+		</form>
+		OnFormSubmitted(form:NgForm){
+			console.log(form)
+		}
+	how to get NgForm with @ViewChild decorator in component class
+		<form class="form" (ngSubmit)="OnFormSubmitted()" #registrationForm="ngForm">
+			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
+		</form>
+		@ViewChild(registrationForm) form:NgForm;
+		OnFormSubmitted(){
+			console.log(this.form)
+		}
+	using @ViewChild decorator we can access DOM object or component from templete
+114	
+	NgForm has controls and value properties, but to populate value into it
+		we shlod do two things on element (ngModule and name attribute)
+		<input type="text" placeholder="First Name" name="firstname" ngModel />
+	access form values 
+		OnFormSubmitted(){
+			console.log(this.form.value.firstname)
+			console.log(this.form.controls['firstname'].value)
+		}
+	
 124			[124-135-Reactive form]
-	Reactive form
+            -------------------------------
+	import ReactiveFormsModule 
+	how to define reactive form in component class
+		export class AppComponent implements OnInit{
+		reactiveForm: FormGroup;
 
-
+		ngOnInit(){
+			this.reactiveForm = new FormGroup({
+			  firstname: new FormControl(null)
+			})
+		}
+		}
+	how to connect rectiv form in component to form in html
+		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
+		</form>
+	how to connect form elements
+		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
+			<input type="text" placeholder="First Name" formControlName="firstname" />
+		</form>
+125
+	how to add validaters
+		ngOnInit(){
+		this.reactiveForm = new FormGroup({
+		  firstname: new FormControl(null, [Validators.required, CustomValidators.noSpaceAllowed]),
+		  email: new FormControl(null, [Validators.required, Validators.email])
+		  })
+		  }
+		  valid, invalid properties are there at form level and controller
+	how to reactive css class classes
+		by default reactive form adds css classes like ng-touch, ng-untouch, ng-invalied
+		using this we can chnage elements display styyle
+			input.ng-invalid.ng-touched{
+			  border: red 2px solid;
+			}
+		above code updated border value if is touched and data not valied
 
 
 136      [136-155-HttpClient]
-	http client
+		---------------------------------
+	no need to watch it is just rest basics and firebase setup
 137
+	step1: basic html project
+	UI- one create task button, it will display popup form 
+		tasks will be dispalyed in below button
+		task record will have edit, delete options
+		
+	components-
+		appcomponet -[headder - dashboard - footer]
+		dashboard component -[create component]
+	create component 
+		form- tempelte driven form
+			ngForm, onsubmit, name, ngModule
+		class 
+			@output to emmit event to dashboard class
+	dashboard 
+		form
+			add create form selecter
+			in selecter config emiter to send data from crete class to dashboard class
 
-138
+138 import HttpClientModule in modules.ts
+
 	http: HttpClient = inject(HttpClient)
 	
 	this.http.post<{name:string}>('url',body,{headers:headers})
@@ -671,5 +745,33 @@ get value in parent componet event
 139
 	this.http.get<{ [key:string]:Task}>('url')
 				.subcribe( (response)=> {console.log(response)});
+	you can watch the end 10 min for pipe and map knowledge
+	this.http.get<{ [key:string]:Task}>('url').pipe(map((response) => {
+                 //TRANSFORM DATA
+                 let tasks = [];
+                 for(let key in response){
+                   if(response.hasOwnProperty(key)){
+                     tasks.push({...response[key], id: key});
+                   }              
+                 }
+     
+                 return tasks;
+            })
+140
+	display task in html
+	fetch taskes in ngOnInit and assgin to intance variable array
+	<div class="task-item" [ngClass]="'task-' + task.status" *ngFor="let task of allTasks">
+	this line sets different css class based on status
+141
+	delete task
+	add click event and pass task id, and delete it
+	
 
 
+
+
+156    [Authentication]
+
+
+oauth2-oidc
+-----------------------

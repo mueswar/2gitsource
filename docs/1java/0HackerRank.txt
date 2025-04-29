@@ -18,7 +18,8 @@ data types
 	obj instanceof Student//remember format
 
 	convert
-	doble to long : (long)doubleValue= long
+		doble to long 
+			long count = (long)doubleValue
 
 Array
 ---------------------------------------------------------------------------------------------------
@@ -50,14 +51,19 @@ Dates
 
 String
 ---------------------------------------------------------------------------------------------------
-	s.charAt(0);
-	s.subString(0); 
-	s.subString(0,1);
-	s.split(","); returns String[] a 
-	s.isEmpty();
-	s.isBlank()//from java 11
-	s.concat("abc")// we need to assign it, else we loose change
-	String.valueOf()//convert any data type into String
+	charAt
+	chars
+	toCharArray
+	indexOf, lastIndexOf
+	length
+	concat
+	contains
+	endsWith, startsWith
+	isBlank, isEmpty
+	matches
+	replace, replaceAll, replaceFirst
+	substring
+	split, strip, trim
 
 Wrapper
 ---------------------------------------------------------------------------------------------------
@@ -135,13 +141,30 @@ create list
 			.filter(i -> Collections.frequency(list, i) > 1)
 			.distinct()
 			.collect(Collectors.toList());
-
+Set
 
 	
-create Stream	
+Map
+	map.forEach((key, value) -> System.out.println(key + " -> " + value));
+	Map<String, Integer> filteredByKey = map.entrySet()
+    .stream()
+    .filter(e -> e.getKey().startsWith("A"))
+    .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+	Map<Integer, String> swapped = map.entrySet()
+    .stream()
+    .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+	
+Stream	
 	Stream.of("This", "is", "Java8", "Stream").forEach(System.out::println);	
+	String[] arry1 = {"Streams", "can", "be", "created", "from", "arrays"};
+	Char[] = {'a','b','c'}
+	Char[] = ['a','b','c']
 	String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
 	Arrays.stream(stringArray).forEach(System.out::println);
+
+ConcurrentHashMap  from java.util.concurrent
+ConcurrentLinkedQueue from java.util.concurrent
+what is difference between cuncurrency map and syncronized map in java
 
 Exception
 ---------------------------------------------------------------------------------------------------
@@ -160,9 +183,15 @@ enum
 			System.out.println(dir);
 } 
 
-*****************************************************
-***************   written test   **********************
-*****************************************************
+Records
+---------------------------------------------------------------------------------------------------
+record Point(int x, int y) { }
+
+VirtualThread
+---------------------------------------------------------------------------------------------------
+
+Code snippet
+---------------------------------------------------------------------------------------------------
 char[] vowels = {'a', 'e', 'i', 'o', 'u'};
 
 for (int i = 0; i < vowels.length; ++ i) {}
@@ -201,12 +230,12 @@ List<Integer> squaresList = numbers.stream().map( i -> i*i)
 	.distinct().collect(Collectors.toList());
 	
 Junit:
-------------------------------------
+---------------------------------------------------------------------------------------------------
 see jnuit doc
 
 
 my own coding test
--------------------------------------------------------
+---------------------------------------------------------------------------------------------------
 how to convert any data type into string with wrapper and String class
 how to get wrapper from String value
 how to compare two strings
