@@ -146,13 +146,20 @@ Set
 	
 Map
 	map.forEach((key, value) -> System.out.println(key + " -> " + value));
+	
 	Map<String, Integer> filteredByKey = map.entrySet()
     .stream()
     .filter(e -> e.getKey().startsWith("A"))
     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+	
 	Map<Integer, String> swapped = map.entrySet()
     .stream()
     .collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+	
+	List<String> fruits = List.of("apple", "banana", "apple", "orange", "banana");
+	Map<String, Long> fruitCounts = fruits.stream()
+										 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+	System.out.println(fruitCounts); // Output: {orange=1, banana=2, apple=2}
 	
 Stream	
 	Stream.of("This", "is", "Java8", "Stream").forEach(System.out::println);	
@@ -161,10 +168,48 @@ Stream
 	Char[] = ['a','b','c']
 	String[] stringArray = new String[]{"Streams", "can", "be", "created", "from", "arrays"};
 	Arrays.stream(stringArray).forEach(System.out::println);
+		.stream().forEach(obj -> {methodone(obj);});
+	.stream().filter(x -> x != null).collect(Collectors.toList());
+	.stream().map(ClassName::methodName).collect(Collectors.toList());
+	.stream().map(obj ->
+		if(condition){
+			retrun obj.property;
+		}
+		return null;
+	).filter(Objects::nonNull).collect(Collectors.toList());
+	
+	.strem()
+			.filter(obj -> obj.getName().equals("options"))
+			.map(obj -> obj.getProducts().stream()
+					.filter(x -> x.getname().equals("PUT"))
+					.map(x-> x.getId())
+				)
+			.flatMap(Function.identity()).collect(Collectors.toList());
+	.stream()
+		.filter(c1ob1 -> c2.stream().anyMatch(c2ob1-> c1ob1.getId().equals(c2ob1.getId())))
+		.collect(Collectors.toList());
+collectors.joining()
 
+Objects::nonNull
+	can we use Objects::nonNull  for string
+	java.utils.Objects::nonNull - true if nonNull
 ConcurrentHashMap  from java.util.concurrent
 ConcurrentLinkedQueue from java.util.concurrent
 what is difference between cuncurrency map and syncronized map in java
+what is Function.identity() 
+
+immutable
+	Collections.unmodifiableList(list);
+	List.of(list.toArray(new String[]{}));//java 9
+	ListUtils.unmodifiableList(list);// apache commons
+	List<String> l = new ArrayList();
+	List<String> l = Lists.newArrayList();com.google.common.collect //mutable
+	List<String> l = Lists.newArrayList(Obj);or.assertj.core.util.Lists //mutable
+
+	List<String> list = Arrays.asList(new String[]{"foo", "bar"}); //list from array
+	List<String> list = Arrays.asList("foo", "bar"); //list from fixed objects
+	List<String> list = List.of("foo", "bar", "baz");//list from list interface java9  immutable
+	Set<String> set = Set.of("foo", "bar", "baz");//Set from Set interface java9 immutable
 
 Exception
 ---------------------------------------------------------------------------------------------------
@@ -234,28 +279,3 @@ Junit:
 see jnuit doc
 
 
-my own coding test
----------------------------------------------------------------------------------------------------
-how to convert any data type into string with wrapper and String class
-how to get wrapper from String value
-how to compare two strings
-how to add someting to string
-how to find length of string
-how to get subString
-how to get case sensitive strings
-how to create arrys 
-how to create list from existing array
-how to create list from fixed values
-what is difference between filter and map 
-how to convert one list of objects into other data type list objects
-how to convert one list of objects into other data type list objects and print
-iterate array
-iterate list
-iterate set
-iterate map
-create enum  and print single value
-compare enum constant with Sting value
-create Comparator for userdefined class, and sort collection
-replace white space without replace method "abcd   xyz"
-java 11 date for date and time
-localdate,localtime

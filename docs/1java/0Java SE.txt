@@ -1129,3 +1129,30 @@ How to use predicate
 	Predicate<Integer> greaterThanTen = (i) -> i > 10;
 	Predicate<Integer> lowerThanTwenty = (i) -> i < 20;
 	boolean result = greaterThanTen.and(lowerThanTwenty).test(15);
+
+
+my own coding test
+---------------------------------------------------------------------------------------------------
+how to convert any data type into string with wrapper and String class
+how to get wrapper from String value
+how to compare two strings
+how to add someting to string
+how to find length of string
+how to get subString
+how to get case sensitive strings
+how to create arrys 
+how to create list from existing array
+how to create list from fixed values
+what is difference between filter and map 
+how to convert one list of objects into other data type list objects
+how to convert one list of objects into other data type list objects and print
+iterate array
+iterate list
+iterate set
+iterate map
+create enum  and print single value
+compare enum constant with Sting value
+create Comparator for userdefined class, and sort collection
+replace white space without replace method "abcd   xyz"
+java 11 date for date and time
+localdate,localtime
