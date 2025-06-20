@@ -8,3 +8,7 @@ statistics and probability- khan Acadamy
 Algebra
 calculas
 Scikit learn
+
+speach to text
+-------------------
+openAi model - https://github.com/openai/whisper

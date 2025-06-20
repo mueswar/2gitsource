@@ -1,15 +1,5 @@
 
 
-
-
-2 learning
----------------------
-	python
-		discuss about tools, libs with working friend for AWS usecase
-	NodeJs, React
-	Terrafa
-	
-
 https://www.youtube.com/watch?v=o73kDW0xqlg
 https://www.youtube.com/watch?v=mVSFHgItaa4
 

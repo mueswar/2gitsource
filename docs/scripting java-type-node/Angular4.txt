@@ -1,6 +1,7 @@
 https://www.youtube.com/watch?v=Bv_5Zv5c-Ts   (Tony Alicea)
 https://www.youtube.com/playlist?list=PL1BztTYDF-QNlGo5-g65Xj1mINHYk_FM9  v16
-
+https://www.youtube.com/watch?v=yRv0DJi2iSk&t=17s  azure AD B2C
+https://www.youtube.com/watch?v=DlJhZxSraPU&list=PLVlM_EVY85Xs7qlyTnMNOCorAS_coKVyE admin role authentication
 C:\2gitsource\anguler-projects
 
 
@@ -486,7 +487,7 @@ how to convert employ record in employ component to link to display details
 			.catch(this.handleError);
 	} 
 
-
+-----------------------------------------------------------------------------------------------------------------------
 
 how to careate component as attribute insted of element itself 
 how to careate component as css class insted of element itself 
@@ -506,17 +507,20 @@ why we need property binding when we string interpolation(disable,hidden,check)
 
 
 25
-@Input
+	@Input
+	in productlist componet has product array object, 
+	now we need pass product object from productlist html to product component
+	to display in product html file
 26
-@input
-how to add filter in productlist with productliter component
-	add filter radios in productliter html
+	@input
+	how to add filter in productlist with productfliter component
+	add filter radios in productfliter html
 	get data from productlist to productfilter component
 	parent htmml has child component selecter, so the selector pass name and values as propery binding
 	and capture in child element component using @input
 27
-pass value from child to parent component using @Output decorator and EventBinder
-get value in parent componet event
+	pass value from child to parent component using @Output decorator and EventBinder
+	get value in parent componet event
 28
 	how to pass data between non related components
 	assuem there 3 components 1, continer 2,search, 3.product list
@@ -529,6 +533,7 @@ get value in parent componet event
 	in previous example no need to click search, just need to type it in textbox
 	use templete reference variable
 30
+	How to pass value of input html tag to component class
 	<div>
 		<input #searchInput> 
 		<button (click)="updateSearchText(searchInput)">Search</button>
@@ -549,13 +554,19 @@ get value in parent componet event
 	with above code, input element is available as soon as input element is loaded.
 
 
-38
-	for each selecter tag, one component ince is created
+38      _____________________ Lifecycle Hook's______________________________
+	for each selecter tag, one component instance is created
 	we can check it with writing log in constructor
 	but by the time components are inisialized, we only have property inisialized values.
-	but @input property value passed from parent component is not availavle
+	but @input property value passed from parent component is not available
 	@ngOnChanges, @ngOnInit, @ngDoCheck, @ngDestroy
-	@ngAfterViewInit, @ngAfterViewChecked, @ngAfterContentInit, @ngAfterContentChecked
+	@ngAfterViewInit, @ngAfterViewChecked, 
+	@ngAfterContentInit, @ngAfterContentChecked
+39
+	ngOnChanges
+40
+	ngOnInit
+	
 
 59
 	view encasulation, CSS in one component only applicable to same component html
@@ -623,7 +634,7 @@ get value in parent componet event
 		this.myObservable.subscribe((val:any)=>{this.x=val;});
 	}
 	
-	second ecample
+	second example
 	x :any[]=[];
 	myObservable = new Observable((observer) ->{
 		setInterval(()=>{observer.next(['1'])},1000);
@@ -634,8 +645,17 @@ get value in parent componet event
 	getAsycData(){
 		this.myObservable.subscribe((val:any)=>{this.x.push(val);});
 	}
+70    how to use error and complete methods of observable
+71    how to use 1 of and 2 from functions to create observable and how to handle observable data
+	  what id difference between 1 of and 2 from
+72	  fromevent
+	1.how to log something from component menthod when button clicked but we should not call method directly
+	2.how to display new dev element when button is clicked with observable with help of formevent
+73	use map $ filter methods on observable
 	
-81,82
+81,82 Routes
+-----------------------------------------
+
 
 
 113			[113-124-templete driven form]
@@ -771,7 +791,48 @@ get value in parent componet event
 
 
 156    [Authentication]
+	--nothing
+157
+	useCase- login component, loging form should support both login and registrasion 
+	and it should capture values log in login component class
+	solution: componet class can have two methods one to toggle indicator to indicate login and registration 
+	one method to capture ngForm, which we get from html with templete driven style form
+	html can have two buttons one to submit form, other to call toggle method
+	toggle method button should not submit the form, so we need to set type as button istedof submit
+158
+	usecase - call post api and pass login details to register
+	solution - create service call with @Injectable and inject HttpClient
+	crete model class for post response this.http.post<LogRes>('url',body)
+	in component class inject service class 
+	this.serviceName.servicemethod().subcribe({
+		next: (res) => {console.log(res)},
+		error: (error) => {console.log(error)}
+	})
+	
+161
+	tap function
+	emit data using rxjs/Subject
 
 
+
+
+183 
+ angular 16 signals
+
+
+188
+ angular 14 stand alone components
+ 
+
+
+PrimeNG
+----------------------------------
+
+
+Debug
+--------------------------------------
+component function debug
+
+	
 oauth2-oidc
 -----------------------

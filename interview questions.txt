@@ -28,7 +28,16 @@ prepare-2 interview when actively looking
 	Docker
 	jenkins
 	python-aws
+	
+self dabba
+-------------------
+i have 15 experience
+release managment
+scrum master
+review code, helping  junior developers
+enterprise level chnages understanding, do ing small implementation
 
+I have 15 years of experience in Java development, with a strong understanding of architectural patterns, design principles, and various Java frameworks and technologies Spring, j2EE, Oracle DB, postgresql, mongo DB. My expertise covers the entire SDLC, including requirements analysis, system design, development, unit and integration testing, performance tuning, and CI/CD pipelines for deployment. I'm comfortable working at any stage of a project and contributing to robust and scalable Java-based solutions.
 
 -----------------------------------------------------------------------------------------------------------------------
                                 Last 15 minutes
@@ -51,7 +60,7 @@ Spring
 5. POST vs PUT
 6. what is diff b/w propagation and isolation
 7. ACID properies
-8.circle dependency
+8. circle dependency(setter injection solution)
 
 DB
 ----------
@@ -152,7 +161,18 @@ Srping answers
 	It clearly communicates the role of the class to other developers. When someone sees @Service. Spring might introduce specific behavior or features for @Service annotated classes in the future (though currently, it largely behaves the same as @Component). Using @Service allows for more specific Aspect-Oriented Programming (AOP) pointcut expressions that target the service layer. For example, you could easily apply logging or transaction management to all @Service beans.
 9. how to implement with distribution trace id 
 10. if two methods involved in trasaction if something goes wrong how do we rool back it.
+11. AOP for exceptions
+12. spring validations
+13. reference token, acces token
 
+
+experience
+--------------------------------------
+i have java experience,
+work on restful service
+i involve in planning, like tory create 
+i have jenkins, AWS 
+support, splunk and dynatrace
 
 
 
@@ -240,6 +260,11 @@ CompleatableFeature vs Feature
 List<String> flatList = listOfLists.stream().flatMap(Collection::stream)
                 .collect(Collectors.toList());
 				
+what is stream lazy loading, what is trigger point to exicute
+what is difference between collection and stream
+what is static imports
+
+				
 l.stream().flatMap(s -> s.chars().mapToObj(c -> (char) c)) // Convert each string to stream of characters
                 .map(c -> c.toString().toLowerCase())            // Convert to lowercase string
                 .collect(Collectors.joining(" ")); 
@@ -285,6 +310,7 @@ core java
 	functional interfaces- examples
 	
 	thread v runnable
+	cealed class
 	
 
 
@@ -331,3 +357,17 @@ ask interviewer
 	requirment flow
 	team hirachy
 	architects
+	
+"I'm familiar with that topic, but I’d need to revisit it to give a precise answer."
+
+"That’s something I’ve worked with before, but it’s not top of mind at the moment—I’d need a quick refresher."
+
+"I’ve come across that before, though I’d want to double-check the details to be sure."
+
+"I understand the general concept, but I’d have to review it to walk you through it confidently."
+
+"It’s not immediately coming to mind, but I’ve used it before and can get up to speed quickly if needed."
+
+"I’m a bit rusty on that specific point, but I know where to look and how to apply it once I review."
+
+"I’ve worked with that in the past, though I’d need a quick refresher to recall the specifics."

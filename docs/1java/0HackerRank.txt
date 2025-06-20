@@ -188,6 +188,18 @@ Stream
 	.stream()
 		.filter(c1ob1 -> c2.stream().anyMatch(c2ob1-> c1ob1.getId().equals(c2ob1.getId())))
 		.collect(Collectors.toList());
+	list.stream().sorted().forEach(System.out::println);
+	list.stream().count();
+	numbers.stream().distinct().forEach(System.out::println);
+	list.stream().limit(2).forEach(System.out::println);
+	list.stream().skip(1).forEach(System.out::println);
+	list.stream().anyMatch(s -> s.equals("a"));
+	list.stream().allMatch(s -> s.equals(s.toLowerCase()));
+	list.stream().noneMatch(s -> s.equals("z"));
+	list.stream().collect(Collectors.joining(", "));
+	nums.stream().collect(Collectors.averagingInt(Integer::intValue));
+	nums.stream().collect(Collectors.summingInt(Integer::intValue));
+	
 collectors.joining()
 
 Objects::nonNull
@@ -201,13 +213,9 @@ what is Function.identity()
 immutable
 	Collections.unmodifiableList(list);
 	List.of(list.toArray(new String[]{}));//java 9
-	ListUtils.unmodifiableList(list);// apache commons
 	List<String> l = new ArrayList();
-	List<String> l = Lists.newArrayList();com.google.common.collect //mutable
-	List<String> l = Lists.newArrayList(Obj);or.assertj.core.util.Lists //mutable
-
 	List<String> list = Arrays.asList(new String[]{"foo", "bar"}); //list from array
-	List<String> list = Arrays.asList("foo", "bar"); //list from fixed objects
+	List<String> list = Arrays.asList("foo", "bar"); //list from fixed objects immutable
 	List<String> list = List.of("foo", "bar", "baz");//list from list interface java9  immutable
 	Set<String> set = Set.of("foo", "bar", "baz");//Set from Set interface java9 immutable
 

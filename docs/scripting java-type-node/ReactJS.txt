@@ -1,7 +1,7 @@
 https://www.youtube.com/watch?v=7o5FPaVA9m0&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=16  codeevalution 
 https://www.youtube.com/watch?v=j942wKiXFu8&list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d           net ninja 
 https://www.youtube.com/watch?v=e1IQAIBJiHQ&list=PL6n9fhu94yhVpO8VBlUXbxKUuG-n2b1bL&index=3   kudvenkat  nodejs 12
-https://www.youtube.com/watch?v=emzrev03Ppc&list=PL1BztTYDF-QMPh8UW3xxk8C6uk2WVfUS3           procademy
+https://www.youtube.com/watch?v=emzrev03Ppc&list=PL1BztTYDF-QMPh8UW3xxk8C6uk2WVfUS3           procademy nodejs 18
 
 
 C:\2gitsource\React-projects open VS code
@@ -45,15 +45,8 @@ child component is just js fucntion just export it
 Using JSX expression {}, we can call js variable and we call function, nothing special here
 here function can return just value or other JSX component or comination of both
 we can not write if condition or any javascript in JSX,
-
-<span style ="padding: 0px 2px"> Hello</span> this does not work like in html
-let a ={padding : 0px 20px}
-<span style ={a}> Hello</span> this will works
-<img src="path"></img> this does not work
-<img src={require("path")}></img> 
 every component have default props object
 
-how pass products arry to product component from AppCompent, we have to list products in appComponent
 
 Keyboard Events: onKeyDown, onKeyPress, onKeyUp
 Focus Events: onFocus, onBlur
@@ -64,32 +57,13 @@ how to call method on click event on button
 	<button onClick={nameChange}>accepect </button>
 	here we are using jsx expression {} and method name without ()
 	
-work1: lets assume there +, - buttons in page two times, when + clicked count should increase
-		implement with button and custom button
-	note: when we click button, it calls function and increases value of variable
-	but if variable is is used to dispaly with jsx, the display will not change
-	why beacuse the component section will be changed once it is loaded
-	to fix this issue we have to use useSate hook
-How to use useState
-     let [count, updateCount] =useSate(0)
-	 here count deafault value is 0, and updateCount is function we have to call from button function 
-	 but we do not define updateCount function, it is special function
+useState
 	
 
 fetch api
 
 axios api
 
-how to return two tags in functional component
-	we can not directly do it, but with following options
-	1. wrap with <div>
-	2. wrap with <div> is not good idea, use react fragment 
-		<>
-		<h1>
-		<h2>
-		</> this empty tage is fragment shortcut 
-		
-how to add bootstarp to react
 
 how to list of elements, assume you have list constant in function.
 	function Message(){
@@ -123,4 +97,427 @@ How to create event function
 				</ul>
 			</>
 		)
+	}
+
+
+
+6 
+	create react component 
+	//App.js
+	function App(){
+		return (<h2> Hello <h2>);
+	}
+	export default App;
+		
+	//index.js
+	import ReactDOM from 'react-dom/client'; //react 18 version
+	import App from './App';
+	
+	const root = ReactDOM.createRoot(document.getElementById('root'));
+	root.render(  element);
+7
+	in JSX, every element should  have end tag, it follows xml syntax
+	we can do any operation in jsx like below
+	function App(){
+		return (<h2> Hello {1+1} <h2>);
+	}
+	function App(){
+		let msg = 'awsome';
+		return (<h2> Hello {msg} <h2>);
+	}
+8
+	CSS
+	import './app.css';
+	function App(){
+		let msg = 'awsome';
+		return (<h2 className="myHeader"> Hello {msg} <h2>);
+	}
+10
+	if your return statement is more than one line, keep it in paranthasis(), to be safe side, 
+	javaScript add implicitly semicolan after every line 
+	
+12	
+	in JSX expression we call java script function
+	//App.js
+	let count= 0;
+	function one(){
+		return  count++;
+	}
+	function App(){
+		let msg = 'awsome';
+		return (<h2 className="myHeader"> Hello {one()} <h2>);
+	}
+13
+	<img src="path"></img> this does not work
+	<img src={require("path")}></img> 
+	<span style ="padding: 0px 2px"> Hello</span> this does not work like in html
+	let a ={padding : 0px 20px}
+	<span style ={a}> Hello</span> this will works
+
+15  
+	pass data from product display to product component
+	every component have default props object
+	//Product.js
+	function Product(props){
+		return (
+			<h5> {props.name}</h5>
+			<h5> {props.desc}</h5>
+		)
+	}
+	
+	//Dashboard.js
+	let products = [{name='one',
+					desc='onedesc'},
+					{name='two',
+					desc='twodesc'}];
+	function Dashboard(){
+		return (
+			<Product name={products[0].name} desc={products[0].desc}></Product>
+			<Product name={products[1].name} desc={products[1].desc}></Product>
+		)
+	}
+16 
+	split component
+	Pass data from Dashboard to Product to ProductDetails
+	logic same as above, for this we have to data from product to product details through props
+17
+
+20
+	we can not attach events to custom components directly
+	<product onClick={productChange}/>
+	it only works with JSX tags.
+	for work around 
+	<product producthandlerevent={productChange}/>
+	function Product(props){
+		return (
+			<h5 onClick={props.producthandlerevent}> {props.name}</h5>
+		)
+	}
+21
+	work1: lets assume there +, - buttons in page two times, when + clicked count should increase
+			implement with button and custom button
+		note: when we click button, it calls function and increases value of variable
+		but if variable is is used to dispaly with jsx, the display will not change
+		why beacuse the component section will be changed only once when it is loaded
+		to fix this issue we have to use useSate hook
+	How to use useState
+		 let [count, updateCount] =useSate(0)
+		 here count deafault value is 0, and updateCount is function we have to call from button function 
+		 but we do not define updateCount function, but we call it, it is special function
+
+22
+	if dash board page displays 5 products, if product function has useState function
+	each product gets its own useState function default value, 
+	if we increase from one product it does not effect other components
+	if we change useSate of one product with any event only that component will be reloaded, not all
+23
+	Forms
+	appCompnent, CreateProduct
+	create Product has html form
+	<form>
+		<input id="name"/>
+		<input id="location"/>
+	</form>
+
+24
+	capture input data
+	function CreateProduct(){
+		function nameChangeHandler(event){
+			console.log(event.target.value);
+		}
+		function locationChangeHandler(event){
+			console.log(event.target.value);		
+		}
+		
+		return(
+			<form>
+				<input id="name" onChange={nameChangeHandler}/>
+				<input id="location" onChange={locationChangeHandler}/>
+			</form>	
+		)
+	}
+	
+	here onChange event function we are not passing parameter, but still you get event objecct in function
+25
+	store inputdata in memory
+	function CreateProduct(){
+		let [name, upateName]=useSate('');
+		let [location, upateLocation]=useSate('');
+		function nameChangeHandler(event){
+			upateName(event.target.value);
+		}
+		function locationChangeHandler(event){
+			upateLocation(event.target.value);		
+		}
+		
+		return(
+			<form>
+				<input id="name" onChange={nameChangeHandler}/>
+				<input id="location" onChange={locationChangeHandler}/>
+			</form>	
+		)
+	}
+
+26
+	how to capture input data with single useState Function
+		let [userInput, updateUserInput]=useSate({
+			name:'',
+			location:''
+		});
+		function nameChangeHandler(event){
+			updateUserInput({..userInput, name:event.target.value});
+		}
+		function locationChangeHandler(event){
+			updateUserInput({..userInput, location:event.target.value});		
+		}
+		we can also capture data with global variable, but form state does not change
+27
+	safer approach(lamda)
+		let [userInput, updateUserInput]=useSate({
+			name:'',
+			location:''
+		});
+		function nameChangeHandler(event){
+			updateUserInput((preSatte) => {..preSatte, name:event.target.value});
+		}
+		function locationChangeHandler(event){
+			updateUserInput((preSatte) => {..preSatte,  location:event.target.value});		
+		}
+28
+	form submit and prevent reload
+	function CreateProduct(){
+		let [name, upateName]=useSate('');
+		let [location, upateLocation]=useSate('');
+		function nameChangeHandler(event){
+			upateName(event.target.value);
+		}
+		function locationChangeHandler(event){
+			upateLocation(event.target.value);		
+		}
+		function productForm(event){
+			event.preventDefault();
+			let product = {
+				pname:name,
+				plocation:location
+			}
+		}
+		return(
+			<form onSubmit={productForm}>
+				<input id="name" onChange={nameChangeHandler}/>
+				<input id="location" onChange={locationChangeHandler}/>
+				<input type="submit"/>
+			</form>	
+		)
+	}
+
+29
+	how to clear the form- two way binding
+	function CreateProduct(){
+		let [name, upateName]=useSate('');
+		let [location, upateLocation]=useSate('');
+		function nameChangeHandler(event){
+			upateName(event.target.value);
+		}
+		function locationChangeHandler(event){
+			upateLocation(event.target.value);		
+		}
+		function productForm(event){
+			event.preventDefault();
+			let product = {
+				pname:name,
+				plocation:location
+			}
+			upateName('');
+			upateLocation('');
+		}
+		return(
+			<form onSubmit={productForm}>
+				<input id="name" value={pname} onChange={nameChangeHandler}/>
+				<input id="location" value={plocation} onChange={locationChangeHandler}/>
+				<input type="submit"/>
+			</form>	
+		)
+	}
+30
+		watch it again
+31 
+	loop list	
+	function App{
+		let productList =[
+			{},{}
+		]
+		return (
+			<div>
+				productList.map((product)=>{
+					return <product name= {product.pname} location={product.plocation}></product>
+				})
+			</div>
+		)
+	}
+
+32
+	appcomponent will have createComponent and productlist component
+	poductlist component will have looping logic and call product componet for display format
+	question is where should we have initial productlist and where should we add new product to list
+	is it in productList or app component and why?
+33
+	whatch for key property importance
+34
+	add filter- which filters dispaly products
+	appcomponent will have createComponent ,filter component and productlist component
+	poductlist component will have looping logic and call product componet for display format
+35 & 36
+	how to open form when we click create button 
+	how to hide form when cancle button is clicked
+
+39
+	fragments
+	<>
+	</>
+	<React.Fragment> </React.Fragment>
+40
+41
+	useRef hook, using this wan refer any element in DOM
+	function UserForm(){
+		let nameRef =useref();
+		function createUser(){
+			console.log(nameRef.current.value);
+		}
+		
+		return <>
+			<form>
+				<input type="text" ref={nameRef}/>
+				<button type="submit" onclick={}>showname</button>
+			</form>			
+		<>
+	}
+42
+	useEffect hook
+	let [x,setX]=useState('abc');
+	useEffect(()=>{console.log(x)},[]);// this only be called when page first load
+	useEffect(()=>{console.log(x)},[x]); //this will be called everytime x is changed
+
+43
+	we can not directly set useSate variable in component,
+	we always need to set in component event functions, otherwise we will face infinate loop issue.
+	but if there is any requirement , we have useEffect function we can use it
+	localStorage.setItem('isLoggedIn','1');
+	localStorage.remove('isLoggedIn');
+	please watched again very good concept about login and local storage
+
+46
+	useReducer hook- implement count value increment and decrement with buttons
+	
+
+
+69 
+	send user form details as post call using fetch and axios
+	npm install --save axios 
+	
+	function App(){
+		onCreateUser(user){
+			fetch('http://localhost:5000/api/users', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(user)
+			}).then ((res)=>console.log(res))
+		
+		}
+		return (
+			<UserForm attribute1= {onCreateUser}></UserForm>
+		)
+	}
+	
+	function UserForm(props){
+		let nameRef =useref();
+		let locationRef =useref();
+		function createUser(event){
+			event.preventDefault();
+			let user = {
+				pname:nameRef.current.value,
+				plocation:locationRef.current.value
+			}
+			props.attribute1(user)
+		}
+		
+		return <>
+			<form onSubmit={createUser}>
+				<input type="text" ref={nameRef}/>
+				<input type="text" ref={locationRef}/>
+				<input type="submit"/>
+			</form>			
+		<>
+	}
+	
+	axios.post('http://localhost:5000/api/users', user)
+	..then ((res)=>console.log(res.data))
+	
+70
+	fetch data from appComponent when button is clicked
+	and put in users array
+	pass data to display component
+	function App(){
+		let [users,SetUsers] =useState([])
+		function getusers(){
+			fetch('http://localhost:5000/api/users')
+			.then ((res)=>{return res.json();})
+			.then ((data)=>{
+				let userData = [];
+				for(let key in data){
+					userData.push({...data[key]})
+				}
+			})
+			SetUsers(userData);
+		}
+		return (
+			<button onClick= {getusers}>Get Users</button>
+			<UserDatails attr1 ={users}></UserDatails>
+		)
+	}
+	
+	function UserDatails(props){
+		return (
+			<table>
+			<tr><td>pname</td> <td>plocation</td> </tr>
+			{props.attr1.map((user)={
+				<tr><td>{user.pname}</td> <td>{user.plocation}</td></tr>			
+			})}
+			</table>
+		)
+	}
+	with axios 
+	function getusers(){
+			axios.get('http://localhost:5000/api/users')
+			.then ((res)=>{return res.data;})
+			.then ((data)=>{
+				let userData = [];
+				for(let key in data){
+					userData.push({...data[key]})
+				}
+			})
+			SetUsers(userData);
+		}
+71
+	loading spinner
+	function App(){
+		let [users,SetUsers] =useState([])
+		let [load,Setload] =useState(false)
+		function getusers(){
+			Setload(true)
+			//fetch data
+			Setload(false)
+		}
+		return (
+			<button onClick= {getusers}>Get Users</button>
+			{!load && <UserDatails attr1 ={users}></UserDatails>}
+			{load && <p>loading</p>}
+		)
+	}
+72
+	fetch data while page load itself
+	function App(){
+		useEffect(()=>{getusers();},[]);
+	
 	}

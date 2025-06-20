@@ -122,6 +122,15 @@ var val1 = document.getElementById('Id1').value;
 	if(isNaN(val1){
 		alert("please enter number");
 	}
+
+convert
+---------------------
+string to boolean
+	let vIndicator = 'true';
+	let flag1 = Boolean(vIndicator)
+string to number
+	let age = '20';
+	let age1= Number(age)
 	
 strings
 ----------------

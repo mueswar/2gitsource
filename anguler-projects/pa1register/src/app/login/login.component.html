@@ -1,0 +1,8 @@
+<form #authForm="ngForm" (ngSubmit)="getData(authForm)">
+
+  <input type="text" name="email" ngModel/><br>
+  <input type="text" name="password" ngModel/><br>
+  <button type="submit">{{isLogin ? 'login' : 'Register'}} </button><br>
+  {{isLogin ? 'new user?' : 'old user'}}
+  <button type="button" (click)="isNewUser()">{{isLogin ? 'Register' : 'login'}}</button>
+</form>
