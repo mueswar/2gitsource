@@ -72,6 +72,424 @@ Angular 4 - Environment Setup
 		tips:https://code.visualstudio.com/docs/getstarted/tips-and-tricks#vscode
 
 
+-----------------------------------------------------------------------------------------------------------------------
+
+how to careate component as attribute insted of element itself 
+how to careate component as css class insted of element itself 
+how to careate component as id insted of element itself 
+what is data binding
+what is string iterpolation
+what is property binding
+why we need property binding when we string interpolation(disable,hidden,check)
+we can not add more than one structural directives on one element(like *ngFor and *ngIf)
+
+
+19  -------------directive--------------
+
+	<div *ngFor="let item of [2,3,4,5]">
+		{{item}}
+	</div>
+20
+	<div *ngFor="let i of items">
+		{{i}}
+	</div>
+
+
+25
+	@Input
+	in productlist componet has product array object, 
+	now we need pass product object from productlist html to product component
+	to display in product html file
+	
+	productlistcomponent.ts
+	products:Product[];
+	
+	productlist.html
+	<productComponent1 *ngFor="let prod of products" [product1]="prod">
+	
+	productCompnent.ts
+	@Input() product1 :Product;
+	
+	productcomponent.html
+	{product1.name}
+	
+26
+	@input
+	how to add filter in productlist with productfliter component
+	add filter radios in productfliter html
+	get data from productlist to productfilter component
+	parent htmml has child component selecter, so the selector pass name and values as propery binding
+	and capture in child element component using @input
+	
+	productlistComponent.ts
+		products:Product[];
+		totalProducts=this.products.length;
+		totalAvailable= this.products.filter(p = p.isAvailable ===true).length
+	productlist.html
+		<productfliterComponent [all]="totalProducts" [available] ="totalAvailable">
+		<productComponent1 *ngFor="let prod of products" [product1]="prod">	
+	productfliterComponent
+		@Input() all :0;
+		@Input() available :0;
+		@Input() unavailable :0;
+	productfliter html
+		<input type="radio" name="filter" value="all">all{{all}}
+		<input type="radio" name="filter" value="true">avilable{{available}}
+	
+27
+	pass value from child to parent component using @Output decorator and EventBinder
+	get value in parent componet event
+	
+	productfliterComponent
+		@Input() all :0;
+		@Input() available :0;
+		@Input() unavailable :0;
+		selectedFilter:string='all'
+		@output() selectedFilterChanged= new EventEmitter<string>();
+		mone(){
+			this.selectedFilterChanged.emit(this.selectedFilter);
+		}
+	productfliter html
+		<input type="radio" name="filter" value="all" [(ngModel)]="selectedFilter" (change)="mone()">all{{all}}
+		<input type="radio" name="filter" value="true" [(ngModel)]="selectedFilter" (change)="mone()">avilable{{available}}
+	productlistComponent.ts
+		products:Product[];
+		totalProducts=this.products.length;
+		totalAvailable= this.products.filter(p = p.isAvailable ===true).length;
+		selectedradio :string="all";
+		mtwo(value:string){
+			this.selectedradio=string;
+		}
+	productlist.html
+		<productfliterComponent [all]="totalProducts" [available] ="totalAvailable" (selectedFilterChanged) = "mtwo($event)">
+		<productComponent1 *ngFor="let prod of products" [product1]="prod">	
+28
+	how to pass data between non related components
+	assuem there 3 components 1, continer 2,search, 3.product list
+	continer componet is in app componet
+	seacrh component, and productlist components are in continer component
+	search and productlist componet does not have parent child relation, 
+	but we have to pass data search to product to display only seached products in products page
+29
+	same example, but we only need to desplay results when we click search button
+	in previous example no need to click search, just need to type it in textbox
+	use templete reference variable
+	searchComponent.html
+		<input #searchtemp>
+		<button (click)=updateSearchText(searchtemp)>
+	searchComponetTS
+		updateSearchText(tempvalue:HtmlInPutElement){
+			this.serchtext=tempvalue.value
+		}
+30
+	How to pass value of input html tag to component class
+	<div>
+		<input #searchInput> 
+		<button (click)="updateSearchText(searchInput)">Search</button>
+	</div>
+	updateSearchText(inputEL : HtmlInputElement){
+		inputEL.value;
+	}
+	here we are passing input value when putton clicked to component method
+	
+	<div>
+		<input #searchInput> 
+		<button (click)="updateSearchText()">Search</button>
+	</div>
+	@viewChild('searchInput') searchEL: ElementRef;
+	updateSearchText(){
+		this.inputEL.nativeElement.value;
+	}
+	with above code, input element is available as soon as input element is loaded.
+
+
+38      _____________________ Lifecycle Hook's______________________________
+	for each selecter tag, one component instance is created
+	we can check it with writing log in constructor
+	but by the time components are inisialized, we only have property inisialized values.
+	but @input property value passed from parent component is not available
+	@ngOnChanges, @ngOnInit, @ngDoCheck, @ngDestroy
+	@ngAfterViewInit, @ngAfterViewChecked, 
+	@ngAfterContentInit, @ngAfterContentChecked
+39
+	ngOnChanges
+40
+	ngOnInit
+	
+
+59
+	view encasulation, CSS in one component only applicable to same component html
+	but there are othen encapsulation properties we can apply
+
+60
+	not much
+	so to pass data two non parent-chield compo , it was difficult with @input and event
+	we can achive same with services
+61
+	create service
+	service is just plain class in seprate ts file, this can be used any component methods
+62 
+		inject service as dependency injection insted of creating instance directly
+		
+		@Component({
+		  selector: 'app-hero',
+		  templateUrl: './hero.component.html',
+		  providers: [ServiceOne]
+		})
+		export class Cone{
+			constructor(private x : ServiceOne){
+			
+			}
+			
+			onsubscribe(){
+				this.x.subscribe();
+			}
+		
+		}
+	
+63
+	hierarachial dependency
+	if we inject service with provider that component seperate instance of service
+	if we do not use provider in child component, we can still use service, but this time we are sharing same service insce between parent and child componets
+	if inject in app module file it self then all components in that module can use injected service instance
+64
+	pratice code example for hierarachial dependency
+	componets are like app->admin>user
+	admin has form to collect userdata
+	user has deisplay logic for list of users
+	adimn and user component selecters are in app html one after other
+	use service class for creating user and adding into list
+	crete use model class as well
+65
+	how inject loger service in userservice
+	1.both include in module file
+	2. @Injectable() on the top of userservice 
+	3. constructor in userservice
+		constructor(private x : LoggerService){}
+	but when we inject service in component we do not add @Injectable() 
+	but we need this for service to service injection
+
+
+	
+68
+	observable is to hadle stream of data in async form with RxJS	
+69
+	when button clicked data should dispaly
+	x :any[]=[];
+	myObservable = new Observable((observer) ->{
+		observer.next(['1','2','3','4']);
+	});
+	getAsycData(){
+		this.myObservable.subscribe((val:any)=>{this.x=val;});
+	}
+	
+	second example
+	x :any[]=[];
+	myObservable = new Observable((observer) ->{
+		setInterval(()=>{observer.next(['1'])},1000);
+		setInterval(()=>{observer.next(['2'])},2000);
+		setInterval(()=>{observer.next(['3'])},4000);
+		setInterval(()=>{observer.next(['4'])},6000);
+	});
+	getAsycData(){
+		this.myObservable.subscribe((val:any)=>{this.x.push(val);});
+	}
+70    how to use error and complete methods of observable
+71    how to use 1 of and 2 from functions to create observable and how to handle observable data
+	  what id difference between 1 of and 2 from
+72	  fromevent
+	1.how to log something from component menthod when button clicked but we should not call method directly
+	2.how to display new dev element when button is clicked with observable with help of formevent
+73	use map $ filter methods on observable
+	
+81,82 Routes
+-----------------------------------------
+
+
+
+113			[113-124-templete driven form]
+            ----------------------------------
+	import FormsModule
+	FormsModule converst form tage to templete driven form
+	
+	how to get HTMLFormElement in component class
+		<form class="form" (ngSubmit)="OnFormSubmitted(registrationForm)" #registrationForm>
+			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
+		</form>
+		OnFormSubmitted(form:HTMLFormElement){
+			console.log(form)
+		}
+	how to get NgForm (json form form of heml form)in component class
+		<form class="form" (ngSubmit)="OnFormSubmitted(registrationForm)" #registrationForm="ngForm">
+			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
+		</form>
+		OnFormSubmitted(form:NgForm){
+			console.log(form)
+		}
+	how to get NgForm with @ViewChild decorator in component class
+		<form class="form" (ngSubmit)="OnFormSubmitted()" #registrationForm="ngForm">
+			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
+		</form>
+		@ViewChild(registrationForm) form:NgForm;
+		OnFormSubmitted(){
+			console.log(this.form)
+		}
+	using @ViewChild decorator we can access DOM object or component from templete
+114	
+	NgForm has controls and value properties, but to populate value into it
+		we shlod do two things on element (ngModule and name attribute)
+		<input type="text" placeholder="First Name" name="firstname" ngModel />
+	access form values 
+		OnFormSubmitted(){
+			console.log(this.form.value.firstname)
+			console.log(this.form.controls['firstname'].value)
+		}
+	
+124			[124-135-Reactive form]
+            -------------------------------
+	import ReactiveFormsModule 
+	how to define reactive form in component class
+		export class AppComponent implements OnInit{
+		reactiveForm: FormGroup;
+
+		ngOnInit(){
+			this.reactiveForm = new FormGroup({
+			  firstname: new FormControl(null)
+			})
+		}
+		}
+	how to connect rectiv form in component to form in html
+		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
+		</form>
+	how to connect form elements
+		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
+			<input type="text" placeholder="First Name" formControlName="firstname" />
+		</form>
+125
+	how to add validaters
+		ngOnInit(){
+		this.reactiveForm = new FormGroup({
+		  firstname: new FormControl(null, [Validators.required, CustomValidators.noSpaceAllowed]),
+		  email: new FormControl(null, [Validators.required, Validators.email])
+		  })
+		  }
+		  valid, invalid properties are there at form level and controller
+	how to reactive css class classes
+		by default reactive form adds css classes like ng-touch, ng-untouch, ng-invalied
+		using this we can chnage elements display styyle
+			input.ng-invalid.ng-touched{
+			  border: red 2px solid;
+			}
+		above code updated border value if is touched and data not valied
+
+
+136      [136-155-HttpClient]
+		---------------------------------
+	no need to watch it is just rest basics and firebase setup
+137
+	step1: basic html project
+	UI- one create task button, it will display popup form 
+		tasks will be dispalyed in below button
+		task record will have edit, delete options
+		
+	components-
+		appcomponet -[headder - dashboard - footer]
+		dashboard component -[create component]
+	create component 
+		form- tempelte driven form
+			ngForm, onsubmit, name, ngModule
+		class 
+			@output to emmit event to dashboard class
+	dashboard 
+		form
+			add create form selecter
+			in selecter config emiter to send data from crete class to dashboard class
+
+138 import HttpClientModule in modules.ts
+
+	http: HttpClient = inject(HttpClient)
+	
+	this.http.post<{name:string}>('url',body,{headers:headers})
+			.subcribe( (response)=> {console.log(response)});
+139
+	this.http.get<{ [key:string]:Task}>('url')
+				.subcribe( (response)=> {console.log(response)});
+	you can watch the end 10 min for pipe and map knowledge
+	this.http.get<{ [key:string]:Task}>('url').pipe(map((response) => {
+                 //TRANSFORM DATA
+                 let tasks = [];
+                 for(let key in response){
+                   if(response.hasOwnProperty(key)){
+                     tasks.push({...response[key], id: key});
+                   }              
+                 }
+     
+                 return tasks;
+            })
+140
+	display task in html
+	fetch taskes in ngOnInit and assgin to intance variable array
+	<div class="task-item" [ngClass]="'task-' + task.status" *ngFor="let task of allTasks">
+	this line sets different css class based on status
+141
+	delete task
+	add click event and pass task id, and delete it
+	
+
+
+
+
+156    [Authentication]
+	--nothing
+157
+	useCase- login component, loging form should support both login and registrasion 
+	and it should capture values log in login component class
+	solution: componet class can have two methods one to toggle indicator to indicate login and registration 
+	one method to capture ngForm, which we get from html with templete driven style form
+	html can have two buttons one to submit form, other to call toggle method
+	toggle method button should not submit the form, so we need to set type as button istedof submit
+158
+	usecase - call post api and pass login details to register
+	solution - create service call with @Injectable and inject HttpClient
+	crete model class for post response this.http.post<LogRes>('url',body)
+	in component class inject service class 
+	this.serviceName.servicemethod().subcribe({
+		next: (res) => {console.log(res)},
+		error: (error) => {console.log(error)}
+	})
+	
+161
+	tap function
+	emit data using rxjs/Subject
+
+
+
+
+183 
+ angular 16 signals
+
+
+188
+ angular 14 stand alone components
+ 
+
+
+PrimeNG
+----------------------------------
+
+
+Debug
+--------------------------------------
+component function debug
+
+	
+oauth2-oidc
+-----------------------
+
+
+
+
+
 
 -----------------------------------------------------------------------------------------------------------------------
 	
@@ -486,353 +904,3 @@ how to convert employ record in employ component to link to display details
 			.map((response: Response) => <IEmployee>response.json())
 			.catch(this.handleError);
 	} 
-
------------------------------------------------------------------------------------------------------------------------
-
-how to careate component as attribute insted of element itself 
-how to careate component as css class insted of element itself 
-how to careate component as id insted of element itself 
-what is data binding
-what is string iterpolation
-what is property binding
-why we need property binding when we string interpolation(disable,hidden,check)
-
-<div *ngFor="let item of [2,3,4,5]">
-	{{item}}
-</div>
-
-<div *ngFor="let i of items">
-	{{i}}
-</div>
-
-
-25
-	@Input
-	in productlist componet has product array object, 
-	now we need pass product object from productlist html to product component
-	to display in product html file
-26
-	@input
-	how to add filter in productlist with productfliter component
-	add filter radios in productfliter html
-	get data from productlist to productfilter component
-	parent htmml has child component selecter, so the selector pass name and values as propery binding
-	and capture in child element component using @input
-27
-	pass value from child to parent component using @Output decorator and EventBinder
-	get value in parent componet event
-28
-	how to pass data between non related components
-	assuem there 3 components 1, continer 2,search, 3.product list
-	continer componet is in app componet
-	seacrh component, and productlist components are in continer component
-	search and productlist componet does not have parent child relation, 
-	but we have to pass data search to product to display only seached products in products page
-29
-	same example, but we only need to desplay results when we click search button
-	in previous example no need to click search, just need to type it in textbox
-	use templete reference variable
-30
-	How to pass value of input html tag to component class
-	<div>
-		<input #searchInput> 
-		<button (click)="updateSearchText(searchInput)">Search</button>
-	</div>
-	updateSearchText(inputEL : HtmlInputElement){
-		inputEL.value;
-	}
-	here we are passing input value when putton clicked to component method
-	
-	<div>
-		<input #searchInput> 
-		<button (click)="updateSearchText()">Search</button>
-	</div>
-	@viewChild('searchInput') searchEL: ElementRef;
-	updateSearchText(){
-		this.inputEL.nativeElement.value;
-	}
-	with above code, input element is available as soon as input element is loaded.
-
-
-38      _____________________ Lifecycle Hook's______________________________
-	for each selecter tag, one component instance is created
-	we can check it with writing log in constructor
-	but by the time components are inisialized, we only have property inisialized values.
-	but @input property value passed from parent component is not available
-	@ngOnChanges, @ngOnInit, @ngDoCheck, @ngDestroy
-	@ngAfterViewInit, @ngAfterViewChecked, 
-	@ngAfterContentInit, @ngAfterContentChecked
-39
-	ngOnChanges
-40
-	ngOnInit
-	
-
-59
-	view encasulation, CSS in one component only applicable to same component html
-	but there are othen encapsulation properties we can apply
-
-60
-	not much
-	so to pass data two non parent-chield compo , it was difficult with @input and event
-	we can achive same with services
-61
-	create service
-	service is just plain class in seprate ts file, this can be used any component methods
-62 
-		inject service as dependency injection insted of creating instance directly
-		
-		@Component({
-		  selector: 'app-hero',
-		  templateUrl: './hero.component.html',
-		  providers: [ServiceOne]
-		})
-		export class Cone{
-			constructor(private x : ServiceOne){
-			
-			}
-			
-			onsubscribe(){
-				this.x.subscribe();
-			}
-		
-		}
-	
-63
-	hierarachial dependency
-	if we inject service with provider that component seperate instance of service
-	if we do not use provider in child component, we can still use service, but this time we are sharing same service insce between parent and child componets
-	if inject in app module file it self then all components in that module can use injected service instance
-64
-	pratice code example for hierarachial dependency
-	componets are like app->admin>user
-	admin has form to collect userdata
-	user has deisplay logic for list of users
-	adimn and user component selecters are in app html one after other
-	use service class for creating user and adding into list
-	crete use model class as well
-65
-	how inject loger service in userservice
-	1.both include in module file
-	2. @Injectable() on the top of userservice 
-	3. constructor in userservice
-		constructor(private x : LoggerService){}
-	but when we inject service in component we do not add @Injectable() 
-	but we need this for service to service injection
-
-
-	
-68
-	observable is to hadle stream of data in async form with RxJS	
-69
-	when button clicked data should dispaly
-	x :any[]=[];
-	myObservable = new Observable((observer) ->{
-		observer.next(['1','2','3','4']);
-	});
-	getAsycData(){
-		this.myObservable.subscribe((val:any)=>{this.x=val;});
-	}
-	
-	second example
-	x :any[]=[];
-	myObservable = new Observable((observer) ->{
-		setInterval(()=>{observer.next(['1'])},1000);
-		setInterval(()=>{observer.next(['2'])},2000);
-		setInterval(()=>{observer.next(['3'])},4000);
-		setInterval(()=>{observer.next(['4'])},6000);
-	});
-	getAsycData(){
-		this.myObservable.subscribe((val:any)=>{this.x.push(val);});
-	}
-70    how to use error and complete methods of observable
-71    how to use 1 of and 2 from functions to create observable and how to handle observable data
-	  what id difference between 1 of and 2 from
-72	  fromevent
-	1.how to log something from component menthod when button clicked but we should not call method directly
-	2.how to display new dev element when button is clicked with observable with help of formevent
-73	use map $ filter methods on observable
-	
-81,82 Routes
------------------------------------------
-
-
-
-113			[113-124-templete driven form]
-            ----------------------------------
-	import FormsModule
-	FormsModule converst form tage to templete driven form
-	
-	how to get HTMLFormElement in component class
-		<form class="form" (ngSubmit)="OnFormSubmitted(registrationForm)" #registrationForm>
-			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
-		</form>
-		OnFormSubmitted(form:HTMLFormElement){
-			console.log(form)
-		}
-	how to get NgForm (json form form of heml form)in component class
-		<form class="form" (ngSubmit)="OnFormSubmitted(registrationForm)" #registrationForm="ngForm">
-			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
-		</form>
-		OnFormSubmitted(form:NgForm){
-			console.log(form)
-		}
-	how to get NgForm with @ViewChild decorator in component class
-		<form class="form" (ngSubmit)="OnFormSubmitted()" #registrationForm="ngForm">
-			<input type="submit" value="Submit" class="submit-btn" [disabled]="!registrationForm.valid"> 
-		</form>
-		@ViewChild(registrationForm) form:NgForm;
-		OnFormSubmitted(){
-			console.log(this.form)
-		}
-	using @ViewChild decorator we can access DOM object or component from templete
-114	
-	NgForm has controls and value properties, but to populate value into it
-		we shlod do two things on element (ngModule and name attribute)
-		<input type="text" placeholder="First Name" name="firstname" ngModel />
-	access form values 
-		OnFormSubmitted(){
-			console.log(this.form.value.firstname)
-			console.log(this.form.controls['firstname'].value)
-		}
-	
-124			[124-135-Reactive form]
-            -------------------------------
-	import ReactiveFormsModule 
-	how to define reactive form in component class
-		export class AppComponent implements OnInit{
-		reactiveForm: FormGroup;
-
-		ngOnInit(){
-			this.reactiveForm = new FormGroup({
-			  firstname: new FormControl(null)
-			})
-		}
-		}
-	how to connect rectiv form in component to form in html
-		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
-		</form>
-	how to connect form elements
-		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
-			<input type="text" placeholder="First Name" formControlName="firstname" />
-		</form>
-125
-	how to add validaters
-		ngOnInit(){
-		this.reactiveForm = new FormGroup({
-		  firstname: new FormControl(null, [Validators.required, CustomValidators.noSpaceAllowed]),
-		  email: new FormControl(null, [Validators.required, Validators.email])
-		  })
-		  }
-		  valid, invalid properties are there at form level and controller
-	how to reactive css class classes
-		by default reactive form adds css classes like ng-touch, ng-untouch, ng-invalied
-		using this we can chnage elements display styyle
-			input.ng-invalid.ng-touched{
-			  border: red 2px solid;
-			}
-		above code updated border value if is touched and data not valied
-
-
-136      [136-155-HttpClient]
-		---------------------------------
-	no need to watch it is just rest basics and firebase setup
-137
-	step1: basic html project
-	UI- one create task button, it will display popup form 
-		tasks will be dispalyed in below button
-		task record will have edit, delete options
-		
-	components-
-		appcomponet -[headder - dashboard - footer]
-		dashboard component -[create component]
-	create component 
-		form- tempelte driven form
-			ngForm, onsubmit, name, ngModule
-		class 
-			@output to emmit event to dashboard class
-	dashboard 
-		form
-			add create form selecter
-			in selecter config emiter to send data from crete class to dashboard class
-
-138 import HttpClientModule in modules.ts
-
-	http: HttpClient = inject(HttpClient)
-	
-	this.http.post<{name:string}>('url',body,{headers:headers})
-			.subcribe( (response)=> {console.log(response)});
-139
-	this.http.get<{ [key:string]:Task}>('url')
-				.subcribe( (response)=> {console.log(response)});
-	you can watch the end 10 min for pipe and map knowledge
-	this.http.get<{ [key:string]:Task}>('url').pipe(map((response) => {
-                 //TRANSFORM DATA
-                 let tasks = [];
-                 for(let key in response){
-                   if(response.hasOwnProperty(key)){
-                     tasks.push({...response[key], id: key});
-                   }              
-                 }
-     
-                 return tasks;
-            })
-140
-	display task in html
-	fetch taskes in ngOnInit and assgin to intance variable array
-	<div class="task-item" [ngClass]="'task-' + task.status" *ngFor="let task of allTasks">
-	this line sets different css class based on status
-141
-	delete task
-	add click event and pass task id, and delete it
-	
-
-
-
-
-156    [Authentication]
-	--nothing
-157
-	useCase- login component, loging form should support both login and registrasion 
-	and it should capture values log in login component class
-	solution: componet class can have two methods one to toggle indicator to indicate login and registration 
-	one method to capture ngForm, which we get from html with templete driven style form
-	html can have two buttons one to submit form, other to call toggle method
-	toggle method button should not submit the form, so we need to set type as button istedof submit
-158
-	usecase - call post api and pass login details to register
-	solution - create service call with @Injectable and inject HttpClient
-	crete model class for post response this.http.post<LogRes>('url',body)
-	in component class inject service class 
-	this.serviceName.servicemethod().subcribe({
-		next: (res) => {console.log(res)},
-		error: (error) => {console.log(error)}
-	})
-	
-161
-	tap function
-	emit data using rxjs/Subject
-
-
-
-
-183 
- angular 16 signals
-
-
-188
- angular 14 stand alone components
- 
-
-
-PrimeNG
-----------------------------------
-
-
-Debug
---------------------------------------
-component function debug
-
-	
-oauth2-oidc
------------------------

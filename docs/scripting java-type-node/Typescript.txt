@@ -148,3 +148,8 @@ how do we declare varable as function
 
 
 difference between Type and Interface
+
+
+Object.keys()
+Array.from()
+new Set()
