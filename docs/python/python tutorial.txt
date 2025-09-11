@@ -2,7 +2,11 @@ https://www.pythontutorial.net/
 https://www.youtube.com/watch?v=mrhccLHtyN4&list=PLeo1K3hjS3utXiAr1FqrssqNU1Q0ai84x   OOPS
 https://www.youtube.com/watch?v=qNxrPri1V0I   road to ML with python
 
-FastAPI, Flask, Pandas
+python 3.13 -- as of 08/2025
+
+FastAPI -- top priority
+Flask, 
+Pandas
 understand use case for scikit
 
 FastAPI logging, security, transaction, ORM, invoke secure API

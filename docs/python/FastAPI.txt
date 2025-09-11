@@ -1,0 +1,13 @@
+
+
+python 3.13 -- as of 08/2025
+
+
+
+software
+---------------------------------
+python
+pip install fastapi
+pip install uvicorn
+
+

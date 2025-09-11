@@ -16,3 +16,17 @@ mvn test
 mvn package
 mvn install //publishes in local repository not in server
 mvn deploy // publish in remote repository not in server
+
+
+
+
+maven
+----------------------------------------
+cd C:\two\eclipsework\Bit\one-vehicle-association-legacy
+mvn clean package install
+mvn -U clean spring-boot:run
+mvn -U clean spring-boot:run -Dhibernate.show_sql=true -Dspring.profiles.active=dev,local -P dev-vault
+mvn -U clean spring-boot:run -Dspring.profiles.active=dev,local -P dev-vault >c:\2work\one.txt
+mvn -U clean spring-boot:run -Daws_profile=sso-nonprod -Daws_access_key_id=ASIA3NILJ2 -Daws_secret_access_key=hSm59zsUm/1O1Vn0hU26W0ezWvPAS
+mvn -U clean spring-boot:run -Dcloud.aws.region.static=us-east-1 -Dcloud.aws.credentials.useDefaultAwsCredentialsChain=true
+

@@ -1,6 +1,31 @@
+
+merge f1 into dev 
+--------------------------------
+git checkout f1 
+git pull
+git checkout dev
+git pull
+git merge f1
+:wq
+
+rebase f1 with dev
+-------------------------------------
+git checkout dev
+git pull
+git checkout f1 
+git pull
+git rebase dev
+--merge conflicts 
+resolve manually
+git add <file-name> 
+git rebasse --continue 
+git push --force
+
+git rebase --abort
+
+
 git clone http://bitbucket.us.ABC.com/scm/digital/CompanyOne.advisor.reference-api.git
-enter password
-cd C:\two\eclipsework\Bit\one-vehicle-health-report
+
 
 git checkout advisor-details-AMID
 git status
@@ -20,20 +45,6 @@ git add -A
 git commit -m "TTARL-
 git push origin Branchname1
 
-maven
-----------------------------------------
-cd C:\two\eclipsework\Bit\one-vehicle-association-legacy
-mvn clean package install
-mvn -U clean spring-boot:run
-mvn -U clean spring-boot:run -Dhibernate.show_sql=true -Dspring.profiles.active=dev,local -P dev-vault
-mvn -U clean spring-boot:run -Dspring.profiles.active=dev,local -P dev-vault >c:\2work\one.txt
-mvn -U clean spring-boot:run -Daws_profile=sso-nonprod -Daws_access_key_id=ASIA3NILJ2 -Daws_secret_access_key=hSm59zsUm/1O1Vn0hU26W0ezWvPAS
-mvn -U clean spring-boot:run -Dcloud.aws.region.static=us-east-1 -Dcloud.aws.credentials.useDefaultAwsCredentialsChain=true
-
-
-password change
---------------------------
-control panel> Credential Manager>git:http//
 
 for config
 -------------------------------
@@ -129,19 +140,6 @@ move to different repository
 ----------------------------------------------
 git remote set-url origin http://user1@bitbucket.us.abc.com/scm/digital/CompanyOne.advisor.reference-api.git
 
-
-
-Git 
-https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
-
-
-cd C:/two/eclipsework/Bit/
-cd C:/two/eclipsework/Bit/one-vehicle-health-report
-
-git clone https://bitbucket.sdlc.toyota.com/scm/ctp/one-vehicle-association-legacy.git
-
-mvn clean package install
-mvn -U clean spring-boot:run
 
 
 >git --version

@@ -112,6 +112,7 @@ we can not add more than one structural directives on one element(like *ngFor an
 	
 	productcomponent.html
 	{product1.name}
+	Note- so child component input propert becomes as attribute to selecter tag, that is true even for non input properties
 	
 26
 	@input
@@ -163,6 +164,8 @@ we can not add more than one structural directives on one element(like *ngFor an
 	productlist.html
 		<productfliterComponent [all]="totalProducts" [available] ="totalAvailable" (selectedFilterChanged) = "mtwo($event)">
 		<productComponent1 *ngFor="let prod of products" [product1]="prod">	
+	Note:-ouptput property becomes attribute to tag but sepcialtype(like event). whithout manual click even it triggered here.
+	we trigger event manually in child component, but from parent it auto triggers and calls parent method to set value
 28
 	how to pass data between non related components
 	assuem there 3 components 1, continer 2,search, 3.product list
