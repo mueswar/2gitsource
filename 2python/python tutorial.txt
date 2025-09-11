@@ -692,3 +692,11 @@ how do you accepect input data from user?
 
 scikit
 tenserflow
+
+
+issues
+------------------------------------------------------------------------
+what is wrong below 
+if a ==30 :
+    print('true')
+print('false')

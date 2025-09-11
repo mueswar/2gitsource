@@ -1,0 +1,11 @@
+
+
+1 define all datatupes
+
+2 print data types
+
+3 practice if,elif, for with numbers
+
+4 exicute all string methods
+
+
