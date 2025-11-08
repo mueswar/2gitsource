@@ -1,0 +1,74 @@
+https://www.youtube.com/watch?v=mqhxxeeTbu0&list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX
+https://www.youtube.com/watch?v=3mwFC4SHY-Y
+
+install
+--------------------------
+pip install flask
+
+
+
+
+from flask import Flask
+
+app=Flask(__name__)
+
+@app.route("/")
+def home():
+	return "Hello"
+	
+@app.route("/<name>")
+def user(name):
+	return f"Hello {name!}"
+
+if __name__ == "__main__":
+	app.run()
+
+>python Hello.py
+
+example 2
+-------------
+	from flask import Flask, redirect, url_for
+
+	app=Flask(__name__)
+
+	@app.route("/")
+	def home():
+		return "Hello"
+		
+	@app.route("/<name>")
+	def user(name):
+		return f"Hello {name!}"
+		
+	@app.route("/admin")
+	def admin(name):
+		return redirect(url_for("home"))    //no url, it is just function name
+	@app.route("/qa")
+	def admin(name):
+		return redirect(url_for("user",name="qa1"))    //no url, it is just function name, paramer
+
+	if __name__ == "__main__":
+		app.run()
+
+Example 3
+--------------
+	display hml page, to send html page to user, it should in in templetes folder
+	from flask import Flask, redirect, url_for, render_templete
+
+	app=Flask(__name__)
+
+	@app.route("/")
+	def home():
+		return render_templete("index.html")
+		
+pass value to html
+	@app.route("/<name>")
+	def home(name):
+		return render_templete("index.html", content=name)
+		
+	index.html
+	Hello {{content}}
+	
+we can also write native python code in html like below
+	<%for x in range(10)%>
+		{{x}}
+	<%endfor%>

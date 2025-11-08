@@ -1,4 +1,6 @@
 
+https://www.youtube.com/watch?v=rvFsGRvj9jo
+
 
 python 3.13 -- as of 08/2025
 
@@ -10,4 +12,41 @@ python
 pip install fastapi
 pip install uvicorn
 
+python -m pip install fastapi
+WARNING: The script fastapi.exe is installed in 'C:\Users\Arha\AppData\Local\Programs\Python\Python312\Scripts' which is not on PATH.
+
+create main.py 
+
+main.py
+from fastapi import FastAPI
+
+api = FastAPI()
+@api.get('/')
+def index():
+	return {"message":"Hello"}
+
+run below command
+uvicorn main:api --port9999
+or
+fastapi dev main.py
+
+
+-------------------------------------------------------------
+Example1
+	create below endpoints
+	1.get all TODOs
+		assume todo has id,name,description
+	2.get request todo 
+	3.create new todo
+	4.update todo for given todo id 
+	5.delete todo for requested todo id
+	
+Example2
+	create above endpoints but now todo list has Customer type of objects, use pydantic basemodel to create it
+	all endpoints should have return type
+Example3 
+	rasie error if give todo id is not in the list while updating list
+	add field validations
+Example 4
+	logger
 

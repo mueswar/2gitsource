@@ -6,6 +6,24 @@
 
 3 practice if,elif, for with numbers
 
-4 exicute all string methods
+4 practice if,elif, for arthemetic words
+
+5 exicute all string methods
+
+6 classes, methods
+
+7 exceptions
+
+
+
+
+database
+-----------------------
+pandas
+sqlalchemy
+
+
+loging
+----------------------
 
 
