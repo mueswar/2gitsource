@@ -19,7 +19,7 @@ git rebase dev
 resolve manually
 git add <file-name> 
 git rebasse --continue 
-git push --force
+git push --force   [when rebase is completed and git status gives diverege message]
 
 git rebase --abort
 

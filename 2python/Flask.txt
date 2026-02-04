@@ -1,13 +1,29 @@
 https://www.youtube.com/watch?v=mqhxxeeTbu0&list=PLzMcBGfZo4-n4vJJybUVV3Un_NFS5EOgX
 https://www.youtube.com/watch?v=3mwFC4SHY-Y
 
+learning with AI help
+--------------------------------------
+ask chatGPT
+
+compare spring rest api creation with flask rest api creation
+Compare Spring Security vs Flask auth
+Show Flask + SQLAlchemy vs JPA
+Explain Flask decorators in deep Java terms
+
 install
 --------------------------
 pip install flask
 
 
+Type	    Convention	      Example
+Class	    PascalCase       (Capitalized)	Flask, UserService
+Function	snake_case       (lowercase + underscores)	redirect, url_for
+Variable	snake_case	     user_name
+Module	    lowercase	     flask, math, sys
 
 
+Hello.py
+-------------------------
 from flask import Flask
 
 app=Flask(__name__)

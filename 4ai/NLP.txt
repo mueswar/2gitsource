@@ -1,0 +1,42 @@
+
+
+Tokenization is the process of breaking a piece of text into smaller units (“tokens”) which are easier for machines to work with. These tokens might be words, sub-words, characters or sometimes sentences.
+
+NLTK (Natural Language Toolkit), spaCy, Hugging Face Tokenizers, SentencePiece, GATE NLP and Apache OpenNLP
+
+spaCy
+pip install spacy
+python -m spacy download en_core_web_sm
+
+import spacy
+nlp = spacy.load("en_core_web_sm")
+doc = nlp("ChatGPT is a powerful NLP model created by OpenAI.")
+for token in doc:
+    print(token.text)
+	
+Preprocessing steps
+------------------------
+Case folding means converting all text to a single case (usually lowercase) so that comparisons and tokenization are consistent.
+Stopword Removal- Stopwords are common words like “the”, “is”, “a”, etc., that often don’t carry much meaning.
+Stemming chops words to their root form (roughly, without caring if it’s a real word).
+Lemmatization reduces words to their dictionary base form (“lemma”), considering grammar and context.
+Part-of-speech tagging assigns a grammatical category (like noun, verb, adjective, etc.) to each word in a sentence.
+Named Entity Recognition (NER) identifies and classifies key information (“entities”) in text into predefined categories such as:
+	PERSON → names of people
+	ORG → organizations
+	GPE → countries, cities
+	DATE → dates or times
+	MONEY → monetary values
+Parsing
+	Constituency Parsing - Groups words into nested phrases (noun phrase, verb phrase)
+	Dependency Parsing - Identifies head–dependent relationships between words
+
+Basic Bag-Of-Words
+--------------------------------
+vectorization
+Binary and raw freqency BOW
+Cosin similarity
+N-grams
+
+TF-IDF
+------------------------------

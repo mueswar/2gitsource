@@ -1,5 +1,21 @@
 
 
+minimum 3.4.11 as per spring start io  on 11/18/2025
+
+springboot 3.3.11 on 11/18/2025 at Ford
+------------------------------------------------------------------------------------------------------------------
+
+
+
+spring boot 3.5.7
+	java 17 to 25
+	spring framework 6.2.12
+
+
+
+
+
+
 
 Zipkin and Jaeger
 Sleuth

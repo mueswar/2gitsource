@@ -1,15 +1,25 @@
-java LTS- 8, 11, 17, 21
+java LTS- 8, 11, 17, 21, 25
 	java 21 was released sep-2023 
-current version - 23
+	java 25  was released sep-2025
+current version - 25
 
 Reduce defect fix time:
 ---------------------------------
+0) Do not implement, understand complete requrment evry property business, write your clear story
 1) Always handle exception with care. log more info
 2) Do not log same exception more than once
 3) implement tostring() method
 4) log third party exceptions properly at one place, check all mandatory fields at one place.
 5) have front side and back side different objects and always convert third party service response
 6) always have seperate vo object to call third party service
+7) Do not create request/response as one plain big object, allways group properties into small group/object and inject into one
+8) try to create seprate controller and service always so that dependency can be reduced
+9)
+
+style your code
+--------------------------------------
+1)within the method always use var
+2)use Optional
 
 Coding:
 ................................................................................
