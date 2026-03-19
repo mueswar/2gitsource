@@ -1,0 +1,34 @@
+
+RAG (Retrieval-Augmented Generation)
+
+Retrieve relevant content from PDFs → Feed to LLM → Generate answer.
+
+	User Question
+		  ↓
+	Backend (Python API)
+		  ↓
+	Embedding Model
+		  ↓
+	Vector Database (stores PDF chunks)
+		  ↓
+	Relevant chunks retrieved
+		  ↓
+	LLM generates answer using those chunks
+		  ↓
+	Response returned
+
+ADK helps manage:
+
+	LLM calls
+	Tool usage
+	Retrieval
+	Memory
+	Multi-step reasoning
+
+So yes, it is a framework.
+
+User question
+→ System embeds question
+→ Vector DB finds similar chunks
+→ LLM generates answer
+→ Response returned

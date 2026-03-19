@@ -11,9 +11,15 @@ understand use case for scikit
 
 FastAPI logging, security, transaction, ORM, invoke secure API
 
+Tools
+-----------------------------------------------------------------------------------------------------------------------
+VS Code
+open C:\2gitsource\python-projects\python-test folder to see example projects
+run- to run individual files in the treminal> python one.py
+
 
 install type1
-------------------------
+-----------------------------------------------------------------------------------------------------------------------
 	in cmd >python --version
 	just install python anconda
 	python comes with jupiter notebook
@@ -37,14 +43,24 @@ how to open python interactive promt
 	how can we exit from interactive promt
 		>>>exit()
 IDE
--------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
 	IDLE can be used to write python files
 		start programs> python 3.6>IDLE
 
 	how can we run .py file from command promt
 		>python c:\one.py click enter
 
---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+there is no new key word while creating instance for object
+we do not declare exceptions at the method level even if a function might raise
+in service.py file does not have class, methods do not have slef argument, but contoller.py does have class.
+we can define multiple classes in single file, file name cabe any thing, but to inmport class, we need file name
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
 
 comments
 # can be used to comment the code.

@@ -1,3 +1,11 @@
+SSH
+open bash from program files
+ssh-keygen -t ed25519 -C "your_email@example.com"
+cd .ssh   //key file is generated here
+cat id_ed25519.pub | clip
+past key in github
+and also validate SSO
+
 
 merge f1 into dev 
 --------------------------------

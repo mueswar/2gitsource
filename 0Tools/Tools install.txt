@@ -2,7 +2,6 @@ install java8
 install NodeJs 12
 install Python
 install AWS CLI version 2
-install eclipse
 install IntellliJ
 install visual studio
 install PyCharm

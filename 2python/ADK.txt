@@ -1,0 +1,51 @@
+https://ai.google.dev/
+https://ai.google.dev/gemini-api/docs/models
+
+OpenAi
+https://developers.openai.com/api/reference/overview
+
+
+
+
+video-1:
+https://www.youtube.com/watch?v=P4VFL9nIaIA
+
+example-1 [create Agent with google model gemini-2.0-flash]
+	create folder(name anyything)
+	create sub folder this folder name should be agent name
+	__init__.py
+	.env file
+		key-this is created in google ai studio for google model
+	agent.py- this our class
+		in this call import Google agent class and pass parameters like name, model, description, instructions
+		google model details we can find here https://ai.google.dev/gemini-api/docs/models
+	from google.adk.agents import Agent
+	from google.adk.runners import Runner
+
+	# Define the agent
+	qa_agent = Agent(
+		name="qa_agent",
+		model="gemini-1.5-pro",
+		instruction="""
+		You are a helpful assistant.
+		Your job is to answer user questions clearly and concisely.
+		
+		Guidelines:
+		- If the user asks a factual question, provide a clear explanation.
+		- If the question is unclear, ask for clarification.
+		- Use simple language and short examples when helpful.
+		"""
+	)
+	run command > adk web
+Example-2 [Tools]
+	Tool is function which can give answer for question, it can be our function or google or third party.
+	in the above example question related anser is configured in instruction property
+	here we write function/google function and pass as Tool property to Google Agent class
+	Model finds this tool and takes the answer, gives polished answer
+
+
+example -3 [Create Agent with OpneAI model]
+	litellm - a library to connect any model
+	openrouter - we have to create acoount and get credits for any model, and create key
+	google ADK's Agent uses litell model, whenit is apssed to Agent
+	litellm model contains, model name and openroter key
