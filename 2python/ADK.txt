@@ -49,3 +49,16 @@ example -3 [Create Agent with OpneAI model]
 	openrouter - we have to create acoount and get credits for any model, and create key
 	google ADK's Agent uses litell model, whenit is apssed to Agent
 	litellm model contains, model name and openroter key
+
+Example -4 [generate email format, if we give email text]
+	for format create one Class (EmailFormatter)
+	LLM agent has property called "output_schema", here we have to give class name which we have created above.
+	in instruction also we should tell generate JSON, esplain format(here Emailformatter like subject, budy)
+	
+Example -5 [session, state, runner]
+	MemmorySessionService
+
+
+Example -6 [Persistent storage]
+	DatabaseSessionService
+	Context

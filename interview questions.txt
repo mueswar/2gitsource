@@ -170,7 +170,7 @@ experience
 --------------------------------------
 i have java experience,
 work on restful service
-i involve in planning, like tory create 
+i involve in planning, like story create 
 i have jenkins, AWS 
 support, splunk and dynatrace
 

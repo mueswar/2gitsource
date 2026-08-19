@@ -5,6 +5,23 @@ How to read input
 	Scanner in = new Scanner(System.in);
 	int n = in .nextInt();
 	
+Questions on syntax
+--------------------------------------------------------------------------------------------------
+
+String
+
+
+StringBuffer 
+	attach string in the end 
+	add sting in 4th postion
+	delete given charater 
+	delete character at position
+	subString 
+	size 
+	reverse
+	
+	
+	
 data types
 ---------------------------------------------------------------------------------------------------
 	char 2 bytes

@@ -923,66 +923,7 @@ Testing
 	http://localhost:8080/h2-console/
 
 
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@      FAQ            @@@@@@@@@@@@@@@@@@@@@@
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-Spring boot version -2.7.14
-Spring version -5
 
-get bean with Beanfactory
-get bean with ApplicationContext
-use setter injection
-use constructor injection
-injects objects
-get bean using alias ,name ,id,idref
-list and maps
-get dependecy with autowire
-scopes Singleton and proptotype
-bean defination inheritance with lists
-what is factory method use in dependency
-how to read properties
-	@Value("key1")
-How to configure objects that have been created outside the control of an IoC container.
-how to instantiate a Spring IoC container
-how to solve Circular Dependency in spring
-how to build spring mavc with spring boot
-
-What is maximum payload in post in RESTful
-Different kind of rest methods
-Rest status codes
-URL versioning 
-Rest security
-how to handle logging
-how to handle exceptions
-How to read external properties
-Integration testing
-File/Image sending through RestFul
-how to combine declarative and programetic transactions
-
-SPring+ JPA+ transactions
-	JpaTransactionManager it needs LocalContainerEntityManagerFactoryBean
-	LocalContainerEntityManagerFactoryBean needs DataSource and JpaVendorAdapter
-	JpaVendorAdapter is HibernateJpaVendorAdapter
-	@Transactional(isolation = Isolation.SERIALIZABLE)
-	When using JPA outside of a dependency injection container, transactions need 
-	to be handled programatically by the developer:
-	@PersistenceContext
-	private EntityManager em;
-	UserTransaction utx = entityManager.getTransaction(); 
-	utx.begin();utx.commit();utx.rollback(); 
-	propagation: REQUIRED, REQUIRES_NEW, MANDATORY, NESTED, SUPPORTS
-	isolation:DEFAULT, READ_COMMITTED, READ_UNCOMMITTED, REPEATABLE_READ, SERIALIZABLE 
-	DEFAULT is lets DB to deceide it
-	readOnly - whether the transaction is read-only or read/write
-	timeout — transaction timeout
-Spring logging with AOP
-	ImportAware
-	ApplicationListener
-	@Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)
-	@Target(value = { java.lang.annotation.ElementType.TYPE })
-	@Documented
-	@Import({LoggerHeaderConfigurator.class})
-	public @interface EnableLoggerHeader {
 
 
 

@@ -1,0 +1,183 @@
+Spring interview questions
+
+
+Spring boot version -2.7.14
+Spring version -5
+
+
+
+get bean with Beanfactory
+get bean with ApplicationContext
+Dependency injection
+IOc continer
+use setter injection
+use constructor injection
+injects objects
+get bean using alias ,name ,id,idref
+list and maps
+get dependecy with autowire
+scopes Singleton and proptotype
+bean defination inheritance with lists
+what is factory method use in dependency
+how to read properties
+	@Value("key1")
+How to configure objects that have been created outside the control of an IoC container.
+how to instantiate a Spring IoC container
+how to solve Circular Dependency in spring
+how to build spring mavc with spring boot
+StereoType Annotations
+
+Difference between Conroller and RestController
+What is maximum payload in post in RESTful
+Different kind of rest methods
+Rest status codes
+Different annotations
+URL versioning 
+Rest security
+how to handle logging
+how to handle exceptions
+How to read external properties
+Integration testing
+File/Image sending through RestFul
+how to combine declarative and programetic transactions
+Batch process
+
+SPring+ JPA+ transactions
+	JpaTransactionManager it needs LocalContainerEntityManagerFactoryBean
+	LocalContainerEntityManagerFactoryBean needs DataSource and JpaVendorAdapter
+	JpaVendorAdapter is HibernateJpaVendorAdapter
+	@Transactional(isolation = Isolation.SERIALIZABLE)
+	When using JPA outside of a dependency injection container, transactions need 
+	to be handled programatically by the developer:
+	@PersistenceContext
+	private EntityManager em;
+	UserTransaction utx = entityManager.getTransaction(); 
+	utx.begin();utx.commit();utx.rollback(); 
+	propagation: REQUIRED, REQUIRES_NEW, MANDATORY, NESTED, SUPPORTS
+	isolation:DEFAULT, READ_COMMITTED, READ_UNCOMMITTED, REPEATABLE_READ, SERIALIZABLE 
+	DEFAULT is lets DB to deceide it
+	readOnly - whether the transaction is read-only or read/write
+	timeout — transaction timeout
+Spring logging with AOP
+	ImportAware
+	ApplicationListener
+	@Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)
+	@Target(value = { java.lang.annotation.ElementType.TYPE })
+	@Documented
+	@Import({LoggerHeaderConfigurator.class})
+	public @interface EnableLoggerHeader {
+	
+Answers	
+--------------------------------------------------------------------------------------------------------
+
+Factory pattern
+	The Factory Design Pattern is a creational design pattern. Instead of letting the client directly create an object using new, a separate component is responsible for deciding which object to create and returning it.
+
+BeanFactory
+	BeanFactory is a Spring IoC container interface. It provides mechanisms for managing and retrieving beans. It may perform object creation internally, but its responsibility is broader than the traditional Factory Design Pattern.
+Dependency injection
+	Dependency Injection is a design pattern where a class receives its dependencies from an external container instead of creating them itself. In Spring Boot, the Spring IoC container creates and manages beans and injects their dependencies, usually through constructor injection. This reduces tight coupling, improves testability, and makes it easy to switch implementations.
+Which type of injection do you prefer?
+	Constructor injection, because dependencies are explicit, can be final, objects are fully initialized when created, 
+	and it's easier to unit test.	
+IOC 
+	Normally, your application controls object creation. With Spring The control of object creation has moved from your application code to the framework. That's Inversion of Control.
+
+how to instantiate a Spring IoC container
+	The Spring Boot application starts through SpringApplication.run(). Spring Boot creates and initializes an ApplicationContext, which acts as the IoC container. It processes configuration, performs component scanning, registers bean definitions, creates and configures beans, resolves their dependencies, and performs dependency injection. Once the context is initialized, the application is ready to serve requests.
+	
+	Although Spring Boot normally does this for you, you can explicitly create an ApplicationContext.
+	ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+	OrderService service = context.getBean(OrderService.class);
+how to solve Circular Dependency in spring
+	First, I would identify why the circular dependency exists and refactor the design to remove the cycle. Circular dependencies often indicate that responsibilities between services are too tightly coupled. I might extract common functionality into another service or introduce an orchestration component so that dependencies have a clear direction. @Lazy can sometimes break the initialization cycle, but I would treat that as a workaround rather than the preferred solution. I would avoid enabling spring.main.allow-circular-references just to hide the problem.
+
+Difference between Conroller and RestController
+	The main difference is what Spring does with the return value from your controller method.
+	@Controller is traditionally used for MVC applications that return views/pages.
+	@RestController is used for REST APIs, where the response is normally JSON/XML/data rather than an HTML view.
+	
+StereoType Annotations
+	@Service, @Component, @Repository @RestController are stereotype annotations
+	In Spring, stereotype annotations are annotations that tell Spring: "This class is a component managed by the Spring IoC container, and this is the role it plays."
+	Spring discovers the class through component scanning.
+Stereotype vs @Bean
+	@Configuration
+	public class AppConfig {
+		@Bean
+		public PaymentClient paymentClient() {
+			return new PaymentClient();
+		}
+	}
+	Here you explicitly tell Spring how to create the bean.
+What is maximum payload in post in RESTful
+	AWS API Gateway has 10 MB payload limit for REST APIs. So if there are large reports
+	store in AWS S3 bucket and create singned URL( for GCP:? )
+	
+Different kind of rest methods
+	CREATE  → POST
+	READ    → GET
+	UPDATE  → PUT / PATCH
+	DELETE  → DELETE
+	One important distinction: POST is generally not idempotent, 
+	while GET, PUT, and DELETE are defined as idempotent (assuming the server follows HTTP semantics).
+	(Search and read how to make POST as Idempotent by using idempotent-key in hedder, for this we will extra table )
+Rest status codes
+	200 OK                 GET
+	201 Created            POST
+	204 No Content         DELETE
+	400 Bad Request        request itself is invalid.
+	401 Unauthorized
+	403 Forbidden		   The user is authenticated, but doesn't have permission.
+	404 Not Found
+	422 Unprocessable Content  The request is syntactically valid, but the business validation fails.
+	500 Internal Server Error
+	502 Bad Gateway
+	503 Service Unavailable
+	504 Gateway Timeout
+Different annotations
+	@SpringBootApplication [It is combination of @Configuration, @EnableAutoConfiguration and @ComponentScan]
+	@Configuration
+	@EnableAutoConfiguration
+	@ComponentScan
+	@RestController
+	@RequestMapping("/api/users")
+	@GetMapping("/{id}")
+	@PostMapping
+	@PathVariable
+	@RequestBody
+	@RequestParam
+	@Service
+	@Repository
+	@Autowired
+	@Component
+	@Entity
+	@Table
+	@Id
+	@GeneratedValue
+how to handle logging	
+	In a Spring Boot application, logging is usually handled through SLF4J as the logging API 
+	and Logback as the default logging implementation.
+	logging.level.root=INFO
+	logging.level.com.mycompany.myapp=DEBUG
+	by default spring boot logs to console[AWS cloudwatch]
+how to handle exceptions
+	public class OrderNotFoundException extends RuntimeException {
+		public OrderNotFoundException(String message) { super(message); } 	}
+	@RestControllerAdvice
+	public class GlobalExceptionHandler {
+		@ExceptionHandler(OrderNotFoundException.class)
+		public ResponseEntity<ErrorResponse> handleOrderNotFound( OrderNotFoundException ex) {
+			ErrorResponse error = new ErrorResponse( "ORDER_NOT_FOUND", ex.getMessage() );
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+		}
+	}
+	Checked exceptions compiler forces to you handle the exception either with throws keyword or try/catch
+	IOException SQLException FileNotFoundException InterruptedException
+	unchecked exception- compiler does not force you to handle
+	NullPointerException IllegalArgumentException IllegalStateException IndexOutOfBoundsException RuntimeException
+	all custom exceptions extends RuntimeException are unchecked exceptions 
+	we use unceked exceptions for business logic exptions, we do not need to writr try/catch in every layer
+	API is throwing checked exception we catch it and convert to uncheked exception
+	
+	

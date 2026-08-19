@@ -1,0 +1,9 @@
+<div *ngIf="product; else noProduct">
+  <h2>Product Details</h2>
+  <p><strong>Name:</strong> {{ product.name }}</p>
+  <p><strong>Price:</strong> ${{ product.price }}</p>
+</div>
+
+<ng-template #noProduct>
+  <p>Please select a product.</p>
+</ng-template>

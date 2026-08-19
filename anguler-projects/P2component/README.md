@@ -1,9 +1,11 @@
 ng new P2component --no-standalone
 
+problem: create new component and display content in app html
 
-<app-header></app-header>
+in app html
+  <app-header></app-header>
 
-folder header in app folder
+create folder header in app folder
 
 create header.component.ts
 import { Component } from '@angular/core';
@@ -16,6 +18,7 @@ export class HeaderComponent {
   title = 'Headercomponent';
 }
 
-
-import in app.module.ts
-import { HeaderComponent } from './header/header.component';
+in app module file
+  import in app.module.ts
+  import { HeaderComponent } from './header/header.component';
+  add header component in declarations

@@ -1,0 +1,777 @@
+String programms
+
+1 Reverse a String
+public static String reverse(String str) {
+    char[] chars = str.toCharArray();
+
+    for (int i = 0, j = chars.length - 1; i < j; i++, j--) {
+        char temp = chars[i];
+        chars[i] = chars[j];
+        chars[j] = temp;
+    }
+
+    return new String(chars);
+}
+2. Check if a String is Palindrome
+public static boolean isPalindrome(String str) {
+    int left = 0;
+    int right = str.length() - 1;
+
+    while (left < right) {
+        if (str.charAt(left) != str.charAt(right)) {
+            return false;
+        }
+        left++;
+        right--;
+    }
+
+    return true;
+}
+
+3. Reverse Words in a Sentence
+public static String reverseWords(String str) {
+    String[] words = str.trim().split("\\s+");
+
+    StringBuilder result = new StringBuilder();
+
+    for (int i = words.length - 1; i >= 0; i--) {
+        result.append(words[i]);
+
+        if (i != 0) {
+            result.append(" ");
+        }
+    }
+
+    return result.toString();
+}
+
+4. Count Characters in a String
+public static Map<Character, Integer> countCharacters(String str) {
+    Map<Character, Integer> map = new HashMap<>();
+
+    for (char c : str.toCharArray()) {
+        map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+
+    return map;
+}
+5. Find the First Non-Repeated Character
+public static Character firstNonRepeated(String str) {
+    Map<Character, Integer> frequency = new LinkedHashMap<>();
+
+    for (char c : str.toCharArray()) {
+        frequency.put(c, frequency.getOrDefault(c, 0) + 1);
+    }
+
+    for (Map.Entry<Character, Integer> entry : frequency.entrySet()) {
+        if (entry.getValue() == 1) {
+            return entry.getKey();
+        }
+    }
+
+    return null;
+}
+6. Find the First Repeated Character
+public static Character firstRepeated(String str) {
+    Set<Character> set = new HashSet<>();
+
+    for (char c : str.toCharArray()) {
+        if (!set.add(c)) {
+            return c;
+        }
+    }
+
+    return null;
+}
+7. Remove Duplicate Characters
+public static String removeDuplicates(String str) {
+    Set<Character> set = new LinkedHashSet<>();
+
+    for (char c : str.toCharArray()) {
+        set.add(c);
+    }
+
+    StringBuilder result = new StringBuilder();
+
+    for (char c : set) {
+        result.append(c);
+    }
+
+    return result.toString();
+}
+8. Check Whether Two Strings are Anagrams
+public static boolean areAnagrams(String a, String b) {
+    if (a.length() != b.length()) {
+        return false;
+    }
+
+    char[] arr1 = a.toCharArray();
+    char[] arr2 = b.toCharArray();
+
+    Arrays.sort(arr1);
+    Arrays.sort(arr2);
+
+    return Arrays.equals(arr1, arr2);
+}
+9. Anagram Check in O(n)
+public static boolean areAnagrams(String a, String b) {
+    if (a.length() != b.length()) {
+        return false;
+    }
+
+    int[] count = new int[256];
+
+    for (int i = 0; i < a.length(); i++) {
+        count[a.charAt(i)]++;
+        count[b.charAt(i)]--;
+    }
+
+    for (int value : count) {
+        if (value != 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+10. Count Vowels and Consonants
+public static void countVowelsAndConsonants(String str) {
+    int vowels = 0;
+    int consonants = 0;
+
+    for (char c : str.toLowerCase().toCharArray()) {
+        if (c >= 'a' && c <= 'z') {
+            if ("aeiou".indexOf(c) >= 0) {
+                vowels++;
+            } else {
+                consonants++;
+            }
+        }
+    }
+
+    System.out.println("Vowels: " + vowels);
+    System.out.println("Consonants: " + consonants);
+}
+11. Count Words in a String
+public static int countWords(String str) {
+    if (str == null || str.trim().isEmpty()) {
+        return 0;
+    }
+
+    return str.trim().split("\\s+").length;
+}
+12. Find Duplicate Characters
+public static Set<Character> duplicateCharacters(String str) {
+    Set<Character> seen = new HashSet<>();
+    Set<Character> duplicates = new LinkedHashSet<>();
+
+    for (char c : str.toCharArray()) {
+        if (!seen.add(c)) {
+            duplicates.add(c);
+        }
+    }
+
+    return duplicates;
+}
+13. Find the Most Frequent Character
+public static Character mostFrequentCharacter(String str) {
+    Map<Character, Integer> map = new HashMap<>();
+
+    for (char c : str.toCharArray()) {
+        map.put(c, map.getOrDefault(c, 0) + 1);
+    }
+
+    Character result = null;
+    int max = 0;
+
+    for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+        if (entry.getValue() > max) {
+            max = entry.getValue();
+            result = entry.getKey();
+        }
+    }
+
+    return result;
+}
+14. Remove All White Spaces
+public static String removeSpaces(String str) {
+    return str.replaceAll("\\s+", "");
+}
+15. Replace Spaces Without replace()
+public static String replaceSpaces(String str) {
+    StringBuilder result = new StringBuilder();
+
+    for (char c : str.toCharArray()) {
+        if (c == ' ') {
+            result.append("%20");
+        } else {
+            result.append(c);
+        }
+    }
+
+    return result.toString();
+}
+16. Check Whether a String Contains Only Digits
+public static boolean containsOnlyDigits(String str) {
+    if (str == null || str.isEmpty()) {
+        return false;
+    }
+
+    for (char c : str.toCharArray()) {
+        if (!Character.isDigit(c)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+17. Convert String to Integer Without Integer.parseInt()
+public static int toInteger(String str) {
+    if (str == null || str.isEmpty()) {
+        throw new IllegalArgumentException("Invalid number");
+    }
+
+    int result = 0;
+    int sign = 1;
+    int index = 0;
+
+    if (str.charAt(0) == '-') {
+        sign = -1;
+        index++;
+    }
+
+    while (index < str.length()) {
+        char c = str.charAt(index);
+
+        if (c < '0' || c > '9') {
+            throw new NumberFormatException(str);
+        }
+
+        result = result * 10 + (c - '0');
+        index++;
+    }
+
+    return result * sign;
+}
+18. Convert Integer to String Without String.valueOf()
+public static String intToString(int number) {
+    if (number == 0) {
+        return "0";
+    }
+
+    boolean negative = number < 0;
+
+    long n = Math.abs((long) number);
+
+    StringBuilder result = new StringBuilder();
+
+    while (n > 0) {
+        result.append((char) ('0' + n % 10));
+        n /= 10;
+    }
+
+    if (negative) {
+        result.append('-');
+    }
+
+    return result.reverse().toString();
+}
+19. Find the Longest Word
+public static String longestWord(String str) {
+    String[] words = str.split("\\s+");
+
+    String longest = "";
+
+    for (String word : words) {
+        if (word.length() > longest.length()) {
+            longest = word;
+        }
+    }
+
+    return longest;
+}
+20. Find the Shortest Word
+public static String shortestWord(String str) {
+    String[] words = str.trim().split("\\s+");
+
+    String shortest = words[0];
+
+    for (String word : words) {
+        if (word.length() < shortest.length()) {
+            shortest = word;
+        }
+    }
+
+    return shortest;
+}
+21. Capitalize Every Word
+public static String capitalizeWords(String str) {
+    String[] words = str.trim().split("\\s+");
+
+    StringBuilder result = new StringBuilder();
+
+    for (String word : words) {
+        result.append(Character.toUpperCase(word.charAt(0)))
+              .append(word.substring(1))
+              .append(" ");
+    }
+
+    return result.toString().trim();
+}
+22. Check if One String is Rotation of Another
+public static boolean isRotation(String a, String b) {
+    return a != null &&
+           b != null &&
+           a.length() == b.length() &&
+           (a + a).contains(b);
+}
+23. Find All Substrings
+public static List<String> allSubstrings(String str) {
+    List<String> result = new ArrayList<>();
+
+    for (int i = 0; i < str.length(); i++) {
+        for (int j = i + 1; j <= str.length(); j++) {
+            result.add(str.substring(i, j));
+        }
+    }
+
+    return result;
+}
+24. Find All Permutations of a String
+public static void permutations(String str) {
+    permutations("", str);
+}
+
+private static void permutations(String prefix, String remaining) {
+    if (remaining.isEmpty()) {
+        System.out.println(prefix);
+        return;
+    }
+
+    for (int i = 0; i < remaining.length(); i++) {
+        permutations(
+            prefix + remaining.charAt(i),
+            remaining.substring(0, i) + remaining.substring(i + 1)
+        );
+    }
+}
+25. Find the Longest Palindromic Substring
+public static String longestPalindrome(String str) {
+    if (str == null || str.length() < 2) {
+        return str;
+    }
+
+    int start = 0;
+    int end = 0;
+
+    for (int i = 0; i < str.length(); i++) {
+        int len1 = expand(str, i, i);
+        int len2 = expand(str, i, i + 1);
+
+        int len = Math.max(len1, len2);
+
+        if (len > end - start + 1) {
+            start = i - (len - 1) / 2;
+            end = i + len / 2;
+        }
+    }
+
+    return str.substring(start, end + 1);
+}
+
+private static int expand(String str, int left, int right) {
+    while (left >= 0 &&
+           right < str.length() &&
+           str.charAt(left) == str.charAt(right)) {
+        left--;
+        right++;
+    }
+
+    return right - left - 1;
+}
+26. Check if String Contains Only Unique Characters
+public static boolean hasUniqueCharacters(String str) {
+    Set<Character> set = new HashSet<>();
+
+    for (char c : str.toCharArray()) {
+        if (!set.add(c)) {
+            return false;
+        }
+    }
+
+    return true;
+}
+27. Find Character with Maximum Occurrence
+public static char maxOccurringChar(String str) {
+    int[] count = new int[256];
+
+    for (char c : str.toCharArray()) {
+        count[c]++;
+    }
+
+    char result = str.charAt(0);
+
+    for (char c : str.toCharArray()) {
+        if (count[c] > count[result]) {
+            result = c;
+        }
+    }
+
+    return result;
+}
+28. Remove a Given Character
+public static String removeCharacter(String str, char target) {
+    StringBuilder result = new StringBuilder();
+
+    for (char c : str.toCharArray()) {
+        if (c != target) {
+            result.append(c);
+        }
+    }
+
+    return result.toString();
+}
+29. Count Occurrences of a Substring
+public static int countOccurrences(String str, String target) {
+    int count = 0;
+    int index = 0;
+
+    while ((index = str.indexOf(target, index)) != -1) {
+        count++;
+        index += target.length();
+    }
+
+    return count;
+}
+30. Count Overlapping Substrings
+public static int countOverlapping(String str, String target) {
+    int count = 0;
+
+    for (int i = 0; i <= str.length() - target.length(); i++) {
+        if (str.startsWith(target, i)) {
+            count++;
+        }
+    }
+
+    return count;
+}
+31. Remove Consecutive Duplicate Characters
+public static String removeConsecutiveDuplicates(String str) {
+    if (str == null || str.isEmpty()) {
+        return str;
+    }
+
+    StringBuilder result = new StringBuilder();
+    result.append(str.charAt(0));
+
+    for (int i = 1; i < str.length(); i++) {
+        if (str.charAt(i) != str.charAt(i - 1)) {
+            result.append(str.charAt(i));
+        }
+    }
+
+    return result.toString();
+}
+32. Compress a String
+public static String compress(String str) {
+    if (str == null || str.isEmpty()) {
+        return str;
+    }
+
+    StringBuilder result = new StringBuilder();
+
+    int count = 1;
+
+    for (int i = 1; i <= str.length(); i++) {
+        if (i < str.length() && str.charAt(i) == str.charAt(i - 1)) {
+            count++;
+        } else {
+            result.append(str.charAt(i - 1))
+                  .append(count);
+            count = 1;
+        }
+    }
+
+    return result.toString();
+}
+33. Check if Two Strings Differ by One Character
+public static boolean differByOne(String a, String b) {
+    if (a.length() != b.length()) {
+        return false;
+    }
+
+    int differences = 0;
+
+    for (int i = 0; i < a.length(); i++) {
+        if (a.charAt(i) != b.charAt(i)) {
+            differences++;
+
+            if (differences > 1) {
+                return false;
+            }
+        }
+    }
+
+    return differences == 1;
+}
+34. Find Common Characters Between Two Strings
+public static Set<Character> commonCharacters(String a, String b) {
+    Set<Character> first = new HashSet<>();
+
+    for (char c : a.toCharArray()) {
+        first.add(c);
+    }
+
+    Set<Character> result = new LinkedHashSet<>();
+
+    for (char c : b.toCharArray()) {
+        if (first.contains(c)) {
+            result.add(c);
+        }
+    }
+
+    return result;
+}
+35. Check if String is a Pangram
+public static boolean isPangram(String str) {
+    boolean[] present = new boolean[26];
+
+    for (char c : str.toLowerCase().toCharArray()) {
+        if (c >= 'a' && c <= 'z') {
+            present[c - 'a'] = true;
+        }
+    }
+
+    for (boolean value : present) {
+        if (!value) {
+            return false;
+        }
+    }
+
+    return true;
+}
+36. Find Missing Character from Alphabet
+public static char findMissingCharacter(String str) {
+    int xor = 0;
+
+    for (char c = 'a'; c <= 'z'; c++) {
+        xor ^= c;
+    }
+
+    for (char c : str.toLowerCase().toCharArray()) {
+        if (c >= 'a' && c <= 'z') {
+            xor ^= c;
+        }
+    }
+
+    return (char) xor;
+}
+37. Find the Longest Substring Without Repeating Characters
+public static int longestUniqueSubstring(String str) {
+    Set<Character> set = new HashSet<>();
+
+    int left = 0;
+    int max = 0;
+
+    for (int right = 0; right < str.length(); right++) {
+        char c = str.charAt(right);
+
+        while (set.contains(c)) {
+            set.remove(str.charAt(left));
+            left++;
+        }
+
+        set.add(c);
+
+        max = Math.max(max, right - left + 1);
+    }
+
+    return max;
+}
+38. Longest Substring Without Repeating Characters Using Map
+public static int longestUniqueSubstring(String str) {
+    Map<Character, Integer> lastIndex = new HashMap<>();
+
+    int left = 0;
+    int max = 0;
+
+    for (int right = 0; right < str.length(); right++) {
+        char c = str.charAt(right);
+
+        if (lastIndex.containsKey(c)) {
+            left = Math.max(left, lastIndex.get(c) + 1);
+        }
+
+        lastIndex.put(c, right);
+
+        max = Math.max(max, right - left + 1);
+    }
+
+    return max;
+}
+39. Find Longest Common Prefix
+public static String longestCommonPrefix(String[] strs) {
+    if (strs == null || strs.length == 0) {
+        return "";
+    }
+
+    String prefix = strs[0];
+
+    for (int i = 1; i < strs.length; i++) {
+        while (!strs[i].startsWith(prefix)) {
+            prefix = prefix.substring(0, prefix.length() - 1);
+
+            if (prefix.isEmpty()) {
+                return "";
+            }
+        }
+    }
+
+    return prefix;
+}
+40. Find Longest Common Substring
+public static String longestCommonSubstring(String a, String b) {
+    int[][] dp = new int[a.length() + 1][b.length() + 1];
+
+    int maxLength = 0;
+    int endIndex = 0;
+
+    for (int i = 1; i <= a.length(); i++) {
+        for (int j = 1; j <= b.length(); j++) {
+
+            if (a.charAt(i - 1) == b.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+
+                if (dp[i][j] > maxLength) {
+                    maxLength = dp[i][j];
+                    endIndex = i;
+                }
+            }
+        }
+    }
+
+    return a.substring(endIndex - maxLength, endIndex);
+}
+41. Find Longest Common Subsequence
+public static int lcs(String a, String b) {
+    int[][] dp = new int[a.length() + 1][b.length() + 1];
+
+    for (int i = 1; i <= a.length(); i++) {
+        for (int j = 1; j <= b.length(); j++) {
+
+            if (a.charAt(i - 1) == b.charAt(j - 1)) {
+                dp[i][j] = dp[i - 1][j - 1] + 1;
+            } else {
+                dp[i][j] = Math.max(
+                    dp[i - 1][j],
+                    dp[i][j - 1]
+                );
+            }
+        }
+    }
+
+    return dp[a.length()][b.length()];
+}
+42. Check if String Contains Balanced Parentheses
+public static boolean isBalanced(String str) {
+    int balance = 0;
+
+    for (char c : str.toCharArray()) {
+        if (c == '(') {
+            balance++;
+        } else if (c == ')') {
+            balance--;
+
+            if (balance < 0) {
+                return false;
+            }
+        }
+    }
+
+    return balance == 0;
+}
+43. Reverse Only the Vowels
+public static String reverseVowels(String str) {
+    char[] chars = str.toCharArray();
+
+    int left = 0;
+    int right = chars.length - 1;
+
+    while (left < right) {
+
+        while (left < right && !isVowel(chars[left])) {
+            left++;
+        }
+
+        while (left < right && !isVowel(chars[right])) {
+            right--;
+        }
+
+        char temp = chars[left];
+        chars[left] = chars[right];
+        chars[right] = temp;
+
+        left++;
+        right--;
+    }
+
+    return new String(chars);
+}
+
+private static boolean isVowel(char c) {
+    return "aeiouAEIOU".indexOf(c) >= 0;
+}
+
+44. Check if Two Strings are Isomorphic
+public static boolean isIsomorphic(String s, String t) {
+    if (s.length() != t.length()) {
+        return false;
+    }
+
+    Map<Character, Character> map1 = new HashMap<>();
+    Map<Character, Character> map2 = new HashMap<>();
+
+    for (int i = 0; i < s.length(); i++) {
+        char a = s.charAt(i);
+        char b = t.charAt(i);
+
+        if (map1.containsKey(a) && map1.get(a) != b) {
+            return false;
+        }
+
+        if (map2.containsKey(b) && map2.get(b) != a) {
+            return false;
+        }
+
+        map1.put(a, b);
+        map2.put(b, a);
+    }
+
+    return true;
+}
+45. Implement indexOf() Yourself
+public static int indexOf(String text, String pattern) {
+    if (pattern.isEmpty()) {
+        return 0;
+    }
+
+    if (pattern.length() > text.length()) {
+        return -1;
+    }
+
+    for (int i = 0; i <= text.length() - pattern.length(); i++) {
+
+        int j = 0;
+
+        while (j < pattern.length()
+                && text.charAt(i + j) == pattern.charAt(j)) {
+            j++;
+        }
+
+        if (j == pattern.length()) {
+            return i;
+        }
+    }
+
+    return -1;
+}

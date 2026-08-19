@@ -3,6 +3,21 @@ java LTS- 8, 11, 17, 21, 25
 	java 25  was released sep-2025
 current version - 25
 
+Design
+--------------------------------------
+1.small method,
+	think of if you want to same method in two process but only few lines different 
+	that mean those lines are seprate behaviour, why can not we seprate it, insted of putting
+	in same method with if else condition
+
+2.small class
+	think of code conflicts with same people working on same class
+	think of someone refactoring, while you are working on performace issue on same issue
+
+3 small pojos
+	make 4 to 5 fields into one pojo, then put in has-a relation
+	small pojo's can be reuseable, we can write seprate class for each output and reduce duplicate code.
+
 Reduce defect fix time:
 ---------------------------------
 0) Do not implement, understand complete requrment evry property business, write your clear story
@@ -341,10 +356,6 @@ How do we know whether perticuler string is in given group.
             Collections.unmodifiableSet( ArrayUtility.toUnsortedSet("PS", "DC", "PC","CA"));
 	CONTRACT_STATUS_BEFORE_ACTIVE.contains("DC");
 -------------------------------------------
-if productCode is DB06 or DBNY06 return true
-public boolean isDefinedBenefit(String productCode){
-return "DB06".equals(productCode) || "DBNY06".equals(productCode);
-}
 
 How to short two vo objects?
 Use: In jsp if records are displayed with name date status and you want to short all records by any column
@@ -726,6 +737,25 @@ java.util.stream.Collectors get additional methods to collect a Stream into unmo
 TextBlocks
 	we can place our text in between the triple quotes and have multiple double quoted strings inside it without having to use escape characters
 	we can use \s to add space and \ to remove new line
+	
+----------------------------------------------------------------------------------------------------------------------------
+                                                 JAVA 14 features                                                
+----------------------------------------------------------------------------------------------------------------------------
+pattern matching
+	if (obj instenceOf String){
+		String s = (String)obj
+		s.length()
+	}
+	this can be changed like below
+	if (obj instenceOf String s){
+		s.length()
+	}
+	if (obj instenceOf String s && s.length() > 0){ //this will work
+		s.length()
+	}
+	if (obj instenceOf String s || s.length() > 0){ // this does not work since s would not be available if first condition fails
+		s.length()
+	}
 
 
 ----------------------------------------------------------------------------------------------------------------------------
@@ -1019,6 +1049,10 @@ so finally is not exicuted when exit statement is exicuted.
 ###################################################################
 #################          FAQ                    #################
 ###################################################################
+SOLID principles
+OOPS concepts
+Design patterns
+Anty patterns
 what is prototype creational pattern
 what is Single responsibility principle
 Why do we need to use character arry than string in security?
@@ -1067,6 +1101,47 @@ what are intermediate function
 what is terminate function
 what are the builtin functinal interfaces in java
 How to use predicate
+
+
+Why must equals() and hashCode() be overridden together?
+How does ConcurrentHashMap achieve thread safety?
+Why is String immutable?
+Explain the Java Memory Model (JMM).
+How does the JVM class loading process work?
+What happens internally when new Object() is executed?
+How does HashMap work internally (buckets, hashing, collisions, treeification)?
+Explain garbage collection algorithms (G1, ZGC, Shenandoah).
+Difference between fail-fast and fail-safe iterators.
+Explain CompletableFuture and asynchronous programming.
+JVM memory areas, Metaspace, and garbage collection tuning.
+java 8/11/17/21 new features
+
+gemini questions
+---------------------------
+Suppose you have a high-throughput Java web application running on Java 21. You are tasked with implementing an in-memory, thread-safe counter that millions of threads will concurrently increment.
+
+Why would AtomicLong become a performance bottleneck under extremely high thread contention?
+
+What class in java.util.concurrent.atomic solves this specific contention problem, and how does it achieve high throughput under the hood?
+
+How do Virtual Threads (Loom) impact your choice of synchronization constructs (e.g., synchronized blocks vs. ReentrantLock or atomics)?
+
+You have a high-throughput stream processing pipeline in Java 8 using .parallelStream().
+
+Which shared pool does parallelStream() execute tasks on under the hood, and what thread-starvation risks does this pose if one stream task performs blocking I/O?
+
+How would you isolate a long-running or blocking parallel stream execution away from the rest of the application?
+
+What are two major architectural differences between the Java 11 HttpClient and the old HttpURLConnection regarding asynchronous execution and thread management?
+
+How did String representation change between Java 8 and Java 11 under the hood (Compact Strings), and how did it impact heap memory usage?
+Why are Sealed Classes paired with pattern matching in switch statements, and how does the compiler enforce domain safety without needing a default case?
+
+Records are immutable and final. If a Record contains a mutable field (like a java.util.Date or List), how do you preserve true immutability?
+
+What hierarchy issue in the legacy java.util.Collection framework did Sequenced Collections solve regarding ordering and backward iteration?
+
+Explain the difference between Platform Threads and Virtual Threads in terms of how the OS handles them vs how the JVM scheduler mounts/unmounts them onto Carrier Threads.
 
 
 What is difference between StringBuffer and StringBuilder

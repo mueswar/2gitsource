@@ -1,0 +1,16 @@
+<div>
+
+  <button (click)="selectTab('One')">One</button><br/>
+  <button (click)="selectTab('Two')">Two</button><br/>
+  <button (click)="selectTab('Three')">Three</button><br/>
+
+</div>
+<div *ngIf="tabName === 'One'">
+  <part-create></part-create>
+</div>
+<div *ngIf="tabName === 'Two'">
+  Two
+</div>
+<div *ngIf="tabName === 'Three'">
+  Theree
+</div>

@@ -2,8 +2,11 @@ https://www.youtube.com/watch?v=Bv_5Zv5c-Ts   (Tony Alicea)
 https://www.youtube.com/playlist?list=PL1BztTYDF-QNlGo5-g65Xj1mINHYk_FM9  v16
 https://www.youtube.com/watch?v=yRv0DJi2iSk&t=17s  azure AD B2C
 https://www.youtube.com/watch?v=DlJhZxSraPU&list=PLVlM_EVY85Xs7qlyTnMNOCorAS_coKVyE admin role authentication
+
+https://github.com/manojjha86?tab=repositories
 C:\2gitsource\anguler-projects
 
+company is using Angular 18 - April 2026
 
 practice 1: create one reactive style form
 practice 2: create one templete driven style form
@@ -28,6 +31,10 @@ Javascript global scope issue(solve with encapsulation)
 	}
 	var john= new person("fone","lone");
 	logPerson(john);
+	
+coding rules
+--------------------------------
+allways use this key word to access properties
 
 benifits of AngularJs
 ---------------------
@@ -51,7 +58,7 @@ Angular 4 - Environment Setup
 		Nodejs
 		Npm
 		node –v  (v20)
-		npm –v
+		npm –v    (npm  works in command promt not in powersell)
 	Step2: Angular CLI
 		c:\angular9>npm install –g @angular/cli@latest  // to install angular cli on your system.(create new folder)
 		c:\angular9>ng version //this is working version is 17
@@ -70,6 +77,11 @@ Angular 4 - Environment Setup
 		download  Visual Studio code IDE https://code.visualstudio.com/
 		Ctrl+Shift+P
 		tips:https://code.visualstudio.com/docs/getstarted/tips-and-tricks#vscode
+		
+-----------------------------------------------------------------------------------------------------------------------
+ng new APP-ONE --no-standalone
+cd APP-ONE
+ng g c componet-one
 
 
 -----------------------------------------------------------------------------------------------------------------------
@@ -82,6 +94,39 @@ what is string iterpolation
 what is property binding
 why we need property binding when we string interpolation(disable,hidden,check)
 we can not add more than one structural directives on one element(like *ngFor and *ngIf)
+how to get <input> tag value in component when input is not inside <form> html tag with event binding
+how to get <input> tag value in component when input is not inside <form> html tag with two way binding
+how to get <input> tag value in component when input is not inside <form> html tag without @viewChild
+how to get <input> tag value in component when input is not inside <form> html tag with @viewChild
+
+14 data binding
+
+15 String interpolation  [component to view data flow]
+	{{property1}}
+
+16 property binding     [component to view data flow]
+	<img [src]="product.image">
+	<button [disabled] ="!(product.inStock >0)">By product<button>
+	in property binding we are assigining component property values to DOM/Selector attribute/property
+	
+	property binding is oneway binding, we can use string interpolation insted of property binding
+	but we can not use all places like DOM element attributes like disable, hidden, checked
+	
+	we can also bind diffent style
+	<button bind-disabled ="!(product.inStock >0)">By product<button>
+	
+	Below are not propeties in the tag, these are attibutes, so we have to bind differently
+	aria-lable, aria-hidden, aria-expand, aria-control, data-id, data-name, colspan
+	<input [attr-area-hidden]="xxx">
+
+17 event binding [view to component data flow]
+
+18 two way binding ngModel, formsModule
+	case 1: when use types something in text box, that should display that value below text box
+			with property and event binding
+			
+	case 2: when use types something in text box, that should display that value below text box
+			with two way binding
 
 
 19  -------------directive--------------
@@ -93,32 +138,42 @@ we can not add more than one structural directives on one element(like *ngFor an
 	<div *ngFor="let i of items">
 		{{i}}
 	</div>
+	
+22 *ngIf
+	<p *ngIf="searchTxt= !'' "> abc </p>
+	<div *ngIf=""> xyz</div>
+	
+	
 
-
-25
-	@Input
-	in productlist componet has product array object, 
-	now we need pass product object from productlist html to product component
-	to display in product html file
+---------------------------[25 - 37]  parent child -----------------------------
+		[Continer]
+			[ProductList]
+				[ProductFilter]
+				[Product]
+			[ProductList]
+		[Continer]
+25	
+	@Input (i.e Component selector tag property binding, it is not html tag property binding)
+	Assume productlist componet has product array object, 
+	now we need pass product object from productlist component to product component to display in product html file
 	
 	productlistcomponent.ts
-	products:Product[];
-	
+		products:Product[];	
 	productlist.html
-	<productComponent1 *ngFor="let prod of products" [product1]="prod">
-	
+		<productComponent *ngFor="let prod of products" [product1]="prod">	
 	productCompnent.ts
-	@Input() product1 :Product;
-	
+		@Input() product1 :Product;	
 	productcomponent.html
-	{product1.name}
-	Note- so child component input propert becomes as attribute to selecter tag, that is true even for non input properties
+		{product1.name}
+	Note1- so child component input property becomes as attribute to selecter tag.
+	Note2- selecter tags property binding values comes from parent and passed to selecter component
+	note3- non slecter tags propertiy binding values comes from component-html  
 	
 26
 	@input
 	how to add filter in productlist with productfliter component
-	add filter radios in productfliter html
-	get data from productlist to productfilter component
+	add filter radios with product counts in productfliter html
+	get data from productlist component to productfilter component
 	parent htmml has child component selecter, so the selector pass name and values as propery binding
 	and capture in child element component using @input
 	
@@ -168,7 +223,7 @@ we can not add more than one structural directives on one element(like *ngFor an
 	we trigger event manually in child component, but from parent it auto triggers and calls parent method to set value
 28
 	how to pass data between non related components
-	assuem there 3 components 1, continer 2,search, 3.product list
+	assuem there are 3 components 1, continer 2,search, 3.product list
 	continer componet is in app componet
 	seacrh component, and productlist components are in continer component
 	search and productlist componet does not have parent child relation, 
@@ -184,7 +239,7 @@ we can not add more than one structural directives on one element(like *ngFor an
 		updateSearchText(tempvalue:HtmlInPutElement){
 			this.serchtext=tempvalue.value
 		}
-30
+30  @viewChild
 	How to pass value of input html tag to component class
 	<div>
 		<input #searchInput> 
@@ -193,10 +248,10 @@ we can not add more than one structural directives on one element(like *ngFor an
 	updateSearchText(inputEL : HtmlInputElement){
 		inputEL.value;
 	}
-	here we are passing input value when putton clicked to component method
+	here we are passing input value when button clicked to component method
 	
 	<div>
-		<input #searchInput> 
+		<input type="text" #searchInput> 
 		<button (click)="updateSearchText()">Search</button>
 	</div>
 	@viewChild('searchInput') searchEL: ElementRef;
@@ -204,26 +259,92 @@ we can not add more than one structural directives on one element(like *ngFor an
 		this.inputEL.nativeElement.value;
 	}
 	with above code, input element is available as soon as input element is loaded.
+	
+31 @viewClid for element, for component
+
+32 @viewchildren
+	<div>
+		<input type="text" #searchInput> 
+		<input type="text"#searchInput>
+		<button (click)="updateSearchText()">Search</button>
+	</div>
+	@viewchildren('searchInput') searchEL: QueryList<ElementRef>;
+	updateSearchText(){
+		this.inputEL.forEach((e)=> e.nativeElement.value)
+	}
+	viewchildren will have value only after page loaded and change detected
+	viewchildren gives all matching elements
+	Q&A: if viewChildren values are avilable afterchange detection, do we need click event 
+	or we can also get values in one of the change detection hook method
+
+33 ng-template, ngTempletOutlet
+	<div *ngIf="isLoggedIn; else loginTemplate"> //see how else is written here
+	  Welcome, user!
+	</div>
+
+	<ng-template #loginTemplate>
+	  <p>Please log in.</p>
+	</ng-template>
+	
+	example2
+	<ng-template #userTemplate let-name="name">
+	  <p>Hello, {{ name }}!</p>
+	</ng-template>
+	<ng-container *ngTemplateOutlet="userTemplate; context: { name: 'John' }">	</ng-container>
+	<ng-container *ngTemplateOutlet="userTemplate; context: { name: 'Sarah' }"> </ng-container>
+	This is especially useful for reusable layouts, tables, cards, custom components, and dynamically choosing which piece of UI to display.
+34 ng-continer
+	ng-container is basically an invisible wrapper used by Angular. It helps you apply Angular logic to multiple elements without adding an unnecessary <div> to the DOM.
+	<ng-container *ngIf="isLoggedIn">
+	  <h2>Welcome</h2>
+	  <p>You are logged in.</p>
+	  <button>Logout</button>
+	</ng-container>
+	but we achive with div also like below, but extra DOM div will be added
+	<div *ngIf="isLoggedIn">
+	  <h2>Welcome</h2>
+	  <p>You are logged in.</p>
+	  <button>Logout</button>
+	</div>
+35 ng-content
+	ng-content lets a parent component put its HTML/content inside a child component.
+	app-product-list.html
+		<app-product>
+		  <h2>My Profile</h2>
+		  <p>This is my profile information.</p>
+		</app-product>
+	app-product.html
+		<div class="card">
+		  <ng-content></ng-content>
+		</div>
+36 ContentChild() and difference with viewchild()
+
+37 ContentChildren()
 
 
 38      _____________________ Lifecycle Hook's______________________________
 	for each selecter tag, one component instance is created
-	we can check it with writing log in constructor
+	we can check it, with writing log in constructor
 	but by the time components are inisialized, we only have property inisialized values.
 	but @input property value passed from parent component is not available
 	@ngOnChanges, @ngOnInit, @ngDoCheck, @ngDestroy
 	@ngAfterViewInit, @ngAfterViewChecked, 
 	@ngAfterContentInit, @ngAfterContentChecked
-39
-	ngOnChanges
-40
-	ngOnInit
-	
+39 ngOnChanges
+40 ngOnInit
+41 ngDoCheck
+42 @ngAfterContentInit
+43 @ngAfterContentChecked
+44 @ngAfterViewInit
+45 ngAfterViewChecked
+46 ngOnDestroy
+------------------------[ 47-58  custom directive]--------------------------------
 
 59
-	view encasulation, CSS in one component only applicable to same component html
+	view encasulation, CSS in one component, only applicable to same component html
 	but there are othen encapsulation properties we can apply
 
+_____________________ service and dependency______________________________
 60
 	not much
 	so to pass data two non parent-chield compo , it was difficult with @input and event
@@ -273,8 +394,13 @@ we can not add more than one structural directives on one element(like *ngFor an
 	but we need this for service to service injection
 
 
-	
+67
+   how to pass data from one component to other component using service
+   userlist componet html diisplaying users when we click on any user use details should display
+
+_____________________ observable  RxJs  ______________________________	
 68
+	what is diff between promise and observable
 	observable is to hadle stream of data in async form with RxJS	
 69
 	when button clicked data should dispaly
@@ -298,20 +424,277 @@ we can not add more than one structural directives on one element(like *ngFor an
 		this.myObservable.subscribe((val:any)=>{this.x.push(val);});
 	}
 70    how to use error and complete methods of observable
-71    how to use 1 of and 2 from functions to create observable and how to handle observable data
-	  what id difference between 1 of and 2 from
+	x :any[]=[];
+	myObservable = new Observable((observer) ->{
+		setInterval(()=>{observer.next(['1'])},1000);
+		setInterval(()=>{observer.next(['2'])},2000);
+		setInterval(()=>{observer.error(new Error('someting went wrong'))},4000);
+		setInterval(()=>{observer.next(['4'])},6000);
+	});
+	getAsycData(){
+		this.myObservable.subscribe(
+		(val:any)=>{this.x.push(val);},
+		(error)=>{alert(error);}
+		);
+	}
+	here number 4 will not be displayed
+	
+	x :any[]=[];
+	myObservable = new Observable((observer) ->{
+		setInterval(()=>{observer.next(['1'])},1000);
+		setInterval(()=>{observer.next(['2'])},2000);
+		setInterval(()=>{observer.next(['4'])},6000);
+		setInterval(()=>{observer.complete()},4000);
+	});
+	getAsycData(){
+		this.myObservable.subscribe(
+		(val:any)=>{this.x.push(val);},
+		(error)=>{alert(error);},
+		()=>{alert('all data arrived');}
+		);
+	}
+	here number 4 will not be displayed
+		
+	latest style
+		this.myObservable.subscribe({
+		next:(val:any)=>{this.x.push(val);},
+		error(error){alert(error);},
+		complete()=>{alert('all data arrived');}
+		});
+71    how to use 1. "of" function and 2 from functions to create observable and how to handle observable data
+	  what is the difference between 1 of function and 2 from function
+	  x :any[]=[];
+	  array1:nay[] =[1,2,3,4,5]
+	  myObservable = of(array1, "x", "y", true, false);
+	  getAsycData(){
+		this.myObservable.subscribe({
+		next:(val:any)=>{this.x.push(val);},
+		error(error){alert(error);},
+		complete()=>{alert('all data arrived');}
+		});
+	  }
+	  from accepects only iterable as argument, and emits one after one element
+	  array1:nay[] =[1,2,3,4,5]
+	  myObservable = from(array1); //this works
+	  myObservable = from(2); //this does not work
+	  myObservable = from('12345'); //this works
+	  getAsycData(){
+		this.myObservable.subscribe({
+		next:(val:any)=>{this.x.push(val);},
+		error(error){alert(error);},
+		complete()=>{alert('all data arrived');}
+		});
+	  }
+	  
+	  
 72	  fromevent
 	1.how to log something from component menthod when button clicked but we should not call method directly
+		<button #createBtn >create</button>
+		<div id='continerDiv'></div>
+		@viewChild('createBtn')
+		createBtn :ElementRef;
+		one(){
+			this.btObservable =fromEvent(this.createBtn.nativeElement,'click')
+			.subcribe((data)=> {
+				console.log(data);
+				this.showItem();
+				});
+		}
+		ngAfterViewInit(){
+			this.one();
+		}
+		showItem(){
+			let div = document.createElement('div');
+			div.innerText ='item';
+			document.getElementById('continerDiv').appendChild(div);
+		}
 	2.how to display new dev element when button is clicked with observable with help of formevent
 73	use map $ filter methods on observable
 	
-81,82 Routes
------------------------------------------
+			[81 82]        Routes
+			-----------------------------------------
+81
+	display 4 hiper link in hedder and display respective content below header(body) when user click on link
+	header.component.html
+		<a href="Home"> Home</a><a href="About"> About</a>
+	app.module.ts
+		const routes = Routes[
+			{path='', redirectTo= 'Home', pathMatch='full'},
+			{path='Home', component= HomeComponent},
+			{path='About', component= AboutComponent}
+		]
+		imports:[BrowserModule, RouterModule.forRoot(routes)]
+		
+	app.module.html
+		<header-componet>
+		<router-outlet> </router-outlet>
+		<footerr-component>
 
+82   not found route
+	{path='**', component= NotFoundComponent}
+
+83 do not want page reload every time
+	<a routerLink="Home"> Home</a>
+	<a [routerLink]="'About'"> About</a> //if we warp with [], then value should be typescript expression
+84 highlight acvtive link	
+	<a routerLink="Home" [routerLinkActive]="'cssclass1'" [routerLinkActiveOptions]="{exact:true}"> Home</a>
+	<a [routerLink]="'About'" [routerLinkActive]="'cssclass1'" [routerLinkActiveOptions]="{exact:true}"> About</a>
+	
+85 absolute relative path
+	<a routerLink="Home"> Home</a> it is relative path
+	<a routerLink="/Home"> Home</a> it is obsolute path
+	if we are in home page and if we have button with relative path then path is [path in browser+relative path]
+	if we are in home page and if we have button with obsolute path then path is [root path+relative path]
+	if button/link is not on active page then even relative path is appended to root path
+86 programatecally navigate (in side component)
+	
+	router:Router =inject(Router)
+	activateRouter:ActivatedRoute = inject(ActivatedRoute)
+	
+	router.navigate([books]); this absolute path
+	router.navigate([books], {relativeTo:this.activateRouter}); this relative path
+	router.navigateByurl('books'); this absolute path
+
+87	router paramters
+	const routes = Routes[
+			{path='', redirectTo= 'Home', pathMatch='full'},
+			{path='Home', component= HomeComponent},
+			{path='course/:id', component= CourseDetails}
+		]
+	courses.componet.html
+		<button [routerLink]="'/course'+cousre.id"> About</button>
+	CourseDetails.ts
+		courseid:number;
+		activateRouter:ActivatedRoute = inject(ActivatedRoute)
+		ngOnInit(){
+			this.courseid=this.activateRouter.snapshot.param['id'];
+			this.courseid=this.activateRouter.snapshot.paramMap.get('id');
+		}
+88 	router paramters
+		ngOnInit(){
+			this.activateRouter.params.subcribe((data)=>{
+				this.courseid= +data['id'];
+				this.courseid=this.activateRouter.snapshot.paramMap.get('id');
+			});
+			
+		}
+89 query param
+	this.activateRouter.snapshot.queryParams['searchString'];
+	this.activateRouter.snapshot.queryMap.get('searchString');
+
+90 fragment
+	we have to go differnt sections on same Home page, when we click on header
+	hedder.componet.html
+		<a routerLink="home" fragment="about">about</a>
+		<a routerLink="home" fragment="contact">contact</a>
+	Home.component.html
+		<div>
+			<section id="about">
+				<about-component></about-component>
+			</section>
+			<section id="contact">
+				<contact-component></contact-component>
+			</section>
+		
+		</div>
+	home.component.ts
+	
+		ngOnInit(){
+			this.activateRouter.fragment.subcribe((data)=>{
+				this.courseid= +data['id'];
+			});			
+		}
+		jumptosection(section){
+			document.getElementById(section).scrollIntoView({behavior:'smooth'});
+		}
+91 child route 
+92 Routing module	
+	just create new ts file like app.module.ts and @NgModule
+	routing.module.ts
+		@NgModule({
+			imports:[],
+			exports:[]
+		})
+	export class RoutingModule{
+	
+	}
+	
+	
+95 canActivate route gaurd in java 14 with service
+	routes :Route=[path='checkout', component='CheckoutComponent' canActivate=[AuthService]] //here we are giving service
+	AuthService implements Canactivate{
+		canActivate(route: ActivatedRouteSnapshot, state:RouterStateSnapshot):boolean|Observable<boolean>|Promise<boolean>{
+			return true
+		}
+	}
+	
+
+96	canActivate route gaurd in java 15 with functions
+	routes :Route=[path='checkout', component='CheckoutComponent' canActivate=[isActivated]] //here we are giving function
+	One.ts
+	export isActivated(){
+		const xservice = inject(AuthService);
+		const router = inject(Router);
+		if(xservice.isAuthed()) {retuen true;}
+		else {router.navigate([/login])}
+	}
+97 canActivateChild
+	to apply for all child routes
+	routes :Route=[path='checkout', component='CheckoutComponent' canActivateChild=[isActivated]]
+
+98 canDeactive
+	when user moves from one form to other without saving changes we can prevent it using this
+99 Resolve
+
+100 route navigation events
+	imports:[BrowserModule, RouterModule.forRoot(routes, {enableTracing:true})]
+	NavigationStart, NavigationEnd, NavigationCancel, NavigationError
+			[102, 107]	pipe
+	--------------------------------------------------------
+102  angular pipes
+		percentage, date, currency, upppercase
+	
+103 custom pipes
+	percentage.pipe.ts
+	@pipe({
+		name:'percentage'
+	})
+	export class PercentagePipe implements PipeTransform{
+		transform(a:any){
+			return a*100;
+		}
+	}
+104
+
+105 pure & impure pipe
+	pure pipe will be called if value changes for primetives
+	pure pipe will be claeed only  reference changes for objects
+	impure pipe will be called for every change detection
+	pure pipes are fast, impure pipe are slow, we should not use impure pipes 
+	pure pipe should not be ued for filter and shorting
+
+106 filter without pipes 
+	we will have dropdown gender and list of sudents down, we should be able to filter by gender 
+	in the list of sudents table we shold be able to edit sudent propeties ans we should be able to add new student.
+107 async pipe	
+	we can use Async pipe, when page as total student field but to calulate it takes time, and value is coming as promise/observable
+	we can use Async pipe.
+
+     		[108-112-dynamic components]
+     -----------------------------------------
+108 just intro not much - NNW
+109	 dynamic component with ngIf
+	we will have list of users, when we click on delete buttoon, overlay dynamic component should be displayed 
+	that dynamic component should ask are you want to delete this user and use name should display
+	delete and cancle buttons also, when we click delete, user should be deleted and componet should disappiar
+110,111 dynamic component with component factory- programatically
+
+112
+	110,11,112 are bout doing programmatically  doing 109 example
 
 
 113			[113-124-templete driven form]
-            ----------------------------------
+     -----------------------------------------
 	import FormsModule
 	FormsModule converst form tage to templete driven form
 	
@@ -339,17 +722,36 @@ we can not add more than one structural directives on one element(like *ngFor an
 		}
 	using @ViewChild decorator we can access DOM object or component from templete
 114	
-	NgForm has controls and value properties, but to populate value into it
-		we shlod do two things on element (ngModule and name attribute)
+	NgForm has 'controls' and 'value' properties, but to populate values into those
+		we shlod do two things on element (ngModule and name all tags)
 		<input type="text" placeholder="First Name" name="firstname" ngModel />
 	access form values 
 		OnFormSubmitted(){
 			console.log(this.form.value.firstname)
 			console.log(this.form.controls['firstname'].value)
 		}
-	
-124			[124-135-Reactive form]
+115 Touched & Dirty
+	if any one of the conform control is focused then then that touch propety will be true, untouch will be false 
+	if any of the formcontrol value is change then entier form also becomes dirty
+116 Radio buttons
+117 Form validations
+	generally to do validation we have bind events like click/hover/key press or submit
+	in templete form we no need to do this explicitly, for every event on any field in the form the formcontrol object 
+	properties keep get changing, we can use those properties(touched/dirty/value) for validation 
+	and the css clasess get changed.
+118 validations 
+119 Grouping Form controls
+	create form anem, age, address and addd erroe message when name is touched not added value also css for name 
+	for address group all fileds atree,city, county, and dis play one error message for entire Address
+	log obfect values in console, with control property, value property and with Groupcontrol
+
+			[124-135-Reactive form]
             -------------------------------
+124
+	create simple form with one input text box and submit button,
+	make form as reactiveform, set default value to text box, 
+	capture form details in componet when form is submitted
+	
 	import ReactiveFormsModule 
 	how to define reactive form in component class
 		export class AppComponent implements OnInit{
@@ -361,7 +763,7 @@ we can not add more than one structural directives on one element(like *ngFor an
 			})
 		}
 		}
-	how to connect rectiv form in component to form in html
+	how to connect rective form in component to form in html
 		<form class="form" [formGroup]="reactiveForm" (ngSubmit)="OnFormSubmitted()">
 		</form>
 	how to connect form elements
@@ -384,6 +786,9 @@ we can not add more than one structural directives on one element(like *ngFor an
 			  border: red 2px solid;
 			}
 		above code updated border value if is touched and data not valied
+
+127 group FormControls
+128 FormArray
 
 
 136      [136-155-HttpClient]
@@ -472,8 +877,9 @@ we can not add more than one structural directives on one element(like *ngFor an
  angular 16 signals
 
 
-188
- angular 14 stand alone components
+	[188 - ] Standalone components
+----------------------------------------------------
+ angular 14  introduced standalone components
  
 
 
