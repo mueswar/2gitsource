@@ -26,17 +26,19 @@ how to instantiate a Spring IoC container
 how to solve Circular Dependency in spring
 how to build spring mavc with spring boot
 StereoType Annotations
+Microservice 12 factor Design Principles
+How to call external api from Restful , FiegnClient and WebClient
 
 Difference between Conroller and RestController
 What is maximum payload in post in RESTful
 Different kind of rest methods
 Rest status codes
 Different annotations
-URL versioning 
-Rest security
 how to handle logging
 how to handle exceptions
 How to read external properties
+URL versioning 
+Rest security
 Integration testing
 File/Image sending through RestFul
 how to combine declarative and programetic transactions
@@ -179,5 +181,22 @@ how to handle exceptions
 	all custom exceptions extends RuntimeException are unchecked exceptions 
 	we use unceked exceptions for business logic exptions, we do not need to writr try/catch in every layer
 	API is throwing checked exception we catch it and convert to uncheked exception
+Rest security
+	I use Spring Security to secure REST endpoints. Authentication can be implemented using JWT or OAuth2, depending on the architecture. After authentication, Spring Security uses roles or authorities for authorization.
 	
-	
+	OAuth2
+		in OAuth2, Your application never needs to receive the user's IDP password. Instead, IDP provides tokens that represent the user's authorization.
+		After successful authentication/authorization, the authorization server gives the client an access token.
+		Spring Security validates the token.
+		OAuth2 is an authorization framework/protocol.
+		JWT is a token format.
+		An OAuth2 access token can be a JWT, but it doesn't have to be.
+		OAuth2-Authorization — what can this application access?
+		OpenID Connect (OIDC) -Authentication — who is the user?
+		you're often dealing with OpenID Connect + OAuth2, not OAuth2 alone.
+		Microsoft Entra ID
+			ID Token → tells application who the user is
+			Access Token → used to call APIs
+		don't use the ID token as the bearer credential for your Spring Boot API. The API should receive and validate an access token intended for that API.
+	You may need to configure CORS so the browser allows the Angular application to call your API.
+	disabling CSRF is common for a stateless JWT API

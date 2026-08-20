@@ -159,6 +159,12 @@ create list
 			.distinct()
 			.collect(Collectors.toList());
 Set
+	add("");
+	isEmpty();
+	size();
+	clear();
+	clone();
+	contains("");
 
 	
 Map

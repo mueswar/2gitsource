@@ -1,6 +1,6 @@
 
 
-1 define all datatupes
+1 define all datatypes
 
 2 print data types
 
