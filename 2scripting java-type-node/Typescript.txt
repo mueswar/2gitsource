@@ -1,5 +1,7 @@
 typescriptlang.org
 
+procademy
+https://www.youtube.com/watch?v=StzncyAHdkw&list=PL1BztTYDF-QNrddrcvejiw5vxSZSPIRfn&index=37
 
 net ninja- youtube
 https://www.youtube.com/watch?v=X-mUYxLjqLY&list=PL4cUxeGkcC9gUgr39Q_yD6v-bSyMwKPUI&index=17
@@ -153,3 +155,56 @@ difference between Type and Interface
 Object.keys()
 Array.from()
 new Set()
+
+
+14 function return type
+	in type script it is not madatory to specify return type in method defination, but once you sepecify one data type we can not return different data type.
+	return type can be void. 
+	function mone():void{};
+	console.log(mone());// this returns undefined. but define return type as undefined but it is not good practice.
+15 function as type
+	in typescript we can assign fucntion to variable, and we also have Function datatype
+	function greatuser(user:User){
+		console.log("greet fucntion");
+	}
+	function sum(a:number, b:number){
+		reurn a+b;
+	}
+	let x = greatuser; //this works 
+	x(user);//this also works here we are calling greet function passing user object
+	x=sum;//this also works 
+	let y :Function;
+	y=greatuser; //this works 
+	y=sum// this also works
+	let z:(user:User)=>void;
+	z=greatuser; //this works 
+	z=sum;//this does not work we can only assign function which takes user object and returns void
+16 function type for callback function
+	function getResult(a:number, b:number, monefunction){
+		constant sum= a+b;
+		monefunction('total', sum)
+	}
+	function display(msg:string, result:number){
+		console.log(msg+result);
+	}
+	getResult(2,3, display);//this works and getReslt call back did not define any type for callback function
+	function getResult1(a:number, b:number, monefunction:(msg:string, result:number)=>void){
+		constant sum= a+b;
+		monefunction('total', sum)
+	}
+	getResult1(3,4,display)//this also works but getResult1 callback function as specipic type now
+17 difference between any and unknown	
+	let a:unknown; //at this moment we do not what type would be assigned
+	let b = '';
+	a='xyz';
+	if (type of a === 'string'){ // here we know what to do if type is string
+		b=a;
+	}
+	unknow is better choice when we know what to do if we know type in the feature
+	
+	
+	
+	
+
+
+36  no use

@@ -27,6 +27,14 @@ elastic search:
 		2.aws lambda
 
 
+
+how to deploy springboot to EKS
+how to deploy lambda from github
+whar are the jar to connect sqs/sns/db from lamda python
+whar are the jar to connect sqs/sns/db from lamda nodeJs
+
+
+
 IAM
 ---------------------------------------------------------------------------------------------------
 when we creat user, adminstator can give two kids of access types 1. programmatics and 2. console access
@@ -153,6 +161,8 @@ on-demand: more expensive
 reserved:
 spot
 Amazon Machine Image (AMI's)
+
+
 
 
 *****************************************

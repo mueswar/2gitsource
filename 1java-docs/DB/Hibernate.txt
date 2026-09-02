@@ -1,85 +1,30 @@
 
-##########################################################
-#############        Java Brains    ######################
-##########################################################
 
-25 
-HQL
-SessionFactory sf = new Configuration.configure().buildSessionFactory();
-Session s = sf.openSession();
-s.beginTransaction();
 
-Query q = s.createQuery("from Entity1 where ep1>5");
-List u = q.list();
+spring-boot-starter-data-jpa dependency automatically configures hibernate, we no need to do it manually.
+JPA is specification and Hibernate is implentation hare.
+spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
+Dialect tell sping to generate SQL appropriate for PostgreSQL
 
-s.getTransaction().commit();
-s.close();
+JPA also compatable with EclipseLink and OpenJPA -- that means we can use JPA annotations with entity class
+MyBatis and JDBC can be used with Spring , but not with JPA
 
-26
-Query q = s.createQuery("from Entity1 where ep1>5");
-List<Entity1> u = (List<Entity1>)q.list();
 
-pagination
-Query q = s.createQuery("from Entity1");
-q.setFirstResult(5);
-q.setMaxResults(4);
-List<Entity1> u = (List<Entity1>)q.list();
+Spring+JPA+Hibernate
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'org.postgresql:postgresql'
 
-fetching single column
-Query q = s.createQuery("select ep1 from Entity1");
-List<String> u = (List<String>)q.list();//here list doest return collection entity
+Spring+JPA+eclipselink    
+    implementation 'org.springframework.data:spring-data-jpa' // Spring Data JPA    
+    implementation 'jakarta.persistence:jakarta.persistence-api' // JPA API    
+    implementation 'org.eclipse.persistence:eclipselink:4.0.7' // EclipseLink implementation    
+    runtimeOnly    'com.mysql:mysql-connector-j'  // MySQL JDBC driver
+	
+So if we want to work other jpa implementations other than Hibernate we can not use spring-boot-starter-data-jpa, this is brings Hibernate by default.
+But entity and repositories are allways same only
 
-fetching two columns
-Query q = s.createQuery("select ep1,ep2 from Entity1");
-List<List> u = (List<List>)q.list();//here list does not return collection entity
 
-Query q = s.createQuery("select max(ep2) from Entity1");//we can use all agrigation functions
-Query q = s.createQuery("select new Map(ep1,ep2) from Entity1");// returns List<Map>
 
-27
-String minUserid ="5";
-Query q = s.createQuery("from Entity1 where ep1 >"+minUserid);//this causes SQL injection issue, user can send below details
-String minUserid ="5 or 1=1"; // even drop table commands
-solution is postion place holders
-Query q = s.createQuery("from Entity1 where ep1 > ?");
-q.setInteger(0,Integer.parseInt(minUserid));
-named parameters
-Query q = s.createQuery("from Entity1 where ep1 > :ID");
-q.setInteger("ID",Integer.parseInt(minUserid));
-
-28
-named quries
-on enity NamedQuery(name="detailsByID",query="from Entity1 where ep1 = ?")//this is JPA Annotation and HQL query
-Query q = s.getNamedQuery("detailsByID");
-q.setInteger(0,Integer.parseInt(minUserid));
-
-NamedNativeQuery(name="detailsByID",query="Select * from table1 where column1 = ?", resultClass=Entity1.class);
-we can run procedure with NamedNativeQuery
-
-29
-Criteria c = s.createCriteria(Entity1.class)
-c.add(Restrictions.eq("ep1","5"));
-List<Entity1> u = (List<Entity1>)c.list();
-
-31
-Criteria c = s.createCriteria(Entity1.class)
-			.setProjection(Projections.propety("ep1"))//to get only one column
-Criteria c = s.createCriteria(Entity1.class)
-			.setProjection(Projections.max("ep1"))
-Prjections.count("ep1");
-
-how to use Example
-Entity1 e = new Entity1();
-e.ep1("5");
-e.ep1("Ram");
-Example ex = new Example(e);
-Criteria c = s.createCriteria(Entity1.class).add(ex);
-
-with example does not work on primary key column
-exmple ingnore nulls
-
-##########################################################
-from refence doc
 
 
 
@@ -271,6 +216,89 @@ Emp.java
 		}
 	}
 -------------------------end of poc-------------------------
+
+
+##########################################################
+#############        Java Brains    ######################
+##########################################################
+
+25 
+HQL
+SessionFactory sf = new Configuration.configure().buildSessionFactory();
+Session s = sf.openSession();
+s.beginTransaction();
+
+Query q = s.createQuery("from Entity1 where ep1>5");
+List u = q.list();
+
+s.getTransaction().commit();
+s.close();
+
+26
+Query q = s.createQuery("from Entity1 where ep1>5");
+List<Entity1> u = (List<Entity1>)q.list();
+
+pagination
+Query q = s.createQuery("from Entity1");
+q.setFirstResult(5);
+q.setMaxResults(4);
+List<Entity1> u = (List<Entity1>)q.list();
+
+fetching single column
+Query q = s.createQuery("select ep1 from Entity1");
+List<String> u = (List<String>)q.list();//here list doest return collection entity
+
+fetching two columns
+Query q = s.createQuery("select ep1,ep2 from Entity1");
+List<List> u = (List<List>)q.list();//here list does not return collection entity
+
+Query q = s.createQuery("select max(ep2) from Entity1");//we can use all agrigation functions
+Query q = s.createQuery("select new Map(ep1,ep2) from Entity1");// returns List<Map>
+
+27
+String minUserid ="5";
+Query q = s.createQuery("from Entity1 where ep1 >"+minUserid);//this causes SQL injection issue, user can send below details
+String minUserid ="5 or 1=1"; // even drop table commands
+solution is postion place holders
+Query q = s.createQuery("from Entity1 where ep1 > ?");
+q.setInteger(0,Integer.parseInt(minUserid));
+named parameters
+Query q = s.createQuery("from Entity1 where ep1 > :ID");
+q.setInteger("ID",Integer.parseInt(minUserid));
+
+28
+named quries
+on enity NamedQuery(name="detailsByID",query="from Entity1 where ep1 = ?")//this is JPA Annotation and HQL query
+Query q = s.getNamedQuery("detailsByID");
+q.setInteger(0,Integer.parseInt(minUserid));
+
+NamedNativeQuery(name="detailsByID",query="Select * from table1 where column1 = ?", resultClass=Entity1.class);
+we can run procedure with NamedNativeQuery
+
+29
+Criteria c = s.createCriteria(Entity1.class)
+c.add(Restrictions.eq("ep1","5"));
+List<Entity1> u = (List<Entity1>)c.list();
+
+31
+Criteria c = s.createCriteria(Entity1.class)
+			.setProjection(Projections.propety("ep1"))//to get only one column
+Criteria c = s.createCriteria(Entity1.class)
+			.setProjection(Projections.max("ep1"))
+Prjections.count("ep1");
+
+how to use Example
+Entity1 e = new Entity1();
+e.ep1("5");
+e.ep1("Ram");
+Example ex = new Example(e);
+Criteria c = s.createCriteria(Entity1.class).add(ex);
+
+with example does not work on primary key column
+exmple ingnore nulls
+
+##########################################################
+from refence doc
 
 
 

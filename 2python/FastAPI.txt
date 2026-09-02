@@ -8,27 +8,44 @@ python 3.13 -- as of 08/2025
 
 software
 ---------------------------------
-python
+python- we should have first
+
+python -m venv dev      // this creates vertioual env, we should do it first
+activate vertual env
+command to deactivate is deactivate
+pip list // to see packages
 pip install fastapi
-pip install uvicorn
+pip install uvicorn       //it is webserver
+pip install fastapi uvicorn
+pip install fastapi uvicorn sqlalchemy psycopg2-binary
+uvicorn main:api --reload
 
 python -m pip install fastapi
 WARNING: The script fastapi.exe is installed in 'C:\Users\Arha\AppData\Local\Programs\Python\Python312\Scripts' which is not on PATH.
 
+-------------------------------------------------------------
 create main.py 
 
 main.py
-from fastapi import FastAPI
+	from fastapi import FastAPI
 
-api = FastAPI()
-@api.get('/')
-def index():
-	return {"message":"Hello"}
+	api = FastAPI()
+	@api.get('/')
+	def index():
+		return {"message":"Hello","weather":"cool"}
+
+	@api.get('/{user}')
+	def index(user:str):
+		return {"user":user}
+
+	@api.get('/books')
+	def index(book:str):
+		return {"book":book}
 
 run below command
-uvicorn main:api --port9999
-or
-fastapi dev main.py
+	uvicorn main:api --reload --port9999
+	or
+	fastapi dev main.py
 
 
 -------------------------------------------------------------

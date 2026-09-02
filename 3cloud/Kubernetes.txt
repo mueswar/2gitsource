@@ -1,2 +1,9 @@
 https://www.youtube.com/watch?v=0GgBi8yNQT4 springboot kubernetes deployment with command line manually
 https://www.youtube.com/watch?v=XE_mAhxZpwU&list=PLVx1qovxj-akr_3XqQQgpqRyQw4GYuS4h
+
+
+Kubernetes is open source continer orchestration platform
+the goal is automate deployment, scaling and managment of containerized apps.
+
+Kubernetes has two components 1.master nodes(Control plane) 2. worker nodes
+Control plane would continuously monitor the cluster and checks these instances( worker nodes) of microservices. If any of these instances fail, the control plane would automatically replace it with a healthy instance.

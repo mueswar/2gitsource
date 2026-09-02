@@ -24,6 +24,12 @@ Test data
 ----------
 	see below
 	
+PostgreSQL
+---------------------------
+c:\usterinstall\postgreSql
+
+	user name and password test/test
+	
 ----------------------------------------------------------------------------------
 
 Database interview questions
@@ -229,6 +235,19 @@ VALUES (9369, 'TONY', 'STARK', 'SOFTWARE ENGINEER', 7902, '1980-12-17', 2800,0,2
        (9777, 'MADII', 'HIMBURY', 'ANALYST', 7839, '1981-05-01', 2000, 200, NULL),
        (9860, 'ATHENA', 'WILSON', 'ANALYST', 7839, '1992-06-21', 7000, 100, 50),
        (9861, 'JENNIFER', 'HUETTE', 'ANALYST', 7839, '1996-07-01', 5000, 100, 50);
+	   
+CREATE TABLE public.employee (
+    empcode INT NOT NULL,
+    empfName VARCHAR(15),
+    empLName VARCHAR(15),
+    job VARCHAR(45),
+    manager CHAR(4),
+    hiredate DATE,
+    salary DECIMAL(6,2),
+    commission INT,
+    deptcode INT
+);
+
 
 
 

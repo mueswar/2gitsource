@@ -845,10 +845,9 @@ _____________________ observable  RxJs  ______________________________
 	
 
 
-
-
-156    [Authentication]
-	--nothing
+    [156 - 168 Authentication]
+---------------------------------
+156	--nothing
 157
 	useCase- login component, loging form should support both login and registrasion 
 	and it should capture values log in login component class
@@ -856,24 +855,59 @@ _____________________ observable  RxJs  ______________________________
 	one method to capture ngForm, which we get from html with templete driven style form
 	html can have two buttons one to submit form, other to call toggle method
 	toggle method button should not submit the form, so we need to set type as button istedof submit
+	
+	<form #authForm (ngSubmit)=method1(authForm)>
+	<input type="email" name="email" ngModel required email>
+	<button type="button"></button>
+	</form>
+	
 158
 	usecase - call post api and pass login details to register
 	solution - create service call with @Injectable and inject HttpClient
 	crete model class for post response this.http.post<LogRes>('url',body)
 	in component class inject service class 
-	this.serviceName.servicemethod().subcribe({
-		next: (res) => {console.log(res)},
-		error: (error) => {console.log(error)}
+	@Injectable({
+	  providedIn: 'root'
 	})
-	
+	export class UserService {
+		http: HttpClient =Inject(HttpClient);
+		signeup(emil, password){
+			data = {email:email, password:password};
+			this.http.post<UserResponse>(url, data);		
+		}
+	}
+	method1(form:NgForm){
+		this.sserService.signeup(form.value.email, form.email.password).subcribe({
+			next: (res) => {console.log(res)},
+			error: (error) => {console.log(error)}
+		})	
+	}
+159 error handling
+160	login-- this is same as signup 158
 161
+	usecase:- when we call Api, create one object from response object and store it to access anywhere in the application
 	tap function
 	emit data using rxjs/Subject
+	Note: how to do same with state managment lib
+162
+	usecase: on success full login redirect to Dashboard component, do not show dashboard link in header until login success
+	after sussfully login show dashboard, logout link on headder part
+	
+	
+	this.router.navigate(['/dashboard']);
+	
+163 
+	usecase: once we login get token and pass it to subsequent calls
+	what id fifferenc between Subject vs BehaviorSubject
+169
+	usecase: use intercepter for sending access token to api calls
 
 
+    [169 - Module]
+---------------------------------
 
-
-183 
+	[183 
+----------------------------------------------------
  angular 16 signals
 
 
