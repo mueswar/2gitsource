@@ -1,0 +1,152 @@
+.product-list-container {
+  padding: 20px;
+}
+
+.product-list-container h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-size: 16px;
+}
+
+.no-products {
+  text-align: center;
+  padding: 40px 20px;
+  color: #d32f2f;
+  font-size: 16px;
+  background-color: #ffebee;
+  border: 1px solid #f5a5a5;
+  border-radius: 4px;
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.product-table thead {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.product-table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.product-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+.product-row:hover {
+  background-color: #f5f5f5;
+}
+
+.clickable-id {
+  cursor: pointer;
+  color: #4CAF50;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.clickable-id:hover {
+  color: #45a049;
+}
+
+.available {
+  color: green;
+  font-weight: bold;
+}
+
+.unavailable {
+  color: red;
+  font-weight: bold;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  opacity: 0.8;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 15px;
+  gap: 15px;
+}
+
+.detail-row .label {
+  font-weight: bold;
+  min-width: 120px;
+  color: #333;
+}
+
+.detail-row .value {
+  flex: 1;
+  color: #666;
+}

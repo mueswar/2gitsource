@@ -1,0 +1,73 @@
+<div class="product-list-container">
+  <h3>Product List</h3>
+  <div *ngIf="isLoading" class="loading">Loading products...</div>
+  <div *ngIf="!isLoading && products.length === 0" class="no-products">No products found. Check if API is running on http://localhost:8080</div>
+  <table class="product-table" *ngIf="!isLoading && products.length > 0">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Price</th>
+        <th>Availability</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products" class="product-row">
+        <td class="clickable-id" (click)="openProductDetails(product.id)">{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>${{ product.price }}</td>
+        <td>
+          <span [class.available]="product.availability" [class.unavailable]="!product.availability">
+            {{ product.availability ? 'Available' : 'Unavailable' }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal for product details -->
+  <div *ngIf="showModal" class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Product Details </h2>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+      <div class="modal-body" *ngIf="selectedProduct">
+        <div class="detail-row">
+          <span class="label">Product ID:</span>
+          <span class="value">{{ selectedProduct.id }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Product Name:</span>
+          <span class="value">{{ selectedProduct.name }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Price:</span>
+          <span class="value">${{ selectedProduct.price }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Description:</span>
+          <span class="value">{{ selectedProduct.description }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Category:</span>
+          <span class="value">{{ selectedProduct.category }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Availability:</span>
+          <span class="value" [class.available]="selectedProduct.availability" [class.unavailable]="!selectedProduct.availability">
+            {{ selectedProduct.availability ? 'Available' : 'Unavailable' }}
+          </span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Stock:</span>
+          <span class="value">{{ selectedProduct.stock }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Created Date:</span>
+          <span class="value">{{ selectedProduct.createdDate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

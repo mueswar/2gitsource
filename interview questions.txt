@@ -51,49 +51,33 @@ I have 15 years of experience in Java development, with a strong understanding o
 -----------------------------------------------------------------------------------------------------------------------
 Speak slowly with consciosness
 
+AWS
+--------------------------------
+	C:\2gitsource\3cloud\0aws_interview.txt
+
 Spring
-------------
-1. Basic annotations
-2. 12 factor
-3. Bean scopes
-4. spring-boot-actuator
-5. POST vs PUT
-6. what is diff b/w propagation and isolation
-7. ACID properies
-8. circle dependency(setter injection solution)
+--------------------------------
+	0SpringInterview.txt
 
 DB
-----------
-what is diff b/w propagation and isolation
-ACID properies
-self join
-left self join
+--------------------------------
+	0Database_interview_QA
 
-
+Design patterns
+--------------------------------
+	Design it is in java folder
+	
 core Java
-----------
-String methods
-List methods
-Set Methods
-Map methods
+--------------------------------
 
-SOLID princeples
-Comparable vs Comparator
-Interface default methods
-Interface static methods
-Finctional interface
-Functional programming
-write comparator program with list
-write producer consumer program
-callable(What is relation with Feature)
-Exicutors
-CompleatableFeature vs Feature
-fork/join frame work
 
-Date Api in java 8
+
+Hibernate
+---------------------------------
+
 
 Angular
------------------------------------------------------------------------------------------------------------------------
+--------------------------------
 what happens when application loaded into browser
 type and interface disffernce
 obsorvebale
@@ -101,70 +85,15 @@ life cycles of component
 hooks
 how do you give access to only few urls in frontend application
 
-Design patterns
------------------------------------------------------------------------------------------------------------------------
-solid princleples
-4 types polymoriphisim
-behavioral pattrens
-creational patterns 
-anti patterns
+React
+-------------------------------------
 
-Srping answers
------------------------------------------------------------------------------------------------------------------------
-1. Basic annotations
-	@SpringBootApplication  - it triggers component scanning and auto-configuration
-	@EnableFeignClients
-	@RestController
-	@ReuestMapping   - at class level 
-	@GetMapping
-	@PostMapping
-	@PutMapping
-	@RequestBody
-	@PathVariable
-	@RequestParam
-	@Component
-	@Service
-	@Repository
-	
-2 12 factor
-	it is just 12 best practices,
-	1.Code version  - git
-	2.Dependencies  - pom.xml, build.gradle
-	3.configurations -
-	4.logs
-	5.build
-	6.Backing services
-	
-3. Bean scopes in v6
-	singleton (default- only one instance per IoC)
-	prototype
-	request, session, application, websocket
-4. spring-boot-actuator
-	it gives production ready features like healt, metrics
-	actuator provides dependency managment and auto-configuration for Micrometer Tracing.
-	Spring boot ships acuto-configuration for Zipkin tracer
-	/actuator/health , /actuator/env , /actuator/loggers, /actuator/threaddump
-	/actuator/info
-5. The difference between POST and PUT is that PUT requests are idempotent. That is, calling the same PUT request multiple times will 	
-	always produce the same result. In contrast, calling a POST request repeatedly have side effects of creating the same resource
-	multiple times.
-6. what is diff b/w propagation and isolation
-	
-7. ACID properies
-	Atomacity: either all of its operations are executed or none.
-	Durability:If a transaction commits but the system fails before the data could be written on to the disk, 
-		then that data will be updated once the system springs back into action.
-	Isolation: No transaction will affect the existence of any other transaction.
-	consistent:If the database was in a consistent state before the execution of a transaction, 
-		it must remain consistent after the execution of the transaction as well.
-8.@Component and @Service
-	It clearly communicates the role of the class to other developers. When someone sees @Service. Spring might introduce specific behavior or features for @Service annotated classes in the future (though currently, it largely behaves the same as @Component). Using @Service allows for more specific Aspect-Oriented Programming (AOP) pointcut expressions that target the service layer. For example, you could easily apply logging or transaction management to all @Service beans.
-9. how to implement with distribution trace id 
-10. if two methods involved in trasaction if something goes wrong how do we rool back it.
-11. AOP for exceptions
-12. spring validations
-13. reference token, acces token
+kafka
+-------------------------------------
+	C:\2gitsource\1java-docs\0kafka_interview.txt
 
+python
+--------------------------------------
 
 experience
 --------------------------------------
@@ -189,128 +118,7 @@ Run      - git/java-code/interview-program
 	s2.forEach(System.out::print);
 
 
-Comparable vs Comparator
------------------------
-	Comparable:compareTo()
-	Comparator:compare()
-	class Bcomparator implements Comparator<B>{
-		public int compare(B o1, B o2) {
-			return o1.getName().compareTo(o2.getName());
-		}	
-	}
-	Collections.sort(employees, new Bcomparator());
-	Collections.sort(employees); //use this when u implement Comparable
 
-Interface default methods
-	A default method allows you to define a method inside an interface with a body. They allow you to add new methods to interfaces without breaking the existing implementations.
-    default void sleep() {
-        System.out.println("This animal is sleeping.");
-    }
-
-Interface static methods
-	Static methods in interfaces cannot be overridden by classes implementing the interface. typically used to provide utility methods or common behavior.
-    static int add(int a, int b) {
-        return a + b;
-    }
-
-Finctional interface
-	Funtional interface can have only one abstract method but many default methods and static methods.
-	Lambda expressions can be used to represent the instance of a functional interface. Before Java 8, we had to create anonymous inner class objects or implement these interfaces.
-Functional programming
-	Improved Code Reusability and Modularity
-		By following a declarative style, functional programming allows developers to focus on what needs to be done rather than how it should be done. 
-		Complex logic can be broken down into small, reusable functions with functional programming, making it easier to test and debug.
-	Better Scalability and Performance Optimization
-		functional programming enables the composition of functions, where the output of one function becomes the input of another. This composability further enhances code modularity, making reasoning about and maintaining complex software systems easier.
-	Reduced Complexity and Improved Debugging
-		the immutability of data ensures that functions can be safely executed in parallel without the need for complex synchronization mechanisms.
-		functional programming encourages the use of lazy evaluation, where computations are only performed when their results are actually needed.
-callable
-	[Callable.call, ExecutorService.submit, Feature.get]
-	Java 5 introduced java.util.concurrent.Callable interface in concurrency package that is similar to Runnable interface but it can return any Object and able to throw Exception.
-	Callable interface has call method
-	We can exicute callable with ExecutorService.submit, submit returns Future.
-	when we submit main thread does not get blocked , main thread continue to exicute state ments after submit method 
-	we have Feature.get method to get callable return object.
-	When we call Feature.get method main thread gets blocked until callable completes task and returns value
-	feature.get()
-	feature.get(time)//it avoid getting blocked for longer
-	feature.isDone() and isCancelled()  // to know the status of callable
-Exicutors
-	By providing a simple and efficient way to manage task execution, the Executor Framework can help developers improve the performance and scalability of their applications while minimizing the risk of threading errors and other concurrency issues.
-	The framework includes several key components, including the Executor, ExecutorService, ScheduledExecutorService, and ThreadPoolExecutor. 
-	An Executor is normally used instead of explicitly creating threads. generally to run runnable task we have to create thred using new Thread passing runnable task and we call start method. But with Executor we call execute method.
-	Executor executor = new ThreadPoolExecutor(1, 10,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
-	executor.execute(runnableTask);
-	ExecutorService is an extended version of Executor with more methods and features.
-	An ExecutorService provides methods to manage termination and methods that can produce a Future for tracking the progress of one or more asynchronous tasks.
-	When an ExecutorService is terminated then it has no tasks actively executing, no tasks waiting for execution, and no new tasks can be submitted.
-	Hence an unused ExecutorService should be shut down to allow the reclamation of its resources.
-	ExecutorService has methods like submit(), invokeAny, invokeAll.
-	The ThreadPoolExecutor is an implementation of ExecutorService and provides a pool of threads that executes the runnable or callable tasks.
-	ExecutorService executorService = new ThreadPoolExecutor(1, 10,0L, TimeUnit.MILLISECONDS,new LinkedBlockingQueue<Runnable>());
-	We also have Executors class
-	ExecutorService executorService = Executors.newFixedThreadPool(10);
-CompleatableFeature vs Feature
-	CompletableFuture(java 8) is non blocking
-		it is easy to combile multiple async calls
-		thenApply(), thenAccept(), join(), thenCompose(), thenCombine(), and allOf()
-	Feature(java 5) is blocking feature
-		get() -it blocks
-List<String> flatList = listOfLists.stream().flatMap(Collection::stream)
-                .collect(Collectors.toList());
-				
-what is stream lazy loading, what is trigger point to exicute
-what is difference between collection and stream
-what is static imports
-
-				
-l.stream().flatMap(s -> s.chars().mapToObj(c -> (char) c)) // Convert each string to stream of characters
-                .map(c -> c.toString().toLowerCase())            // Convert to lowercase string
-                .collect(Collectors.joining(" ")); 
-DB
------------------------------------------------------------------------------------------------------------------------
-	what kind of caching techniques are you using
-	transaction isolation levels
-
-design patterns
------------------------------------------------------------------------------------------------------------------------
-	buider/singleton/factory/prototype
-	adapter/proxy/facade
-	
-	
-core java
-	oops- abstraction/encapsulation/inheritance/polymoriphisim
-	string contanct pool 1. new string 2. string litteral
-	string v buffer v builder
-	abstarct vs interface
-	interface default methods
-	interface static methods
-	interface functinal interface /examples
-	euqals and hash code
-	comparator v comparable
-	
-	
-	iterator v enumarator
-        for (String elem : list) {
-            if (elem.equals("a")) {
-                list.remove(elem);
-            }
-        }	
-		above code throws expection. Since the enhanced for loop uses an Iterator internally to traverse elements in a Collection, 
-		running the above code causes a ConcurrentModificationException since the remove() method of the Collection is used instead of the iterator
-	Maps
-		ConcurrentHashMap, HashMap, Hashtable, LinkedHashMap, TreeMap
-		see code of haspmap, hash table, concurrent hash map get, put, interrator
-	hash map, concurrent hash map
-	stream v parllel stream
-	flat map
-	optional
-	marker interfaces -examples
-	functional interfaces- examples
-	
-	thread v runnable
-	cealed class
 	
 
 

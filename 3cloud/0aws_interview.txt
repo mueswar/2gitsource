@@ -1,0 +1,86 @@
+AWS
+	What service are you using
+	how do you intract with AWS service
+s3
+	How do you connect s3 bucket and what are method we use
+	how do you connect secured S3
+lambda
+	how do you connect s3 with python
+	how do you connect s3 with nodejs
+	how do you connect sqs with python
+	how do you connect sqs with nodejs
+	how do you connect postgresql with python
+	how do you connect postgresql with nodejs
+	
+	
+	
+
+AWS-S3
+	bucket, object
+	signed url, public url
+	S3 Bucket also have permission(i.e block public access)
+	Ec2 accesing S3 bucket
+		EC2 will have EC2 instance Role, this will have IAM permission 
+		how to heck access weather it has access or not
+			>aws s3 ls bucketname //this will list all objects in that bucket
+			https://www.youtube.com/watch?v=NQxEu1kAVMY
+			
+	<dependency>
+		<groupId>software.amazon.awssdk</groupId>
+		<artifactId>s3</artifactId>
+	</dependency>
+
+	S3Client.builder().region(Region.of(region)).build();
+
+	PutObjectRequest request = PutObjectRequest.builder()
+					.bucket(bucketName)
+					.key(key)
+					.contentType(file.getContentType())
+					.build();
+	s3Client.putObject(
+                request,
+                RequestBody.fromInputStream(
+                        file.getInputStream(),
+                        file.getSize()
+                )
+        );
+		
+	GetObjectRequest request = GetObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+	s3Client.getObjectAsBytes(request).asByteArray();
+	
+	DeleteObjectRequest request = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+	s3Client.deleteObject(request);
+	
+AWS -SNS SQS
+----------------------------------------
+Consumer should be idem-potent
+if consumer crashes before deleting message from queue, it will agin process it, So it should be idempotent
+publish to SNS
+	SnsClient  snsClient = SnsClient.builder().region(Region.US_EAST_1).build();
+	PublishRequest request = PublishRequest.builder().topicArn(topicArn)
+                .message(message).build();
+	snsClient.publish(request);
+Consume from Queue	
+	@SqsListener("order-events-queue")
+    public void receiveMessage(String message)
+            throws JsonProcessingException {
+
+        OrderCreatedEvent event =
+                objectMapper.readValue(
+                        message,
+                        OrderCreatedEvent.class
+                );
+
+        System.out.println(
+                "Order ID: " + event.orderId()
+        );
+
+        // Business processing
+    }
+	

@@ -38,11 +38,11 @@ we can get equivalent javascript for javascript xml in bablejs.io website
 functional component is just javascript fuction with return of javascript xml.
 class component- this old style
 end tag is very importent in JSX, but in html
-to apply css in JSX we cuse className insdted of class, why because class is reserved for other
+to apply css in JSX we can use className insdted of class, why because class is reserved for other in javascript
 to apply CSS import css like just import and file relative path in single quoute.
 to import child component import componentname from file relative path
 child component is just js fucntion just export it
-Using JSX expression {}, we can call js variable and we call function, nothing special here
+Using JSX expression {}, we can call js variable and we can call function, nothing special here
 here function can return just value or other JSX component or comination of both
 we can not write if condition or any javascript in JSX,
 every component have default props object
@@ -64,6 +64,18 @@ fetch api
 
 axios api
 
+
+• Built and maintained a large-scale React 18 (TypeScript) enterprise portal used by 5,000+ Ford dealership users across the country.
+• Designed a feature-based folder structure with lazy-loaded routes, which helped keep the app fast and easy to navigate for the team.
+• Created 50+ reusable UI components — tables, forms, charts, drag-and-drop panels — used consistently across the application.
+• Used Module Federation (Webpack 5) so different parts of the application could be deployed independently without affecting each other.
+• Added React Suspense with skeleton loaders to make pages feel faster while data is loading.
+• Used React Query to cache API responses smartly, cutting down unnecessary repeat calls to the server by around 60%.
+• Managed page-level state using Context API and useReducer, keeping data flow predictable without adding extra complexity.
+• Used useMemo, useCallback, react.memo, and virtualized lists to keep the app responsive on pages with large datasets, improving the application's Lighthouse performance score from 54 to 89.
+
+
+-----------------------------[  1- 18 Getting started with React  ]-----------------------------------------------
 
 how to list of elements, assume you have list constant in function.
 	function Message(){
@@ -136,8 +148,8 @@ How to create event function
 	if your return statement is more than one line, keep it in paranthasis(), to be safe side, 
 	javaScript add implicitly semicolan after every line 
 	
-12	
-	in JSX expression we call java script function
+12	call function
+	in JSX expression we can call java script function
 	//App.js
 	let count= 0;
 	function one(){
@@ -179,21 +191,38 @@ How to create event function
 16 
 	split component
 	Pass data from Dashboard to Product to ProductDetails
-	logic same as above, for this we have to data from product to product details through props
+	logic same as above, for this we have to pass data from product to ProductDetails through props
 17
 
-20
-	we can not attach events to custom components directly
-	<product onClick={productChange}/>
-	it only works with JSX tags.
-	for work around 
-	<product producthandlerevent={productChange}/>
-	function Product(props){
-		return (
-			<h5 onClick={props.producthandlerevent}> {props.name}</h5>
-		)
-	}
-21
+18 write component in javascript (convert everything in JSX)
+	no need to watch
+-----------------------------[  19-  State and Events  ]-----------------------------------------------
+19
+	no need to watch just remmeber this 
+	
+	<h5 onClick={mone}> Hello</h5>
+	note1- event name fist letter is small(and camel case)
+	note2- when we want to call function mone we just give function name but no paranthasis
+	note3- and also observe here we are not using double quotes, insted we are using curly braces
+	
+	
+
+20     event of custom element (not html element, but html element wrapped by function and exposed as component)
+	Note1- we can not attach events to custom components directly, like on html tags
+	Assume we have bButton component like this and added on Product component
+		function Button(props){
+			return ( <button > Submit</button> 	)
+		}
+	<Button onClick={productChange}/> //this does not work, since it is custom button
+	But solution is here 
+		<Button producthandlerevent={productChange}/> // here we are creating property and passing function(normal javascript function)
+		function Button(props){
+			return (
+				<button onClick={props.producthandlerevent}> {props.name}</button>
+			)
+		}
+	now when user click button, productChange function will be called
+21    useState function
 	work1: lets assume there +, - buttons in page two times, when + clicked count should increase
 			implement with button and custom button
 		note: when we click button, it calls function and increases value of variable
@@ -201,19 +230,26 @@ How to create event function
 		why beacuse the component section will be changed only once when it is loaded
 		to fix this issue we have to use useSate hook
 	How to use useState
+	import React, {useState} from 'react';
 		 let [count, updateCount] =useSate(0)
 		 here count deafault value is 0, and updateCount is function we have to call from button function 
 		 but we do not define updateCount function, but we call it, it is special function
+		 when this special function is called, component function will be recalled again
+	
+	Note1- we have to import useState function from react lib, it is react hook 
+	Note2- it should be used in react component function, we can not use outside and we can not use any other nested function
 
-22
+22     one more time understand detailly about useState
 	if dash board page displays 5 products, if product function has useState function
 	each product gets its own useState function default value, 
 	if we increase from one product it does not effect other components
-	if we change useSate of one product with any event only that component will be reloaded, not all
+	if we change useSate of one product with any event, only that component will be reloaded, not all
+	Note- add console.log to all component functions and see how it is beaing called on events
+	
 23
 	Forms
 	appCompnent, CreateProduct
-	create Product has html form
+	createProduct has html form
 	<form>
 		<input id="name"/>
 		<input id="location"/>
@@ -237,7 +273,7 @@ How to create event function
 		)
 	}
 	
-	here onChange event function we are not passing parameter, but still you get event objecct in function
+	here in onChange event function we are not passing parameter, but still you get event objecct in function
 25
 	store inputdata in memory
 	function CreateProduct(){
@@ -338,7 +374,7 @@ How to create event function
 			</form>	
 		)
 	}
-30
+30	parent-child data passing
 		watch it again
 31 
 	loop list	
@@ -370,8 +406,9 @@ How to create event function
 	how to open form when we click create button 
 	how to hide form when cancle button is clicked
 
-39
-	fragments
+39		fragments
+	no need to watch 
+	we use React.Fragment to avoid unnessary wraper tags like divs for for returning multiple tgas in jsx
 	<>
 	</>
 	<React.Fragment> </React.Fragment>
@@ -391,25 +428,72 @@ How to create event function
 			</form>			
 		<>
 	}
+-----------------------------------[42-55 side effect, reducer, context]-------------------------------------------
 42
 	useEffect hook
 	let [x,setX]=useState('abc');
 	useEffect(()=>{console.log(x)},[]);// this only be called when page first load
 	useEffect(()=>{console.log(x)},[x]); //this will be called everytime x is changed
 
-43
+43 useEffect - for reading localstrage- usecase - maintain user login state when user refreshes page
 	we can not directly set useSate variable in component,
 	we always need to set in component event functions, otherwise we will face infinate loop issue.
 	but if there is any requirement , we have useEffect function we can use it
 	localStorage.setItem('isLoggedIn','1');
 	localStorage.remove('isLoggedIn');
+	localStorage is javascript global object, you no need to import it, we can use directly
 	please watched again very good concept about login and local storage
-
-46
-	useReducer hook- implement count value increment and decrement with buttons
 	
+45 cleanup function of useEffect() function
+	cleanup function will not be called first time when page is loaded, but next time onwoards cleanfunction will be exicuted first.
+	cleanup function is function, which useeffect returns
+	usecase: do validations for login form but do not do every key stroke, wait some and then do it
+
+46 useReducer hook- implement count value increment and decrement with buttons
+	let [state, dispatcher] = useReducer(reducer, {count:0})
+	function decrementhandler(){dispatcher('decrement')}
+	function incrementhandler(){dispatcher('increment')}
+	
+	function reducer(currentsate, action){
+		switch (action):
+			case 'increment'
+				reurn {count:currentsate.count+1}
+			case 'increment'
+				reurn {count:currentsate.count+1}
+			default 
+				return currentsate;	
+	}
+
+50 useContext, React context
 
 
+
+
+
+-------------------------------[56-62 Behind the scenes        ]-----------------------------------
+
+-------------------------------[63-67 Class based components   ]-----------------------------------
+63 class Component
+	we can use class components and function components in same project
+	before 16.8 we can not use useSate, UseEffect hooks in function component, but 16.8 introduced React hoooks
+	So we do  not need class based components now.
+	Demo.js
+	import {Component} from 'react'
+	class Demo extends Component{
+		render(){
+		return <>
+		<h3>this.props.name</h3>
+		<p>this.props.children</p>
+		<>
+		}
+	}
+	Function App(){
+	return <Demo name={'test app'}>this is demo</Demo>
+	}
+
+
+-------------------------------[68-76 Http request and response]-----------------------------------
+68
 69 
 	send user form details as post call using fetch and axios
 	npm install --save axios 
@@ -521,3 +605,121 @@ How to create event function
 		useEffect(()=>{getusers();},[]);
 	
 	}
+Project code
+	const api = axios.create({
+		baseURL: API_BASE_URL,
+		withCredentials: true,
+		headers: {
+			'X-API-Key': API_KEY,
+			'Content-Type': 'application/json',
+		},
+	});
+
+
+Redux
+--------------------------------------------------------------	
+
+Coding tips
+-------------------------------------------------------------
+export async function updateUserProfile(userId, { first_name, last_name, phone_number, title }) {
+    const res = await api.put(`/users_new/${userId}`, { first_name, last_name, phone_number, title })
+    return res.data?.profile ?? res.data?.user ?? res.data
+}
+here we are using object destructuring(in method defination we have like this { first_name, last_name, phone_number, title })
+res.data?.profile ?? res.data?.user ?? res.data - this means if left side is null or undefined, return right value
+0 ?? 10          // 0
+"" ?? "default"  // ""
+false ?? true    // false
+null ?? 10       // 10
+undefined ?? 10  // 10
+0 || 10          // 10
+"" || "default"  // "default"
+false || true    // true
+null || 10       // 10
+
+const res = await api.post(`/users_new/${encodeURIComponent(userId)}/resend-invite`, {})
+encodeURIComponent- is javascript builtin function
+try/catch block
+    try {
+        const res = await api.post(`/users_new/${encodeURIComponent(userId)}/resend-invite`, {})
+        return res.data
+    } catch (err) {
+        throw Object.assign(new Error(parseApiError(err)), { cause: err })
+    }
+	here Error is javascript class
+	Object.assign({}, {})// combines both objects properties into one object
+details.map(()=>{})join(',')
+	it concats values with ,
+function deactivateUser(userId, { reason = 'admin_action' } = {}) {}
+	second parameter is optional
+	we are providing default value for reason
+const params = { limit }
+if (userId) params.user_id = userId
+if (event) params.event = event
+const res = await api.get('/user_logs', { params })
+	after defining object in js, we can add additional property, and also observ short hand form
+
+	
+practice
+--------------------------------------------------------------
+create DisplayComponet, ProductComponent, ProductDetailsComponent, ButtonComponent, CreateProductComponent
+DisplayComponet- has list of products, and logic to display ProductComponent
+ProductComponent - has display one value like name and should have logic to display ProductDetailsComponent
+ProductDetailsComponent- logic to display price, description and logic to select number of products with help of + - butons
+ButtonComponent- is wrapper of html button wrapper
+CreateProductComponent- two input fields, one submit button, capture change value and when submit form prevent form reload
+
+WebApp features
+--------------------------------------------------------------------
+get data from backend
+send data to backend 
+create forms [input text/dropdown/radio]
+events
+errors
+routes
+states
+
+quick recap
+------------------------------------------------------------------
+
+function mone(){
+	return (<span>hello </span>);
+}
+function mone(){
+	return (<div>
+			<span>hello </span>
+			<div>Title</div>
+		</div>);
+}
+function mone(){
+	return (<>
+			<span>hello </span>
+			<div>Title</div>
+		<>);
+}
+function mone(){
+	let name;
+	return (<span>{name} </span>);
+}
+function mone(){
+	let name;
+	mtwo(){
+		console.log(name);
+	}
+	return (<input type="text" onClick="mtwo">{name} </input>);
+}
+function mone(){
+	let name;
+	let [desc, setDesc] = useSate('');
+	mtwo(){
+		console.log(name);
+		setDesc(name);
+		console.log(name);
+	}
+	return (<input type="text" onClick="mtwo">{name} </input>);
+}
+
+
+
+createContext
+useContext

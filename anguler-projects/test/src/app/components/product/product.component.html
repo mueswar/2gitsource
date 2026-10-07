@@ -1,0 +1,17 @@
+<div class="product-card" *ngIf="product">
+  <div class="product-header">
+    <h4>{{ product.name }}</h4>
+    <span class="product-id">ID: {{ product.id }}</span>
+  </div>
+  <div class="product-body">
+    <p><strong>Price:</strong> ${{ product.price }}</p>
+    <p><strong>Description:</strong> {{ product.description }}</p>
+    <p><strong>Category:</strong> {{ product.category }}</p>
+    <p><strong>Stock:</strong> {{ product.stock }} units</p>
+    <p><strong>Status:</strong>
+      <span [class.available]="product.availability" [class.unavailable]="!product.availability">
+        {{ product.availability ? 'Available' : 'Unavailable' }}
+      </span>
+    </p>
+  </div>
+</div>

@@ -16,3 +16,9 @@ collect data
 call backend service
 
 
+//steps for test project for daily temprary use
+delete test project
+create project
+ng new test --no-standalone
+cd test
+ng serve

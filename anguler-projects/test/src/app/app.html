@@ -1,0 +1,10 @@
+<div class="app-container">
+  <div class="app-header">
+    <h1>Product Management System</h1>
+  </div>
+
+  <div class="app-content">
+    <app-product-filter (filterChanged)="onFilterChanged($event)"></app-product-filter>
+    <app-product-list [filter]="currentFilter"></app-product-list>
+  </div>
+</div>

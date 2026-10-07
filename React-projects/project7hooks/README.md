@@ -1,4 +1,4 @@
-npx create-react-app project7hook
+c:\2gitsource\React-projects>npx create-react-app project7hook
 cd project7hook
 npm start
 

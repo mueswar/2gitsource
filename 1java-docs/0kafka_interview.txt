@@ -1,0 +1,16 @@
+kafka
+
+What happens if the application crashes?
+	if offset is not commited, After restarting, the consumer may process messages again.
+	Kafka consumers should generally be designed to handle duplicate processing.
+Why do we need partitions?
+	Primarily for scalability and parallelism.
+What is a consumer group?
+	Each partition gets assigned to one consumer within that group.
+	But another consumer group can independently consume the same topic
+Can two consumers in the same consumer group consume the same partition simultaneously?
+	Normally no. A partition is assigned to only one consumer within a consumer group at a time.
+What happens if you have more consumers than partitions?
+	the extra consumers be ideal
+What is offset commit?
+	After processing a message, the consumer commits its offset.

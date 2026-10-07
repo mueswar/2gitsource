@@ -122,11 +122,25 @@ how to get <input> tag value in component when input is not inside <form> html t
 17 event binding [view to component data flow]
 
 18 two way binding ngModel, formsModule
-	case 1: when use types something in text box, that should display that value below text box
+	case 1: when we type something in text box, that should display that value below text box
 			with property and event binding
 			
-	case 2: when use types something in text box, that should display that value below text box
+	case 2: when we type something in text box, that should display that value below text box
 			with two way binding
+    <div>
+        Fname: <input type="text" [(ngModel)]="fname" />
+    </div>
+    <div>{{fname}}</div>
+    <div>
+        Lname: <input type="text" [value]="lname" (change)="lname = $event.target.value; mone()"/>
+    </div>
+    <div>{{lname}}</div>
+	<div>
+        Lname: <input type="text" [value]="lname" (change)="mone($event.target.value)"/>
+    </div>
+	  mone(value: any){
+		this.lname = value;
+	  }
 
 
 19  -------------directive--------------
@@ -193,7 +207,7 @@ how to get <input> tag value in component when input is not inside <form> html t
 		<input type="radio" name="filter" value="true">avilable{{available}}
 	
 27
-	pass value from child to parent component using @Output decorator and EventBinder
+	pass value from child(productfliter) to parent component(productlist) using @Output decorator and EventBinder
 	get value in parent componet event
 	
 	productfliterComponent
@@ -211,7 +225,7 @@ how to get <input> tag value in component when input is not inside <form> html t
 	productlistComponent.ts
 		products:Product[];
 		totalProducts=this.products.length;
-		totalAvailable= this.products.filter(p = p.isAvailable ===true).length;
+		totalAvailable= this.products.filter(p => p.isAvailable ===true).length;
 		selectedradio :string="all";
 		mtwo(value:string){
 			this.selectedradio=string;
@@ -509,7 +523,29 @@ _____________________ observable  RxJs  ______________________________
 			document.getElementById('continerDiv').appendChild(div);
 		}
 	2.how to display new dev element when button is clicked with observable with help of formevent
-73	use map $ filter methods on observable
+73	use map & filter methods on observable
+	myObservable = from([2,4,6,8]);
+	transformedObservable = this.myObservable.pipe(map((val)=>{return val*5}));
+	getAsycData(){
+		this.transformedObservable.subscribe({
+		next:(val:any)=>{this.x.push(val);},
+		error(error){alert(error);},
+		complete()=>{alert('all data arrived');}
+		});
+	  }
+	  converted one observable to other observable with map operator
+	myObservable = from([2,4,6,8]);
+	transformedObservable = this.myObservable.pipe(map((val)=>{return val*5}));
+	filteredObservable = this.transformedObservable.pipe(filter((val)=>{return val%4 ===0;}));
+74 RxJS subjects
+	there are 3 components, one continer component, create task component, show task component
+	in create componet, take task name through input and submit button
+	in show task component- logic to display list of components
+	solution-1: with service and eventemmiter
+	
+	solotion-2: rxjs subjects
+	  
+
 	
 			[81 82]        Routes
 			-----------------------------------------
@@ -1347,3 +1383,49 @@ how to convert employ record in employ component to link to display details
 			.map((response: Response) => <IEmployee>response.json())
 			.catch(this.handleError);
 	} 
+
+
+issues while practicing
+------------------------------------------
+how to defaine variables in component class(let,var, const)
+property binding- do we only do property binding on input taking tags(text,radio,checkbox)?
+	input tag has name attribute, should we apply to only name attribute
+
+
+
+
+
+quick recap
+----------------------------
+I am talking about my angular knowledge....
+we have string interpolation is access component propertyin templete
+<div> {{prop1}} </div>
+we have property binding to set component property to any input fields
+<input type ="text" [value]={{prop1}}/>
+we have event binding to send element value from templete to component
+<input type ="text" [value]={{prop1}} (click)="mone($event.target.value)"/>
+we have two way dinding with ngModule directive from fromsModule
+<input type ="text" [(ngDirective)]={{prop1}} (change)="mone($event.target.value)"/>
+we have angluar hook which are exicuted throughout component life cycle
+ngOnInit(){}
+ngOnDestroy(){} - for clean up resources only once
+ngOnChanges()- exicutes only when input @Input property value changes
+ngDocheck() - exicutes every time for any change
+ngAfterViewInit - exicuted after all components initialized
+ngAfterViewChecked
+ngAfterContent Init - 
+ngAfterContentCheck
+we can do property binding directly for predefine dom tags, for component property we should use @Input decorator to access value from parent to child
+<component1 property1={product}/>
+@Input property1:Product|null=null;
+we can send value from child to parent with @outPut decorator and EventBinder
+
+@outPut productemiter:EventBinder= new EventBinder();
+mone(value){
+	productemiter.emit(value);
+}
+in parent templete <parent1 (productemiter)=mtwo(value)/>
+in parent componet parent1:String;
+ngTemplete
+ngOutlet to display ngTemplete ccontent
+<ngContent> to pass content from parent to child templete

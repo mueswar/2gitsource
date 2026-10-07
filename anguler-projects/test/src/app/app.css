@@ -1,0 +1,28 @@
+.app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.app-header {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.app-content {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}

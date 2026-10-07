@@ -1,8 +1,8 @@
 Spring interview questions
 
 
-Spring boot version -2.7.14
-Spring version -5
+Spring boot version -3.8
+Spring version -
 
 
 
@@ -18,11 +18,14 @@ list and maps
 get dependecy with autowire
 scopes Singleton and proptotype
 bean defination inheritance with lists
+
+12 factor
 what is factory method use in dependency
 how to read properties
 	@Value("key1")
 How to configure objects that have been created outside the control of an IoC container.
 how to instantiate a Spring IoC container
+ApplicationContext  vs 	BeanFactory
 how to solve Circular Dependency in spring
 how to build spring mavc with spring boot
 StereoType Annotations
@@ -43,6 +46,15 @@ Integration testing
 File/Image sending through RestFul
 how to combine declarative and programetic transactions
 Batch process
+
+1. Basic annotations
+2. 12 factor
+3. Bean scopes
+4. spring-boot-actuator
+5. POST vs PUT
+6. what is diff b/w propagation and isolation
+7. ACID properies
+8. circle dependency(setter injection solution)
 
 SPring+ JPA+ transactions
 	JpaTransactionManager it needs LocalContainerEntityManagerFactoryBean
@@ -71,7 +83,14 @@ Spring logging with AOP
 	
 Answers	
 --------------------------------------------------------------------------------------------------------
-
+12 factor
+	it is just 12 best practices,
+	1.Code version  - git
+	2.Dependencies  - pom.xml, build.gradle
+	3.configurations -
+	4.logs
+	5.build
+	6.Backing services
 Factory pattern
 	The Factory Design Pattern is a creational design pattern. Instead of letting the client directly create an object using new, a separate component is responsible for deciding which object to create and returning it.
 
@@ -91,6 +110,8 @@ how to instantiate a Spring IoC container
 	Although Spring Boot normally does this for you, you can explicitly create an ApplicationContext.
 	ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 	OrderService service = context.getBean(OrderService.class);
+ApplicationContext  vs 	BeanFactory
+	BeanFactory is Spring's basic IoC container, while ApplicationContext extends BeanFactory and provides additional enterprise/application-level features such as event publishing, internationalization, environment/profile support, annotation processing, and easier integration with Spring infrastructure. In Spring Boot, we normally work with ApplicationContext rather than BeanFactory.
 how to solve Circular Dependency in spring
 	First, I would identify why the circular dependency exists and refactor the design to remove the cycle. Circular dependencies often indicate that responsibilities between services are too tightly coupled. I might extract common functionality into another service or introduce an orchestration component so that dependencies have a clear direction. @Lazy can sometimes break the initialization cycle, but I would treat that as a workaround rather than the preferred solution. I would avoid enabling spring.main.allow-circular-references just to hide the problem.
 
@@ -124,6 +145,8 @@ Different kind of rest methods
 	One important distinction: POST is generally not idempotent, 
 	while GET, PUT, and DELETE are defined as idempotent (assuming the server follows HTTP semantics).
 	(Search and read how to make POST as Idempotent by using idempotent-key in hedder, for this we will extra table )
+GET, POST
+	data sending, secure, cashing, bookmark
 Rest status codes
 	200 OK                 GET
 	201 Created            POST
@@ -200,3 +223,53 @@ Rest security
 		don't use the ID token as the bearer credential for your Spring Boot API. The API should receive and validate an access token intended for that API.
 	You may need to configure CORS so the browser allows the Angular application to call your API.
 	disabling CSRF is common for a stateless JWT API
+	
+	
+3. Bean scopes in v6
+	singleton (default- only one instance per IoC)
+	prototype
+	request, session, application, websocket
+4. spring-boot-actuator
+	it gives production ready features like healt, metrics
+	actuator provides dependency managment and auto-configuration for Micrometer Tracing.
+	Spring boot ships acuto-configuration for Zipkin tracer
+	/actuator/health , /actuator/env , /actuator/loggers, /actuator/threaddump
+	/actuator/info
+5. The difference between POST and PUT is that PUT requests are idempotent. That is, calling the same PUT request multiple times will 	
+	always produce the same result. In contrast, calling a POST request repeatedly have side effects of creating the same resource
+	multiple times.
+6. what is diff b/w propagation and isolation
+	
+7. ACID properies
+	Atomacity: either all of its operations are executed or none.
+	Durability:If a transaction commits but the system fails before the data could be written on to the disk, 
+		then that data will be updated once the system springs back into action.
+	Isolation: No transaction will affect the existence of any other transaction.
+	consistent:If the database was in a consistent state before the execution of a transaction, 
+		it must remain consistent after the execution of the transaction as well.
+8.@Component and @Service
+	It clearly communicates the role of the class to other developers. When someone sees @Service. Spring might introduce specific behavior or features for @Service annotated classes in the future (though currently, it largely behaves the same as @Component). Using @Service allows for more specific Aspect-Oriented Programming (AOP) pointcut expressions that target the service layer. For example, you could easily apply logging or transaction management to all @Service beans.
+9. how to implement with distribution trace id 
+	 the modern way to implement distributed tracing is to use Micrometer Tracing + OpenTelemetry.
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>io.micrometer</groupId>
+        <artifactId>micrometer-tracing-bridge-otel</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-exporter-otlp</artifactId>
+    </dependency>
+15. OpenTelemetry Collector + Jaeger
+
+10. if two methods involved in trasaction if something goes wrong how do we rool back it.
+11. AOP for exceptions
+12. spring validations
+13. reference token, acces token
+
+14. RestClient , Feign clients

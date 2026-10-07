@@ -1,0 +1,95 @@
+Components
+JSX
+Props
+State
+Events
+Event Handling
+Conditional Rendering
+Lists & Keys
+Forms
+Controlled Components
+Uncontrolled Components
+Hooks
+useState
+useEffect
+useContext
+useRef
+useReducer
+useMemo
+useCallback
+
+Custom Hooks
+Calling Backend APIs
+fetch
+Axios
+GET / POST / PUT / DELETE
+Handling loading & errors
+Async/Await
+Component Lifecycle
+Lifting State Up
+Prop Drilling
+Context API
+Refs
+Routing
+React Router
+Routes
+Parameters
+Navigation
+Protected Routes
+State Management
+Redux / Redux Toolkit
+Zustand
+Authentication
+Login / Logout
+JWT
+Protected Pages
+Authorization / Roles
+Error Handling
+Loading States
+API Response Handling
+CRUD Operations
+Pagination
+Search & Filtering
+Debouncing
+Local Storage / Session Storage
+Environment Variables
+Reusable Components
+Custom Hooks
+Component Composition
+React.memo
+Performance Optimization
+Lazy Loading
+Code Splitting
+Suspense
+Error Boundaries
+Portals
+Fragments
+Higher-Order Components
+Render Props
+Testing
+Jest
+React Testing Library
+TypeScript with React
+
+Form Validation
+
+React Hook Form
+
+Zod/Yup
+
+Fetching Libraries
+
+React Query / TanStack Query
+
+Deployment
+
+Build
+
+Environment configuration
+
+Deploying React applications
+
+A practical learning order
+If you're learning React for real-world development, I'd go roughly:
+
+Components → JSX → Props → State → Events → Forms → Hooks → API Calls → CRUD → Routing → Context → Authentication → State Management → Custom Hooks → Performance → Testing → TypeScript → Deployment.

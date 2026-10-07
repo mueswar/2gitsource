@@ -1,0 +1,153 @@
+
+javascript closers
+what are pipe
+what are directives
+modules
+loagy loading, eagar loadin module
+
+what happens when application loaded into browser
+type and interface disffernce
+life cycles of component
+
+Beginner
+What is Angular, and how is it different from AngularJS?
+What are the main features of Angular?
+What is a component in Angular?
+What is a module? Is NgModule still required in modern Angular?
+What is a standalone component?
+What is data binding? Explain:
+Interpolation
+Property binding
+Event binding
+Two-way binding
+What are directives in Angular?
+Difference between structural and attribute directives?
+What is dependency injection in Angular?
+What are services, and why are they used?
+What is a pipe? How do you create a custom pipe?
+What is the difference between a component and a directive?
+What are Angular lifecycle hooks?
+Explain ngOnInit, ngOnChanges, and ngOnDestroy.
+How does Angular handle forms?
+Difference between template-driven and reactive forms?
+What is routing in Angular?
+How do you pass parameters through Angular routes?
+What is an Observable?
+What is RxJS, and why does Angular use it?
+Intermediate
+Explain Angular change detection.
+What is ChangeDetectionStrategy.OnPush?
+What is the difference between Subject, BehaviorSubject, and ReplaySubject?
+What is the difference between switchMap, mergeMap, concatMap, and exhaustMap?
+How do you make HTTP requests in Angular?
+What is an HTTP interceptor?
+How would you handle authentication using an interceptor?
+What are route guards?
+Difference between CanActivate, CanDeactivate, and other route guards.
+What is lazy loading?
+How do you lazy-load routes in modern Angular?
+What is content projection and ng-content?
+What is ViewChild? When would you use it?
+Difference between ViewChild and ContentChild.
+How can components communicate with each other?
+Explain @Input() and @Output().
+How would you share data between unrelated components?
+What is AsyncPipe?
+Why is unsubscribing from Observables important?
+What are common ways to prevent memory leaks in Angular?
+Advanced
+Explain Angular's modern signals API.
+Difference between signals, Observables, and BehaviorSubject.
+What are computed() and effect()?
+How do signals interact with Angular change detection?
+What is zoneless Angular?
+How does Angular's rendering and change-detection process work?
+What is server-side rendering (SSR)?
+What is hydration in Angular?
+How would you improve the performance of a large Angular application?
+How does lazy loading improve application performance?
+How would you optimize a component that renders thousands of records?
+What is Angular CDK?
+How would you implement global error handling?
+How do you protect an Angular application against XSS?
+How would you structure a large-scale Angular application?
+How do you implement role-based access control?
+How would you test Angular components and services?
+Difference between unit testing and end-to-end testing.
+How would you mock an HTTP request in an Angular test?
+How would you debug a slow Angular application?
+Scenario-Based Questions
+These are particularly common for experienced candidates:
+
+An API is being called multiple times unexpectedly. How would you find and fix the problem?
+A component is not updating after changing an object. What could be wrong with OnPush change detection?
+You have a search box that calls an API on every keystroke. How would you optimize it?
+Two components need to share state. How would you design it?
+A user can access an admin URL directly even though they aren't an admin. How would you fix it?
+Your Angular application takes 8 seconds to load. What would you investigate?
+A subscription continues running after navigating away from a page. How would you prevent the memory leak?
+How would you design an Angular application with 50+ feature areas?
+How would you handle token expiration and automatically refresh authentication tokens?
+How would you migrate an older Angular application to modern standalone components and newer APIs?
+
+
+
+my questions
+----------------------------------------------
+when will component be destroyed
+how to use RxJs map() filter() switchMap() mergeMap() debounceTime() catchError() takeUntil()
+switchMap → switch to latest
+mergeMap → run concurrently
+concatMap → run sequentially
+exhaustMap → ignore while busy
+
+what are new features in 14/15/16/17/18
+testing
+
+
+
+
+When an Angular app loads, the browser loads index.html and JavaScript bundles, Angular bootstraps the application, creates the root component, initializes dependency injection and routing, renders the component tree, and then performs change detection to keep the DOM synchronized with application state.
+
+type and interface disffernce
+	interface is mainly used to define the structure or contract of objects and classes, while type is more flexible and can define objects, unions, intersections, primitives, tuples, and other type combinations. Interfaces also support declaration merging.
+	
+what is directive	
+	A directive is a special instruction in Angular that allows you to manipulate the DOM, add behaviors, or enhance templates with custom functionality.
+	Structural Directives- Shape or structure your DOM elements by adding or removing them
+	Attribute Directives- Change the appearance or behavior of an element. ngClass, ngStyle
+	Custom Directives- Create your own reusable directives to extend HTML behavior.
+What Are Angular Pipes
+	Angular Pipes allow you to transform and format data directly in templates without modifying the underlying data. They are great for Formatting dates, numbers, currencies, and text
+	{{ today | date:'fullDate' }}
+	{{ price | currency:'USD' }}
+	{{ 'angular' | uppercase }}
+	{{ 'Angular' | lowercase }}
+	{{ 1234.56 | number:'1.1-2' }} decimal pipe
+	Pure Pipes (Default)-Executes only when the input value changes.
+	Impure Pipes - Executes on every change detection cycle, even if the input hasn’t changed.
+	@Pipe({
+	  name: 'impurePipeExample',
+	  pure: false
+	})
+	export class ImpurePipeExample implements PipeTransform {
+	  transform(values: any[]): any[] { }}
+Change Detection
+	Change Detection in Angular ensures your UI updates efficiently when data changes.
+	Angular provides two strategies to control how Change Detection runs:
+	Default Strategy- Runs Change Detection on the entire component tree.
+	OnPush Strategy- Runs Change Detection only when Input properties change.
+	@Component({  
+	  selector: 'app-example',  
+	  templateUrl: './example.component.html',  
+	  changeDetection: ChangeDetectionStrategy.OnPush  
+	})  
+	export class ExampleComponent {  
+	  @Input() data: any;  
+	}
+	trackBy - use trackBy  for large lists
+	Angular will repaint the entire list instead of just modifying the changed item. if we use trackBy, only modified items would be rerendered
+Angular Modules	
+	Angular Modules are essential for organizing, maintaining, and scaling your applications. An Angular Module is a container that groups related parts of an application, like components, directives, services, and pipes. Every Angular app has at least one module, the root module (AppModule).
+	Lazy Loading a Module- Improve performance by loading modules only when needed
+ngOnChanges()- uns when an @Input() property changes.

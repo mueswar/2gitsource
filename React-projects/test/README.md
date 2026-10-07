@@ -1,9 +1,3 @@
-# Run below commands
-## npm install
-## npm start
-
-
-# for test project
 open cmd
 go to c:\2gitsource\React-projects>
 run npx crate-react-app test
